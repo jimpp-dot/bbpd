@@ -1,0 +1,63 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+
+// 统计
+message RespGuestStats{
+  bool success = 1;
+  string msg = 2;
+  uint32 total = 3;
+  uint32 new_num = 4;
+}
+
+// 列表
+message RespGuestList{
+  bool success = 1;
+  string msg = 2;
+  uint32 next = 3;
+  uint32 page = 4;
+  bool hidden = 5;  // 是否需要隐藏访客信息
+  bool recharge  =6; // 是否有充值记录
+  bool register_limit = 7;  // 注册时间限制
+  repeated GuestUsers users = 8;
+  int32 have_forbidden = 9; //访客中是否有被封禁用户
+  int32 profile_integrity = 10; //是否完善个人信息
+}
+
+message GuestUsers{
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  string sex = 4;
+  uint32 deleted = 5;
+  uint32 age = 6;
+  uint32 title_new = 7;
+  uint32 vnum = 8;
+  string src = 9;
+  uint32 isnew = 10;
+  uint32 rid = 11;
+  uint32 mic = 12;
+  uint32 online = 13;
+  uint32 time = 14;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

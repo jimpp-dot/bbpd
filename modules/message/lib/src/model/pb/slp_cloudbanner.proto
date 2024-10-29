@@ -1,0 +1,22 @@
+syntax = "proto3";
+package pb;
+/*
+消息页顶部横幅proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ResCloudBanner {
+  bool success = 1;                         //成功true，失败false
+  string msg = 2;                           //失败message
+  CloudBannerData data = 3;
+}
+
+message CloudBannerData {
+  bool show = 1;                    //是否展示横幅
+  string banner_img = 2;            //横幅图片
+  string banner_text = 3;           //横幅文案
+  string banner_url = 4;            //横幅跳转地址
+}

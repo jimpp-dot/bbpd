@@ -1,0 +1,15 @@
+syntax = "proto3";
+    
+package room.lottery.end;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message RoomLotteryEnd {
+    option (pb.register_name) = 'room.lottery.end';
+    option (pb.register_id) = 71;
+    uint32 lottery_id = 1;
+    repeated uint32 winners = 2;
+}

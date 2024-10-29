@@ -1,0 +1,32 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+message ShowImpressTagMessage {
+  option (pb.register_name) = 'impress.tag';
+  option (pb.register_id) = 10045;
+  uint32 rid = 1; // 房间id
+  repeated ShowImpressTagData show_data= 2;
+}
+
+message ShowImpressTagData {
+  uint32 uid = 1; // 麦上用户id
+  uint32 tag_id = 2;
+  string tag_icon = 3;
+  uint32 end_time = 4; // 结束时间
+}
+
+// 印象标签展示 (麦上用户，在当前展示到期时调用)
+message ShowImpressTagsReq {
+  uint32 rid = 1; // 房间id
+  string actionTyp = 2; // 触发时机 mic (麦上用户)
+}
+message ShowImpressTagsRsp{
+  bool success = 1;                 //成功true，失败false
+  string msg = 2;                   //失败message
+}

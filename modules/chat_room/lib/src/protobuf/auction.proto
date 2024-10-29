@@ -1,0 +1,257 @@
+syntax = "proto3";
+package pb;
+
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+/**
+ * UNKNOWN = 0; 未知状态
+ * WAIT    = 1; 等待状态
+ * SETTING = 2; 设置状态
+ * START   = 3; 开始阶段
+ * AUCTION = 4; 拍卖阶段
+ * UPGRADE = 5; 关系升级阶段
+ * CLOSED  = 6; 拍卖关闭
+ */
+enum AuctionStatus{
+  UNKNOWN = 0;
+  WAIT = 1;
+  SETTING = 2;
+  START = 3;
+  AUCTION = 4;
+  UPGRADE = 5;
+  CLOSED = 6;
+}
+
+/**
+ * commodity_id 拍卖礼物ID
+ * commodity_name 拍卖礼物名称
+ * num_days 关系拍卖天数
+ * gift_id 拍卖关系需要的礼物ID
+ * gift_name 拍卖关系需要的礼物名称
+ * gift_price 拍卖关系需要的礼物价格;
+ */
+message AuctionCommodity{
+  int32 commodity_id = 1;
+  string commodity_name = 2;
+  int32 num_days = 3;
+  int32 gift_id = 4;
+  string gift_name = 5;
+  int32 gift_price = 6;
+}
+
+message AuctionGiftItem{
+  int32 id = 1;
+  string name = 2;
+  int32 price = 3;
+}
+
+/**
+ * uid
+ * sex
+ * name
+ * icon
+ * wishReceived 用户收到的祝福值（当前场）
+ * wishSent 用户送出的祝福之（当前场）
+ */
+message AuctionUser{
+  uint32 uid = 1;
+  int32 sex = 2;
+  string name = 3;
+  string icon = 4;
+  int32 wishReceived = 5;
+  int32 wishSent = 6;
+}
+
+/**
+ * value 总祝福值进度条节点需要的祝福值
+ * desc 当前节点的名称/描述
+ */
+message AuctionRelationTotalProgressItem{
+  int32 value = 1;
+  string name = 2;
+  int32 diy_status = 3; // 0 未开启，1 开启，任务未完成 ,2 任务 已完成，3 审核中 4 审核失败 5 审核成功
+  int32 level = 4; // 级别
+  string title = 5; // 级别名
+  string defend_name = 6; // 关系名
+  string diy_name = 7; // 关系名diy 修改后-审核中
+  int64 price = 8; // 任务价格
+}
+
+/**
+ * list 当前进度条的节点信息
+ * current 当前祝福值
+ */
+message AuctionRelationTotalProgress{
+  repeated AuctionRelationTotalProgressItem list = 1;
+  int32 current = 2;
+}
+
+/**
+ * value 总祝福值进度条节点需要的祝福值
+ * gift_id 当前节点获得的礼物
+ * gift_name 当前节点获得的礼物名称
+ * gift_icon 当前阶段获得的礼物图像
+ */
+message AuctionRelationCurrentProgressItem{
+  int32 value = 1;
+  int32 gift_id = 2;
+  string gift_name = 3;
+  string gift_icon = 4;
+}
+
+/**
+ * list 当前进度条的节点信息
+ * current 当前祝福值
+ */
+message AuctionRelationCurrentProgress{
+  repeated AuctionRelationCurrentProgressItem list = 1;
+  int32 current = 2;
+}
+
+message AuctionCommodityMessage{
+  int32 cid = 1;
+  string commodity = 2;
+  int32 duration = 3;// 正常拍品模式下使用
+  string days = 4;//正常拍品模式下使用
+  int32 giftId = 5;
+  int32 giftPrice = 6;
+  string giftName = 7;
+  int32 checked = 8; // 自定义拍品模式下使用
+  int32 editable = 9; // 自定义拍品模式下使用
+}
+
+/**
+ * rid
+ * vvc
+ * endline
+ * status
+ * auctionUser
+ * rank
+ * totalProgress
+ * currentProgress
+ */
+message AuctionConfigMessage{
+  uint32 rid = 1;
+  int32 vvc = 2;
+  int32 endline = 3;
+  AuctionStatus status = 4;
+  AuctionCommodityMessage commodity = 5;
+  AuctionUser auctionUser = 6;
+  AuctionUser defendUser = 7;
+  repeated AuctionUser rank = 8;
+  AuctionRelationTotalProgress totalProgress = 9;
+  AuctionRelationCurrentProgress currentProgress = 10;
+  uint32 mode = 11; // 0 表示正常拍品模式，1表示娱乐模式，自定义拍品
+}
+
+message AuctionCommoditySettingsItem{
+  int32 id = 1;
+  string name = 2;
+  string tag = 3; // 附加说明，比如 自定义 项的"VIP15"
+  bool isSelfDefine = 4; // 是否可以自定义
+  map<uint32, uint64> partPrice = 5; // 时长对应起始价格
+}
+message AuctionTimeSettingsItem{
+  int32 id = 1;
+  string name = 2;
+}
+message AuctionSettingData{
+  AuctionCommodity current = 1;
+  repeated AuctionCommoditySettingsItem listCommodity = 2;
+  repeated AuctionTimeSettingsItem listTime = 3;
+  repeated AuctionGiftItem listGift = 4;
+  repeated AuctionCommoditySettingsItem listCommoditySelfDefine = 5;
+}
+
+message RespAuctionSetting{
+  bool success = 1;
+  string message = 2;
+  AuctionSettingData data = 3;
+}
+
+message RespAuctionSave{
+  bool success = 1;
+  string message = 2;
+  AuctionCommodity data = 3;
+}
+
+message RespAuctionAction{
+  bool success = 1;
+  string message = 2;
+}
+
+message RespAuctionConfig{
+  bool success = 1;
+  string message = 2;
+  AuctionConfigMessage data = 3;
+}
+
+message AuctionRankUserProfile{
+  uint32 uid = 1;
+  int32 sex = 2;
+  string name = 3;
+  string icon = 4;
+  int32 popularity = 5;
+  uint32 age = 6;
+}
+
+enum AuctionRelationLevel{
+  NORMAL = 0;
+  GOLD = 1;
+  PLATINUM = 2;
+  DIAMOND = 3;
+  HONOUR = 4;
+}
+
+message RespAuctionRankItem{
+  AuctionRankUserProfile auctionUser = 1;
+  AuctionRankUserProfile defendUser = 2;
+  AuctionRelationLevel level = 3;
+  string relation = 4;
+  int32 score = 5;
+  uint32 endLine = 6;
+  uint32 dateLine = 7;
+}
+
+message RespAuctionRankList{
+  repeated RespAuctionRankItem list = 1;
+}
+
+message RespAuctionRank{
+  bool success = 1;
+  string message = 2;
+  RespAuctionRankList data = 3;
+}
+
+message AuctionStageEffectMessage{
+  uint32 rid = 1;
+  uint32 vvc = 2;
+  AuctionStatus stage = 3;
+  uint32 duration = 4;
+  string url = 5;
+  AuctionConfigMessage config = 6;
+}
+
+message AuctionOchHitMessage{
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 num = 4;
+}
+
+message AuctionDefendDiyEmitMessage{
+  uint32 rid = 1;
+  uint32 vvc = 2;
+  uint32 uid = 3;
+  string name = 4;
+  string icon = 5;
+  string diyName = 6;
+  uint32 version = 7;
+  string originName = 8;
+  int32 defendLevel = 9;
+  string defendTitle = 10;
+  uint32 target_uid = 11;
+}

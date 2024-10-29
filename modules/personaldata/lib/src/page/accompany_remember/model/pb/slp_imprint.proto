@@ -1,0 +1,72 @@
+syntax = "proto3";
+package pb;
+/*
+陪伴记proto
+*/
+
+option go_package = "../app/pb";
+
+message ResImprintLight {
+  bool success = 1;                 //成功true，失败false
+  string msg = 2;                   //失败message
+  ImprintLightData data = 3;        //返回数据
+}
+
+message ImprintLightData {
+  uint32 lighten_num = 1;                   //点亮数量
+  uint32 total_num = 2;                     //印记总数
+  ImprintUserData user = 3;                 //印记双方信息
+  repeated UserImprintLight list = 4;       //印记列表
+  ImprintLevel level = 5; // 陪伴等级
+}
+
+// 陪伴等级
+message ImprintLevel {
+  uint32 level = 1; // 当前陪伴等级
+  uint32 score = 2; // 当前陪伴分数值
+  uint32 next_level_score = 3; // 下一等级需要陪伴分数值
+}
+
+message ImprintUserData {
+  uint32 from_uid = 1;
+  string from_name = 2;
+  string from_icon = 3;
+  uint32 to_uid = 4;
+  string to_name = 5;
+  string to_icon = 6;
+}
+
+message UserImprintLight {
+  uint32 imprint_id = 1;                    //印记id
+  string name = 2;                          //印记名称
+  string description = 3;                   //印记描述
+  repeated string images = 4;               //印记图片
+  uint32 level = 5;                         //印记等级
+  uint32 lighten = 6;                       //是否点亮，0-未点亮，1-点亮
+  uint32 score = 7;                         //当前分值
+  repeated uint32 level_scores = 8;         //各等级所需分值
+  string redirect = 9;                      //通用跳转
+  repeated uint32 accompany_scores = 10; // 各个等级增加陪伴值
+}
+
+
+message ResImprintUserList {
+  bool success = 1;                         //成功true，失败false
+  string msg = 2;                           //失败message
+  ImprintUserListData data = 3;             //返回数据
+}
+
+message ImprintUserListData {
+  repeated ImprintUserListItem list = 1;
+}
+
+message ImprintUserListItem {
+  uint32 uid = 1;                           //用户id
+  string name = 2;                          //用户昵称
+  string icon = 3;                          //用户头像
+  uint32 vip_level = 4;                     //用户VIP等级
+  uint32 lighten_num = 5;                   //已点亮个数
+  uint32 total_num = 6;                     //总数
+  uint32 degree = 7;                        //亲密度
+  uint32 stay_secs = 8;                     //陪伴时长，单位秒
+}

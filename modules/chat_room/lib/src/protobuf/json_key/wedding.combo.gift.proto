@@ -1,0 +1,23 @@
+syntax = "proto3";
+    
+package wedding.combo.gift;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message WeddingComboGift {
+    option (pb.register_name) = 'wedding.combo.gift';
+    option (pb.register_id) = 107;
+    repeated GiftList gift_list = 1;
+    string type = 2;
+
+    message GiftList {
+        uint32 h = 1;
+        uint32 index = 2;
+        uint32 position = 3;
+        uint32 w = 4;
+    }
+
+}

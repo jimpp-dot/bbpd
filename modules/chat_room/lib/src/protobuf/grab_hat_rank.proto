@@ -1,0 +1,153 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../../app/pb";
+
+// ********************************************************************************
+// go/banban/hat/atlas
+// ********************************************************************************
+message ApiHatActivityAtlasResponse{
+  bool success = 1;
+  string message = 2;
+  HatActivityAtlasData data = 3;
+}
+
+// 帽子玩法活动用户信息
+message HatActivityUserInfo{
+  uint32 uid = 1; // uid
+  string name = 2; // name
+  uint32 light = 3; // 帽子点亮数
+  uint64 charm = 4; // 魅力值（心动速配房间）
+  string icon = 5; // 头像
+}
+
+// 帽子玩法活动信息
+message HatActivityInfo{
+  uint32 season = 1; // 活动赛季
+  uint32 startAt = 2; // 活动开始时间
+  uint32 endAt = 3; // 活动结束时间
+  string helpUrl = 4; // 活动帮助链接
+  string animation = 5; // 动画mp4
+  uint32 vapSize = 6;
+}
+
+// 帽子玩法帽子信息
+message HatActivityHatItem{
+  uint32 hid = 1; // 帽子ID
+  string name = 2; // 帽子名称
+  string url = 3; // 帽子资源url
+  uint32 lightTimes = 4; // 帽子点亮次数
+  string category = 5; // 帽子分类
+}
+
+// 帽子分类信息
+message HatActivityCategoryItem{
+  string category = 1; // 帽子分类名称
+  repeated HatActivityHatItem hats = 2; // 分类下所有帽子
+}
+
+// 帽子玩法奖励物品信息
+message HatActivityRewardCommodity{
+  uint32 cid = 1; // cid
+  string name = 2; // name
+  string url = 3; // url
+  uint32 period = 4; // 有效期（天）
+  uint32 periodHour = 5; // 有效期（小时）
+  uint32 price = 6; // 价格（钻)
+  uint32 num = 7; // 数量（个）
+}
+
+message HatActivityCollectRewordItem{
+  string title = 1;
+  string task = 2;
+  repeated HatActivityRewardCommodity commodities = 3;
+}
+
+// 帽子玩法图鉴
+message HatActivityAtlasData{
+    HatActivityUserInfo me = 1; // 我的帽子玩法相关信息
+    HatActivityInfo activity = 2; // 活动信息
+    repeated HatActivityCategoryItem hatCategories = 3; // 分类帽子信息
+    repeated HatActivityCollectRewordItem collectRewards = 4; // 收集奖励信息
+}
+
+// ********************************************************************************
+// go/banban/hat/rankIndex
+// Type uint32 `v:"type@integer|required"` // 1-日榜，2-周榜
+// 
+// ********************************************************************************
+
+message ApiHatActivityRankIndexResponse{
+  bool success = 1;
+  string message = 2;
+  HatActivityRankIndexData data = 3;
+}
+
+message HatActivityRankIndexData{
+  repeated HatActivityRankTabItem tabs = 1;
+}
+
+message HatActivityRankTabItem{
+  string tab = 1;
+  uint32 token = 2;
+}
+
+// ********************************************************************************
+// go/banban/hat/rank
+// Type uint32 `v:"type@integer|required"` // 1-日榜，2-周榜
+// Time uint32 `v:"time@integer|required"` // 日榜/周榜 的当日/周内任意时间戳
+// Page uint32 `v:"page@integer|required"` // 当前请求分页
+// ********************************************************************************
+message ApiHatActivityRankResponse{
+  bool success = 1;
+  string message = 2;
+  HatActivityRankData data = 3;
+}
+
+// 活动榜单项
+message HatActivityRankItem{
+  uint32 uid = 1; // uid
+  string name = 2; // name 
+  string icon = 3; // icon
+  uint32 light = 4; // 点亮数
+  uint32 charm = 5; // 魅力值
+  int32 rank = 6; // 0 表示未上榜
+  int32 score = 7; // 点亮分数
+}
+
+message HatActivityRankData{
+  uint32 rankType = 1;// 1-daily 2-weekly
+  uint32 page = 2; // 当前页面
+  uint32 more = 3; // 是否还有更多
+  repeated HatActivityRankItem list = 4; // 当前分页下榜单数据
+  HatActivityRankItem me = 5; // 我的上榜信息
+}
+
+// ********************************************************************************
+// go/banban/hat/help
+// Type uint32 `v:"type@integer|required"` // 1-玩法说明，2-奖励说明
+// ********************************************************************************
+message ApiHatActivityHelpResponse{
+  bool success = 1;
+  string message = 2;
+  HatActivityHelpData data = 3;
+}
+
+// 活动帮助信息
+message HatActivityHelpData{
+  string rule = 1; // 活动规则
+  HatActivityRankRewardData rewards = 3; // 榜单奖励
+}
+
+// 活动榜单奖励
+message HatActivityRankRewardData{
+  repeated HatActivityRankRewardItem dailyReward = 1; // 日榜奖励
+  repeated HatActivityRankRewardItem weeklyReward = 2; // 周榜奖励
+  repeated HatActivityRankRewardItem totalReward = 3; // 总榜奖励
+}
+
+// 活动榜单奖励项
+message HatActivityRankRewardItem{
+  uint32 rank = 1; // 榜单排名
+  repeated HatActivityRewardCommodity commodities = 2; // 奖励物品信息
+}

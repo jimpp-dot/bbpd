@@ -1,0 +1,366 @@
+PODS:
+  - agora (4.0.6):
+    - AgoraRtcEngine_iOS (= 3.6.2)
+    - Flutter
+  - AgoraRtcEngine_iOS (3.6.2):
+    - AgoraRtcEngine_iOS/AINS (= 3.6.2)
+    - AgoraRtcEngine_iOS/AV1Dec (= 3.6.2)
+    - AgoraRtcEngine_iOS/ContentInspect (= 3.6.2)
+    - AgoraRtcEngine_iOS/FullAudioFormat (= 3.6.2)
+    - AgoraRtcEngine_iOS/JND (= 3.6.2)
+    - AgoraRtcEngine_iOS/ReplayKit (= 3.6.2)
+    - AgoraRtcEngine_iOS/ROIEnc (= 3.6.2)
+    - AgoraRtcEngine_iOS/RtcBasic (= 3.6.2)
+    - AgoraRtcEngine_iOS/SuperResolution (= 3.6.2)
+    - AgoraRtcEngine_iOS/VideoPreprocess (= 3.6.2)
+    - AgoraRtcEngine_iOS/VirtualBackground (= 3.6.2)
+  - AgoraRtcEngine_iOS/AINS (3.6.2)
+  - AgoraRtcEngine_iOS/AV1Dec (3.6.2)
+  - AgoraRtcEngine_iOS/ContentInspect (3.6.2)
+  - AgoraRtcEngine_iOS/FullAudioFormat (3.6.2)
+  - AgoraRtcEngine_iOS/JND (3.6.2)
+  - AgoraRtcEngine_iOS/ReplayKit (3.6.2)
+  - AgoraRtcEngine_iOS/ROIEnc (3.6.2)
+  - AgoraRtcEngine_iOS/RtcBasic (3.6.2)
+  - AgoraRtcEngine_iOS/SuperResolution (3.6.2)
+  - AgoraRtcEngine_iOS/VideoPreprocess (3.6.2)
+  - AgoraRtcEngine_iOS/VirtualBackground (3.6.2)
+  - amap_location (0.0.1):
+    - AMapLocation (= 2.8.0)
+    - Flutter
+  - AMapFoundation (1.6.9)
+  - AMapLocation (2.8.0):
+    - AMapFoundation (~> 1.6.9)
+  - app_tracking_transparency (0.0.1):
+    - Flutter
+  - audioplayer2 (0.0.1):
+    - Flutter
+  - audioplayers (0.0.1):
+    - Flutter
+  - bbim (0.0.1):
+    - Flutter
+  - connectivity (0.0.1):
+    - Flutter
+    - Reachability
+  - shared_app_plugin (0.0.1):
+    - Flutter
+    - UICKeyChainStore
+  - device_info (0.0.1):
+    - Flutter
+  - dfa (0.0.1):
+    - Flutter
+  - digitalunion (0.0.1):
+    - digitalunion/DigitalUnionSDK (= 0.0.1)
+    - Flutter
+  - digitalunion/DigitalUnionSDK (0.0.1):
+    - Flutter
+  - Flutter (1.0.0)
+  - flutter_aliyun_account_certify (0.0.1):
+    - Flutter
+    - flutter_aliyun_account_certify/WBCloudReflectionFaceVerify (= 0.0.1)
+  - flutter_aliyun_account_certify/WBCloudReflectionFaceVerify (0.0.1):
+    - Flutter
+  - flutter_banban_push (0.0.1):
+    - Flutter
+  - flutter_bugly (0.0.1):
+    - Flutter
+    - flutter_bugly/BuglySDK (= 0.0.1)
+  - flutter_bugly/BuglySDK (0.0.1):
+    - Flutter
+  - flutter_local_notifications (0.0.1):
+    - Flutter
+  - flutter_sound (0.0.1):
+    - Flutter
+  - flutter_statusbar_manager (0.0.1):
+    - Flutter
+  - flutter_vap (1.0.10):
+    - Flutter
+  - fluwx (0.0.1):
+    - Flutter
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - image_editor (0.0.1):
+    - Flutter
+  - image_picker (0.0.1):
+    - Flutter
+  - keyboard_visibility (0.5.0):
+    - Flutter
+    - Reachability
+  - local_auth (0.0.1):
+    - Flutter
+  - lvb (0.0.1):
+    - Flutter
+    - TXLiteAVSDK_Professional (= 9.3.10765)
+  - native_video_view (0.0.1):
+    - Flutter
+  - package_info (0.0.1):
+    - Flutter
+  - path_provider (0.0.1):
+    - Flutter
+  - performance_fps (0.0.1):
+    - Flutter
+  - "permission_handler (5.1.0+2)":
+    - Flutter
+  - photo_manager (0.0.1):
+    - Flutter
+  - quick_actions (0.0.1):
+    - Flutter
+  - Reachability (3.2)
+  - root_checker (0.0.1):
+    - Flutter
+  - screen (0.0.1):
+    - Flutter
+  - share (0.0.1):
+    - Flutter
+  - shared_preferences (0.0.1):
+    - Flutter
+  - sqflite (0.0.2):
+    - Flutter
+    - FMDB (>= 2.7.5)
+  - tencent_trtc_cloud_professional (0.1.9):
+    - Flutter
+    - TXCopyrightedMedia (= 1.0.4)
+    - TXLiteAVSDK_Professional (= 9.3.10765)
+  - ThinkingSDK (2.6.5)
+  - tracker (2.6.2):
+    - Flutter
+    - ThinkingSDK (= 2.6.5)
+  - TXCopyrightedMedia (1.0.4)
+  - TXLiteAVSDK_Professional (9.3.10765)
+  - UICKeyChainStore (2.2.1)
+  - uni_links (0.0.1):
+    - Flutter
+  - url_launcher (0.0.1):
+    - Flutter
+  - vad (0.0.1):
+    - Flutter
+  - video_compress (0.3.0):
+    - Flutter
+  - video_player (0.0.1):
+    - Flutter
+  - webview_flutter (0.0.1):
+    - Flutter
+  - zego_express_engine (2.2.1):
+    - Flutter
+    - ZegoExpressEngine (= 2.10.1)
+  - ZegoExpressEngine (2.10.1):
+    - ZegoExpressEngine/Video (= 2.10.1)
+  - ZegoExpressEngine/Video (2.10.1)
+
+DEPENDENCIES:
+  - agora (from `.symlinks/plugins/agora/ios`)
+  - amap_location (from `.symlinks/plugins/amap_location/ios`)
+  - app_tracking_transparency (from `.symlinks/plugins/app_tracking_transparency/ios`)
+  - audioplayer2 (from `.symlinks/plugins/audioplayer2/ios`)
+  - audioplayers (from `.symlinks/plugins/audioplayers/ios`)
+  - bbim (from `.symlinks/plugins/bbim/ios`)
+  - connectivity (from `.symlinks/plugins/connectivity/ios`)
+  - shared_app_plugin (from `.symlinks/plugins/shared_app_plugin/ios`)
+  - device_info (from `.symlinks/plugins/device_info/ios`)
+  - dfa (from `.symlinks/plugins/dfa/ios`)
+  - digitalunion (from `.symlinks/plugins/digitalunion/ios`)
+  - Flutter (from `Flutter`)
+  - flutter_aliyun_account_certify (from `.symlinks/plugins/flutter_aliyun_account_certify/ios`)
+  - flutter_banban_push (from `.symlinks/plugins/flutter_banban_push/ios`)
+  - flutter_bugly (from `.symlinks/plugins/flutter_bugly/ios`)
+  - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
+  - flutter_sound (from `.symlinks/plugins/flutter_sound/ios`)
+  - flutter_statusbar_manager (from `.symlinks/plugins/flutter_statusbar_manager/ios`)
+  - flutter_vap (from `.symlinks/plugins/flutter_vap/ios`)
+  - fluwx (from `.symlinks/plugins/fluwx/ios`)
+  - image_editor (from `.symlinks/plugins/image_editor/ios`)
+  - image_picker (from `.symlinks/plugins/image_picker/ios`)
+  - keyboard_visibility (from `.symlinks/plugins/keyboard_visibility/ios`)
+  - local_auth (from `.symlinks/plugins/local_auth/ios`)
+  - lvb (from `.symlinks/plugins/lvb/ios`)
+  - native_video_view (from `.symlinks/plugins/native_video_view/ios`)
+  - package_info (from `.symlinks/plugins/package_info/ios`)
+  - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - performance_fps (from `.symlinks/plugins/performance_fps/ios`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - photo_manager (from `.symlinks/plugins/photo_manager/ios`)
+  - quick_actions (from `.symlinks/plugins/quick_actions/ios`)
+  - root_checker (from `.symlinks/plugins/root_checker/ios`)
+  - screen (from `.symlinks/plugins/screen/ios`)
+  - share (from `.symlinks/plugins/share/ios`)
+  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
+  - tencent_trtc_cloud_professional (from `.symlinks/plugins/tencent_trtc_cloud_professional/ios`)
+  - tracker (from `.symlinks/plugins/tracker/ios`)
+  - uni_links (from `.symlinks/plugins/uni_links/ios`)
+  - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
+  - vad (from `.symlinks/plugins/vad/ios`)
+  - video_compress (from `.symlinks/plugins/video_compress/ios`)
+  - video_player (from `.symlinks/plugins/video_player/ios`)
+  - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
+  - zego_express_engine (from `.symlinks/plugins/zego_express_engine/ios`)
+
+SPEC REPOS:
+  trunk:
+    - AgoraRtcEngine_iOS
+    - AMapFoundation
+    - AMapLocation
+    - FMDB
+    - Reachability
+    - ThinkingSDK
+    - TXCopyrightedMedia
+    - TXLiteAVSDK_Professional
+    - UICKeyChainStore
+    - ZegoExpressEngine
+
+EXTERNAL SOURCES:
+  agora:
+    :path: ".symlinks/plugins/agora/ios"
+  amap_location:
+    :path: ".symlinks/plugins/amap_location/ios"
+  app_tracking_transparency:
+    :path: ".symlinks/plugins/app_tracking_transparency/ios"
+  audioplayer2:
+    :path: ".symlinks/plugins/audioplayer2/ios"
+  audioplayers:
+    :path: ".symlinks/plugins/audioplayers/ios"
+  bbim:
+    :path: ".symlinks/plugins/bbim/ios"
+  connectivity:
+    :path: ".symlinks/plugins/connectivity/ios"
+  shared_app_plugin:
+    :path: ".symlinks/plugins/shared_app_plugin/ios"
+  device_info:
+    :path: ".symlinks/plugins/device_info/ios"
+  dfa:
+    :path: ".symlinks/plugins/dfa/ios"
+  digitalunion:
+    :path: ".symlinks/plugins/digitalunion/ios"
+  Flutter:
+    :path: Flutter
+  flutter_aliyun_account_certify:
+    :path: ".symlinks/plugins/flutter_aliyun_account_certify/ios"
+  flutter_banban_push:
+    :path: ".symlinks/plugins/flutter_banban_push/ios"
+  flutter_bugly:
+    :path: ".symlinks/plugins/flutter_bugly/ios"
+  flutter_local_notifications:
+    :path: ".symlinks/plugins/flutter_local_notifications/ios"
+  flutter_sound:
+    :path: ".symlinks/plugins/flutter_sound/ios"
+  flutter_statusbar_manager:
+    :path: ".symlinks/plugins/flutter_statusbar_manager/ios"
+  flutter_vap:
+    :path: ".symlinks/plugins/flutter_vap/ios"
+  fluwx:
+    :path: ".symlinks/plugins/fluwx/ios"
+  image_editor:
+    :path: ".symlinks/plugins/image_editor/ios"
+  image_picker:
+    :path: ".symlinks/plugins/image_picker/ios"
+  keyboard_visibility:
+    :path: ".symlinks/plugins/keyboard_visibility/ios"
+  local_auth:
+    :path: ".symlinks/plugins/local_auth/ios"
+  lvb:
+    :path: ".symlinks/plugins/lvb/ios"
+  native_video_view:
+    :path: ".symlinks/plugins/native_video_view/ios"
+  package_info:
+    :path: ".symlinks/plugins/package_info/ios"
+  path_provider:
+    :path: ".symlinks/plugins/path_provider/ios"
+  performance_fps:
+    :path: ".symlinks/plugins/performance_fps/ios"
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
+  photo_manager:
+    :path: ".symlinks/plugins/photo_manager/ios"
+  quick_actions:
+    :path: ".symlinks/plugins/quick_actions/ios"
+  root_checker:
+    :path: ".symlinks/plugins/root_checker/ios"
+  screen:
+    :path: ".symlinks/plugins/screen/ios"
+  share:
+    :path: ".symlinks/plugins/share/ios"
+  shared_preferences:
+    :path: ".symlinks/plugins/shared_preferences/ios"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
+  tencent_trtc_cloud_professional:
+    :path: ".symlinks/plugins/tencent_trtc_cloud_professional/ios"
+  tracker:
+    :path: ".symlinks/plugins/tracker/ios"
+  uni_links:
+    :path: ".symlinks/plugins/uni_links/ios"
+  url_launcher:
+    :path: ".symlinks/plugins/url_launcher/ios"
+  vad:
+    :path: ".symlinks/plugins/vad/ios"
+  video_compress:
+    :path: ".symlinks/plugins/video_compress/ios"
+  video_player:
+    :path: ".symlinks/plugins/video_player/ios"
+  webview_flutter:
+    :path: ".symlinks/plugins/webview_flutter/ios"
+  zego_express_engine:
+    :path: ".symlinks/plugins/zego_express_engine/ios"
+
+SPEC CHECKSUMS:
+  agora: 6aae11cf66d05e5c8be4dfa252a8c95cf8500926
+  AgoraRtcEngine_iOS: 5bf5d2bb6669a6f3606716a02f3fb3ac58708f25
+  amap_location: 7d172d736eac9bb2832b4b58d2282ae5651fbe2b
+  AMapFoundation: 8d8ecbb0b2e9ce5487995360d26c885d94642bfd
+  AMapLocation: 5ef44a1117be7dc541cb7a7d43d03c5ee91e4387
+  app_tracking_transparency: 5b1745ef9ade815f7455cb6a0848349589afb7c5
+  audioplayer2: 0e1b988df319138d6cdc3f9d35af9f3b01147a60
+  audioplayers: 455322b54050b30ea4b1af7cd9e9d105f74efa8c
+  bbim: 3b60b6f92adfc2df30391510928502e18eb0e927
+  connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
+  shared_app_plugin: 77a877cb533dc7ef64c8021de3f13d3bb6501d52
+  device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
+  dfa: 02a0f416d333cf53dbb9c8b84bd7b33026ae8371
+  digitalunion: 012dd35ba47c00e6450fa9ff77c9a8ff90ead595
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  flutter_aliyun_account_certify: 9e7e954fbb1f5870f8d84e7889d3ede4bc285b11
+  flutter_banban_push: 05cd9561fd23e31635804dc08ed120dba997b2ec
+  flutter_bugly: 2b8fa13aaa2b78301733d94885aa41b10f375f66
+  flutter_local_notifications: 9e4738ce2471c5af910d961a6b7eadcf57c50186
+  flutter_sound: 0e8163ceac1e00eb6d894e2ae4641ba726a2c479
+  flutter_statusbar_manager: 18588ba7dce7a28a538363d2a9989f9ede4a6710
+  flutter_vap: de2691ac59fc1b07099f3f5dd441093bcba31387
+  fluwx: 765c6052398eaf6fe13c73409488b0d0b9d00fd6
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  image_editor: c1d038630eedea60d2dee9c14f36aa66c7f9cfab
+  image_picker: a211f28b95a560433c00f5cd3773f4710a20404d
+  keyboard_visibility: 96a24de806fe6823c3ad956c01ba2ec6d056616f
+  local_auth: 17f985934bb4ab2637431e5b3fe1b2d6698d2051
+  lvb: 4248128d9b31bf649ba2cbbd39e7101ba5d8aca6
+  native_video_view: 02756aebe7ec9d0ab00d039b7aa3756548900bc3
+  package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
+  path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
+  performance_fps: 6eb113a5c4e488a9df1a00fd7e6f1219bedc4cb2
+  permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
+  photo_manager: f7c619c2cc8c2adb8d85c63363babac477de9c67
+  quick_actions: cd83314083fa994182e6cd9e7516167a215a4f83
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  root_checker: 0813e70bd17104226b9ab1f00b833f0407ed26a4
+  screen: abd91ca7bf3426e1cc3646d27e9b2358d6bf07b0
+  share: 0b2c3e82132f5888bccca3351c504d0003b3b410
+  shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
+  sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
+  tencent_trtc_cloud_professional: cf836bcc050de0d4319badcecc639a4ede9e3eec
+  ThinkingSDK: af9ecdea62593a7c88186d41feee1d3a89a0104d
+  tracker: aca455a3b9c7fba9e4036d7369e946c60177a03b
+  TXCopyrightedMedia: ae133686b8935046597c56e979b81f4eff0888c4
+  TXLiteAVSDK_Professional: 888a568d86a602b0ead383baf714feb2840d7f69
+  UICKeyChainStore: ba3bff2c762b12db1e516f395c837dd25298b05e
+  uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
+  url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
+  vad: 143cc7c92e524ff2999031dc60c2489f7218a2e4
+  video_compress: fce97e4fb1dfd88175aa07d2ffc8a2f297f87fbe
+  video_player: ecd305f42e9044793efd34846e1ce64c31ea6fcb
+  webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96
+  zego_express_engine: 97c4ece23349ead5012d8492376119d84d5a928a
+  ZegoExpressEngine: 2645e887affb1adaa862baa5fd2d23ec0b7e45a8
+
+PODFILE CHECKSUM: b23e1f2190578a43c79f085bb90b220b568fb7d9
+
+COCOAPODS: 1.11.3

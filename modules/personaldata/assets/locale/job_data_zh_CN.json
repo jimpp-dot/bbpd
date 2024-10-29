@@ -1,0 +1,517 @@
+[
+  {
+    "label": "学生",
+    "value": 110,
+    "data": [
+      {
+        "label": "学生",
+        "value": 11001,
+        "data": null
+      },
+      {
+        "label": "大学生",
+        "value": 11002,
+        "data": null
+      },
+      {
+        "label": "研究生",
+        "value": 11003,
+        "data": null
+      },
+      {
+        "label": "留学生",
+        "value": 11004,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "信息技术",
+    "value": 101,
+    "data": [
+      {
+        "label": "IT",
+        "value": 10101,
+        "data": null
+      },
+      {
+        "label": "互联网",
+        "value": 10102,
+        "data": null
+      },
+      {
+        "label": "通讯",
+        "value": 10103,
+        "data": null
+      },
+      {
+        "label": "计算机",
+        "value": 10104,
+        "data": null
+      },
+      {
+        "label": "网络游戏",
+        "value": 10105,
+        "data": null
+      },
+      {
+        "label": "电信运营",
+        "value": 10106,
+        "data": null
+      },
+      {
+        "label": "产品经理",
+        "value": 10107,
+        "data": null
+      },
+      {
+        "label": "程序员",
+        "value": 10108,
+        "data": null
+      },
+      {
+        "label": "设计师",
+        "value": 10109,
+        "data": null
+      },
+      {
+        "label": "网络运营",
+        "value": 10110,
+        "data": null
+      },
+      {
+        "label": "网络编辑",
+        "value": 10111,
+        "data": null
+      },
+      {
+        "label": "游戏策划",
+        "value": 10112,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "金融保险",
+    "value": 102,
+    "data": [
+      {
+        "label": "金融",
+        "value": 10201,
+        "data": null
+      },
+      {
+        "label": "投资",
+        "value": 10202,
+        "data": null
+      },
+      {
+        "label": "银行",
+        "value": 10203,
+        "data": null
+      },
+      {
+        "label": "证券",
+        "value": 10204,
+        "data": null
+      },
+      {
+        "label": "保险",
+        "value": 10205,
+        "data": null
+      },
+      {
+        "label": "信托/担保",
+        "value": 10206,
+        "data": null
+      },
+      {
+        "label": "投资经理",
+        "value": 10207,
+        "data": null
+      },
+      {
+        "label": "基金经理",
+        "value": 10208,
+        "data": null
+      },
+      {
+        "label": "理财顾问",
+        "value": 10209,
+        "data": null
+      },
+      {
+        "label": "客户经理",
+        "value": 10210,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "商业服务",
+    "value": 103,
+    "data": [
+      {
+        "label": "咨询",
+        "value": 10301,
+        "data": null
+      },
+      {
+        "label": "培训",
+        "value": 10302,
+        "data": null
+      },
+      {
+        "label": "个体经营",
+        "value": 10303,
+        "data": null
+      },
+      {
+        "label": "旅游",
+        "value": 10304,
+        "data": null
+      },
+      {
+        "label": "酒店餐饮",
+        "value": 10305,
+        "data": null
+      },
+      {
+        "label": "休闲娱乐",
+        "value": 10306,
+        "data": null
+      },
+      {
+        "label": "贸易",
+        "value": 10307,
+        "data": null
+      },
+      {
+        "label": "汽车",
+        "value": 10308,
+        "data": null
+      },
+      {
+        "label": "房地产",
+        "value": 10309,
+        "data": null
+      },
+      {
+        "label": "物业管理",
+        "value": 10310,
+        "data": null
+      },
+      {
+        "label": "装修/装潢",
+        "value": 10311,
+        "data": null
+      },
+      {
+        "label": "美容美发",
+        "value": 10312,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "工程制造",
+    "value": 104,
+    "data": [
+      {
+        "label": "建筑",
+        "value": 10401,
+        "data": null
+      },
+      {
+        "label": "土木工程",
+        "value": 10402,
+        "data": null
+      },
+      {
+        "label": "机械制造",
+        "value": 10403,
+        "data": null
+      },
+      {
+        "label": "电子",
+        "value": 10404,
+        "data": null
+      },
+      {
+        "label": "生物医药",
+        "value": 10405,
+        "data": null
+      },
+      {
+        "label": "食品",
+        "value": 10406,
+        "data": null
+      },
+      {
+        "label": "服装",
+        "value": 10407,
+        "data": null
+      },
+      {
+        "label": "能源",
+        "value": 10408,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "交通运输",
+    "value": 105,
+    "data": [
+      {
+        "label": "航空",
+        "value": 10501,
+        "data": null
+      },
+      {
+        "label": "铁路",
+        "value": 10502,
+        "data": null
+      },
+      {
+        "label": "航运/船舶",
+        "value": 10503,
+        "data": null
+      },
+      {
+        "label": "公共交通",
+        "value": 10504,
+        "data": null
+      },
+      {
+        "label": "物流运输",
+        "value": 10505,
+        "data": null
+      },
+      {
+        "label": "空乘",
+        "value": 10506,
+        "data": null
+      },
+      {
+        "label": "空姐",
+        "value": 10507,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "文化传媒",
+    "value": 106,
+    "data": [
+      {
+        "label": "媒体出版",
+        "value": 10601,
+        "data": null
+      },
+      {
+        "label": "文化传媒",
+        "value": 10602,
+        "data": null
+      },
+      {
+        "label": "广告创意",
+        "value": 10603,
+        "data": null
+      },
+      {
+        "label": "公关/会展",
+        "value": 10604,
+        "data": null
+      },
+      {
+        "label": "动漫",
+        "value": 10605,
+        "data": null
+      },
+      {
+        "label": "电视",
+        "value": 10606,
+        "data": null
+      },
+      {
+        "label": "记者",
+        "value": 10607,
+        "data": null
+      },
+      {
+        "label": "主持人",
+        "value": 10608,
+        "data": null
+      },
+      {
+        "label": "设计",
+        "value": 10609,
+        "data": null
+      },
+      {
+        "label": "摄影",
+        "value": 10610,
+        "data": null
+      },
+      {
+        "label": "美术",
+        "value": 10611,
+        "data": null
+      },
+      {
+        "label": "作家",
+        "value": 10612,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "娱乐体育",
+    "value": 107,
+    "data": [
+      {
+        "label": "影视",
+        "value": 10701,
+        "data": null
+      },
+      {
+        "label": "音乐",
+        "value": 10702,
+        "data": null
+      },
+      {
+        "label": "模特",
+        "value": 10703,
+        "data": null
+      },
+      {
+        "label": "运动体育",
+        "value": 10704,
+        "data": null
+      },
+      {
+        "label": "健身",
+        "value": 10705,
+        "data": null
+      },
+      {
+        "label": "演员",
+        "value": 10706,
+        "data": null
+      },
+      {
+        "label": "歌手",
+        "value": 10707,
+        "data": null
+      },
+      {
+        "label": "运动员",
+        "value": 10708,
+        "data": null
+      },
+      {
+        "label": "健身教练",
+        "value": 10709,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "公共事业",
+    "value": 108,
+    "data": [
+      {
+        "label": "政府机关",
+        "value": 10801,
+        "data": null
+      },
+      {
+        "label": "医疗",
+        "value": 10802,
+        "data": null
+      },
+      {
+        "label": "教育",
+        "value": 10803,
+        "data": null
+      },
+      {
+        "label": "法律",
+        "value": 10804,
+        "data": null
+      },
+      {
+        "label": "科研",
+        "value": 10805,
+        "data": null
+      },
+      {
+        "label": "公益",
+        "value": 10806,
+        "data": null
+      },
+      {
+        "label": "公务员",
+        "value": 10807,
+        "data": null
+      },
+      {
+        "label": "警察",
+        "value": 10808,
+        "data": null
+      },
+      {
+        "label": "军人",
+        "value": 10809,
+        "data": null
+      },
+      {
+        "label": "医生",
+        "value": 10810,
+        "data": null
+      },
+      {
+        "label": "护士",
+        "value": 10811,
+        "data": null
+      },
+      {
+        "label": "教师",
+        "value": 10812,
+        "data": null
+      },
+      {
+        "label": "幼师",
+        "value": 10813,
+        "data": null
+      },
+      {
+        "label": "律师",
+        "value": 10814,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "自由职业",
+    "value": 111,
+    "data": [
+      {
+        "label": "自由职业",
+        "value": 11101,
+        "data": null
+      },
+      {
+        "label": "无业",
+        "value": 11102,
+        "data": null
+      },
+      {
+        "label": "其他",
+        "value": 11103,
+        "data": null
+      }
+    ]
+  }
+]

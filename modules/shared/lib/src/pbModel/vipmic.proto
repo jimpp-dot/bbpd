@@ -1,0 +1,109 @@
+
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "entity_xs_gift.proto";
+
+message VipMicGiftInfo{
+  uint32 id = 1;
+  string name = 2;
+  uint32 num = 3;
+  repeated string receiverIcons = 4;
+  string firstReceiverName = 5;
+}
+
+message VipMicUserInfo{
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 sex = 4;
+  uint32 title = 5;
+  uint32 vip = 6;
+  bool gray = 7;
+  uint32 age = 8;
+  uint32 popularityLevel = 9;
+  //repeated HomeProfileBadgeItem badges = 9;
+  string badgeIconInUse = 10;
+  EntityXsGift mount = 11;
+  string mount_image = 12;
+}
+
+message VipMicVipInfo{
+  uint32 duration = 1;
+  uint64 value = 2;
+}
+
+message VipMicGiftCoupon{
+  uint32 cid = 1;
+  uint32 duction_money = 2;     //VIP券额外增加的身价
+  string coupon_tips = 3;       //VIP座位券提示，仅当拥有该券时有值
+}
+
+message VipMicConfigMessage{
+  VipMicUserInfo user = 1;
+  VipMicGiftInfo gift = 2;
+  VipMicVipInfo vip = 3;
+  repeated string annotation = 4;
+  string frame = 5;
+  VipMicGiftCoupon coupon = 6;
+}
+
+message ApiVipMicConfigResponse{
+  bool success = 1;
+  string message = 2;
+  VipMicConfigMessage data = 3;
+}
+
+message VipMicUserSimple{
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 sex = 4;
+  string frame = 5;
+  uint32 mic_type = 6; //1表示vip坑位，2表示CP坑位 99表示关闭
+  VipMicCPInfo cp_info = 7; //mic_type为CP坑位时，昨日最佳CP
+  repeated MicCubicleUser cubicle_users = 8;//mic_type为麦位包厢时，显示当前包厢3位最高消费者
+}
+
+message ApiVipMicSimpleResponse{
+  bool success = 1;
+  string message = 2;
+  VipMicUserSimple data = 3;
+}
+
+
+message VipMicCPInfoData {
+  VipMicCPInfo yesterday = 1;
+  repeated VipMicCPInfo today_lst = 2;
+}
+
+message ApiVipMicCPInfoResponse{
+  bool success = 1;
+  string message = 2;
+  VipMicCPInfoData data = 3;
+}
+message VipMicCPInfo {
+  VipMicCPUser user_1 = 1;
+  VipMicCPUser user_2 = 2;
+  uint32 value = 3;
+}
+
+message VipMicCPUser {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 vip = 4;
+  uint32 title = 5;
+}
+
+/// 房间包厢成员（原VIP麦位）
+message MicCubicleUser{
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 value = 4;
+}

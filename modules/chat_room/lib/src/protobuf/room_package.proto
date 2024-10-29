@@ -1,0 +1,25 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+message BodyRoomPackageRecords{
+  message RecordItem {
+    uint32 id = 1;
+    uint32 uid = 2;
+    string name = 3;
+    string icon = 4;
+    string from_name = 5;
+    uint32 money = 6; // 领取钻石数
+    uint32 dateline = 7; // 领取时间戳
+  }
+  repeated RecordItem list = 1;
+  uint32 last_id = 2;
+  bool has_more = 3;
+}
+
+message RspRoomPackageRecords{
+  bool success = 1;
+  string msg = 2;
+  BodyRoomPackageRecords data = 3;
+}

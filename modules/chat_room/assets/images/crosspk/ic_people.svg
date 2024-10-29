@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.5" stroke-linejoin="round">
+        <g id="三房混战面板-A方案" transform="translate(-70.000000, -633.000000)" fill-rule="nonzero" stroke="#737373" stroke-width="1.5">
+            <g id="编组" transform="translate(0.000000, 306.000000)">
+                <g id="编组-11" transform="translate(0.000000, 292.000000)">
+                    <g id="Group-2" transform="translate(20.000000, 10.000000)">
+                        <g id="Group-20" transform="translate(50.000000, 3.000000)">
+                            <g id="people" transform="translate(0.000000, 22.000000)">
+                                <path d="M6,0.75 C7.65685425,0.75 9,2.09314575 9,3.75 C9,4.41987864 8.78044325,5.03847705 8.40936522,5.53775978 C9.66578845,6.23301964 10.5,7.45723472 10.5,8.8512955 C10.5,11.0177562 8.48528137,11.176197 6,11.176197 C3.51471863,11.176197 1.5,11.0177562 1.5,8.8512955 C1.5,7.45723472 2.33421155,6.23301964 3.59121613,5.53729058 C3.21955675,5.03847705 3,4.41987864 3,3.75 C3,2.09314575 4.34314575,0.75 6,0.75 Z" id="形状结合"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

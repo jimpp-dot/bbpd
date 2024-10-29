@@ -1,0 +1,16 @@
+syntax = "proto3";
+    
+package super.voice.play.music;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+import "google/protobuf/struct.proto";
+
+message SuperVoicePlayMusic {
+    option (pb.register_name) = 'super.voice.play.music';
+    option (pb.register_id) = 100;
+    string music_type = 1;
+    google.protobuf.Value rid = 2;
+    uint32 state = 3;
+}

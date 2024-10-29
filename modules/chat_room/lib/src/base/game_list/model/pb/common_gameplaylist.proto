@@ -1,0 +1,29 @@
+syntax = "proto3";
+package pb;
+/*
+朋友圈的pb定义
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message GamePlayItem{
+  int32 id = 1; // 玩法ID
+  string title = 2; // 玩法名称
+  string content = 3; // 玩法简介
+  string icon = 4; // 玩法图标  New
+  int32 hot = 5; // 当前玩法热度  New
+  int32 show_status = 6; // 当前玩法展示状态 New
+}
+
+message GamePlayListMessage{
+  int32 maxPlayItem = 1;
+  repeated GamePlayItem list = 2;
+}
+
+message RespGamePlayListAll{
+  bool success = 1;
+  string message = 2;
+  GamePlayListMessage data = 3;
+}

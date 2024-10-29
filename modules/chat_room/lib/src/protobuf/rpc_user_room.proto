@@ -1,0 +1,69 @@
+syntax = "proto3";
+package pb;
+
+
+option go_package = "../app/pb";
+
+// 个人名片半屏页 request
+message ReqHalfScreenOfVCard{
+  uint32 vuid = 1;// 被访问者的uid
+  uint32 rid = 2;// 被访问者所处的房间ID
+}
+// 个人名片半屏页 response
+message ResHalfScreenOfVCard{
+  bool success = 1;// 是否成功
+  string msg = 2;// 提示信息
+  VCardInfo data = 3; // data
+}
+
+
+message VCardInfo {
+  uint32 vuid = 1; // 被访问者uid
+  string name = 2; // 被访问者u用户昵称
+  uint32 age = 3; // 被访问者用户年龄
+  string icon = 4; // 被访问者用户图标
+  uint32 sex = 5; // 被访问者性别 1: 男 2：女 3：未知
+  string country_code = 6; // 被访问者所处国家code eg: CN (中国)
+  string country_icon = 7; // 被访问者国家icon
+  uint32 mic_position = 8; // 当前所属麦位(在麦上时才有值)
+  bool   is_follow = 9; // 是否关注过被访问者
+  repeated RoomOperateCardBehavior behaviors = 10; // 当前用户能够对被访问者执行的操作
+}
+
+// room 操作类型
+enum RoomOperateCardBehaviorType{
+  // 无效的权限点
+  INVALID = 0;
+  // 上麦
+  JOIN_MIC = 1;
+  // 下麦
+  OFF_MIC = 2;
+  // 抱人上麦
+  HOLDING_JOIN_MIC = 3;
+  // 抱人下麦
+  HOLDING_OFF_MIC = 4;
+  // 禁言
+  MUTE = 5;
+  // 解禁
+  UNMUTE = 6;
+  // 设为管理员
+  SET_ADMIN = 7;
+  // 踢出房间
+  KICK_OUT_ROOM = 8;
+}
+
+// room 操作行为
+message RoomOperateCardBehavior{
+  RoomOperateCardBehaviorType type = 1;
+  string name = 2;
+}
+
+message ReqRoomOperateCardBehaviorTypes{
+  uint32 uid = 1; // 访问人
+  uint32 vuid = 2;// 被访问人
+  uint32 rid = 3;// 当前房间id
+}
+
+message ResRoomOperateCardBehaviorTypes {
+  repeated RoomOperateCardBehaviorType behavior_types = 1; // 能够操作的列表类型
+}

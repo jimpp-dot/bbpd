@@ -1,0 +1,32 @@
+syntax = "proto3";
+    
+package listen.music.robot.sync;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message ListenMusicRobotSync {
+    option (pb.register_name) = 'listen.music.robot.sync';
+    option (pb.register_id) = 41;
+    CurrentSongConfig CurrentSong = 1;
+    string PlayMode = 2;
+    string RobotUid = 3;
+
+    message FromUser {
+        string icon = 1;
+        string name = 2;
+        string uid = 3;
+    }
+
+    message CurrentSongConfig {
+        FromUser from_user = 1;
+        string name = 2;
+        string resource_path = 3;
+        uint32 sid = 4;
+        string state = 5;
+        uint32 type = 6;
+    }
+
+}

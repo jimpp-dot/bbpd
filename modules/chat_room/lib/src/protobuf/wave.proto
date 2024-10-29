@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package room.wave.sync;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+message WaveConfigMessage{
+  option (pb.register_name) = 'room.wave.sync';
+  option (pb.register_id) = 10005;
+
+  uint32 rid = 1; // rid
+  uint32 status = 2; // 当前状态，0 表示海浪关闭,1 表示海浪玩法进行中（潜水），2表示浪来了，3，表示退浪,4，结束，清零
+  uint32 version = 3; // 当前房间当前海浪游戏的版本号，每一把+1，客户端回传，服务端校验
+  uint32 currentWave = 4; // 当前是第几波海浪
+  uint32 totalWave = 5;// 一共有几波海浪
+  uint32 nextWaveTime = 6; // 下一波节点（海浪/退潮）到来时间点
+  repeated WaveUserInfo players = 7;// 参与的玩家信息
+  WaveQuit quitWave = 8;
+  WaveWinner winner = 9;
+}
+
+message WaveUserInfo{
+  uint32 uid = 1; // uid
+  uint32 oxygen = 2; // 氧气值
+  uint32 dead = 3; // 是否被海浪卷走了，0存活，1，喂鲨鱼了
+}
+
+message WaveQuit{
+  uint32 quit = 1; // 播放退浪动画
+  repeated uint32 dead = 2; // 本轮海浪卷走了哪些人？
+}
+
+message WaveWinner{
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 sex = 4;
+  uint32 vip = 5;
+}
+
+message ApiWaveConfigResponse{
+  bool success = 1;
+  string message = 2;
+  WaveConfigMessage data = 3;
+}

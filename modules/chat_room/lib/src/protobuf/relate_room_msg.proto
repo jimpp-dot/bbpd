@@ -1,0 +1,21 @@
+syntax = "proto3";
+package pb;
+
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+
+// 获取信息流关联房间历史消息/go/room/room/historyMsg [get]
+message ResRoomHistoryMsg {
+  bool     success             = 1;  //返回给客户端的必须有
+  string   msg                 = 2;  //返回给客户端的必须有
+  repeated RoomHistoryMsg data = 3;  //历史消息,按msg_id排序
+  uint32    online_num         = 4;  // 在线人数
+}
+
+message RoomHistoryMsg {
+  int64  msg_id  = 1;  // 消息id
+  string content = 2;  // 消息内容
+}

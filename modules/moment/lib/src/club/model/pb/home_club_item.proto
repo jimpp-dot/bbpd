@@ -1,0 +1,19 @@
+syntax = "proto3";
+package pb;
+
+
+message ResClub {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  CircleClub data = 3;
+}
+
+message CircleClub {
+  repeated HomeClubItem clubs = 1;
+}
+
+message HomeClubItem {
+  uint32 club_id = 1;
+  string name = 2;
+  string icon = 3;
+}

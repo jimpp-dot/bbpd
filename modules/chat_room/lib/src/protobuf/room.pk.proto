@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package room.pk;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+message RoomPkStart {
+  option (pb.register_name) = 'room.pk.start';
+  option (pb.register_id) = 20005;
+
+  uint32 main_rid = 1;
+  string main_icon = 2;
+  string main_name = 3;
+  uint64 main_score = 4;
+  string main_mvp_name = 5;
+  string main_mvp_icon = 6;
+  uint32 main_mvp_uid = 7;
+  uint32 guest_rid = 8;
+  string guest_icon = 9;
+  string guest_name = 10;
+  uint64 guest_score = 11;
+  string guest_mvp_name = 12;
+  string guest_mvp_icon = 13;
+  uint32 guest_mvp_uid = 14;
+  uint64 deadline = 15;
+
+}
+
+message RoomPkChanged{
+  option (pb.register_name) = 'room.pk.changed';
+  option (pb.register_id) = 20006;
+
+  uint32 main_rid = 1;
+  string main_icon = 2;
+  string main_name = 3;
+  uint64 main_score = 4;
+  string main_mvp_name = 5;
+  string main_mvp_icon = 6;
+  uint32 main_mvp_uid = 7;
+  uint32 guest_rid = 8;
+  string guest_icon = 9;
+  string guest_name = 10;
+  uint64 guest_score = 11;
+  string guest_mvp_name = 12;
+  string guest_mvp_icon = 13;
+  uint32 guest_mvp_uid = 14;
+  uint64 deadline = 15;
+}
+
+message PkData {
+  uint32 main_rid = 1;
+  string main_icon = 2;
+  string main_name = 3;
+  uint64 main_score = 4;
+  string main_mvp_name = 5;
+  string main_mvp_icon = 6;
+  uint32 main_mvp_uid = 7;
+  uint32 guest_rid = 8;
+  string guest_icon = 9;
+  string guest_name = 10;
+  uint64 guest_score = 11;
+  string guest_mvp_name = 12;
+  string guest_mvp_icon = 13;
+  uint32 guest_mvp_uid = 14;
+  uint64 deadline = 15;
+}

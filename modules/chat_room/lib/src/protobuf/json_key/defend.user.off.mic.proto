@@ -1,0 +1,15 @@
+syntax = "proto3";
+    
+package defend.user.off.mic;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message DefendUserOffMic {
+    option (pb.register_name) = 'defend.user.off.mic';
+    option (pb.register_id) = 28;
+    uint32 rid = 1;
+    uint32 uid = 2;
+}

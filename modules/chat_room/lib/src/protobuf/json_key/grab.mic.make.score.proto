@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package grab.mic.make.score;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message GrabMicMakeScore {
+  option (pb.register_name) = 'grab.mic.make.score';
+  option (pb.register_id) = 36;
+  uint32 uid = 1;
+  string icon = 2;
+  uint32 singer_uid = 3;
+  uint32 score = 4;
+  string description = 5;
+  string score_icon = 6;
+}

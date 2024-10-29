@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+// 陪伴房默契问答 房间消息
+package AccompanyTacit;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+message TacitAnswer {
+    uint32 uid = 1;
+    string icon = 2;
+    uint32 answer = 3;
+}
+
+message AccompanyTacit {
+    option (pb.register_name) = 'accompany.tacit';
+    option (pb.register_id) = 10102;
+    string content = 1;
+    // json格式,用户数据也在里面
+    string extra = 2;
+    Tacit tacit = 3;
+    message Tacit {
+        //默契问答 type=ack (答), ask(问)
+        string type = 1;
+        //问题
+        string title = 2;
+        //问答选项，选项值索引+1开始
+        repeated string option = 3;
+        //提问者回答
+        uint32 origin = 4;
+        //消息id
+        uint32 msg_id = 5;
+        //包含人
+        repeated uint32 include = 6;
+        //答案
+        repeated TacitAnswer answer = 7;
+    }
+}
+
+
+// 为了不依赖chat模块，以下部分直接复制的tacit.proto内容
+// 复用的私聊默契问答接口，因此会覆盖charles_mapping.xml的映射关系
+message TacitQuestion {
+   uint32 id = 1;
+   string question = 2;
+   string answer1 = 3;
+   string answer2 = 4;
+   string answer3 = 5;
+   string answer4 = 6;
+}
+
+message ResTacitQuestion{
+  bool   success = 1;
+  string msg = 2;
+  TacitQuestion question =3;
+}
+
+message ResSendTacitQuestion{
+  bool   success = 1;
+  string msg = 2;
+  int64 msg_id =3;
+}
+
+message ResAnswerTacitQuestion{
+  bool   success = 1;
+  string msg = 2;
+}

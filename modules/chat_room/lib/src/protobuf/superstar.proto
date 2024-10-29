@@ -1,0 +1,45 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message Banner {
+  string image = 1;
+  string link = 2;
+}
+message Task {
+  bool enable_status = 1;
+  string reward_commodity_name = 2;
+  string reward_commodity_icon = 3;
+  uint32 stage_start_time = 4;
+  uint32 section_time = 5;
+}
+
+message SuperstarInfo {
+  Banner banner = 1;
+  Task online_task = 2;
+}
+
+message RewardInfo {
+  string name = 1;
+  string icon = 2;
+  uint32 num = 3;
+}
+
+message RewardData {
+  RewardInfo reward_info = 1;
+}
+
+message ResSuperstarInfo {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  SuperstarInfo data = 3; //返回的数据结果
+}
+
+message ResSuperstarGetReward {
+  bool success = 1;
+  string msg = 2;
+  RewardData data = 3;
+}

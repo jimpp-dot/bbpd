@@ -1,0 +1,36 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message LoveList {
+  uint32 rid = 1;
+  uint32 uid = 2;
+  uint32 money = 3;
+  uint32 giftid = 4;
+  uint32 dateline = 5;
+  string uname = 6;
+  string uicon = 7;
+  uint32 utitle = 8;
+  uint32 utitle_new = 9;
+  uint32 uvip = 10;
+  string rname = 11;
+  uint32 touid = 12;
+  string toname = 13;
+  string toicon = 14;
+  uint32 totitle = 15;
+  uint32 totitle_new = 16;
+  uint32 tovip = 17;
+  uint32 giftnum = 18;
+  uint32 upopularity = 19;//用户的人气等级
+  uint32 topopularity = 20;//to用户的人气等级
+}
+
+message ResRankingLove {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  repeated LoveList data = 3; //返回的数据结果
+  bool hideRank = 4;
+}

@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package room.wave.sync;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+message SimpleToast{
+  option (pb.register_name) = 'room.simple.toast';
+  option (pb.register_id) = 10029;
+
+  string content = 1;
+}

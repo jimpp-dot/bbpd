@@ -1,0 +1,71 @@
+syntax = "proto3";
+package pb;
+/*
+礼物玩法的pb定义
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+import "slp_gift.proto";
+
+//印象礼物标签
+message ResGiftImpressionDetail {
+  bool success = 1;                 //成功true，失败false
+  string msg = 2;                   //失败message
+  GiftImpressionDetail data = 3;
+  repeated BbGiftPanelChooseNumConfig choose_num_config = 4;
+}
+
+message GiftImpressionDetail {
+  repeated GiftImpressionTagGift tags = 1;
+  repeated GiftImpressionUserStat user_stat = 2;
+  string latest_tag_name = 3;               //目前最新印象
+}
+
+message GiftImpressionTagGift {
+  uint32 tag_id = 1;                        //标签id
+  string tag_name = 2;                      //标签名称
+  string tag_bg = 3;                        //标签背景
+  GiftImpressionTagNaming naming = 4;       //印象标签冠名信息
+  uint32 gift_id = 6; // 礼物id
+  uint32 price = 7; // 价格
+}
+
+message GiftImpressionTagNaming {
+  uint32 uid = 1;
+  string user_name = 2;
+  string user_icon = 3;
+}
+
+message GiftImpressionUserStat {
+  uint32 tag_id = 1;
+  string tag_name = 2;
+  string tag_bg = 3;
+  uint32 income_num = 4;
+  string top_sender_icon = 5;       //赠送最多的用户头像
+}
+
+message ResGiftImpressionRank {
+  bool success = 1;                 //成功true，失败false
+  string msg = 2;                   //失败message
+  GiftImpressionRankData data = 3;
+}
+
+message GiftImpressionRankData {
+  repeated GiftImpressionTag tags = 1;
+  repeated GiftImpressionRank list = 2;
+}
+
+message GiftImpressionTag {
+  uint32 tag_id = 1;
+  string tag_name = 2;
+}
+
+message GiftImpressionRank {
+  uint32 rank = 1;
+  uint32 uid = 2;
+  string user_name = 3;
+  string user_icon = 4;
+  uint32 score = 5;
+}

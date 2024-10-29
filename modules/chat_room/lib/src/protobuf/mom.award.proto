@@ -1,0 +1,25 @@
+syntax = "proto3";
+    
+package mom.award;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+message MomAward {
+	option (pb.register_name) = 'mom.award';
+	option (pb.register_id) = 10002;
+	string room_level = 1;          //S/A/B/C
+	string award_stage = 2;         //特等奖
+	repeated AwardItem award_list = 3;
+	string boss_name = 4;
+	string boss_icon = 5;  
+	uint32 guess_num = 6;  //猜对人数
+}
+
+message AwardItem {
+	string icon = 1;
+	string name = 2;
+	uint32 num = 3;
+}
+

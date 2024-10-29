@@ -1,0 +1,116 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+// /go/room/drainage/create
+message ResDrainageCreate{
+  bool       success = 1;
+  string     message = 2;
+  InviteData data    = 3;
+}
+
+message InviteData {
+  uint32 rid = 1;  // 创建的小房间id
+}
+
+// /go/room/drainage/inviteReply
+message ResDrainageInviteReply{
+  bool            success = 1;
+  string          message = 2;
+  InviteReplyData data    = 3;
+}
+
+message InviteReplyData {
+  uint32 rid = 1;  // 创建的小房间id
+}
+
+// DrainageRoomType 大小房房间类型
+enum DrainageRoomType {
+  DrainageRoomTypeNone = 0;
+  DrainageRoomTypeMaster = 1;  // 大房间
+  DrainageRoomTypeSlave = 2;   // 小房间
+}
+
+// /go/room/drainage/preview
+message ResDrainagePreview{
+  bool                success = 1;
+  string              message = 2;
+  DrainagePreviewData data    = 3;
+}
+
+message DrainagePreviewData {
+  option (pb.register_name) = 'room.drainage.refresh';
+  option (pb.register_id) = 10040;
+  int32          pull_msg_interval              = 1;  //定时拉取历史消息间隔
+  repeated       RoomDrainageData drainage_room = 2;  //关联房间
+  MasterRoomInfo master_room                    = 3;  //被邀请的用户返回大厅信息
+  repeated       RoomDrainageLocking locking    = 4;  //关联小房的解锁状态(针对所有用户)
+  uint32         gift_id = 5;                         //关联房设置的礼物id
+}
+
+message MasterRoomInfo {
+  uint32 master_rid = 1;
+  string master_icon = 2;
+}
+
+message RoomDrainageData {
+  DrainageRoomType type                          = 1;  //房间类型
+  uint32           rid                           = 2;  //关联房间
+  string           name                          = 3;  //关联房间tab名称
+  int32            show_type                     = 4;  //0:平铺(permission为空或长度为1) 1:更多-弹出
+  repeated         DrainagePermission permission = 5;  //用户在当前关联房间的权限
+}
+
+message DrainagePermission{
+  RoomDrainageOperation operation   = 1;
+  string                copywriting = 2;
+  uint32                target_rid  = 3;
+}
+
+enum RoomDrainageOperation {
+  RoomDrainageEnter          = 0;  // 前往该房间
+  RoomDrainageInvite         = 1;  // 邀请
+  RoomDrainageCloseAndInvite = 2;  // 关闭并邀请
+  RoomDrainageChooseInvite   = 3;  // 有选择的邀请
+}
+
+message RoomDrainageLocking {
+  uint32 rid = 1;
+  bool locked = 2;
+  string name = 3;
+  string icon = 4;
+}
+
+// /go/room/drainage/operate
+message ResDrainageOperate{
+  bool   success = 1;
+  string message = 2;
+}
+
+
+enum RoomDrainageEvent {
+  RoomDrainageAdd           = 0;  // 创建,大房所有用户解锁列表新增对应小房,未解锁状态
+  RoomDrainageRemove        = 1;  // 关闭,大房所有用户解锁列表删除对应小房
+}
+
+message RoomDrainageEventData {
+  option (pb.register_name) = 'room.drainage.event';
+  option (pb.register_id) = 10042;
+  int32 refreshInterval = 1; // 重新请求房间preview状态最大延迟,单位:s
+}
+
+// /go/room/drainage/preferences
+message ResDrainagePreferences{
+  bool                success = 1;
+  string              message = 2;
+  DrainagePreferencesData data    = 3;
+}
+
+message DrainagePreferencesData {
+  int32          show_no_permission = 1;              //邀请时是否展示未赠礼用户 0:不可设置  1:开启 2:关闭(默认开启)
+}

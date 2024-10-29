@@ -1,0 +1,91 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "rpc_shop.proto";
+import "rpc_credit_shop.proto";
+message ShopIndexResp{
+	bool success = 1;
+	string msg = 2;
+	ShopIndexData data=3;
+}
+
+//1
+message ShopCateListResp{
+	bool success = 1;
+	string msg = 2;
+	repeated ShopCateInfo data=3;
+}
+
+
+message ShopBagDetailResp{
+	bool success = 1;
+	string msg = 2;
+	ShopBag data=3;
+}
+
+
+message ShopBagListResp{
+	bool success = 1;
+	string msg = 2;
+	repeated ShopBag data=3;
+}
+
+message GetPayUserListResp{
+	bool success = 1;
+	string msg = 2;
+	repeated BagPayUserInfo data=3;
+}
+
+message GetPropListResp{
+	bool success = 1;
+	string msg = 2;
+	repeated ShopProp data=3;
+}
+
+
+message BagPayUserInfo{
+	uint32 uid=1;
+	string name=2;
+	string icon=3;
+	uint32 get_time=4;//获取时间
+	uint32 popularity_level=5;//获取时间
+	uint32 vip_level=6;//获取时间
+	uint32 title_level=7;//用户爵位等级
+}
+
+message ShopProp{
+	string p_type=2;//我怎么感觉后面是根据不同type得支持不同组展示一样。。。
+	string name=3;
+	string image=4;
+	string h5_url=5;//h5调整地址
+}
+
+message GetCreditGoodsIndexResp{
+	bool success = 1;
+	string msg = 2;
+	CreditGoodsIndex data=3;
+}
+
+message GetExchangeListResp{
+	message ExchangeRecord {
+         uint32 id=1;
+		 string desc =2;
+		 int32 score =3;
+		 int32 money =4;
+		 int64 create_time =5;
+	}
+	message ExchangeData {
+		repeated ExchangeRecord records=1;
+		bool is_more =2;//是否还有下一页
+	}
+	bool success = 1;
+	string msg = 2;
+	ExchangeData data=3;
+}
+
+message SubmitCustomApplyResp{
+	bool success = 1;
+	string msg = 2;
+}

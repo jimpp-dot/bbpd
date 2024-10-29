@@ -1,0 +1,36 @@
+syntax = "proto3";
+    
+package room.achievement.notice;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+
+message RoomAchievementNotice {
+    option (pb.register_name) = 'room.achievement.notice';
+    option (pb.register_id) = 61;
+    FansLabel fans_label = 1;
+    string frame = 2;
+    string giftImage = 3;
+    bool icongray = 4;
+    uint32 money = 5;
+    uint32 rid = 6;
+    string rname = 7;
+    string toname = 8;
+    uint32 tovip = 9;
+    string type = 10;
+    string uicon = 11;
+    string uname = 12;
+    uint32 utitle = 13;
+    uint32 utitle_new = 14;
+    uint32 uvip = 15;
+    string word = 16;
+
+    message FansLabel {
+        string label = 1;
+        uint32 credit = 2;
+        uint32 level = 3;
+    }
+}

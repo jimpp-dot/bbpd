@@ -1,0 +1,31 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message SweetList {
+  uint32 uid = 1;
+  string uname = 2;
+  string uicon = 3;
+  uint32 utitle = 4;
+  uint32 utitle_new = 5;
+  uint32 uvip = 6;
+  uint32 touid = 7;
+  string toname = 8;
+  string toicon = 9;
+  uint32 totitle = 10;
+  uint32 totitle_new = 11;
+  uint32 tovip = 12;
+  uint32 money = 13;
+  uint32 upopularity = 14;//用户的人气等级
+  uint32 topopularity = 15;//to用户的人气等级
+}
+
+message ResRankingSweet {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  repeated SweetList data = 3; //返回的数据结果
+  bool hideRank = 4;
+}

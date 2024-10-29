@@ -1,0 +1,48 @@
+syntax = "proto3";
+package pb;
+/*
+banner 相关proto
+*/
+
+option go_package = "../../app/pb";
+
+
+message ResBanner{
+  bool success = 1;
+  string msg = 2;
+  BannerData data = 3;
+}
+
+message BannerData {
+  repeated BannerItem items = 1;
+  BannerOptionData opt = 2;
+  repeated BannerItem verify_items = 3;
+}
+
+message BannerItem{
+  uint32 id = 1;
+  string image = 2;
+  uint32 width = 3;
+  uint32 height = 4;
+  uint32 duration = 5;
+  string url = 6;
+  string title = 7;
+  string position = 8;
+  string data = 9;
+  string type = 10;
+  BannerOptionData opt = 11;
+  BannerRoomInfo room_info = 12;
+}
+
+message BannerOptionData {
+  bool show_close = 1;
+}
+
+message BannerRoomInfo {
+  uint32 rid = 1;
+  repeated string icons = 2; //与uids对应，用户头像
+  string type_icon = 3;
+  string name = 4;
+  string label_type = 5;
+  repeated string type_bg = 6;
+}

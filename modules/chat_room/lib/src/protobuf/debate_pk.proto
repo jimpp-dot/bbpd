@@ -1,0 +1,124 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+/// go/room/debatePk/config  PK主体数据
+message ApiDebatePkConfigResponse{
+  bool success = 1;
+  string message = 2;
+  DebatePkConfigMessage data = 3;
+}
+
+/// socket推送结构
+message DebatePkConfigMessage{
+  option (pb.register_name) = 'refresh.debate.pk.sync';
+  option (pb.register_id) = 10038;
+
+  uint32 option = 1; // 增量选项(按位或)，0x01->pk,0x02->role,0x04->rank
+  DebatePkBase pk = 2;
+  DebatePkRole role = 3;
+  DebatePkRank rank = 4;
+  DebatePkUserConfig user = 5;
+}
+
+message DebatePkBase{
+  uint32 pkId = 1;
+  uint32 stage = 2; // 0和1-准备；2-PK中；3-结束
+  uint32 rid = 3;
+  uint32 current_stage_ttl = 4; // 时间 单位：s
+  uint32 win = 5; // 0-未知；1-红胜；2-红负；3-平局
+  uint32 version = 6; // 透传
+}
+
+message DebatePkRole{
+  DebatePkRoleInfo red = 1;
+  DebatePkRoleInfo blue = 2;
+}
+
+message DebatePkRoleInfo{
+  uint32 uid = 1;
+  string icon = 2;
+  string name = 3;
+  uint32 score = 4;
+  string frame = 5;
+}
+
+
+message DebatePkRank{
+  repeated DebatePkContributionRankItem red = 1;
+  uint32 numRedRanker = 2;
+  repeated DebatePkContributionRankItem blue = 3;
+  uint32 numBlueRanker = 4;
+}
+
+
+message DebatePkContributionRankItem{
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 score = 4;
+  int32 rank = 5;
+  uint32 sex = 6;
+  uint32 vip = 7;
+  bool vip_gray = 8;
+  bool menegxin = 9;
+  uint32 age = 10;
+}
+
+
+message DebatePkUserConfig{
+  uint32 redSupported = 1;
+  uint32 blueSupported = 2;
+}
+
+/// go/room/debatePk/preferences  PK时长配置
+message ApiDebatePkPreferencesResponse{
+  bool success = 1;
+  string message = 2;
+  DebatePkPreferences data = 3;
+}
+
+message DebatePkPreferences{
+  DebatePkDurationRange pkRange = 1;
+  DebatePkDurationRange delayRange = 2;
+}
+
+
+message DebatePkDurationRange {
+  uint32 min = 1;
+  uint32 max = 2;
+  uint32 cur = 3;
+}
+
+/// go/room/debatePk/rank  PK贡献榜
+message ApiDebatePkContributionRankResponse{
+  bool success = 1;
+  string message = 2;
+  DebatePkContributionRankData data = 3;
+}
+
+message DebatePkContributionRankData{
+  repeated DebatePkContributionRankItem list = 1;
+  uint32 more = 2;
+}
+
+
+/// PK结束特效socket
+message DebatePkResultMessage{
+  option (pb.register_name) = 'notify.debate.pk.result';
+  option (pb.register_id) = 10039;
+
+  uint32 pkId = 1;
+  DebatePkRoleInfo red = 2;
+  DebatePkRoleInfo blue = 3;
+  uint32 win = 4; // 0-未知；1-红胜；2-红负；3-平局
+  string winUrl = 5;
+  uint32 winSize = 6;
+  string failUrl = 7;
+  uint32 failSize = 8;
+  string drawUrl = 9;
+  uint32 drawSize = 10;
+}

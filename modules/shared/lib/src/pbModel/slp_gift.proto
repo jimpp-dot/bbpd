@@ -1,0 +1,820 @@
+syntax = "proto3";
+package pb;
+/*
+礼物面板的pb定义
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "entity_xs_commodity.proto";
+
+message BbGiftPanelData {
+  repeated BbGiftPanelGift gift = 1;
+  repeated BbGiftPanelGift privilege_gift = 2;
+  repeated BbGiftPanelCommodities commodities = 3;
+  repeated BbGiftPanelKeyCoupons key_coupons = 4;
+  repeated BbGiftPanelGlobalBox global_box = 5;
+  BbGiftPanelGlobalPiece global_piece = 6;
+  BbGiftPanelExtend extend = 7;
+  repeated BbGiftPanelKeyCommodity key_commodity = 8;
+  repeated BbGiftPanelShopCommodities shop_commodities = 9;
+  repeated BbGiftPanelKeyName key_name = 10;
+  repeated BbGiftPanelDecorates decorates = 11;
+  repeated BbGiftPanelChooseNumConfig choose_num_config = 12;
+  repeated BbGiftPanelChooseNumConfig choose_box_num_config = 13;
+  repeated BbGiftPanelTabConfig tab_config = 14;
+  repeated BbGiftPanelGift pub_drinks = 15;
+  repeated BbGiftPanelLiveProps live_props = 16;
+  repeated BbGiftPanelGift interact_gift = 17;
+  repeated BbGiftPanelGift special_plays = 18;
+  ExclusiveGiftInfo exclusive = 19;
+  repeated BbGiftPanelGift tower_gift = 20;
+  BbGiftPanelBanner banner = 21;
+  BbGiftPanelLuckyEggInfo luck_egg = 22;
+  BbGiftPaneRandomBoxInfo random_box = 23;
+  OutstandingBoxInfo outstanding_box = 24; //甄选礼盒
+  bool show_intimate = 25; //亲密付入口
+}
+
+message ResGraffitiGift {
+  bool success = 1;
+  string msg = 2;
+  BodyGraffitiGift data = 3;
+}
+
+message BodyGraffitiGift {
+  repeated GraffitiItem list = 1;
+  uint32 money = 2;
+}
+
+message GraffitiItem {
+  uint32 id = 1; // 涂鸦礼物id
+  string name = 2; // 涂鸦礼物名称
+  uint32 price = 3; // 涂鸦礼物价格
+}
+
+message OutstandingBoxInfo {
+  message BoxInfoItem {
+    uint32 box_id = 1; // 甄选礼盒id
+    uint32 price = 2; // 礼盒最大花费
+    string price_txt = 3; // 价格文案
+    repeated uint32 loop_gifts = 4; //轮播礼物id
+    string gift_txt = 5; // 加成的礼物名称
+    uint32 growth_add = 6; // 成长值加成
+    double wealth_times = 7; // vip加成倍数
+    double growth_times = 8; // 成长值加成倍数
+  }
+  repeated BoxInfoItem box_info = 1;
+  string ranking_list = 2; // 甄选礼盒排行榜入口
+}
+
+message ResBbGiftPanel {
+  bool success = 1;               //成功true，失败false
+  string msg = 2;                 //失败message
+  BbGiftPanelData data = 3;       //返回数据
+}
+
+//礼物面板
+message BbGiftPanelGift {
+  uint32 id = 1;                    //xs_gift主键id
+  string name = 2;                  //礼物名称中文
+  uint32 price = 3;
+  string display = 4;
+  string sub_display = 5;
+  string type = 6;
+  string gift_type = 7;
+  string income_type = 8;
+  uint32 with_end = 9;
+  uint32 size = 10;
+  uint32 size_big = 11;
+  uint32 ordering = 12;
+  uint32 deleted = 13;
+  uint32 title = 14;
+  string naming = 15;
+  string xratio = 16;
+  string xtype = 17;
+  string excludes = 18;
+  string tag_url = 19;
+  string tag_ids = 20;
+  string description = 21;
+  string jump_page = 22;
+  uint32 unlock_limit = 23;
+  uint32 ext_id = 24;
+  uint32 is_skin = 25;
+  uint32 is_combo = 26;
+  uint32 version = 27;
+  string vap_type = 28;
+  uint32 vap_size = 29;
+  uint32 vap_header = 30;
+  uint32 vap_header_start = 31;
+  uint32 vap_header_end = 32;
+  uint32 magic = 33;
+  uint32 magic_size = 34;
+  string category = 35;
+  uint32 app_id = 36;
+  uint32 is_app_public = 37;
+  uint32 pub_red_packet = 38;
+  uint32 isnaming = 39;
+  string icon = 40;
+  bool has = 41;
+  uint32 star = 42;
+  uint32 num = 43;
+  uint32 cid = 44;
+  uint32 cnum = 45;
+  string ctype = 46;
+  uint32 duction_money = 47;
+  uint32 only_newpay = 48;
+  uint32 state = 49;
+  string period_end_desc = 50;
+  bool close_hit = 51;
+  uint32 diy_icon_num = 52;
+  uint32 diy_preview_size = 53;
+  uint32 diy_bg_size = 54;
+  string diy_bg = 55;
+  BbGiftPanelPrivilegeGift privilege = 56;
+  BbGiftPanelSkin skin = 57;
+  repeated BbGiftPanelTagList tag_list = 58;
+  repeated BbGiftPanelDiyGift diy_gift = 59;
+  bool is_unity = 60;
+  bool show_desc = 61;                          //是否展示礼物描述
+  bool is_gift_reward = 62;                     //是否有礼物奖励玩法
+  BbGiftPanelWeekStarNaming week_naming = 63;   //周星礼物冠名
+  repeated BbGiftPanelSpecialPlayItem special_play_items = 64;
+  bool showOrderSong = 65; // 是否显示点歌入口
+  uint32 sub_enable = 66;                       //子APP启用状态
+  BbGiftPanelInteractCombine combine_gift = 67; //组合礼物
+  BbGiftPanelGloryHourStarBanner glory_banner = 68;    //小时榜礼物横幅
+  BbGiftPanelActivityBanner activity_banner = 69; //banner
+  GiftPanelAwakeInfo awake_info = 70;
+  GiftItemCornerIcon corner = 71;
+  message GiftSuit {
+      message ContentZone {
+        string content = 1;
+        string color = 2; // 色值
+        bool is_bold = 3; // 是否加粗
+      }
+
+      repeated ContentZone title_content=1;//第一行的内容
+      repeated ContentZone desc_content=2;//第二行的内容
+    }
+    GiftSuit gift_suit = 72;//礼物套装
+}
+
+message GiftItemCornerIcon{
+  string left_top = 1; // 左上角通用标签
+  string right_top = 2; // 右上角通用标签
+  string left_bottom = 3; // 左下角通用标签
+  string right_bottom = 4; // 右下角通用标签
+}
+message GiftPanelAwakeInfo {
+  string icon = 1; //觉醒图标
+}
+
+//礼物皮肤
+message BbGiftPanelSkin {
+  uint32 gift_id = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 origin_id = 4;
+  uint32 skin_current = 5;
+  uint32 skin_total = 6;
+  uint32 skin_state = 7;
+  string tips = 8;
+  uint32 award_id = 9;
+  string award_name = 10;
+  string award_type = 11;
+}
+
+//礼物标签
+message BbGiftPanelTagList {
+  uint32 id = 1;
+  string name = 2;
+  string icon = 3;
+  string remark = 4;
+}
+
+//特权礼物
+message BbGiftPanelPrivilegeGift {
+  string grant_way = 1;
+  string grant_limit = 2;
+  uint32 weight = 3;
+  string jump_tips = 4;
+  string grant_limit_icon = 5;
+  string unlock_tips = 6;
+  uint32 grant_limit_from = 7;
+  string grant_limit_range = 8;
+  string grant_status = 9;
+  repeated string icons = 10;
+  string receiver_tag = 11;        //超级主播对象解锁标识
+  string description = 12; //特权礼物banner文案
+  string jump_scheme = 13; //特权礼物banner点击跳转
+  uint32 owner_uid = 14; //礼物专属用户
+  string owner_icon = 15; //礼物专属用户Icon
+  uint32 grant_status_show = 16;//0:默认根据 grant_status字段进行显示。1：显示lock对应的banner
+}
+
+//DIY礼物
+message BbGiftPanelDiyGift {
+  uint32 id = 1;                    //xs_gift主键id
+  string name = 2;                  //礼物名称中文
+  uint32 price = 3;
+  string display = 4;
+  string sub_display = 5;
+  string type = 6;
+  string gift_type = 7;
+  string income_type = 8;
+  uint32 with_end = 9;
+  uint32 size = 10;
+  uint32 size_big = 11;
+  uint32 ordering = 12;
+  uint32 deleted = 13;
+  uint32 title = 14;
+  string naming = 15;
+  string xratio = 16;
+  string xtype = 17;
+  string excludes = 18;
+  string tag_url = 19;
+  string tag_ids = 20;
+  string description = 21;
+  string jump_page = 22;
+  uint32 unlock_limit = 23;
+  uint32 ext_id = 24;
+  uint32 is_skin = 25;
+  uint32 is_combo = 26;
+  uint32 version = 27;
+  string vap_type = 28;
+  uint32 vap_size = 29;
+  uint32 vap_header = 30;
+  uint32 vap_header_start = 31;
+  uint32 vap_header_end = 32;
+  uint32 magic = 33;
+  uint32 magic_size = 34;
+  string category = 35;
+  uint32 app_id = 36;
+  uint32 is_app_public = 37;
+  uint32 pub_red_packet = 38;
+  uint32 isnaming = 39;
+  string icon = 40;
+  bool has = 41;
+  uint32 star = 42;
+  uint32 num = 43;
+  uint32 cid = 44;
+  uint32 cnum = 45;
+  string ctype = 46;
+  uint32 duction_money = 47;
+  uint32 only_newpay = 48;
+  uint32 state = 49;
+  string period_end_desc = 50;
+  bool close_hit = 51;
+  uint32 diy_icon_num = 52;
+  uint32 diy_preview_size = 53;
+  uint32 diy_bg_size = 54;
+  string diy_bg = 55;
+  bool diy_default = 56;
+  BbGiftPanelPrivilegeGift privilege = 57;
+  BbGiftPanelSkin skin = 58;
+  repeated BbGiftPanelTagList tag_list = 59;
+  bool is_unity = 60;
+  uint32 sign_price = 61;
+  uint32 icon_price = 62;
+  uint32 color_price = 63;
+  uint32 sign_direction = 64; //赠言方向 1横 2竖
+  uint32 diy_unity_android_size = 65; //unity礼物android的大小
+  uint32 diy_unity_ios_size = 66;//unity礼物ios的大小
+}
+
+//周星礼物冠名
+message BbGiftPanelWeekStarNaming {
+  uint32 uid = 1;           //冠名用户id, 正在冠名或即将冠名
+  string user_name = 2;     //冠名用户名称
+  string user_icon = 3;     //冠名用户头像
+  bool has_naming = 4;      //是否已经拥有冠名
+  string tips = 5;          //冠名提示
+  string description = 6;   //规则描述
+  string count_down = 7;    //倒计时
+  string jump_url = 8;      //跳转地址
+}
+
+//荣耀小时榜高光之星礼物横幅，用于冠名、解锁礼物展示
+message BbGiftPanelGloryHourStarBanner {
+  uint32 left_uid = 1;      //左边冠名用户id
+  uint32 right_uid = 2;     //右边冠名用户id
+  string left_icon = 3;     //左边用户头像
+  string right_icon = 4;    //右边用户头像
+  string title = 5;         //横幅标题
+  string description = 6;   //规则描述
+  string jump_url = 7;      //跳转地址
+  string naming = 8;        //冠名的名称
+}
+
+//房间礼物面板换色玩法配置
+message BbGiftPanelSpecialPlayItem {
+  uint32 new_gift_id = 1;     //变色后的礼物ID
+  string title = 2;
+  string grant_status = 3;
+  string description = 4;
+  string jump_page = 5;
+  repeated string show_color = 6;
+  string type = 7;            //color:变色  变声:voice
+  string icon = 8;
+  uint32 price = 9;
+}
+
+//互动组合礼物
+message BbGiftPanelInteractCombine {
+  uint32 combine_id = 1;        //礼物组合id
+  string combine_name = 2;      //礼物组合名称
+  string combine_desc = 3;      //礼物组合描述
+  uint32 combine_type = 4;      //礼物组合类型，0-可切换，1-固定单点，2-固定全麦
+  uint32 gift_a = 5;            //礼物a的id
+  string gift_a_name = 6;       //礼物a的名称
+  uint32 gift_a_num = 7;        //礼物a的数量
+  uint32 gift_a_price = 8;      //礼物a的单价
+  uint32 gift_a_to = 9;         //礼物a赠送对象，1-房主+接待，2-房主，3-接待
+  uint32 gift_b = 10;           //礼物b的id
+  string gift_b_name = 11;      //礼物b的名称
+  uint32 gift_b_num = 12;       //礼物b的数量
+  uint32 gift_b_price = 13;     //礼物b的单价
+  uint32 gift_b_to = 14;        //礼物b赠送方式，1-单点，2-全麦
+  string gift_b_position = 15;  //礼物b赠送的麦位范围，从0开始，英文逗号分隔
+  string gift_b_choose = 16;    //礼物b赠送范围内的默认勾选麦位，从0开始，英文逗号分隔
+  uint32 combine_money = 17;    //礼物组合总价
+}
+
+//物品
+message BbGiftPanelCommodities {
+  uint32 id = 1;
+  uint32 uid = 2;
+  uint32 cid = 3;
+  uint32 state = 4;
+  uint32 num = 5;
+  uint32 period_end = 6;
+  uint32 used = 7;
+  uint32 in_use = 8;
+  uint32 dateline = 9;
+  string name = 10;
+  uint32 group_id = 11;
+  string type = 12;
+  string sub_type = 13;
+  string description = 14;
+  uint32 price = 15;
+  string image = 16;
+  string image_bg = 17;
+  uint32 period = 18;
+  uint32 period_hour = 19;
+  uint32 only_newpay = 20;
+  uint32 duction_money = 21;
+  uint32 ext_id = 22;
+  string ext_name = 23;
+  string jump_page = 24;
+  string coupon_type = 25;
+  uint32 is_continue = 26;
+  uint32 can_opened_by_box = 27;
+  uint32 saling_on_shop = 28;
+  uint32 can_give = 29;
+  uint32 title = 30;
+  uint32 ext_id_more = 31;
+  string extra = 32;
+  string money_type = 33;
+  uint32 startline = 34;
+  uint32 endline = 35;
+  string tag_ids = 36;
+  string special_type = 37;
+  uint32 app_id = 38;
+  uint32 spu = 39;
+  bool try_voice = 40;
+  uint32 jump_rid = 41;
+  string jump_type = 42;
+  string gift_type = 43;
+  uint32 star = 44;
+  uint32 useable = 45;
+  uint32 max_num = 46;
+  uint32 box_num = 47;
+  uint32 key_num = 48;
+  uint32 key_price = 49;
+  string gift_image = 50;
+}
+
+message BbGiftPanelExtend {
+  uint64 money = 1;
+  uint64 gold_coin = 2;
+  uint64 money_coupon = 3;
+  uint64 money_order = 4;
+  uint32 gift_version = 5;
+  string company = 6;
+  uint32 show_buy_header = 7;
+  uint32 open_box_user_money = 8;
+  uint32 auction_money = 9;
+  uint32 hit_test = 10;
+  uint32 limit_money = 11;
+  string order_pay_type = 12;
+  uint32 order_pay_num = 13;
+  uint32 tab_index = 14;
+}
+
+message BbGiftPanelKeyCoupons {
+  uint32 id = 1;
+  string type = 2;
+  uint32 ext_id = 3;
+  uint32 num = 4;
+  uint32 duction_money = 5;
+  uint32 state = 6;
+  uint32 only_newpay = 7;
+  string name = 8;
+  uint32 cid = 9;
+}
+
+message BbGiftPanelGlobalBox {
+  string type = 1;
+  uint32 last_refresh_sub_cid = 2;
+  uint32 last_refresh_dateline = 3;
+  string name = 4;
+  string image = 5;
+  uint32 gid = 6;
+}
+
+message BbGiftPanelGlobalPiece {
+  uint32 max_num = 1;
+  string url = 2;
+  string max_gift_image = 3;
+  repeated BbGiftPanelGpRecentGifts recent_gifts = 4;
+}
+
+message BbGiftPanelGpRecentGifts {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  string cname = 4;
+  string cimage = 5;
+  uint32 cnum = 6;
+  string time_text = 7;
+}
+
+message BbGiftPanelKeyCommodity {
+  uint32 id = 1;
+  uint32 uid = 2;
+  uint32 cid = 3;
+  uint32 state = 4;
+  uint32 num = 5;
+  uint32 period_end = 6;
+  uint32 used = 7;
+  uint32 in_use = 8;
+  uint32 dateline = 9;
+  string name = 10;
+  uint32 group_id = 11;
+  string type = 12;
+  string sub_type = 13;
+  string description = 14;
+  uint32 price = 15;
+  string image = 16;
+  string image_bg = 17;
+  uint32 period = 18;
+  uint32 period_hour = 19;
+  uint32 only_newpay = 20;
+  uint32 duction_money = 21;
+  uint32 ext_id = 22;
+  string ext_name = 23;
+  string jump_page = 24;
+  string coupon_type = 25;
+  uint32 is_continue = 26;
+  uint32 can_opened_by_box = 27;
+  uint32 saling_on_shop = 28;
+  uint32 can_give = 29;
+  uint32 title = 30;
+  uint32 ext_id_more = 31;
+  string extra = 32;
+  string money_type = 33;
+  uint32 startline = 34;
+  uint32 endline = 35;
+  string tag_ids = 36;
+  string special_type = 37;
+  uint32 app_id = 38;
+  uint32 star = 39;
+}
+
+message BbGiftPanelShopCommodities {
+  pb.EntityXsCommodity data = 1;
+  BbGiftPanelShopCoupon coupon = 2;
+}
+
+message BbGiftPanelShopCoupon {
+  uint32 id = 1;
+  string type = 2;
+  string coupon_type = 3;
+  uint32 ext_id = 4;
+  uint32 num = 5;
+  uint32 duction_money = 6;
+  uint32 state = 7;
+  uint32 only_newpay = 8;
+  string name = 9;
+  uint32 cid = 10;
+}
+
+message BbGiftPanelKeyName {
+  uint32 key = 1;   //礼cid
+  string name = 2;  //礼盒名称
+}
+
+message BbGiftPanelDecorates {
+  uint32 id = 1;
+  string name = 2;
+  uint32 app_id = 3;
+  uint32 price = 4;
+  string image = 5;
+  string decorate_type = 6;
+  string decorate_type_name = 7;
+  string money_type = 8;
+  string period = 9;
+  uint32 duction_rate = 10;
+  string bubble_desc = 11;
+  string bubble_front_color = 12;
+  BbGiftPanelShopCoupon coupon = 13;
+}
+
+message BbGiftPanelChooseNumConfig {
+  uint32 num = 1;   //选择礼物的数量
+  string desc = 2;  //描述
+}
+
+message BbGiftPanelTabConfig {
+  string name = 1;
+  string type = 2;
+}
+
+//直播房道具
+message BbGiftPanelLiveProps {
+  uint32 pid = 1;
+  string url = 2;
+  string name = 3;
+  string desc = 4;
+  uint32 expired = 5;
+  uint32 pnum = 6;
+}
+
+message RocketAssemblyGiftItem {
+  BbGiftPanelDiyGift panelDiyGift = 1;
+  uint32  diyGiftImageType = 2; //1没选  2选自己 3选对方
+  string  sign = 3; //赠言内容
+  int32   color = 4; //色调
+}
+
+message ResRocketAssemblyGift {
+  bool success = 1;               //成功true，失败false
+  string msg = 2;                 //失败message
+  repeated RocketAssemblyGiftItem list = 3; //装配间列表
+}
+
+message ResNestGiftList{
+  bool success = 1;               //成功true，失败false
+  string msg = 2;                 //失败message
+  repeated BbGiftPanelGift list = 3;
+}
+message GiftWallItemUser {
+  uint32 uid = 1;
+  string icon = 2;
+  string name = 3;
+}
+
+message GiftWallItem {
+  uint32 gid = 1;
+  uint32 num = 2;
+  string name = 3;
+  uint32 level = 4;
+  GiftWallItemUser user = 5;
+  uint64 sum = 6;
+  uint32 price = 7;
+}
+
+message GiftWallListRes {
+  bool success = 1;
+  string msg = 2;
+  repeated GiftWallItem data = 3;
+  repeated GiftWallTabItem tabs = 4;
+}
+
+message GiftWallTabItem {
+    uint32 tab_id = 1;
+    string title = 2;
+    string icon = 3;
+    uint32 cur = 4;
+    uint32 total = 5;
+    string event = 6; /// 上报的事件名称
+}
+
+message GiftWallStatics {
+  uint32 uid = 1;
+  string user_icon = 2;
+  string name = 3;
+  uint32 total = 4;
+  uint32 gold = 5;
+  uint32 silver = 6;
+  uint32 copper = 7;
+  string level_icon = 8;
+  uint32 next_level_exp = 9;
+  string next_level_name = 10;
+  uint32 exp = 11 ;
+  string bg = 12;
+  string help_url = 13;
+  uint32 level = 14;
+  string level_name = 15;
+  string level_bg = 16;
+}
+
+message GiftWallStaticsRes {
+  bool success = 1;
+  string msg = 2;
+  GiftWallStatics data = 3;
+  uint32 flag = 4;  //1新 2返
+}
+
+message GraphicGift{
+  uint32 gid = 1;
+  uint32 gift_lighten = 2;
+  string gift_name = 3;
+}
+
+message GiftWallGraphic {
+  string name = 1;
+  string bg = 2;
+  uint32 lighten = 3;
+  uint32 expire = 4;
+  repeated GraphicGift gifts = 5;
+  repeated string bg_color = 6;
+}
+
+message GiftWallGraphicRes {
+  bool success = 1;
+  string msg = 2;
+  repeated GiftWallGraphic data = 3;
+}
+
+message OchGiftData{
+  uint32 num = 1;
+  repeated BbGiftPanelGift list = 2;
+}
+message ResOchGiftList{
+  bool success = 1;               //成功true，失败false
+  string msg = 2;                 //失败message
+  OchGiftData data = 3;
+}
+
+//特权礼物超级主播列表
+message ResGiftSuperGsList {
+  bool success = 1;               //成功true，失败false
+  string msg = 2;                 //失败message
+  GiftSuperGsData data = 3;
+}
+
+message GiftSuperGsData {
+  repeated GiftSuperGsUser users = 1;
+}
+
+message GiftSuperGsUser {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 age = 4;
+  uint32 sex = 5;
+  uint32 popularity_level = 6;
+}
+
+message ExclusiveGiftInfo{
+  uint32 giftId = 1;
+  NextOwner cur = 2;
+  NextOwner next = 3;
+  string tips = 4;
+  string notice = 5;
+  string pre_annotation = 6;
+}
+
+message NextOwner{
+  uint32 uid = 1;
+  string icon = 2;
+  string name = 3;
+}
+
+//xyd信息
+message BbGiftPanelLuckyEggInfo {
+    uint32 gift_id = 1;          //xyd礼物ID
+    repeated LuckyEggLevel eggs = 2;
+    string title = 3; //弹窗文案
+}
+
+//随机礼盒信息
+message BbGiftPaneRandomBoxInfo {
+    uint32 gift_id = 1;//xyd礼物ID
+    string bt_txt = 2; //按钮文案文案
+    string price_txt = 3;//价格文案
+}
+
+message LuckyEggLevel {
+    uint32 level = 1;  //等级
+    uint32 price = 2; //单价
+    string image = 3; //头像框图片
+    string coupon_name = 4; //券名称
+    string coupon_image = 5; //券地址
+    string level_name = 6;  //xyd名称
+    string name = 7;  //头像框名称
+    string desc = 8; //头像框描述
+}
+
+//横幅信息
+message BbGiftPanelBanner {
+  string achieve_tips = 1;          //成就墙提示信息
+}
+
+//宝座礼物详情
+message ResGiftThroneDetail {
+  bool success = 1;                 //成功true，失败false
+  string msg = 2;                   //失败message
+  GiftThroneDetailData data = 3;
+}
+
+message GiftThroneDetailData {
+  BbGiftThrone throne = 1;
+}
+
+message BbGiftThrone {
+  uint32 curr_level = 1;                    //当前等级
+  uint32 curr_num = 2;                      //当前等级礼物已收到的个数
+  uint32 total_num = 3;                     //升级所需收礼数
+  string tips = 4;                          //横幅说明
+  repeated BbGiftThroneLevel levels = 5;    //宝座等级信息
+}
+
+message BbGiftThroneLevel {
+  string name = 1;                  //宝座名称
+  string icon = 2;                  //宝座图片
+  uint32 level = 3;                 //宝座等级
+  uint32 need_gift = 4;             //升级到此等级所需送礼数
+}
+
+message ResGiftWallLimit {
+	bool success = 1;
+	string msg = 2;
+	GiftWallLimitData data = 3;
+}
+
+message GiftWallLimitData {
+    repeated GiftWallLimitItem light_gift = 1;
+    GiftWallLimitItem new_gifts = 2;
+    GiftWallLimitItem back_gifts = 3;
+    uint32 version = 4;
+}
+
+message GiftWallLimitItem {
+    string title = 1;   //标题
+    repeated GiftWallItem gift = 2;  //限时点亮礼物
+    string desc = 3;//每周或者每月可以点亮一次
+    uint32 ctype  = 4; //点亮类别 1周  2月
+}
+
+message ResGiftCombineDetail {
+	bool success = 1;
+	string msg = 2;
+	GiftCombineDetailData data = 3;
+}
+
+message GiftCombineDetailData {
+    BbGiftPanelInteractCombine single_combine = 1;          //礼物组合单点配置
+    BbGiftPanelInteractCombine all_combine = 2;             //礼物组合全麦配置
+}
+
+message RspBoxGiftPoolInfo {
+  bool success = 1;
+  string msg = 2;
+  BoxGiftPoolInfo data = 3;
+}
+
+message BoxGiftPoolInfo {
+  uint32 price = 1;//最大礼物价格
+  uint32  pool_type = 2; // 奖池类型
+  repeated BoxGiftPoolGiftItem pool_gifts = 3; // 奖池礼物
+  string pool_desc = 4; // 奖池说明
+}
+
+message BoxGiftPoolGiftItem {
+  uint32 gift_id = 1; //礼物ID
+  uint32 price = 2; //礼物价格
+  string name = 3; //礼物名称
+  uint32 weight = 4; // 概率/权重
+  string icon = 5; //礼物配图
+}
+
+message BbGiftPanelActivityBanner {
+  string icon = 1;
+  string url = 2; // 老版本用的字段，新版本用BbGiftPanelActivityBannerActions里的url
+  uint32 icon_w = 3; // 单位像素
+  uint32 icon_h = 4;
+  repeated BbGiftPanelActivityBannerActions actions = 5; // 有这个字段的时候，不会读取url字段
+}
+
+message BbGiftPanelActivityBannerActions {
+  string url = 1;
+  uint32 x = 2; //单位像素
+  uint32 y = 3;
+  uint32 w = 4;
+  uint32 h = 5;
+}

@@ -1,0 +1,26 @@
+syntax = "proto3";
+    
+package room.theone.result;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message RoomTheoneResult {
+    option (pb.register_name) = 'room.theone.result';
+    option (pb.register_id) = 90;
+    uint32 rid = 1;
+    uint32 size = 2;
+    string status = 3;
+    repeated uint32 uids = 4;
+    string url = 5;
+    repeated Users users = 6;
+
+    message Users {
+        string icon = 1;
+        string name = 2;
+        string uid = 3;
+    }
+
+}

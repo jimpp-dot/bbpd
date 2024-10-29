@@ -1,0 +1,517 @@
+[
+  {
+    "label": "học sinh",
+    "value": 110,
+    "data": [
+      {
+        "label": "học sinh",
+        "value": 11001,
+        "data": null
+      },
+      {
+        "label": "Sinh viên đại học",
+        "value": 11002,
+        "data": null
+      },
+      {
+        "label": "tốt nghiệp",
+        "value": 11003,
+        "data": null
+      },
+      {
+        "label": "Sinh viên quốc tế",
+        "value": 11004,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "Công nghệ thông tin",
+    "value": 101,
+    "data": [
+      {
+        "label": "CNTT",
+        "value": 10101,
+        "data": null
+      },
+      {
+        "label": "Internet",
+        "value": 10102,
+        "data": null
+      },
+      {
+        "label": "truyền thông",
+        "value": 10103,
+        "data": null
+      },
+      {
+        "label": "máy tính",
+        "value": 10104,
+        "data": null
+      },
+      {
+        "label": "trò chơi trực tuyến",
+        "value": 10105,
+        "data": null
+      },
+      {
+        "label": "hoạt động viễn thông",
+        "value": 10106,
+        "data": null
+      },
+      {
+        "label": "Quản lý sản phẩm",
+        "value": 10107,
+        "data": null
+      },
+      {
+        "label": "lập trình viên",
+        "value": 10108,
+        "data": null
+      },
+      {
+        "label": "nhà thiết kế",
+        "value": 10109,
+        "data": null
+      },
+      {
+        "label": "hoạt động mạng",
+        "value": 10110,
+        "data": null
+      },
+      {
+        "label": "chỉnh sửa mạng",
+        "value": 10111,
+        "data": null
+      },
+      {
+        "label": "lập kế hoạch trò chơi",
+        "value": 10112,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "bảo hiểm tài chính",
+    "value": 102,
+    "data": [
+      {
+        "label": "tài chính",
+        "value": 10201,
+        "data": null
+      },
+      {
+        "label": "đầu tư",
+        "value": 10202,
+        "data": null
+      },
+      {
+        "label": "ngân hàng",
+        "value": 10203,
+        "data": null
+      },
+      {
+        "label": "chứng khoán",
+        "value": 10204,
+        "data": null
+      },
+      {
+        "label": "bảo hiểm",
+        "value": 10205,
+        "data": null
+      },
+      {
+        "label": "tin cậy / bảo lãnh",
+        "value": 10206,
+        "data": null
+      },
+      {
+        "label": "Giám đốc đầu tư",
+        "value": 10207,
+        "data": null
+      },
+      {
+        "label": "Quản lý quỹ",
+        "value": 10208,
+        "data": null
+      },
+      {
+        "label": "Cố vấn tài chính",
+        "value": 10209,
+        "data": null
+      },
+      {
+        "label": "Quản lý khách hàng",
+        "value": 10210,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "dịch vụ kinh doanh",
+    "value": 103,
+    "data": [
+      {
+        "label": "tham vấn",
+        "value": 10301,
+        "data": null
+      },
+      {
+        "label": "đào tạo",
+        "value": 10302,
+        "data": null
+      },
+      {
+        "label": "tự làm chủ",
+        "value": 10303,
+        "data": null
+      },
+      {
+        "label": "du lịch",
+        "value": 10304,
+        "data": null
+      },
+      {
+        "label": "Phục vụ khách sạn",
+        "value": 10305,
+        "data": null
+      },
+      {
+        "label": "giải trí",
+        "value": 10306,
+        "data": null
+      },
+      {
+        "label": "thương mại",
+        "value": 10307,
+        "data": null
+      },
+      {
+        "label": "xe hơi",
+        "value": 10308,
+        "data": null
+      },
+      {
+        "label": "bất động sản",
+        "value": 10309,
+        "data": null
+      },
+      {
+        "label": "quản lý tài sản",
+        "value": 10310,
+        "data": null
+      },
+      {
+        "label": "trang trí / trang trí",
+        "value": 10311,
+        "data": null
+      },
+      {
+        "label": "thẩm mỹ viện",
+        "value": 10312,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "kỹ thuật",
+    "value": 104,
+    "data": [
+      {
+        "label": "Kiến trúc",
+        "value": 10401,
+        "data": null
+      },
+      {
+        "label": "Xây dựng dân dụng",
+        "value": 10402,
+        "data": null
+      },
+      {
+        "label": "Sản xuất máy",
+        "value": 10403,
+        "data": null
+      },
+      {
+        "label": "điện tử",
+        "value": 10404,
+        "data": null
+      },
+      {
+        "label": "y sinh",
+        "value": 10405,
+        "data": null
+      },
+      {
+        "label": "thực phẩm",
+        "value": 10406,
+        "data": null
+      },
+      {
+        "label": "quần áo",
+        "value": 10407,
+        "data": null
+      },
+      {
+        "label": "năng lượng",
+        "value": 10408,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "Giao thông vận tải",
+    "value": 105,
+    "data": [
+      {
+        "label": "hàng không",
+        "value": 10501,
+        "data": null
+      },
+      {
+        "label": "đường sắt",
+        "value": 10502,
+        "data": null
+      },
+      {
+        "label": "vận chuyển / tàu",
+        "value": 10503,
+        "data": null
+      },
+      {
+        "label": "giao thông công cộng",
+        "value": 10504,
+        "data": null
+      },
+      {
+        "label": "vận tải hậu cần",
+        "value": 10505,
+        "data": null
+      },
+      {
+        "label": "Tàu con thoi",
+        "value": 10506,
+        "data": null
+      },
+      {
+        "label": "tiếp viên hàng không",
+        "value": 10507,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "phương tiện văn hóa",
+    "value": 106,
+    "data": [
+      {
+        "label": "Xuất bản truyền thông",
+        "value": 10601,
+        "data": null
+      },
+      {
+        "label": "phương tiện văn hóa",
+        "value": 10602,
+        "data": null
+      },
+      {
+        "label": "quảng cáo sáng tạo",
+        "value": 10603,
+        "data": null
+      },
+      {
+        "label": "Quan hệ công chúng / Công ước",
+        "value": 10604,
+        "data": null
+      },
+      {
+        "label": "anime",
+        "value": 10605,
+        "data": null
+      },
+      {
+        "label": "TV",
+        "value": 10606,
+        "data": null
+      },
+      {
+        "label": "Phóng viên",
+        "value": 10607,
+        "data": null
+      },
+      {
+        "label": "máy chủ",
+        "value": 10608,
+        "data": null
+      },
+      {
+        "label": "thiết kế",
+        "value": 10609,
+        "data": null
+      },
+      {
+        "label": "nhiếp ảnh",
+        "value": 10610,
+        "data": null
+      },
+      {
+        "label": "nghệ thuật",
+        "value": 10611,
+        "data": null
+      },
+      {
+        "label": "nhà văn",
+        "value": 10612,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "Thể thao giải trí",
+    "value": 107,
+    "data": [
+      {
+        "label": "phim",
+        "value": 10701,
+        "data": null
+      },
+      {
+        "label": "Âm nhạc",
+        "value": 10702,
+        "data": null
+      },
+      {
+        "label": "mô hình",
+        "value": 10703,
+        "data": null
+      },
+      {
+        "label": "thể thao thể thao",
+        "value": 10704,
+        "data": null
+      },
+      {
+        "label": "thể dục",
+        "value": 10705,
+        "data": null
+      },
+      {
+        "label": "diễn viên",
+        "value": 10706,
+        "data": null
+      },
+      {
+        "label": "ca sĩ",
+        "value": 10707,
+        "data": null
+      },
+      {
+        "label": "vận động viên",
+        "value": 10708,
+        "data": null
+      },
+      {
+        "label": "huấn luyện viên thể dục",
+        "value": 10709,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "tiện ích công cộng",
+    "value": 108,
+    "data": [
+      {
+        "label": "cơ quan chính phủ",
+        "value": 10801,
+        "data": null
+      },
+      {
+        "label": "y tế",
+        "value": 10802,
+        "data": null
+      },
+      {
+        "label": "giáo dục",
+        "value": 10803,
+        "data": null
+      },
+      {
+        "label": "Luật",
+        "value": 10804,
+        "data": null
+      },
+      {
+        "label": "nghiên cứu khoa học",
+        "value": 10805,
+        "data": null
+      },
+      {
+        "label": "lợi ích công cộng",
+        "value": 10806,
+        "data": null
+      },
+      {
+        "label": "công chức",
+        "value": 10807,
+        "data": null
+      },
+      {
+        "label": "Cảnh sát",
+        "value": 10808,
+        "data": null
+      },
+      {
+        "label": "Quân đội",
+        "value": 10809,
+        "data": null
+      },
+      {
+        "label": "Bác sĩ",
+        "value": 10810,
+        "data": null
+      },
+      {
+        "label": "y tá",
+        "value": 10811,
+        "data": null
+      },
+      {
+        "label": "giáo viên",
+        "value": 10812,
+        "data": null
+      },
+      {
+        "label": "Mẫu giáo",
+        "value": 10813,
+        "data": null
+      },
+      {
+        "label": "luật sư",
+        "value": 10814,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "tự do",
+    "value": 111,
+    "data": [
+      {
+        "label": "tự do",
+        "value": 11101,
+        "data": null
+      },
+      {
+        "label": "không có việc làm",
+        "value": 11102,
+        "data": null
+      },
+      {
+        "label": "khác",
+        "value": 11103,
+        "data": null
+      }
+    ]
+  }
+]

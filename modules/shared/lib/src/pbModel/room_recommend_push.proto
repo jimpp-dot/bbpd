@@ -1,0 +1,25 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../../app/pb";
+
+message ResHomeRecommendEnterRoom {
+	bool success = 1;
+	string msg = 2;
+	HomeRecommendEnterRoom data = 3;
+}
+
+message HomeRecommendEnterRoom {
+	string icon = 1;   //用户图像
+	uint32 uid = 2;    //用户 id
+	string title = 3;  //邀请文案
+	uint32 rid = 4;    //房间 id
+	int32  time = 5;  //倒计时几秒进入
+	string name = 6;  //用户昵称
+	int32  num = 7;   //房间人数
+	repeated string avatar_list = 8;  //麦上3个用户头像
+	string  room_tag_icon = 9;  //房间类型icon
+	repeated string type_bg = 10;  //背景渐变颜色
+	string room_factory_type = 11; //房间类型
+	string tag_color = 12;  //背景颜色
+}

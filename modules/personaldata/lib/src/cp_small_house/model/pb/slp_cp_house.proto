@@ -1,0 +1,90 @@
+syntax = "proto3";
+package pb;
+/*
+cp小屋proto
+*/
+
+option go_package = "../../app/pb";
+
+//小屋个人页简略信息
+message ResHouseProfile {
+	bool success = 1;
+	string msg = 2;
+	HouseProfile house_profile = 3;
+}
+
+message HouseUser {
+	uint32 uid = 1;
+	string icon = 2;
+	string name = 3;
+}
+
+message HouseProfile {
+	HouseUser from = 1;//左边用户信息
+	HouseUser to = 2;//右边用户信息
+	string house_name = 3; //小屋名称
+	uint32 house_level = 4;//小屋等级
+	string house_bg = 5;//小屋背景
+	uint32 house_id = 6; //小屋ID
+	repeated HouseLevelConfig house_level_config = 7;//小屋等级配置
+}
+
+ //小屋详情页信息
+message ResHouseDetail {
+	bool success = 1;
+	string msg = 2;
+	HouseDetail house_detail = 3;
+}
+
+message HouseDetail {
+	uint32 house_id = 1; //小屋ID
+	HouseUser from = 2;//左边用户信息
+	HouseUser to = 3;//右边用户信息
+	uint32 exp = 4; //当前房间经验值
+	uint32 next_level_exp = 5; //下一级别所需经验值
+	uint32 house_level = 6; //小屋等级, 1~30
+	HouseMission house_mission = 7; //小屋任务
+	string house_bg = 8;//小屋背景
+	repeated HouseLevelConfig house_level_config = 9;//小屋等级配置
+	bool has_new_invite = 10; //是否有新邀请
+}
+
+message HouseLevelConfig {
+	uint32 unlocke_level = 1;
+	string name = 2;
+	string bg = 3;
+}
+
+
+message HouseMissionItem {
+	uint32 id = 1; //任务ID
+	string title = 2; //任务描述
+	uint32 add_exp = 3;//完成后可以加的经验值
+	uint32 progress = 4; //当前完成进度
+	bool status = 5;//是否已经完成
+	string icon = 6; //任务左侧icon
+	uint32 limit = 7; //任务上限
+}
+
+message HouseMission {
+	repeated HouseMissionItem cp_mission_list = 1; //亲密度任务
+	repeated HouseMissionItem day_mission_list = 2; //每日任务
+	repeated HouseMissionItem week_mission_list = 3; //每周任务
+}
+
+//待邀请列表
+message ResHouseInvite {
+	bool success = 1;
+	string msg = 2;
+	repeated HouseInviteItem data = 3;
+}
+
+message HouseInviteItem {
+	uint32 id = 1;
+	uint32 uid = 2;
+	string name = 3;
+	string icon = 4;
+	uint32 vip_level = 5;
+	uint32 title = 6;
+	uint32 status = 7;// 状态 0待接收 1已接受
+}

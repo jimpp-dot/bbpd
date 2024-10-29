@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package room.screen.cast.state.finish;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+
+message RoomScreenCastStateFinish {
+  option (pb.register_name) = 'room.screen.cast.state.finish';
+  option (pb.register_id) = 80;
+}

@@ -1,0 +1,92 @@
+@startuml
+
+
+together {
+  class SocketConnection
+  class MessageSender
+  class DatabaseManager
+  class MessageReceiver
+}
+
+
+' PulseIMClient o-- SocketConnection 
+' PulseIMClient o-- MessageSender 
+' PulseIMClient o-- DatabaseManager 
+' SocketConnection - MessageSender 
+' MessageReceiver o-- MessageSender 
+
+SocketConnection -[dotted]-> PulseIMClient : call PulseIMClient业务实现回调
+
+' SocketConnection -[dotted]-> MessageReceiver : 依赖(接收到消息处理)
+' MessageReceiver -[dotted]-> SocketConnection : 依赖(踢出回调、断开连接..)
+note "双向依赖\nMessageReceiver依赖SocketConnection: 踢出回调、断开连接\nMessageReceiver依赖SocketConnection: 接收到消息处理" as N2
+SocketConnection <-[dotted]- N2
+N2 -[dotted]-> MessageReceiver
+
+MessageSender -[dotted]-> DatabaseManager : 依赖 
+
+MessageSender -[dotted]-> PulseIMClient : call PulseIMClient业务实现的回调函数
+
+MessageReceiver -[dotted]-> DatabaseManager : 依赖
+MessageReceiver -[dotted]-> PulseIMClient : call PulseIMClient业务实现的回调函数
+
+DatabaseManager -[dotted]-> DatabaseHelper : 依赖
+note on link : 依赖: 局部方法调用
+
+
+class PulseIMClient {
+  .. 静态回调定义,需要业务实现..
+  {static} Function(...) onMessageSend
+  {static} Function(...) onMessageReceived
+  {static} Function(...) onReceiveReadReceipt
+  {static} Function(...) onRecallMessageReceived
+  {static} Function(...) onCmdMessageReceived
+  {static} Function(...) onNotifyUnreadCount
+  {static} Function(...) onLoginError
+  {static} Function(...) onTryConnect
+  ...
+}
+
+class  SocketConnection {
+  .. 单例 ..
+  + static final SocketConnection _instance
+  + factory SocketConnection()
+  - WebSocket? _channel
+  + static final MessageSender _messageSender
+  ...
+}
+
+class  MessageSender {
+  .. 单例 ..
+  + static final MessageSender _instance
+  + factory MessageSender()
+  - SocketConnection _socket
+  ...
+}
+
+class  MessageReceiver {
+  .. 单例 ..
+  + static final MessageReceiver _instance
+  + factory MessageReceiver()
+  - MessageSender _messageSender
+  ...
+}
+
+class  DatabaseManager {
+  .. 单例 ..
+  + static final DatabaseManager _instance
+  + factory DatabaseManager() 
+  .. 根据userid获取DatabaseHelper实例 ..
+  + DatabaseHelper? getDatabaseHelp({String? userId})
+  ...
+}
+
+class  DatabaseHelper {
+  + late DatabaseInit databaseInit;
+  + DatabaseHelper(String userId) {
+  + Future<Database> get db async {
+  ...
+}
+
+
+@enduml

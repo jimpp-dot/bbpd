@@ -1,0 +1,23 @@
+syntax = "proto3";
+package pb;
+/*
+春节打年兽proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ResYearBeastProgress {
+  bool success = 1;                         //成功true，失败false
+  string msg = 2;                           //失败message
+  YearBeastProgressData data = 4;           //打年兽进度数据
+}
+
+message YearBeastProgressData {
+  bool show = 1;                            //是否展示年兽
+  uint32 total_blood = 2;                   //总血量
+  uint32 left_blood = 3;                    //剩余血量
+  uint32 left_seconds = 4;                  //打年兽剩余秒数
+  uint32 version = 5;                       //年兽版本
+}

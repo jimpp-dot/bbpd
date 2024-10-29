@@ -1,0 +1,111 @@
+syntax = "proto3";
+package pb;
+/*
+账户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+message MountDebrisItem {
+    uint32 id = 1;
+    string name = 2;
+    string img = 3;
+    uint32 exchange_num = 4;   //兑换需要的碎片数
+    uint32 own_num = 5;        //现在有的碎片数
+}
+
+message MountMainPageItem {
+    uint32 cid = 1;            //座驾物品cid
+    bool unlock = 2;             //是否拥有了
+    bool in_use = 3;           //是否佩戴中
+    MountDebrisItem debris_item = 4;  //对应的碎片
+    bool my_unlock = 5;      //我是否解锁了
+    uint32 my_debris_num = 6;      //我是否解锁了
+}
+
+message MountMainPage{
+    string title = 1;       //座驾系列名称
+    repeated MountMainPageItem items = 2;
+    bool in_duration = 3;   //是否在有效期内
+    string end_time = 4;    //使用有效期: "2天5小时"
+    uint32 serial_id = 5;   //系列ID
+}
+
+message ResMountMainPage{
+    bool   success = 1;
+    string msg = 2;
+    MountMain data =3;
+}
+message MountMain{
+    repeated MountDebrisBagTab tab_list = 1;      //座驾系列
+    MountMainPage  detail  = 2;
+}
+
+//座驾碎片背包页
+message ResMountDebrisBag{
+    bool   success = 1;
+    string msg = 2;
+    MountDebrisBag data =3;
+}
+message MountDebrisBag{
+    repeated MountDebrisBagTab tab_list = 1;
+    repeated MountDebrisBagItem debris_list = 2;
+}
+message MountDebrisBagTab{
+    uint32 serial_id = 1;   //系列ID
+    string name = 2;        //系列名称
+}
+message MountDebrisBagItem{
+    uint32 cid = 1;            //座驾物品cid
+    string img = 2;            //碎片图片
+    uint32 num = 3;            //碎片数量
+    string name = 4;           //碎片名称
+    uint32 id = 5;             //碎片id
+    string mount_name = 6;     //对应座驾名称
+    uint32 exchange_num = 7;   //兑换该碎片需要其他碎片数量
+    uint32 exchange_mount_num = 8;   //兑换该碎片需要其他碎片数量
+    string mount_img = 9;       //座驾图片
+}
+
+//碎片兑换结果
+message ResMountExchange{
+    bool   success = 1;
+    string msg = 2;
+}
+
+message ResMountSerialTab{
+    bool   success = 1;
+    string msg = 2;
+    repeated MountDebrisBagTab data = 3;
+}
+
+message ResMountSerialRank{
+    bool   success = 1;
+    string msg = 2;
+    MountSerialRank data = 3;
+}
+message MountSerialRank{
+    MountSerialRankItem me = 1;
+    repeated MountSerialRankItem list = 2;
+    string advanced_debris_name = 3;
+}
+message MountSerialRankItem{
+    uint32 uid = 1;
+    string name = 2;
+    string icon = 3;
+    uint32 mount_num = 4;   //座驾数
+    uint32 debris_num = 5;  //碎片数
+    uint32 other_num = 6;   //其他碎片
+    uint32 rank = 7;        //排名
+}
+//跳转到房间并打开礼物面板
+message ResMountSerialJumpRoom{
+    bool   success = 1;
+    string msg = 2;
+    MountSerialJumpRoom data = 3;
+}
+message MountSerialJumpRoom{
+    string jump_url = 1;
+}

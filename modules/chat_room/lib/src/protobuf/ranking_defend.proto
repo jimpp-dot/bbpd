@@ -1,0 +1,22 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message DefendData {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 defend = 4;
+  string expire = 5;
+  repeated uint32 has = 6;
+}
+
+message ResRankingDefend {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  repeated DefendData data = 3; //返回的数据结果
+  bool hideRank = 4;
+}

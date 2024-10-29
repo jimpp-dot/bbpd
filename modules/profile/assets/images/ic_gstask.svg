@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+  <title>bbpd_ic_gstask</title>
+  <g id="ic_gstask" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <rect id="矩形" stroke="#313131" stroke-width="2" stroke-linejoin="round" x="3" y="5" width="18" height="15" rx="2"/>
+    <rect id="矩形" fill="#313131" x="7" y="2" width="2" height="6" rx="1"/>
+    <rect id="矩形" fill="#313131" x="15" y="2" width="2" height="6" rx="1"/>
+    <polyline id="路径-35" stroke="#313131" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(12.597748, 11.647748) rotate(-45.000000) translate(-12.597748, -11.647748) " points="9.39774756 9.96024756 9.39774756 11.0852476 9.39774756 13.3352476 15.7977476 13.3352476"/>
+  </g>
+</svg>

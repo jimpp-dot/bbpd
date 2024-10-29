@@ -1,0 +1,56 @@
+syntax = "proto3";
+    
+package party.wheel.refresh;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+
+message PartyWheelRefresh {
+    option (pb.register_name) = 'party.wheel.refresh';
+    option (pb.register_id) = 55;
+    Wheel wheel = 1;
+    repeated List list = 2;
+    repeated User user = 3;
+    repeated Punish punish = 4;
+    repeated Punlist punlist = 5;
+
+    message Wheel {
+        uint32 id = 1;
+        uint32 is_started = 2;
+        string name = 3;
+        uint32 punish_id = 4;
+        uint32 rotating = 5;
+        User user = 6;
+    }
+
+    message User {
+        uint32 uid = 1;
+        string icon = 2;
+    }
+
+    message List {
+        string desc = 1;
+        uint32 id = 2;
+        string name = 3;
+        uint32 system_id = 4;
+        uint32 uid = 5;
+    }
+
+    message Punish {
+        uint32 paper_count = 1;
+        string system_changename_id = 2;
+        repeated uint32 system_ids = 3;
+        string system_voice_id = 4;
+        uint32 uid = 5;
+    }
+
+    message Punlist {
+        string content = 1;
+        uint32 id = 2;
+        string type = 3;
+    }
+
+}

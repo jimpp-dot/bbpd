@@ -1,0 +1,33 @@
+syntax = "proto3";
+package pb;
+/*
+周星榜相关proto
+*/
+
+option go_package = "../app/pb";
+
+//周星榜名人堂
+message ResWeekStarFameHall {
+  bool success = 1;
+  string msg = 2;
+  bool has_more = 3;
+  repeated WeekStarFameHallData data = 4;
+}
+
+message WeekStarFameHallData {
+  string start_date = 1;
+  string end_date = 2;
+  repeated WeekStarFameHallList list = 3;
+}
+
+message WeekStarFameHallList {
+  repeated WeekStarFameHallItem item = 1;
+}
+
+message WeekStarFameHallItem {
+  uint32 gift_id = 1;               //周星礼物id
+  uint32 uid = 2;                   //用户id
+  string name = 3;                  //用户名称
+  string icon = 4;                  //用户头像
+  string type = 5;                  //类型,income-收礼,consume-送礼
+}

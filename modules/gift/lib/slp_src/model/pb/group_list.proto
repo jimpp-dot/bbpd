@@ -1,0 +1,27 @@
+syntax = "proto3";
+package pb;
+/*
+礼物面板的pb定义
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ResStarshipMemberList{
+  bool success = 1;
+  string msg = 2;
+  repeated StarshipMemberItem data = 3;
+}
+
+message StarshipMemberItem{
+  uint32 uid = 1;
+  string icon = 2;
+  string name = 3;
+  uint32 vip_lv = 4;   //vip等级
+  uint32 add_day = 5; //加入星舰天数,最低1天
+  uint32 role = 6;   //0: 普通用户 1: 议员 2: 副席 3: 首席
+  uint32 score = 7;  //威望值
+  uint32 sex = 8;   //性别
+  uint32 age = 9;   //年纪
+}

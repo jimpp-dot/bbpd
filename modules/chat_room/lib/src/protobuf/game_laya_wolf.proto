@@ -1,0 +1,23 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+// 狼人杀房间用户麦位更新 小窗
+message GamesWolfUpdateMicMessage{
+  option (pb.register_name) = 'games.room.wolf.update.mic';
+  option (pb.register_id) = 40007;
+
+  message Status {
+    uint32 uid = 1; //用户id
+    uint32 speak = 2; // 可否说 1是 2否
+    uint32 listen = 3; // 可否听 1是 2否
+  }
+  uint32 rid = 1; // 房间id
+  repeated Status status = 2; // 麦位状态
+  uint32 audience_status = 3; // 观众能否听 1是 2否
+}

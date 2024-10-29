@@ -1,0 +1,197 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+//0-未开始,1-过渡阶段,2-游戏阶段,3-结束阶段
+enum AvatarKtvStage {
+  SY_ROOM_KTV_STAGE_INIT = 0; //初始阶段
+  SY_ROOM_KTV_STAGE_READY = 1; //准备演唱
+  SY_ROOM_KTV_STAGE_SING = 2; //演唱中
+  SY_ROOM_KTV_STAGE_SHOW_SCORE = 3; //结果展示
+  SY_ROOM_KTV_STAGE_OVER = 4; //演唱结束
+}
+
+
+message AvatarKtvConfigDataRoom{
+  uint32 rid = 1;
+  AvatarKtvStage room_state = 2; //房间的演唱阶段
+  int32 state_expire = 3; //此间断过期时间,-1表示永久 0～9999，表示还剩下的秒数
+  AvatarKtvConfig sy_ktv_config = 4;
+}
+
+message AvatarKtvConfig {
+  uint32 choose_song_limit = 1; //个人可以点歌数
+  uint32 choose_song = 2; //仅麦上用户可以点歌
+  uint32 will_song_list_num = 3;//待唱列表里的个数
+}
+
+message  UserPropInfoItem {
+  uint32  pid = 1;//道具的id
+  string  ptype = 2; //道具的
+  string  prop_name = 3;//道具的名字，根据地区或者别的信息整合后的
+  string  prop_desc = 4;//道具的描述，根据地区或者别的信息整合后的
+  string  prop_icon = 5;//道具的icon，根据地区或者别的信息整合后的
+  string  prop_src = 6;//道具的资源地址，根据地区或者别的信息整合后的
+  int32 top_dp = 7;// 道具的定位尺寸，顶部
+  int32 left_dp = 8;// 道具的定位尺寸，顶部
+  int32 width = 9;// 道具的定位尺寸，顶部
+  int32 height = 10;// 道具的定位尺寸，顶部
+}
+
+message AvatarKtvSingerInfo {
+  uint32 uid = 1;//演唱者的uid
+  string user_name = 2;//演唱者的名字
+  string user_icon = 3; //演唱的icon
+  int32 user_sing_score = 4;//演唱者的得分
+  string now_song_id = 5;//在坑位上的人演唱的歌曲id
+  string now_song_name = 6;//在坑上人的歌曲名称
+  string now_lrc_url = 7;//歌词地址
+  uint32 next_singer_uid = 8;//下一个 要演唱的uid
+  string next_singer_name = 9;//下一个演唱者的名字
+  string next_song_id = 10;//下一个歌曲的id
+  string next_song_name = 11;//下一个歌曲的名字
+  string now_song_artist = 12;//当前歌曲的歌手名字
+  uint32 singer_offline_status = 13;//当前歌手的在线状态
+  map<string, UserPropInfoItem> prop_infos = 14;//用户的道具
+  repeated UserAvatarInfo  user_avatar_info = 15; // 用户的avatar 配置列表
+
+}
+
+message UserAvatarInfo {
+  uint32 config_id = 1; // config id
+  string config = 2; // 配置值
+  uint32 first_ctype = 3; // 所属一级分类类型(枚举值在starify_go中的 proto/api/sy_avatar.proto中)
+  uint32 first_classify_id = 4; // 所属一级分类ID
+  uint32 second_ctype = 5; // 所属二级分类类型(枚举值在starify_go中的 proto/api/sy_avatar.proto中)
+  uint32 second_classify_id = 6; // 所属二级分类ID
+}
+
+
+message AvatarKtvConfigData {
+  option (pb.register_name) = 'avatar.ktv.stage.handle';
+  option (pb.register_id) = 30007;
+  AvatarKtvConfigDataRoom room_config = 1;//starify-ktv的配置信息
+  AvatarKtvSingerInfo singer_info = 2; //starify-ktv的演唱者信息
+}
+
+
+message AvatarKtvOption {
+  uint32 recommend_frequency = 1;//歌曲推荐的刷新频率，单位秒
+  uint32 apply_mic_frequency = 2;//申请上麦的频率，单位秒
+  uint32 syc_score_sec = 3;//同步score的间秒数
+  uint32 choose_song_limit_min = 4;  //个人可以点歌数设置下限
+  uint32 choose_song_limit_max = 5;//个人可以点歌数设置上限
+  uint32 choose_song_limit_room = 6;  //歌房可以点歌总数
+}
+
+message AvatarKtvConfigRsp {
+  bool success = 1;
+  string msg = 2;
+  AvatarKtvConfigData data = 3;//动态配置项
+  AvatarKtvOption   option = 4;//静态配置项
+  uint32 source_type = 5;// 歌库类型，0：主app， 1：zego
+}
+
+message AvatarKtvRefresh{
+  option (pb.register_name) = 'avatar.ktv.song.list';
+  option (pb.register_id) = 30008;
+  uint32  rid = 1;//房间的rid
+  string refresh_type = 2;//需要websocket刷新的类型，目前默 song_list -待唱列表
+  uint32 operator_uid = 3;//操作song_list的人的uid
+  string operate_type = 4;//操作的类型 del 删歌，next 切歌 top置顶
+  uint32 be_operated_uid = 5;//被操作的用户的uid
+  string operate_song_id = 6;//被操作的歌曲的id
+  string operate_song_name = 7;//被操作的歌曲的名字
+  uint32 will_song_list_num = 8;//待唱列表里的个数
+  uint32 has_song_list_num=9;//已唱列表里的个数
+}
+
+
+message MusicTab {
+   string index = 1;
+   string parent = 2;
+   string name = 3 ;
+   repeated MusicTab subTab = 4;
+}
+
+message MusicTabRsp {
+  bool success = 1;
+  string msg = 2;
+  repeated MusicTab data = 3;
+}
+
+message SongItem {
+  string song_url = 1; //歌曲地址
+  uint32 duration = 2; //歌曲时长
+  string lrc_url = 3; //歌词地址
+  string bidi_url = 4; //歌词地址
+  string cover_url = 6; //封面地址
+  string id = 7;  //音乐id
+  string name = 8;     //名称
+  repeated string singer_set = 9; //歌手
+  string uploader = 10; //上传人
+  string choose_name = 11;//点歌人
+  uint32 choosed  = 12; //是否已点2:正在唱
+  uint32 choose_uid  = 13; //是否已点
+  string choose_icon  = 14; //是否已点
+  string accompany_url = 15;// 伴奏
+  string file = 16; //唯一识别标示,已点采有
+  uint32 source_type = 17; //歌库类型，0：主app， 1：zego
+}
+
+message SongList{
+  repeated SongItem info = 1;
+  bool hasMore = 2;
+  uint32 next_id = 3;
+}
+
+message RespChooseSongList{
+  bool success = 1;
+  string msg = 2;
+  SongList data = 3;
+}
+
+message RespChooseSongNum{
+  bool success = 1;
+  string msg = 2;
+  ChooseSongNumInfo data = 3;
+
+}
+
+message ChooseSongNumInfo {
+  uint32 user_song_num = 1; //用户点歌数
+  uint32 room_song_num = 2; //房间点歌数
+}
+
+
+enum SyPropTypeEnum {
+  SyPropTypeRing = 0; //道具之-光圈
+  SyPropTypeInstrument = 1; //道具之-乐器
+}
+
+message RspAvatarPropListItem{
+  uint32  pid = 1;//道具的id
+  string  ptype = 2; //道具的
+  string  prop_name = 3;//道具的名字，根据地区或者别的信息整合后的
+  string  prop_desc = 4;//道具的描述，根据地区或者别的信息整合后的
+  string  prop_icon = 5;//道具的icon，根据地区或者别的信息整合后的
+  string  prop_src = 6;//道具的资源地址，根据地区或者别的信息整合后的
+  int32 top_dp = 7;// 道具的定位尺寸，顶部
+  int32 left_dp = 8;// 道具的定位尺寸，顶部
+  int32 width = 9;// 道具的定位尺寸，顶部
+  int32 height = 10;// 道具的定位尺寸，顶部
+}
+
+
+// 道具列表的返回数据
+message RspAvatarPropList {
+  bool    success = 1; //  成功与否
+  string  msg = 2; // 错误信息
+  repeated  RspAvatarPropListItem data = 3;//道具列表
+  uint32 dress_on = 4;//用户正在穿戴的，0表示没有
+}

@@ -1,0 +1,135 @@
+syntax = "proto3";
+
+package grabmic.refresh;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+import "google/protobuf/struct.proto";
+
+message GrabMicRefresh {
+  option (pb.register_name) = 'grabmic.refresh';
+  option (pb.register_id) = 38;
+  string state = 1;
+  GrabmicInfoMap map = 2;
+  repeated GamingList gaming_list = 3;
+  uint32 grabmic_version = 4;
+  SceneGift scene_gift = 5;
+
+
+  message SceneGift {
+    string id = 1;
+    string name = 2;
+    string name_zh_tw = 3;
+    string name_en = 4;
+    string price = 5;
+    string display = 6;
+    string sub_display = 7;
+    string type = 8;
+    string gift_type = 9;
+    string income_type = 10;
+    string with_end = 11;
+    string size = 12;
+    string size_big = 13;
+    string ordering = 14;
+    string deleted = 15;
+    string title = 16;
+    string naming = 17;
+    string xratio = 18;
+    string xtype = 19;
+    string excludes = 20;
+    string tag_url = 21;
+    string tag_ids = 22;
+    string description = 23;
+    string jump_page = 24;
+    string unlock_limit = 25;
+    string ext_id = 26;
+    string is_skin = 27;
+    string is_combo = 28;
+    string version = 29;
+    string vap_type = 30;
+    string vap_size = 31;
+    string vap_header = 32;
+    string vap_header_start = 33;
+    string vap_header_end = 34;
+    string magic = 35;
+    string magic_size = 36;
+    string category = 37;
+    string app_id = 38;
+    string is_app_public = 39;
+  }
+
+  message EffectList {
+    string none_grab = 1;
+    string grab_success = 2;
+    string grab_fail = 3;
+  }
+
+  message GamingList {
+    uint32 position = 1;
+    uint32 origin = 2;
+    string name = 3;
+    string icon = 4;
+    uint32 points = 5;
+    uint32 health = 6;
+    uint32 is_out = 7;
+    uint32 rank_num = 8;
+    uint32 is_offline = 9;
+  }
+
+  message Rank {
+    uint32 position = 1;
+    uint32 origin = 2;
+    uint32 points = 3;
+    string name = 4;
+    string icon = 5;
+    uint32 total = 6;
+    uint32 success = 7;
+    uint32 win_rate = 8;
+    uint32 score = 9;
+    uint32 rank_num = 10;
+  }
+
+  message GrabmicInfoMap {
+    EffectList effect_list = 1;
+    uint32 max_count = 2;
+    Song song = 3;
+    string title = 4;
+    repeated Rank rank = 5;
+    google.protobuf.Value current_origin = 6;
+    repeated string grab_uids = 7;
+    uint32 start_grab_second = 8;
+    string type = 9;
+    uint32 grab_max_second = 10;
+    string song_result = 11;
+    uint32 song_second = 12;
+    string sub_title = 13;
+    string effect_info = 14;
+    uint32 count = 15;
+  }
+
+  message Song {
+    string id = 1;
+    string name = 2;
+    string singer_name = 3;
+    repeated google.protobuf.ListValue lyric = 4;
+    string path = 5;
+    string duration = 6;
+    string uploader_uid = 7;
+    string uploader_name = 8;
+    string tag = 9;
+    string status = 10;
+    string play_count = 11;
+    string good_count = 12;
+    string bad_count = 13;
+    string sing_success_count = 14;
+    string sing_fail_count = 15;
+    string dateline = 16;
+    string score = 17;
+    string user_is_auth = 18;
+    string area = 19;
+    string app_id = 20;
+    string sing_mode = 21;
+    string uploader_icon = 22;
+  }
+}

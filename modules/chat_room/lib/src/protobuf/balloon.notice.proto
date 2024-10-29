@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package balloon.notice;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+message BalloonNotice {
+    option (pb.register_name) = 'balloon.notice';
+    option (pb.register_id) = 20011;
+    
+    uint32 id = 1;
+    int64 expire_time = 2;
+    string icon = 3;
+    bool show_animate = 4;
+    bool stop = 5;
+    string animate = 6;
+    int32 vap_size = 7;
+}

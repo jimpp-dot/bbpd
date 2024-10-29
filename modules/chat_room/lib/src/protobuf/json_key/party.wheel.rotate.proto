@@ -1,0 +1,29 @@
+syntax = "proto3";
+    
+package party.wheel.rotate;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message PartyWheelRotate {
+    option (pb.register_name) = 'party.wheel.rotate';
+    option (pb.register_id) = 56;
+    Wheel wheel = 1;
+
+    message User {
+        string icon = 1;
+        uint32 uid = 2;
+    }
+
+    message Wheel {
+        uint32 id = 1;
+        uint32 is_started = 2;
+        string name = 3;
+        uint32 punish_id = 4;
+        uint32 rotating = 5;
+        User user = 6;
+    }
+
+}

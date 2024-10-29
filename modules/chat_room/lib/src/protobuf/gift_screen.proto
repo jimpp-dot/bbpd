@@ -1,0 +1,21 @@
+syntax = "proto3";
+package pb;
+
+/*
+订单相关proto
+*/
+option go_package = "../app/pb";
+
+message RespGiftScreen {
+  bool success = 1;						  //是否成功
+  string message = 2;						//结果说明
+  GiftScreenData data = 3;
+}
+
+message GiftScreenData {
+  int32 switch_state = 1;
+  int32 delay = 2;
+  uint32 gift_id = 3;
+  string gift_name = 4;
+  string content = 5;
+}

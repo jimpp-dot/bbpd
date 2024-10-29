@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package common.content;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+import "google/protobuf/struct.proto";
+
+// 消息体不包括name和data字段，content内容为字符串
+message CommonContent {
+  option (pb.register_name) = 'common.content';
+  option (pb.register_id) = 16;
+  string content = 1;
+  Extra extra = 2;
+  string name = 3;
+  User user = 4;
+  uint64 messageId = 5;
+
+  message Extra {
+    bool icongray = 1;
+    uint32 is_grow_user = 2;
+    bool is_guess = 3;
+    uint32 is_newer = 4;
+    uint32 title = 5;
+    uint32 title_new = 6;
+    uint32 vip = 7;
+    uint32 vip_new = 8;
+    At at = 9;
+    Gift gift = 10;
+    string type = 11;
+    string uuid = 14;
+    UserInfo artist = 15;
+    UserInfo agent = 16;
+    string icon = 17;
+    string from = 18;
+    string message = 19;
+
+    uint32 uid = 20;
+    string effect_url = 21;
+    uint32 popularity_level = 22;
+    string message_background = 23;
+    string background_new = 24;
+    string bubble_front_color = 25;
+    string frame = 26;
+    bool show_welcome_bubble = 27;//是否展示欢迎气泡
+
+    message UserInfo {
+      string name = 1;
+      string icon = 2;
+      // int, string
+      google.protobuf.Value  sex = 3;
+    }
+
+    message At {
+      uint32 uid = 1;
+      string name = 2;
+    }
+
+    message Gift {
+      uint32 flyingTime = 1;
+      // int, float, string
+      google.protobuf.Value fromUid = 2;
+      uint32 giftId = 3;
+      double toUid = 4;
+      string url = 5;
+    }
+  }
+
+  message User {
+    string background_new = 1;
+    string bubble_front_color = 2;
+    string frame = 3;
+    uint32 id = 4;
+    string message_background = 5;
+    string name = 6;
+    uint32 popularity_level = 7;
+    string portraitUri = 8;
+  }
+}

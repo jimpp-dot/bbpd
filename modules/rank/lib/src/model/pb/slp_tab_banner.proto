@@ -1,0 +1,37 @@
+syntax = "proto3";
+package pb;
+/*
+banner 相关proto
+*/
+
+option go_package = "../../app/pb";
+
+
+message ResTabBanner{
+  bool success = 1;
+  string msg = 2;
+  TabBannerData data = 3;
+}
+
+message TabBannerData {
+  repeated TabBannerItem items = 1;
+  TabBannerOptionData opt = 2;
+}
+
+message TabBannerItem{
+  uint32 id = 1;
+  string image = 2;
+  uint32 width = 3;
+  uint32 height = 4;
+  uint32 duration = 5;
+  string url = 6;
+  string title = 7;
+  string position = 8;
+  string data = 9;
+  string type = 10;
+  TabBannerOptionData opt = 11;
+}
+
+message TabBannerOptionData {
+  bool show_close = 1;
+}

@@ -1,0 +1,32 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message PackageUser {
+  uint32 uid = 1;//用户ID
+  string name = 2;//用户昵称
+  string icon = 3;//用户头像
+  uint32 sex = 4;//用户性别
+  string birthday = 5;//用户生日
+}
+
+message PackageList {
+  uint32 id = 1;//记录id
+  uint32 rid = 2;//房间id
+  uint32 bid = 3;
+  uint32 sender = 4;//打赏用户id
+  uint32 uid = 5;//被打赏用户id
+  uint32 money = 6;//打赏金额
+  string dateline = 7;//打赏时间
+  PackageUser from = 8;//
+  PackageUser to = 9;//
+}
+
+message ResPackageLog {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  repeated PackageList data = 3; //返回的数据结果
+}

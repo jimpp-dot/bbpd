@@ -1,0 +1,173 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+// 广场达人pb
+// https://docs.google.com/document/d/11k22X6OefeUjZfrVafIjHyt-OabmF1SDEw7f2zR-Z0I/edit
+// https://lanhuapp.com/web/#/item/project/stage?pid=e9ae9f90-d6c5-4718-88b9-f62c9c359a4c&tid=a275fc7e-f90d-4d4e-a7ba-2625d2c4604a&see=all
+
+
+
+
+message SquareTaskInfo {
+  message scoreItem {
+     string name = 1;
+     int32 score = 2;
+  }
+  uint32 id = 1; // 任务编号
+  string name = 2; // 描述
+  string icon = 3; // icon
+  string type = 4; //circle  comment read like follow_topic add_helper
+  repeated scoreItem score_list = 5; // 积分说明
+  int32 status = 6; // 状态 0未完成  1已完成
+  string hint = 7; // name中高亮的
+  uint32 done_num = 8; // 已完成数量
+  uint32 total_num = 9; // 每日总数量
+}
+
+message SquareTopicInfo {
+    uint32 id = 1;
+    string name = 2;
+    string icon = 3;
+    string sub_title = 4;
+    uint32 effect_time = 5;
+}
+
+message SquareCircleExample {
+  uint32 id = 1;
+  string icon = 2;
+  uint32 uid = 3;
+}
+// 主页
+message SquareHomeRsp {
+  bool success = 1;
+  string msg = 2;
+  message Data {
+    repeated SquareTaskInfo task_list = 1;
+    string type = 2; // new新手任务 day每日任务
+    repeated SquareTopicInfo topic_list = 3; // 话题列表
+    repeated SquareCircleExample example_list = 4; // 动态样本
+    uint32 helper_uid = 5;
+  }
+  Data data = 3;
+}
+
+
+message SquareTaskLogInfo {
+  uint32 id = 1;
+  string type = 2; // 每日  新手
+  string name = 3; // 任务名称、描述
+  int32 score = 4; // 积分变动
+  uint32 time = 5; // 时间
+}
+
+// 任务列表
+message SquareTaskLogRsp {
+  bool success = 1;
+  string msg = 2;
+  message Data {
+    repeated  SquareTaskLogInfo list = 1;
+    uint32 next_id = 2; // 分页偏移量
+  }
+  Data data = 3;
+}
+
+message SquareRankUserInfo {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 rank = 4;
+  int32 score = 5;
+  uint32 rid = 6;
+}
+
+// 广场榜单
+message SquareRankRsp {
+  bool success = 1;
+  string msg = 2;
+  message Data {
+    repeated  SquareRankUserInfo list = 1;
+    SquareRankUserInfo me = 2;
+    string type = 3; // week周榜 whole总榜1
+  }
+  Data data = 3;
+}
+
+
+
+
+//广场弹窗
+
+
+message SquareShop {
+  uint32 id=1;
+  uint32 goods_id=2;
+  string name=3;
+  string source_url=4;
+  uint32 score=5;//创作值兑换分1
+  float days=6;//天数
+  string cate_name=7;//类型名称
+  uint32 goods_type=8;
+}
+
+//弹窗
+message SquarePopupRsp {
+  bool success = 1;
+  string msg = 2;
+  SquareTopicInfo topic = 3;
+  repeated SquareShop goods = 4;
+  string activity_url = 5;//活动url
+  uint32 scene = 6;//客户端的透传字段
+  uint32 days = 7;//周期天数，多久弹一次
+}
+
+message BroadcastMsg {
+  string content=2;
+}
+
+message ConvertLog {
+  string fmt_time = 1;//兑换时间.由服务端格式换
+  string convert_pretend=2;//装扮信息,由服务端格式化
+  int32 convert_score=3;//消耗创作值
+}
+
+//广播
+message BroadcastDataRsp {
+  bool success = 1;
+  string msg = 2;
+  repeated SquareShop goods = 3;
+  repeated BroadcastMsg broadcast_msg = 4;//广播消息
+}
+
+message MySquareRsp {
+  bool success = 1;
+  string msg = 2;
+  uint32 square_score=3;//个人当前剩余创作值
+  uint32 h_square_score=4;//个人历史创作值
+}
+
+
+message ConvertListRsp {
+  bool success = 1;
+  string msg = 2;
+  bool is_more = 3;
+  repeated SquareShop list =4;
+}
+
+
+//兑换记录
+message ConvertGoodsLogRsp {
+  bool success = 1;
+  string msg = 2;
+  bool is_more = 3;//true，还有下一页
+  repeated ConvertLog list = 4;
+}
+
+//兑换
+message ConvertGoodsRsp {
+  bool success = 1;
+  string msg = 2;
+}

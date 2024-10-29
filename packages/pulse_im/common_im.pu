@@ -1,0 +1,120 @@
+@startuml
+
+PulseIMClient o-- SocketConnection : 组合 
+note on link : 组合: 作为成员变量被持有
+
+PulseIMClient o-- MessageSender : 组合
+PulseIMClient o-- DatabaseManager : 组合
+SocketConnection o-o MessageSender : 相互组合持有\nSocketConnection使用MessageSender发送登录请求数据 \n MessageSender使用SocketConnection发送消息
+
+MessageReceiver o-- MessageSender : 组合(sendAck、同步消息请求)
+
+' SocketConnection -[dotted]-> PulseIMClient : 依赖(call PulseIMClient业务实现回调)
+' SocketConnection -[dotted]-> MessageReceiver : 依赖(接收到消息处理)
+
+' MessageSender -[dotted]-> DatabaseManager : 依赖 
+' MessageSender -[dotted]-> PulseIMClient : 依赖(call PulseIMClient业务实现回调)
+
+' MessageReceiver o-- MessageSender : 组合(sendAck、同步消息请求)
+
+' MessageReceiver -[dotted]-> DatabaseManager : 依赖
+' MessageReceiver -[dotted]-> PulseIMClient : 依赖(call PulseIMClient业务实现回调)
+' MessageReceiver -[dotted]-> SocketConnection : 依赖(踢出回调断开连接)
+
+DatabaseManager -[dotted]-> DatabaseHelper : 依赖
+note on link : 依赖: 局部方法调用
+
+class PulseIMClient {
+  .. 组合不同的类,提供接口能力 ..
+  {static}  DatabaseHelper? _db
+  {static} final SocketConnection _socketConnection
+  {static} final MessageSender _messageSender
+
+  .. 静态回调定义,需要业务实现..
+  {static} Function(...) onMessageSend
+  {static} Function(...) onMessageReceived
+  ...
+  .. init & config..
+  static Future initLocalData(...)
+  static initRemoteConfig(...)
+  ...
+  .. db 操作接口: 会话列表、消息 ..
+  static Future _databaseManager_init() 
+  ...
+  .. SocketConnection 连接、登出..
+  static void connect(...)
+  static void reconnectIfNeed()
+  static Future logout()
+  .. 发送消息 ..
+  static Future<..> sendMessage(...)
+  ...
+  .. 录音&播放: 调用平台层能力 ..
+  ...
+}
+
+class  SocketConnection {
+  .. 单例 ..
+  + static final SocketConnection _instance
+  + factory SocketConnection()
+  - WebSocket? _channel
+  .. 组合发送消息类 ..
+  {static} final MessageSender _messageSender
+  ...
+  .. init & send..
+  void init(String pushToken, String pushVendor)
+  bool sendPacket(dynamic packet) 
+  ...
+  __callback__
+  void _onError(Object error, StackTrace stackTrace)
+  void _onDone()
+  void _onData(message)
+  Future _disconnect()
+  ...
+}
+
+class  MessageSender {
+  .. 单例 ..
+  + static final MessageSender _instance
+  + factory MessageSender()
+  .. 组合连接类 ..
+  - final SocketConnection _socket
+  .. login ..
+  + Future<bool> login(String pushToken, String pushVendor) async
+  .. send ..
+  + Future<MessageContent> sendMessage(...)
+  + Future<MessageContent> recallMessage(MessageContent message) async
+  ...
+}
+
+class  MessageReceiver {
+  .. 单例 ..
+  + static final MessageReceiver _instance
+  + factory MessageReceiver()
+  .. 组合发送消息类 ..
+  - final MessageSender _messageSender
+  .. Receive ..
+  + void onReceiverMessage(String data) async
+  ...
+  __handles__
+  - void _handleLoginRes(Map data)
+  ...
+}
+
+class  DatabaseManager {
+  .. 单例 ..
+  + static final DatabaseManager _instance
+  + factory DatabaseManager() 
+  .. 根据userid获取DatabaseHelper实例 ..
+  + DatabaseHelper? getDatabaseHelp({String? userId})
+  ...
+}
+
+class  DatabaseHelper {
+  + late DatabaseInit databaseInit;
+  + DatabaseHelper(String userId) {
+  + Future<Database> get db async {
+  ...
+}
+
+
+@enduml

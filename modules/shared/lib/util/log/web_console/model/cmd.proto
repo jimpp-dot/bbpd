@@ -1,0 +1,37 @@
+syntax = "proto3";
+// create a proto buffer file
+// define the message type Cmd which include an enum Op and a message Data
+enum Op {
+  SetLogLevel = 0;
+  SetLogType = 1;
+}
+
+enum LogLevel {
+  Verbose = 0;
+  Debug = 1;
+  Info = 2;
+  Warning = 3;
+  Error = 4;
+  Wtf = 5;
+  Nothing = 6;
+}
+
+enum LogType {
+  Console = 0;
+  Http = 1;
+  RoomSocket = 2;
+  ImSocket = 3;
+  Tracker = 4;
+  ChatSocket = 5;
+}
+
+message Cmd {
+  Op op = 1;
+  Data data = 2;
+}
+
+message Data {
+  LogLevel log_level = 1;
+  LogType log_type = 2;
+  string other = 3;
+}

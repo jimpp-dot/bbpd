@@ -1,0 +1,14 @@
+syntax = "proto3";
+    
+package appraiser.refresh.ui;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message AppraiserRefreshUI {
+    option (pb.register_name) = 'appraiser.refresh.ui';
+    option (pb.register_id) = 2;
+    repeated uint32 pb = 1;
+}

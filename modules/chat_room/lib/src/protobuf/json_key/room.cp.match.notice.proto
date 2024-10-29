@@ -1,0 +1,32 @@
+syntax = "proto3";
+    
+package room.cp.match.notice;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message RoomCpMatchNotice {
+    option (pb.register_name) = 'room.cp.match.notice';
+    option (pb.register_id) = 65;
+    string frame = 1;
+    bool icongray = 2;
+    uint32 is_newer = 3;
+    uint32 level = 4;
+    uint32 num = 5;
+    uint32 rid = 6;
+    string rname = 7;
+    string toicon = 8;
+    string toname = 9;
+    string totitle = 10;
+    uint32 totitle_new = 11;
+    uint32 tovip = 12;
+    string type = 13;
+    string uicon = 14;
+    string uname = 15;
+    string utitle = 16;
+    uint32 utitle_new = 17;
+    uint32 uvip = 18;
+    string word = 19;
+}

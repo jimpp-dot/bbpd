@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20px" height="20px" viewBox="0 0 20 20" version="1.1">
+  <title>bbpd_ic_soundplay_blue</title>
+  <g id="ic_soundplay_blue" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+    <g id="ic_soundplay" stroke="#60C8FF" stroke-width="1.5">
+      <g id="inner" transform="translate(5.000000, 3.333333)">
+        <path d="M0.0622155608,4.35142635 C0.619029119,4.9082399 0.963425465,5.67747067 0.963425465,6.52713952 C0.963425465,7.37680836 0.619029119,8.14603913 0.0622155608,8.70285269" id="3"/>
+        <path d="M3.26356976,2.17571317 C4.37719687,3.28934029 5.06598957,4.82780183 5.06598957,6.52713952 C5.06598957,8.22647721 4.37719687,9.76493875 3.26356976,10.8785659" id="2"/>
+        <path d="M6.46492396,3.37507799e-13 C8.13536463,1.67044067 9.16855367,3.97813298 9.16855367,6.52713952 C9.16855367,9.07614606 8.13536463,11.3838384 6.46492396,13.054279" id="1"/>
+      </g>
+    </g>
+  </g>
+</svg>

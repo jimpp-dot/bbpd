@@ -1,0 +1,7 @@
+-keep class cn.com.chinatelecom.gateway.lib.** {*;}
+-keep class com.unicom.xiaowo.login.** {*;}
+-keep class com.cmic.sso.sdk.** {*;}
+-keep class com.mobile.auth.** {*;}
+-keep class android.support.v4.** { *;}
+-keep class org.json.**{*;}
+-keep class com.alibaba.fastjson.** {*;}

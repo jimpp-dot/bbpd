@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+  <title>bbpd_&#x76F4;&#x64AD;&#x5F39;&#x5E55;&#xFF08;&#x5F00;&#xFF09;</title>
+  <g fill="none" fill-rule="evenodd">
+    <path d="M0 0h28v28H0z"/>
+    <path stroke="#8EE1FF" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14 23h0-5.4A3.6 3.6 0 0 1 5 19.4V8.6A3.6 3.6 0 0 1 8.6 5h10.8A3.6 3.6 0 0 1 23 8.6V14h0"/>
+    <rect width="8" height="2" x="8" y="9" fill="#8EE1FF" rx="1"/>
+    <rect width="11" height="2" x="8" y="13" fill="#8EE1FF" rx="1"/>
+    <rect width="3" height="2" x="17" y="9" fill="#8EE1FF" rx="1"/>
+    <circle cx="20" cy="20" r="4" stroke="#8EE1FF" stroke-width="1.5"/>
+    <path stroke="#8EE1FF" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.363 19.804L20 21.041l2.283-3.364"/>
+  </g>
+</svg>

@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+/**
+ *  婚礼房信息封装
+ */
+message BusinessWeddingConfig{
+  BusinessWeddingBase wedding = 1; // 婚礼基础信息
+  BusinessWeddingEffectConfig effect = 2; // 婚礼特效信息
+}
+
+/**
+ *  婚礼房特效信息，只在接口拉取时返回
+ */
+message BusinessWeddingEffectConfig{
+  option (pb.register_name) = 'room.wedding.sync';
+  option (pb.register_id) = 10027;
+  message BusinessWeddingEffectItem{
+    string url = 1;
+    uint32 size = 2;
+  }
+  BusinessWeddingEffectItem opening = 1;
+  BusinessWeddingEffectItem ringExchange = 2;
+  BusinessWeddingEffectItem ending = 3;
+}
+
+/**
+ *  婚礼房基础信息
+ */
+message BusinessWeddingBase{
+  uint32 state = 1;
+  uint64 score = 2;
+}
+
+/**
+ * /go/room/wedding/config 接口返回使用
+ */
+message BusinessWeddingConfigResponseApi{
+  bool success = 1;
+  string message = 2;
+  BusinessWeddingConfig data = 3;
+}
+

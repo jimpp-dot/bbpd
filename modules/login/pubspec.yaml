@@ -1,0 +1,43 @@
+name: login
+description: 登录注册通用模块.
+version: 0.0.1
+
+environment:
+  sdk: ">=2.18.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_cupertino_datetime_picker: 3.0.0
+
+
+  shared:
+    path: ../shared
+  settings:
+    path: ../settings/
+
+  oneclick_auth:
+    path: ./plugins/oneclick_auth/
+  fmodifier:
+    path: ../shared/plugins/fmodifier/
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.0.0
+  flutter_lints: ^4.0.0
+  assets_gen: ^1.5.0
+
+assets_gen:
+  omit_path_levels: 2
+  exclude:
+    - assets/images_*/**
+    - assets/area/**
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+  assets:
+    - assets/images/
+    - assets/area/

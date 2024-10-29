@@ -1,0 +1,33 @@
+syntax = "proto3";
+    
+package song.ctrl;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+
+message SongCtrl {
+    option (pb.register_name) = 'song.ctrl';
+    option (pb.register_id) = 95;
+    CurrentSong current_song = 1;
+    string type = 2;
+    string state = 3;
+
+    message FromUser {
+        string icon = 1;
+        string name = 2;
+        uint32 uid = 3;
+    }
+
+    message CurrentSong {
+        FromUser from_user = 2;
+        string name = 3;
+        string resource_path = 4;
+        uint32 sid = 5;
+        string state = 6;
+        uint32 type = 7;
+    }
+
+}

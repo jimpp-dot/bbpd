@@ -1,0 +1,72 @@
+syntax = "proto3";
+    
+package super.voice.stage.config;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+
+message SuperVoiceStageConfig {
+    option (pb.register_name) = 'super.voice.stage.config';
+    option (pb.register_id) = 101;
+    Config config = 1;
+    uint32 rid = 2;
+
+    message Config {
+        repeated BuyerRank buyer_rank = 1;
+        repeated Gift gift = 2;
+        string now_shower_position = 3;
+        ReceptorBtnInfo receptor_btn_info = 4;
+        uint32 rid = 5;
+        ShowerInfo shower_info = 6;
+        ShowerStageInfo shower_stage_info = 7;
+
+        message BuyerRank {
+            uint32 uid = 1;
+            string icon = 2;
+            string name = 3;
+            uint32 pay_price = 4;
+        }
+
+        message Gift {
+            string id = 1;
+            string name = 2;
+            string price = 3;
+            string gift_type = 4;
+        }
+
+        message ReceptorBtnInfo {
+            string color = 1;
+            string name = 2;
+        }
+
+        message ShowerStageInfo {
+            bool can_open_mic = 1;
+            uint32 counter_type = 2;
+            uint32 expire_time = 3;
+            string stage_id = 4;
+            string stage_name = 5;
+        }
+
+        message ShowerInfo {
+            uint32 uid = 1;
+            string icon = 2;
+            string name = 3;
+            string sex = 4;
+            double start_price = 5;
+            AgentInfo agent_info = 6;
+            bool is_new_shower = 7;
+            bool can_order_music = 8;
+            bool can_order_pay = 9;
+        }
+
+        message AgentInfo {
+            uint32 uid = 1;
+            string name = 2;
+            string icon = 3;
+        }
+    }
+
+}

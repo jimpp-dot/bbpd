@@ -1,0 +1,93 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message PiaJuBenPayConfig {
+  uint32 gift_id    = 1;  // 礼物ID
+  string gift_name  = 2;  // 礼物名称
+  uint32 gift_price = 3;  // 价格,单位:钻
+  string gift_type  = 4;  // 礼物类型
+  string gift_icon  = 5;  // 礼物icon
+  uint32 min        = 6;  // 礼物数量可设置最小值
+  uint32 max        = 7;  // 礼物数量可设置最大值
+}
+
+message PiaJuBenPayNeed {
+  uint32 gift_id    = 1;  // 礼物ID
+  uint32 gift_num   = 2;  // 礼物数量实际个数
+  string gift_name  = 3;  // 礼物名称
+  uint32 gift_price = 4;  // 价格,单位:钻
+  string gift_icon  = 5;  // 礼物icon
+}
+
+enum PiaJuBenType {
+  PiaJuBenTypeSingle = 0;  // 单人本
+  PiaJuBenTypeMulti  = 1;  // 多人本
+}
+
+message PiaJuBen {
+  string          name           = 1;  // 剧本名
+  PiaOrderUser    creator        = 2;
+  PiaJuBenPayNeed pay_creator    = 3;  // 支付房主,仅房主/接待可见
+  PiaJuBenPayNeed pay_recepition = 4;  // 支付接待,仅房主/接待可见
+  PiaJuBenPayNeed pay_gs         = 5;  // 支付表演gs
+  PiaJuBenType    type           = 6;  // 剧本类型,编辑时需要传入
+  uint32          jid            = 7;  // 剧本id,编辑时需要传入
+}
+
+message PiaJuBenPayConfigData {
+  repeated PiaJuBenPayConfig list = 1;
+  PiaJuBenPayNeed default_pay    = 2;  // 支付房主/接待默认费用
+}
+
+message PiaJuBenListData {
+  repeated PiaJuBen list = 1;
+
+}
+
+// 剧本可选礼物配置 /go/room/piadrama/config接口返回
+message ResPiaJuBenPayConfig {
+  bool success = 1;
+  string msg = 2;
+  PiaJuBenPayConfigData data = 3;
+}
+
+// 剧本列表数据
+// /go/room/piadrama/jubenList
+message ResPiaJuBenList {
+  bool success = 1;
+  string msg = 2;
+  PiaJuBenListData data = 3;
+}
+
+// 已点剧本 /go/room/piadrama/ordered 接口返回
+message ResPiaOrderList {
+  bool success = 1;
+  string msg = 2;
+  PiaOrderListData data = 3;
+}
+
+message PiaOrderListData {
+  repeated PiaOrder orders = 1;
+}
+
+message PiaOrder {
+  PiaJuBen juben = 1;
+  repeated PiaOrderUser players = 2;
+  PiaOrderUser order_user = 3;
+}
+
+message PiaOrderUser {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+}
+
+message PiaOrderNotify {
+  PiaOrderUser from = 1;
+  PiaOrderUser to = 2;
+  string juben = 3;
+}

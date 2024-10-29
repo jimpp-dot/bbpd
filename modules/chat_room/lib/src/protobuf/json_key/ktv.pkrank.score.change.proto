@@ -1,0 +1,16 @@
+syntax = "proto3";
+    
+package ktv.pkrank.score.change;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message KtvPkrankScoreChange {
+    option (pb.register_name) = 'ktv.pkrank.score.change';
+    option (pb.register_id) = 40;
+    uint32 before_score = 1;
+    uint32 current_score = 2;
+    uint32 on_mic_uid = 3;
+}

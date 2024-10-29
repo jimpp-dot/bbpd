@@ -1,0 +1,21 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+import "slp_gift.proto";
+
+message ApiExpCardCheckResponse{
+  bool success = 1;
+  string message = 2;
+  RspExpCardCheckUse data = 3;
+}
+
+message RspExpCardCheckUse{
+  uint32 card = 1;
+  uint32 num = 2;
+  uint32 expiredAt = 3;
+  BbGiftPanelGift panelGift = 4;
+  uint32 target = 5;
+}

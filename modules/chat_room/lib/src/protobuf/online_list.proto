@@ -1,0 +1,64 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message RookieTag {
+  uint32 seven_new = 1;
+  uint32 pay_level = 2;
+}
+
+message ListData {
+  uint32 uid = 1;//用户ID
+  string name = 2;//用户昵称
+  string icon = 3;//用户头像
+  uint32 sex = 4;//用户性别
+  string birthday = 5;//用户生日
+  uint32 version = 6;//版本号
+  uint32 dateline = 7;//注册时间
+  uint32 title = 8;//爵位头衔
+  string role = 9;//用户角色
+  uint32 mic = 10;//是否在麦上
+  uint32 position = 11;//麦位序号
+  uint32 age = 12;//年龄
+  uint32 title_new = 13;//爵位头衔（新版）
+  uint32 vip = 14;//vip级别
+  uint32 year = 15;//岁数
+  uint32 online_time = 16;//上线时间
+  uint32 popularity_level = 17;//人气级别
+  RookieTag rookie = 18;//新用户标签
+  uint32 new_nobile = 19;//新贵标签
+  uint32 ordering = 20;//排序值
+  uint32 is_newer = 21;//萌新标识
+  bool show_paid_tag = 22; //展示付费标签
+  string rich_icon = 23; //Rich标签
+}
+
+message OnlineList {
+  repeated ListData list = 1;//返回的数据列表
+  uint32 online = 2;//在线人数
+  uint32 version = 3;//房间版本号
+}
+
+message ResOnlineList {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  OnlineList data = 3; //返回的数据结果
+}
+
+message ResDrainageRoomOnlineList {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  DrainageRoomOnlineData data = 3; //返回的数据结果
+}
+
+message DrainageRoomOnlineData {
+  repeated ListData no_permission_list = 1;//返回的未赠礼数据列表
+  repeated ListData list = 2;//返回的已赠礼数据列表
+  uint32 online = 3;//在线人数
+  uint32 version = 4;//房间版本号
+  bool show_no_permission = 5;//展示无权限用户
+  uint32 gift_id = 6;//设置的礼物
+}

@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="23" viewBox="0 0 20 23">
+  <title>bbpd_ic_rank2</title>
+  <defs>
+    <linearGradient id="b" x1="50%" x2="50%" y1="-23.133%" y2="100%">
+      <stop offset="0%" stop-color="#12C5FF"/>
+      <stop offset="36.152%" stop-color="#6DD6FF"/>
+      <stop offset="100%" stop-color="#669FDA"/>
+    </linearGradient>
+    <path id="a" d="M5 2h12a1 1 0 0 1 1 1v4.732a1 1 0 0 1-.797.979l-6 1.247a1 1 0 0 1-.406 0l-6-1.247A1 1 0 0 1 4 7.731V3a1 1 0 0 1 1-1z"/>
+    <linearGradient id="c" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset=".016%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#FFF"/>
+    </linearGradient>
+    <linearGradient id="e" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset=".016%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#FFF"/>
+    </linearGradient>
+    <path id="f" d="M10.535 16.745l-4.207 2.211a1 1 0 0 1-1.451-1.054l.803-4.684a1 1 0 0 0-.287-.885L1.989 9.015a1 1 0 0 1 .555-1.706l4.703-.683A1 1 0 0 0 8 6.079l2.103-4.262a1 1 0 0 1 1.794 0L14 6.079a1 1 0 0 0 .753.547l4.703.683a1 1 0 0 1 .555 1.706l-3.404 3.318a1 1 0 0 0-.287.885l.803 4.684a1 1 0 0 1-1.45 1.054l-4.208-2.211a1 1 0 0 0-.93 0z"/>
+    <filter id="g" width="98.3%" height="94.6%" x=".9%" y="-1.1%" filterUnits="objectBoundingBox">
+      <feOffset in="SourceAlpha" result="shadowOffsetOuter1"/>
+      <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation=".5"/>
+      <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0.849467844 0 0 0 0 0.849467844 0 0 0 0 0.849467844 0 0 0 1 0"/>
+    </filter>
+    <linearGradient id="i" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#A8E3FF"/>
+      <stop offset="100%" stop-color="#35B0F7"/>
+    </linearGradient>
+    <linearGradient id="l" x1="50%" x2="50%" y1="0%" y2="144.35%">
+      <stop offset="0%" stop-color="#47C9FF"/>
+      <stop offset="100%" stop-color="#BDE9FF"/>
+    </linearGradient>
+    <circle id="k" cx="7" cy="7" r="5"/>
+    <filter id="j" width="102.5%" height="105%" x="-1.2%" y="-1.2%" filterUnits="objectBoundingBox">
+      <feOffset dy=".25" in="SourceAlpha" result="shadowOffsetOuter1"/>
+      <feColorMatrix in="shadowOffsetOuter1" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.753332605 0"/>
+    </filter>
+  </defs>
+  <g fill="none" fill-rule="evenodd" transform="translate(-1 -1)">
+    <mask id="d" fill="#fff">
+      <use xlink:href="#a"/>
+    </mask>
+    <use fill="url(#b)" xlink:href="#a"/>
+    <path fill="url(#c)" d="M9 2h4v8H9z" mask="url(#d)" opacity=".8" transform="matrix(1 0 0 -1 0 12)"/>
+    <path fill="url(#e)" d="M5 2h1v8H5zM16 2h1v8h-1z" mask="url(#d)" opacity=".8" transform="matrix(1 0 0 -1 0 12)"/>
+    <g transform="translate(0 3)">
+      <mask id="h" fill="#fff">
+        <use xlink:href="#f"/>
+      </mask>
+      <use fill="#000" filter="url(#g)" xlink:href="#f"/>
+      <use fill="#35B0F7" xlink:href="#f"/>
+      <path fill="#8FDCFF" d="M11 11V0l3.233 6.55zM11 11l10.462-3.399-5.231 5.099zM11 16.5V11l6.466 8.899zM4.534 19.899L5.769 12.7 11 11zM11 11L.538 7.601 7.767 6.55z" mask="url(#h)"/>
+    </g>
+    <g transform="translate(4 7)">
+      <circle cx="7" cy="7" r="7" fill="url(#i)"/>
+      <use fill="#000" filter="url(#j)" xlink:href="#k"/>
+      <use fill="url(#l)" xlink:href="#k"/>
+      <text fill="#F8FDFF" font-family="NunitoSans-Bold, Nunito Sans" font-size="9" font-weight="bold">
+        <tspan x="4.25" y="10">2</tspan>
+      </text>
+    </g>
+  </g>
+</svg>

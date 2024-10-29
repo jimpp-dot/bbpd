@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+  <title>bbpd_ic_profile_switch</title>
+  <g id="ic_profile_switch" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linejoin="round">
+    <g id="1" transform="translate(2.000000, 4.500000)" stroke="#313131" stroke-width="2">
+      <rect id="矩形" x="0" y="0" width="20" height="15" rx="2.4"/>
+      <polyline id="路径-21" stroke-linecap="round" points="4 3.5 10 6.5 16 3.5"/>
+    </g>
+  </g>
+</svg>

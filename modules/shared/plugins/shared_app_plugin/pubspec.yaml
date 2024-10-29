@@ -1,0 +1,30 @@
+name: shared_app_plugin
+description: A new flutter plugin project.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ">=2.18.0"
+  flutter: ">=1.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  shared:
+    path: ../../../shared
+
+  image_size_getter: 2.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+  plugin:
+    androidPackage: ly.plugins.shared_app_plugin
+    pluginClass: SharedAppPlugin

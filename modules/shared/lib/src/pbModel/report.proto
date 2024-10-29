@@ -1,0 +1,33 @@
+syntax = "proto3";
+package pb;
+/*
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message RepRoomPopClick{
+	bool success = 1;
+	string msg = 2;
+}
+
+message RespStreamExposure {
+	bool success = 1;						  //是否成功
+	string message = 2;						//结果说明
+}
+
+message RespLocation {
+	bool success = 1;						  //是否成功
+	string message = 2;						//结果说明
+	RespLocationData data = 3;		//定位信息
+}
+
+message RespLocationData {
+	double latitude = 1;		//纬度（校准后）
+	double longitude = 2;		//经度（校准后）
+	string country = 3;			//国家
+	string province = 4;		//省
+	string city = 5;				//城市
+	string cityCode = 6;		//城市编码
+}

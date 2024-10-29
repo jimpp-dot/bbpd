@@ -1,0 +1,20 @@
+syntax = "proto3";
+    
+package broadcaster.content.star.combo.gift;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message BroadcasterContentStarComboGift {
+    option (pb.register_name) = 'broadcaster.content.star.combo.gift';
+    option (pb.register_id) = 8;
+    uint32 uid = 1;
+    string name = 2;
+    string icon = 3;
+    uint32 vip_level = 4;
+    uint32 hit_num = 5;
+    string message = 6;
+    string gift_icon = 7;
+    string combo_id = 8;
+}

@@ -1,0 +1,43 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+message ApiCravingProgressResponse{
+  bool success = 1;
+  string message = 2;
+  CravingProgress data = 3;
+}
+
+message CravingProgress{
+  CravingProgressData process_data = 1;
+  CravingResource resource = 2;
+}
+message CravingResource{
+  string entrance_bg = 1; // 活动挂件入口背景
+  string ic_expand_bar = 2; // 展开条图标
+  string ic_timer = 3; // 倒计时图标
+  string ic_blood = 4; // 血量图标
+  string ic_attack = 5; // 攻击图标
+  string jump_url = 6; // 活动链接
+}
+
+message CravingProgressData{
+  option (pb.register_name) = 'world.boss.progress';
+  option (pb.register_id) = 50001;
+  uint32 monster_id = 1; // 当前怪兽的ID，编码方式位YYYYMMDD
+  uint32 monster_level = 2; // 当前怪兽的等级，1，2，3，4
+  int64 monster_max_hp = 3; // 当前怪兽的最大血量
+  int64 monster_current_hp = 4; // 当前怪兽的当前血量剩余
+  int64 monster_start_at = 5; // 当前怪兽什么时候开始激活
+  int64 monster_end_at = 6; // 当前怪兽将在什么时候逃跑
+  int64 monster_current_state = 7; // 当前活动状态，0:未知状态 1:活动未开始，2:活动开始，怪兽激活，3:活动开始，怪兽逃跑或消灭，中场休息，4:活动开始，结算中
+  int64 activity_start_at = 8; // 活动开始时间
+  int64 activity_end_at = 9; // 活动结束时间
+  string monster_url = 10; // 怪物icon
+  uint32 prev_level_monster_dead = 11; // 上一轮的怪是否死亡
+}

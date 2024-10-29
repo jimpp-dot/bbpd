@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="初稿" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.5">
+        <g id="拍卖房-竞拍设置" transform="translate(-258.000000, -107.000000)">
+            <g id="拍拍世界榜单模块" transform="translate(115.000000, 97.000000)">
+                <g id="说明" transform="translate(3.000000, 5.000000)">
+                    <g transform="translate(140.000000, 5.000000)" id="说明icon">
+                        <g transform="translate(0.666667, 0.666667)">
+                            <circle id="椭圆形" stroke="#FFFFFF" stroke-width="1.33333333" cx="7.33333333" cy="7.33333333" r="6.66666667"></circle>
+                            <path d="M7.66666667,8.33333333 C8.77123617,8.33333333 9.66666667,7.43790283 9.66666667,6.33333333 C9.66666667,5.22876383 8.77123617,4.33333333 7.66666667,4.33333333 C7.04161458,4.33333333 6.46679011,4.81366098 5.94219326,5.77431628 C5.75400431,6.11894957 5.39266676,6.33333333 5,6.33333333 L5,6.33333333 L5,6.33333333" id="路径" stroke="#FFFFFF" stroke-width="1.33333333" stroke-linecap="round" stroke-linejoin="round" transform="translate(7.333333, 6.333333) scale(-1, 1) rotate(-90.000000) translate(-7.333333, -6.333333) "></path>
+                            <circle id="椭圆形" fill="#FFFFFF" cx="7.33333333" cy="11" r="1"></circle>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

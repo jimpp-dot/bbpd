@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package nest.created.notify;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message NestCreatedNotify {
+  option (pb.register_name) = 'nest.created.notify';
+  option (pb.register_id) = 114;
+  string uuid = 1;
+  string vap_url = 2;
+  uint32 vap_size = 3;
+  string rid = 4;
+  Gs gs = 5;
+  Boss boss = 6;
+  message Gs {
+    string uid = 1;
+    string name = 2;
+    string sex = 3;
+    string icon = 4;
+  }
+
+  message Boss {
+    string uid = 1;
+    string name = 2;
+    string sex = 3;
+    string icon = 4;
+  }
+}

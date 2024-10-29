@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="16px" viewBox="0 0 60 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <linearGradient x1="98.2919744%" y1="52.4691358%" x2="0%" y2="47.5308642%" id="linearGradient-1">
+            <stop stop-color="#DE5EDE" offset="0%"></stop>
+            <stop stop-color="#BABEEA" offset="48.4115912%"></stop>
+            <stop stop-color="#6B97E1" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="98.2919744%" y1="54.2534722%" x2="0%" y2="45.7465278%" id="linearGradient-2">
+            <stop stop-color="#DE5EDE" offset="0%"></stop>
+            <stop stop-color="#BABEEA" offset="48.4115912%"></stop>
+            <stop stop-color="#6B97E1" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="50%" x2="100%" y2="50%" id="linearGradient-3">
+            <stop stop-color="#9EC1FE" offset="0%"></stop>
+            <stop stop-color="#F58CF9" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="初稿" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="头框3备份" transform="translate(-6.000000, -28.000000)" fill-rule="nonzero">
+            <g id="钻石情侣标识" transform="translate(6.000000, 28.000000)">
+                <path d="M7.57410875,1.1 L51.8195841,1.1 C53.1366281,1.1 54.3844159,1.68998126 55.2201777,2.70787478 L58.8182307,7.09002636 C59.1552277,7.50046276 59.1508744,8.0930623 58.8078839,8.49850346 L55.2182025,12.7417832 C54.3821831,13.7300224 53.1534245,14.3 51.858996,14.3 L7.54746297,14.3 C6.24932004,14.3 5.01742707,13.7267602 4.18140429,12.7336635 L0.590382096,8.46795191 C0.248390387,8.06170603 0.245447415,7.46913632 0.583387148,7.05951358 L4.18007028,2.69991021 C5.01591796,1.68676442 6.26067595,1.1 7.57410875,1.1 Z" id="矩形" fill="url(#linearGradient-1)" opacity="0.5"></path>
+                <path d="M48.3189482,0.55 C49.5704702,0.55 50.7438965,1.15832871 51.4652013,2.18108328 L51.4652013,2.18108328 L55.197646,7.47340258 L51.4717975,13.2568569 C50.7478049,14.2574705 49.5877155,14.85 48.3526475,14.85 L48.3526475,14.85 L11.0528736,14.85 C9.8151045,14.85 8.65281979,14.2548908 7.9292401,13.2506473 L7.9292401,13.2506473 L4.20557193,8.0826343 L7.93370059,2.17500374 C8.65546242,1.15579107 9.8267639,0.55 11.0756573,0.55 L11.0756573,0.55 Z" id="矩形备份" stroke="url(#linearGradient-3)" stroke-width="1.1" fill="url(#linearGradient-2)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="23" viewBox="0 0 20 23">
+  <title>bbpd_ic_rank1</title>
+  <defs>
+    <linearGradient id="b" x1="50%" x2="50%" y1="-23.547%" y2="100%">
+      <stop offset="0%" stop-color="#FF8E76"/>
+      <stop offset="43.221%" stop-color="#FF9F8F"/>
+      <stop offset="100%" stop-color="#FF5541"/>
+    </linearGradient>
+    <path id="a" d="M5 2h12a1 1 0 0 1 1 1v4.732a1 1 0 0 1-.797.979l-6 1.247a1 1 0 0 1-.406 0l-6-1.247A1 1 0 0 1 4 7.731V3a1 1 0 0 1 1-1z"/>
+    <linearGradient id="c" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF5E6"/>
+      <stop offset="100%" stop-color="#FFE7C9"/>
+    </linearGradient>
+    <linearGradient id="e" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF5E6"/>
+      <stop offset="100%" stop-color="#FFE7C9"/>
+    </linearGradient>
+    <path id="f" d="M10.535 16.745l-4.207 2.211a1 1 0 0 1-1.451-1.054l.803-4.684a1 1 0 0 0-.287-.885L1.989 9.015a1 1 0 0 1 .555-1.706l4.703-.683A1 1 0 0 0 8 6.079l2.103-4.262a1 1 0 0 1 1.794 0L14 6.079a1 1 0 0 0 .753.547l4.703.683a1 1 0 0 1 .555 1.706l-3.404 3.318a1 1 0 0 0-.287.885l.803 4.684a1 1 0 0 1-1.45 1.054l-4.208-2.211a1 1 0 0 0-.93 0z"/>
+    <filter id="g" width="98.3%" height="94.6%" x=".9%" y="-1.1%" filterUnits="objectBoundingBox">
+      <feOffset in="SourceAlpha" result="shadowOffsetOuter1"/>
+      <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation=".5"/>
+      <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 1 0 0 0 0 0.480301316 0 0 0 0 0.376470588 0 0 0 1 0"/>
+    </filter>
+    <linearGradient id="h" x1="50%" x2="50%" y1="-24.441%" y2="100%">
+      <stop offset="0%" stop-color="#FFF36B"/>
+      <stop offset="100%" stop-color="#FFE06E"/>
+    </linearGradient>
+    <linearGradient id="j" x1="50%" x2="50%" y1="-24.441%" y2="100%">
+      <stop offset="0%" stop-color="#FFF36B"/>
+      <stop offset="100%" stop-color="#FFE06E"/>
+    </linearGradient>
+    <linearGradient id="k" x1="50%" x2="50%" y1="-24.441%" y2="100%">
+      <stop offset="0%" stop-color="#FFF36B"/>
+      <stop offset="100%" stop-color="#FFE06E"/>
+    </linearGradient>
+    <linearGradient id="l" x1="50%" x2="50%" y1="-24.441%" y2="100%">
+      <stop offset="0%" stop-color="#FFF36B"/>
+      <stop offset="100%" stop-color="#FFE06E"/>
+    </linearGradient>
+    <linearGradient id="m" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF969"/>
+      <stop offset="100%" stop-color="#FFD177"/>
+    </linearGradient>
+    <linearGradient id="p" x1="50%" x2="50%" y1="0%" y2="120.311%">
+      <stop offset="0%" stop-color="#FF8A29"/>
+      <stop offset="99.926%" stop-color="#FFCF88"/>
+    </linearGradient>
+    <circle id="o" cx="7" cy="7" r="5"/>
+    <filter id="n" width="102.5%" height="105%" x="-1.2%" y="-1.2%" filterUnits="objectBoundingBox">
+      <feOffset dy=".25" in="SourceAlpha" result="shadowOffsetOuter1"/>
+      <feColorMatrix in="shadowOffsetOuter1" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0"/>
+    </filter>
+  </defs>
+  <g fill="none" fill-rule="evenodd" transform="translate(-1 -1)">
+    <mask id="d" fill="#fff">
+      <use xlink:href="#a"/>
+    </mask>
+    <use fill="url(#b)" xlink:href="#a"/>
+    <path fill="url(#c)" d="M9 2h4v8H9z" mask="url(#d)" opacity=".8"/>
+    <path fill="url(#e)" d="M5 2h1v8H5zM16 2h1v8h-1z" mask="url(#d)" opacity=".8"/>
+    <g transform="translate(0 3)">
+      <mask id="i" fill="#fff">
+        <use xlink:href="#f"/>
+      </mask>
+      <use fill="#000" filter="url(#g)" xlink:href="#f"/>
+      <use fill="#FFB960" xlink:href="#f"/>
+      <path fill="url(#h)" d="M11 11V0l3.233 6.55z" mask="url(#i)"/>
+      <path fill="url(#j)" d="M11 11l10.462-3.399-5.231 5.099z" mask="url(#i)"/>
+      <path fill="url(#k)" d="M11 16.5V11l6.466 8.899zM4.534 19.899L5.769 12.7 11 11z" mask="url(#i)"/>
+      <path fill="url(#l)" d="M11 11L.538 7.601 7.767 6.55z" mask="url(#i)"/>
+    </g>
+    <g transform="translate(4 7)">
+      <circle cx="7" cy="7" r="7" fill="url(#m)"/>
+      <use fill="#000" filter="url(#n)" xlink:href="#o"/>
+      <use fill="url(#p)" xlink:href="#o"/>
+      <text fill="#FFFACD" font-family="NunitoSans-Bold, Nunito Sans" font-size="9" font-weight="bold">
+        <tspan x="4.25" y="10">1</tspan>
+      </text>
+    </g>
+  </g>
+</svg>

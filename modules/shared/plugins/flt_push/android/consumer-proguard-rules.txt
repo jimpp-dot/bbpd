@@ -1,0 +1,34 @@
+# for huawei push
+-ignorewarnings
+-keepattributes *Annotation*
+-keepattributes Exceptions
+-keepattributes InnerClasses
+-keepattributes Signature
+-keepattributes SourceFile,LineNumberTable
+-keep class com.huawei.hianalytics.**{*;}
+-keep class com.huawei.updatesdk.**{*;}
+-keep class com.huawei.hms.**{*;}
+
+-keep class com.huawei.gamebox.plugin.gameservice.**{*;}
+
+-keep public class com.huawei.android.hms.agent.** extends android.app.Activity { public *; protected *; }
+-keep interface com.huawei.android.hms.agent.common.INoProguard {*;}
+-keep class * extends com.huawei.android.hms.agent.common.INoProguard {*;}
+
+# for hihonor push
+-keep class com.hihonor.push.**{*;}
+
+# OPPO push SDK
+-keep public class * extends android.app.Service
+-keep class com.heytap.msp.** { *;}
+
+# VIVO push SDK
+-dontwarn com.vivo.push.**
+-keep class com.vivo.push.**{*;   }
+-keep class com.vivo.vms.**{*; }
+-keep class ly.plugins.flt_push.vivo.VivoPushReceiver{*;}
+
+# 小米 push sdk
+-dontwarn com.xiaomi.mipush.sdk.**
+-keep public class com.xiaomi.mipush.sdk.* {*; }
+-keep public class com.google.firebase.* {*;}

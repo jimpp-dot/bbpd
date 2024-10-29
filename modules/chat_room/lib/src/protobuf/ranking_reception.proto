@@ -1,0 +1,28 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message RespRankBestReceptionWeekly {
+  bool success = 1;  //成功true，失败false
+  string msg = 2;  //失败message
+  RankBestReceptionWeeklyData data = 3;
+}
+
+message RankBestReceptionWeeklyData {
+  string rule = 1; // 规则文案
+  message Reception {
+    uint32 rank = 1; // 排名
+    string name = 2; // 姓名
+    string icon = 3; // 头像
+    string sign = 4; // 签名
+    uint32 score = 5; // 魅力数值
+    repeated string tags = 6; // 展示标签图片
+    string lv_img = 7; // vip等级/人气等级图片
+    uint32 uid = 8;
+  }
+  repeated Reception list = 2; // 榜单列表
+  bool hasMore = 3; // 是否有下一页
+}

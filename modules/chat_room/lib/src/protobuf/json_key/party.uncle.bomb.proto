@@ -1,0 +1,19 @@
+syntax = "proto3";
+    
+package party.uncle.bomb;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message PartyUncleBomb {
+    option (pb.register_name) = 'party.uncle.bomb';
+    option (pb.register_id) = 52;
+    string bomb = 1;
+    string bomb_name = 2;
+    string icon = 3;
+    string name = 4;
+    uint32 stop = 5;
+    uint32 uid = 6;
+}

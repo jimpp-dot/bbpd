@@ -1,0 +1,35 @@
+syntax = "proto3";
+package pb;
+/*
+用户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+
+message GetSuitInfoResp {
+  bool success = 1;
+  string msg = 2;
+  message Tab {
+    uint32 tab_id=1;//1:装扮，2：房间边框
+    string name=2;
+    message TabItem {
+      uint32 id=1;
+      string name=2;
+      string img=3;
+      string img_two=4;
+      int64 seconds=5;
+      uint32 source_type=7;
+    }
+    repeated TabItem items=3;
+  }
+
+  message Data {
+    string title=1;
+    string desc=2;
+    repeated Tab tabs=3;
+  }
+  Data data =3;
+}

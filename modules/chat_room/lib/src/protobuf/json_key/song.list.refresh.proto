@@ -1,0 +1,14 @@
+syntax = "proto3";
+    
+package song.list.refresh;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message SongListRefresh {
+    option (pb.register_name) = 'song.list.refresh';
+    option (pb.register_id) = 96;
+    uint32 sid = 1;
+}

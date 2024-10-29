@@ -1,0 +1,22 @@
+syntax = "proto3";
+    
+package room.lottery.start;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message RoomLotteryStart {
+    option (pb.register_name) = 'room.lottery.start';
+    option (pb.register_id) = 72;
+    uint32 gift_id = 1;
+    uint32 join_way = 2;
+    uint32 lottery_id = 3;
+    uint32 now = 4;
+    uint32 rid = 5;
+    uint32 round = 6;
+    uint32 round_time = 7;
+    uint32 start_time = 8;
+    string words = 9;
+}

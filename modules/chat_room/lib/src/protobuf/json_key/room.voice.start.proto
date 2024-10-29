@@ -1,0 +1,14 @@
+syntax = "proto3";
+    
+package room.voice.start;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message RoomVoiceStart {
+    option (pb.register_name) = 'room.voice.start';
+    option (pb.register_id) = 93;
+    uint32 to_rid = 1;
+}

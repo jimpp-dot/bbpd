@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 46 46">
+  <title>bbpd_&#x7F16;&#x7EC4; 3</title>
+  <defs>
+    <linearGradient id="a" x1="35.98%" x2="73.926%" y1="100%" y2="22.371%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#FFEBB6"/>
+    </linearGradient>
+    <linearGradient id="b" x1="65.959%" x2="40.216%" y1="36.409%" y2="78.981%">
+      <stop offset="0%" stop-color="#FFE7A8"/>
+      <stop offset="100%" stop-color="#FFF"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="nonzero">
+    <circle cx="23" cy="23" r="23" fill="#FFC120"/>
+    <path fill="url(#a)" d="M21 14a4 4 0 0 1 2.187 7.35A7 7 0 0 1 28 28c0 3.866-14 3.866-14 0a7.003 7.003 0 0 1 4.812-6.651A4 4 0 0 1 21 14z"/>
+    <path fill="url(#b)" stroke="#FFC120" stroke-width="1.5" d="M28.098 23.005a1.25 1.25 0 0 0-1.036 1.232V26.2h-2.016a1.79 1.79 0 0 0-1.27.526 1.79 1.79 0 0 0-.526 1.27c0 .495.201.944.526 1.269a1.79 1.79 0 0 0 1.277.526l8.007-.145c.433-.24.654-.66.661-1.084.006-.33-.119-.664-.376-.915l-5.247-4.642z"/>
+  </g>
+</svg>

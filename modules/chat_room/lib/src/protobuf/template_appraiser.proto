@@ -1,0 +1,201 @@
+syntax = "proto3";
+package pb;
+import "entity_xs_appraiser_category.proto";
+import "entity_xs_appraiser_tag.proto";
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ResAppraiser {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+    string data = 3; //返回的数据
+}
+
+message ResAppraiserBase {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+    ResAppraiserBaseData data = 3; //返回的闯关插件面板核心数据
+}
+// AppraiserBase的根结构
+message ResAppraiserBaseData {
+    uint32 rid = 1;
+    uint32 story_id = 2;
+    string state = 3; //游戏阶段
+    repeated uint32 start_qids = 4; //已开启的题目
+    ResAppraiserBaseMap map = 5;
+    uint32 counter = 6;//房间倒计时时间
+}
+// AppraiserBase里的map结构
+message ResAppraiserBaseMap {
+    repeated ResAppraiserBaseQuestion question = 1; // 故事答题列表
+}
+
+message UserInfo {
+    uint32 Uid = 1;
+    string Icon = 2;
+}
+
+// AppraiserBase的question结构
+message ResAppraiserBaseQuestion {
+    uint32 qid = 1;
+    string question = 2;
+    uint32 vote_user_num = 3;
+    repeated UserInfo vote_user_list = 4;
+    repeated ResAppraiserBaseQuestionOption option_list = 5;
+    uint32 have_next_question = 6;
+}
+// AppraiserBase的question option结构
+message ResAppraiserBaseQuestionOption {
+    uint32 id = 1;
+    uint32 qid = 2;
+    uint32 option = 3;
+    string option_name = 4;
+    string option_value = 5;
+    repeated uint32 choosen_uids = 6;
+    uint32 choosen_percent = 7;
+}
+
+// 故事详情结构
+message ResAppraiserStory {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+    ResAppraiserStoryDetailData data = 3; //返回的闯关插件面板核心数据
+}
+
+message ResAppraiserStoryDetailData {
+    uint32 id = 1;
+    uint32 uid = 2;
+    string icon = 3;
+    string userName = 4;
+    EntityXsAppraiserCategory cidInfo = 5;
+    repeated EntityXsAppraiserTag tagInfo = 6;
+    repeated QuestionList questionList = 7;
+    string title = 8;
+    string content = 9;
+    string topic_content = 10;
+    uint32 like_num = 11;
+    uint32 status = 12;
+    uint32 createTime = 13;
+    uint32 userLikeStatus= 14;//用户对该故事是否点过赞；0：没有1：点过
+    uint32 topic_num= 15;//动态总数，每一个故事被不同的人发布朋友圈就是一个动态，也称评论
+    uint32 brows= 16;//浏览次数,审核通过后每访问依次累加
+    uint32 deleted= 17;//故事被删除的状态：0：未删除；1：删除
+}
+
+message QuestionList {
+    uint32 qid                              = 1;
+    string question                         = 2;
+    repeated QuesAnswer answer = 3;
+}
+
+message QuesAnswer {
+    uint32 id                                = 1;  //
+    //@inject_tag: orm:"option"
+    uint32 option                            = 3;  // 选项序号
+    //@inject_tag: orm:"option_name"
+    string option_name                       = 4;  // 选项名称:A、B、C、D
+    //@inject_tag: orm:"option_value"
+    string option_value                      = 5;  // 选项内容
+}
+
+
+// 故事列表结构
+message ResAppraiserStoryList {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+    repeated ResAppraiserStoryData data = 3; //返回故事列表信息
+}
+
+
+message ResAppraiserStoryData {
+    uint32 id = 1;
+    uint32 uid = 2;
+    uint32 cid = 3;
+    repeated EntityXsAppraiserTag tagInfo = 4;
+    string qid = 5;
+    string title = 6;
+    string content = 7;
+    string topic_content = 8;
+    uint32 like_num = 9;
+    uint32 brows = 10;
+    uint32 topic_num= 11;//动态总数，每一个故事被不同的人发布朋友圈就是一个动态，也称评论
+    uint32 status= 12;
+    uint32 createTime= 13;
+    uint32 userLikeStatus= 14;//用户对该故事是否点过赞；0：没有1：点过
+}
+
+
+// 用户列表页面需要的基本数据
+message StoryListPageInfo {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+    StoryListPage data = 3; //返回故事列表信息
+}
+
+message StoryListPage {
+    string icon = 1;
+    uint32 score = 2;
+    repeated PlayInfo playInfo = 3;
+    repeated EntityXsAppraiserTag tagInfo = 4;
+    uint32 tagId = 5;  //默认选中的标签id
+    uint32 filterKey = 6;  //默认选中的play选项
+}
+
+message PlayInfo {
+    uint32 id = 1;    //1.不限;2.用户没有玩过 3:用户已经玩过;4:只查用户自己的故事
+    string name = 2;
+    uint32 isCheckbox = 3;//0:单选，1：多选
+}
+
+
+
+
+// 点赞数据返回数据类型
+message LikeResp {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+    LikeData data = 3; //返回点赞必要数据
+}
+
+message LikeData {
+    uint32 like_num = 1;
+    uint32 state = 2;
+}
+
+
+message GameIngResp {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+    repeated GameIngRoomListData data = 3; //鉴定中房间列表
+}
+
+//鉴定中房间列表
+message GameIngRoomListData {
+    string HouseUserIcon = 1;
+    string Title = 2;
+    uint32 MicOnlineCount = 3;//房间上麦总人数
+    uint32 HouseUserCount = 4;//房间总人数
+    uint32 Rid = 5;
+    uint32 StoryId = 6;
+    repeated UserInfo UserList = 7;
+}
+
+message UserScoreStatic {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+    ScoreStatic data = 3;
+}
+
+message ScoreStatic {
+    UserStaticInfo Mine = 1;
+    repeated UserStaticInfo UserList = 2;
+}
+
+message UserStaticInfo {
+    uint32 Uid = 1;
+    string Name = 2;
+    uint32 rank = 3;
+    string Icon = 4;
+    uint32 Score =5;
+}

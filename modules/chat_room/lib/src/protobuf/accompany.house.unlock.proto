@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package accompany.house.unlock;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+/// 陪伴小屋解锁消息
+message AccompanyHouseUnlock {
+    option (pb.register_name) = 'accompany.house.unlock';
+    option (pb.register_id) = 20002;
+    string uicon = 1;
+    string uname = 2;
+    uint32 utitle_new = 3;
+    uint32 uvip = 4;
+    string word = 5;
+    string icon = 6;
+    string type = 7;
+    string desc = 8;
+    uint32 builder_uid = 9;
+    uint32 target_uid = 10;
+    string toname=11;
+}

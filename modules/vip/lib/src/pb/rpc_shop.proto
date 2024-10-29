@@ -1,0 +1,128 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "store.proto";
+import "vip_rpc_pretend.proto";
+
+message ShopCateInfo {
+	string category = 1;
+	string page = 2;
+	string url = 3;
+	string desc = 4;
+	string desc_icon = 5;
+	repeated ShopSubsetCate subsets=6;//子分类
+}
+
+message ShopSubsetCate {
+	string name=1;
+	string icon=2;
+	string page = 3;//子分类类型
+	StoreWhere store_where =4;
+	uint32 parent_b_type = 5;//父级礼包类型
+}
+
+//热门主页返回的数据结构体
+message ShopIndexData {
+	message ShopGiftBagType {
+		ShopBagType b_type=1;
+		string name=2; //模块名称
+		uint32 count_down=3;//倒计时秒.0表示不需要倒计时
+		repeated ShopGoods list=4;
+		repeated ShopSubsetCate subset=5;//子分类
+	}
+	repeated ShopBanner banner =4;
+	repeated ShopGiftBagType bag_list=6;
+}
+
+
+//banner
+message ShopBanner {
+	uint32 id = 1;
+	string image = 2;
+	uint32 width = 3;
+	uint32 height = 4;
+	uint32 duration = 5;
+	string url = 6;
+	string title = 7;
+	string position = 8;
+	string data = 9;
+	string type = 10;
+	ShopBannerOptionData opt = 11;
+}
+
+message ShopBannerOptionData {
+	bool show_close = 1;
+}
+
+//新商品里面的物品，跟老商城里面  成员里多个个礼包的概念
+//所以得重新定义一下成员协议
+
+enum  ShopType{
+	CommodityType=0;//cid类型
+	GiftBagType=1;//礼包类型
+}
+
+//新商城里面的每一个物品重新定义（复用之前的底层商品协议定义）
+message ShopGoods {
+	ShopType c_type=1;
+	StoreCommodityItem commodity=2;
+	ShopBag bag=3;
+}
+
+
+enum  ShopBagType{
+	DefaultShowBagType=0;//空值1
+	NewPeopleType=1;//新人
+	ActivityType=2;//双十二
+	VipPopularityType=3;//vip-人气
+	SelectGiftType=4;//甄选
+	NobilityGoodsType=5;//贵族
+	RecommendType=6;//推荐
+}
+
+//背包协议定义
+message ShopBag {
+	uint32 bag_id=1;
+	ShopBagType b_type=2;
+	string name=3;
+	string image=4;
+	string image_bg=5;
+	string b_desc=6;
+	uint32 price=7;//礼包砖石价格
+	uint32 user_money=8;//用户当前的money
+	string b_tag=9;//礼包标签
+	uint32 user_pay_num=101;//一个人允许最多购买的次数。0表示无限制
+	uint32 user_already_pay_num=102;//用户已经买了的次数
+	uint32 total_pay_num=103;//该礼包允许最多购买的总次数。0表示无限制
+	uint32 total_already_pay_num=104;//礼包已经被卖了的次数
+	repeated BagGoods goods=105;
+
+}
+
+enum  ShopBagGoodsType{
+	DefaultShopGoodsType=0;//空值
+	ShopGoodsTypeBagCidSType=1;//物品表里面的cid
+	ShopGoodsTypeBagMedal=2;//勋章类型
+	ShopPretendTypeBagMedal=3;//装扮
+}
+
+
+//包里面的商品
+message BagGoods {
+	ShopBagGoodsType b_type=2;//知道了是礼包或物品，还需要表示清楚是那种物品
+	StoreCommodityItem commodity=3;//物品,ShopGoodsTypeCidSType
+	ShopBagGoodsBadge badge=4;//爵位商品信息,ShopGoodsTypeMedal
+	PretendInfo pretend=5;//装扮信息
+}
+
+message ShopBagGoodsBadge {
+	uint32 id                               = 1; //
+	string title                            = 2; // 勋章名称，用于检索
+	string icon                             = 3; // 勋章图片地址
+	string desc                             = 4; // 勋章描述，用于展示
+	uint32 create_time                      = 5; // 创建时间
+	int32  gift_id                          = 6; // 礼物id（礼物之星、礼物之王类型勋章）
+	string  image_bg                          = 7; // 勋章的背景图，暂时先写死，后台移过去后对接
+}

@@ -1,0 +1,97 @@
+syntax = "proto3";
+package pb;
+
+/*
+一周情报局
+*/
+
+option go_package = "../app/pb";
+
+
+message RespGetWeekInfo {
+  bool success = 1;
+  string msg = 2;
+  GetWeekInfoData data = 3;
+}
+
+message GetWeekInfoData {
+  message popInfo {
+    string title =1;
+    repeated ContentZone content=2;//内容
+  }
+  message CircleWeekItem{
+    CircleItem item=1;
+    repeated ContentZone msg=2;
+  }
+  repeated CircleWeekItem popularity_top=2;//人气动态top(关注数多)
+  repeated CircleWeekItem fans_top=3;//涨粉动态top(点赞数多)
+  repeated CircleWeekItem influence_top=4;//影响力动态top(进房数多)
+  popInfo pop=5;//弹窗里面的内容
+  string title=6;//广场一周情报
+  string week_star=7;//这周开始日期
+  string week_end=8;//这周结束日期
+}
+
+// 文本区
+message ContentZone {
+  uint32 type = 1; // 0:text 1:图片
+  string content = 2; // 图片地址/文本内容
+  string color = 3; // 色值
+  uint32 width = 4;
+  uint32 height = 5;
+  bool is_bold = 6; // 是否加粗
+  uint32 words_limit = 7; // 字数限制
+}
+
+message CircleItem {
+  message User{
+    uint32 uid=1;
+    string name=2;
+    string icon=3;
+    uint32 age=4;
+    uint32 sex=5;
+    string frame=6;
+  }
+  message AtUser{
+    uint32 uid=1;
+    string name=2;
+    uint32 pos=3;
+  }
+  message Audio{
+    string url=1;//音频地址
+    uint32 duration=2;//音频的时长
+  }
+  message Tag{
+    uint32 id=1;
+    string tag=2;
+  }
+  uint64 topic_id=1;//动态id
+  string a_type =2;//类型
+  string content=3;
+  int64 create_time=4;
+  string cover=5;//图片url
+  uint32 cmt_num=6;//评论数
+  uint32 like_num=7;//点赞数
+  string location=8;//地点信息
+  float longitude=9;//地点信息
+  uint32 has_like=10;
+  uint32 rank=11;
+  repeated AtUser at_uids=12;//@  用户
+  User user=13;
+  string status=14;
+  Audio audio=15;//音频的地址
+  repeated Tag tagstp=17;//动态所属的话题列表
+}
+
+//cfg
+message RespGetCfg {
+  bool success = 1;
+  string msg = 2;
+  message GetCfgData {
+    bool is_open=1;//true:一周情报局开关为 开 状态
+    string week_star=2;//这周开始日期
+    string week_end=3;//这周结束日期
+    string desc=4;
+  }
+  GetCfgData data=3;
+}

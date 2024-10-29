@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <title>bbpd_icon-&#x9080;&#x8BF7;&#x6709;&#x793C;@2x</title>
+  <defs>
+    <circle id="a" cx="11" cy="11" r="11"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <path d="M0 0h24v24H0z"/>
+    <g transform="translate(1 1)">
+      <mask id="b" fill="#fff">
+        <use xlink:href="#a"/>
+      </mask>
+      <circle cx="11" cy="11" r="10" stroke="#313131" stroke-width="2"/>
+      <circle cx="11" cy="11" r="10" stroke="#313131" stroke-width="2" mask="url(#b)"/>
+      <circle cx="11.083" cy="10" r="4" stroke="#313131" stroke-width="2" mask="url(#b)"/>
+      <path stroke="#313131" stroke-width="2" d="M11.083 14.333c2.268 0 4.324.826 5.811 2.173 1.45 1.312 2.356 3.122 2.356 5.127 0 .59-.072 1.056-.24 1.415-.131.284-.328.48-.581.614-.988.521-2.528.353-4.323.245-.948-.057-1.965-.117-3.023-.117s-2.074.06-3.023.117c-1.795.108-3.334.276-4.322-.245a1.283 1.283 0 0 1-.582-.614c-.167-.359-.24-.825-.24-1.415 0-2.005.907-3.815 2.357-5.127 1.487-1.347 3.543-2.173 5.81-2.173Z" mask="url(#b)"/>
+    </g>
+  </g>
+</svg>

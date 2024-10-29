@@ -1,0 +1,222 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message GrabMicSong {
+    uint32 song_id = 1;         //歌曲id
+    string song_name =  2;//歌词地址
+    string singer_name = 3;//歌词地址
+    string brc = 4;//歌词地址
+}
+
+message GrabMicSongs {
+    repeated GrabMicSong list = 1;//歌曲列表
+    uint32 limit = 2;         //专辑id
+}
+
+message ResGrabMicSongSearch {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+    GrabMicSongs data = 3; //返回的数据结果
+}
+
+message ResMySongDel {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+}
+
+message ResMyAlbumAdd {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+}
+
+message ResMyAlbumDel {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+}
+
+message MyAlbumList {
+    uint32 id = 1;         //专辑id
+    string album_name = 2; //专辑name
+    uint32 count = 3;         //专辑中歌曲数量
+}
+
+message MyAlbums {
+    repeated MyAlbumList list = 1;//专辑列表
+}
+
+message ResMyAlbumList {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2;  //返回给客户端的必须有
+    MyAlbums data = 3;//专辑数据
+}
+
+message ResMyAlbumAddSong {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+}
+
+message ResMyAlbumDelSong {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+}
+
+
+message MySongList {
+    uint32 id = 1;         //歌曲id
+    string song_name = 2; //歌曲name
+}
+
+message MySongs {
+    repeated MySongList list = 1;//专辑列表
+}
+
+message ResMyAlbumSongList {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2;  //返回给客户端的必须有
+    MySongs data = 3;//专辑数据
+}
+
+message MusicCategory {
+    uint32 type = 1;         //曲库类型 1--标签 2--专辑
+    uint32 id = 2;           //曲库id
+    string name = 3;         //曲库名称
+}
+
+message MusicCategorys {
+    repeated MusicCategory list = 1;//专辑列表
+}
+
+message ResReqMusicCategory {
+    bool success = 1;          //返回给客户端的必须有
+    string msg = 2;            //返回给客户端的必须有
+    MusicCategorys data = 3;   //曲库列表
+}
+
+message SongCount {
+    uint32 real_count = 1;   //歌曲实际数量
+    uint32 set_count = 2;    //设置的歌曲数量
+}
+
+message ResSongCount {
+    bool success = 1;      //返回给客户端的必须有
+    string msg = 2;       //返回给客户端的必须有
+    SongCount data = 3;   //返回的数据结果
+}
+
+message ScoreStatus {
+    uint32 status = 1;   //1--已经打分，2--还没有打分
+}
+
+message ResScoreStatus {
+    bool success = 1;      //返回给客户端的必须有
+    string msg = 2;       //返回给客户端的必须有
+    ScoreStatus data = 3;   //返回的数据结果
+}
+
+message ResReqMakeScore {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+}
+
+message GrabmicScore {
+    string description = 1;         //描述
+    uint32 score = 2;               //分数
+    string icon = 3;         //icon
+}
+
+message GrabmicScores {
+    repeated GrabmicScore list = 1;//打分列表
+}
+
+message ResScoreList {
+    bool success = 1;          //返回给客户端的必须有
+    string msg = 2;            //返回给客户端的必须有
+    GrabmicScores data = 3;   //曲库列表
+}
+
+message PowerListData {
+    uint32 uid = 1;         //接唱者uid
+    string name = 2;        //接唱者name
+    string icon = 3;        //接唱者icon
+    uint32 power_data = 4;   //接唱者实力数据
+    uint32 week = 5;         //多少周
+    uint32 day = 6;          //第多少天
+}
+
+message GrabmicPowerData {
+    repeated PowerListData list = 1;//实力榜列表
+}
+
+
+//实力榜周榜
+message ResPowerList {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2;  //返回给客户端的必须有
+    GrabmicPowerData data = 3;//实力榜数据
+}
+
+message LeadSingerListData {
+    uint32 uid = 1;         //领唱者uid
+    string name = 2;        //领唱者name
+    string icon = 3;        //领唱者icon
+    uint32 lead_data = 4;   //领唱者者实力数据
+}
+
+message GrabmicLeadSingerData {
+    repeated LeadSingerListData list = 1;//领唱榜列表
+}
+
+message ResLeadSingerList {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2;  //返回给客户端的必须有
+    GrabmicLeadSingerData data = 3;//领唱榜数据
+}
+
+//观众打分/评分推送的消息
+message GrabMicMakeScoreMessage {
+    uint32 uid = 1;                 //打分的观众
+    string icon = 2;                 //打分的观众icon
+    uint32 singer_uid = 3;           //歌手uid
+    uint32 score = 4;               //分数
+    string description = 5;         //描述
+    string scoreIcon = 6;           //分数对应的icon
+}
+
+message GrabMicAlbumAuth {
+    bool album_auth = 1;   //是否可以操作专辑
+}
+
+message ResGrabMicAlbumAuth {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+    GrabMicAlbumAuth data = 3; //返回的数据结果
+}
+
+message IdolSingerListData {
+    uint32 uid = 1;          //歌手uid
+    string name = 2;         //歌手name
+    string icon = 3;         //歌手icon
+    uint32 sex = 4;          //歌手性别
+    uint32 age = 5;          //歌手者年龄
+    uint32 gift_value = 6;   //礼物值
+    int32  rank = 7;         //排名，如果=-1表示没有上榜，>=0表示上榜
+    uint32 distance_on_list = 8;   //距离上榜的数值，在rank=-1的情况才需要关注该数值
+    uint32 week = 9;          //多少周
+    uint32 day = 10;          //第多少天
+}
+
+message GrabmicIdolSingerData {
+    repeated IdolSingerListData list = 1;//偶像榜列表
+    IdolSingerListData myself = 2;    //当前用户偶像榜数据
+}
+
+//抢唱-偶像榜
+message ResIdolSingerList {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2;  //返回给客户端的必须有
+    GrabmicIdolSingerData data = 3;//领唱榜数据
+}

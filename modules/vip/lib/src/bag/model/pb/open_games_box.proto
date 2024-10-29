@@ -1,0 +1,33 @@
+syntax = "proto3";
+package pb;
+
+/*
+充值礼包开宝箱相关proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message CommodityResp {
+  bool success = 1;
+  int32 code = 2;
+  string msg = 3;
+  OpenBoxResp openBoxResp = 4;
+}
+
+// 开宝箱请求
+message OpenBoxReq {
+  int32 cid = 1;
+  int32 num = 2;
+}
+
+message BoxItem {
+  int32 cid = 1;
+  string name = 2;
+  string icon = 3;
+  int32 num = 4;
+}
+message OpenBoxResp {
+  repeated BoxItem items = 1;
+}

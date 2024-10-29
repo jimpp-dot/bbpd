@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "../app/pb";
+
+/// 商城稀有度筛选
+message ResCommodityRareConfig{
+  bool success = 1;
+  string msg = 2;
+  repeated string data = 3;
+}

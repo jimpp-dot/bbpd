@@ -1,0 +1,53 @@
+syntax = "proto3";
+package pb;
+/*
+用户签到 proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+
+message CheckInCardInfo {
+  uint32 price = 1; // 签到卡钻石价格
+  string icon = 2; // 签到卡icon
+  string desc = 3; // 签到卡描述
+  repeated uint32 buy_num = 4; // 购买的配置
+}
+
+message CheckInRewardItem {
+  uint32 cid = 1;
+  string type = 2;
+  uint32 num = 3;
+  string name = 4;
+  bool state = 5; // 奖励状态，false:未签到领取，true:已签到领取
+  string desc = 6;
+  string icon = 7;
+}
+
+message CheckInHomeRsp {
+  bool success = 1;
+  string msg = 2;
+  message Data {
+    repeated CheckInRewardItem reward_list = 1;
+    string check_in_desc = 2; //签到活动说明
+    int64 left_seconds = 3; // 剩余时间
+    bool check_in_today = 4; // 今天是否已经签到
+    CheckInCardInfo check_in_card = 5; // 签到卡配置(签到中心会返回此结果)
+    bool is_popup = 6; // 是否需要弹窗(如果需要弹窗则需要展示首页数据因此放首页返回结果中)
+    string normal_url = 7; // 签到中心url
+    bool can_normal = 8; // 是否可以进阶签到
+  }
+  Data data = 3;
+}
+
+message CheckInRsp {
+  bool success = 1;
+  string msg = 2;
+  message Data {
+    CheckInRewardItem reward = 1;
+  }
+  Data data = 3;
+}
+

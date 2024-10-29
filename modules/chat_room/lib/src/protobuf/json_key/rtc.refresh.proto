@@ -1,0 +1,14 @@
+syntax = "proto3";
+    
+package rtc.refresh;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message RtcRefresh {
+    option (pb.register_name) = 'rtc.refresh';
+    option (pb.register_id) = 94;
+    repeated uint32 pb = 1;
+}

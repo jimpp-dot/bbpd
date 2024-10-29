@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package ktv.pkrank.rank.change;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message KtvPkRankRankChange {
+  option (pb.register_name) = 'ktv.pkrank.rank.change';
+  option (pb.register_id) = 39;
+  repeated List list = 1;
+  string anim_img = 2;
+
+  message List {
+    uint32 uid = 1;
+    string name = 2;
+    string icon = 3;
+    uint32 rank = 4;
+    uint32 score = 5;
+  }
+}

@@ -1,0 +1,59 @@
+syntax = "proto3";
+package pb;
+/*
+表白玩法的pb定义
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ConfessChooseNumConfig {
+  uint32 num = 1;   //选择礼物的数量
+  string desc = 2;  //描述
+}
+
+message ConfessStage {
+    int32 gift_id = 1;
+    uint32 price = 2;
+    bool unlocked = 3;
+    string name = 4;
+    string desc = 5;
+    string probability_txt = 6;
+}
+
+message ConfessIndexData {
+    repeated ConfessChooseNumConfig choose_num_config = 1;
+    repeated ConfessStage stages = 2;
+}
+
+message ResConfessIndex {
+    bool success = 1;
+    string msg = 2;
+    ConfessIndexData data = 3;
+}
+
+message ConfessHistoryItem {
+    string from_icon = 1;
+    string from_name = 2;
+    string to_icon = 3;
+    string to_name = 4;
+    int64 timestamp = 5; //时间戳，单位秒
+    string text = 6;
+    int32 gift_id = 7;
+    uint32 from_uid = 8;
+    uint32 to_uid = 9;
+}
+
+message ConfessHistoryData {
+    uint32 offset = 1;
+    int64 last_id = 2;
+    repeated ConfessHistoryItem items = 3;
+    uint32 more = 4; //1表示还有更多数据
+}
+
+message ResConfessHistory {
+    bool success = 1;
+    string msg = 2;
+    ConfessHistoryData data = 3;
+}

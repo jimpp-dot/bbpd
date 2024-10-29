@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="81" height="32" viewBox="0 0 81 32">
+  <title>bbpd_&#x4FE1;&#x606F;</title>
+  <defs>
+    <rect id="a" width="81" height="32" x="0" y="0" rx="16"/>
+    <mask id="b" width="81" height="32" x="0" y="0" fill="#fff" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox">
+      <use xlink:href="#a"/>
+    </mask>
+  </defs>
+  <use fill="none" fill-rule="nonzero" stroke="#D2D2D2" stroke-dasharray="2 3" stroke-width="2" mask="url(#b)" xlink:href="#a"/>
+</svg>

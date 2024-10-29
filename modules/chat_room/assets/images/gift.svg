@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <title>bbpd_ic_room_liwu</title>
+  <defs>
+    <linearGradient id="a" x1="0%" x2="133.984%" y1="30.469%" y2="82.581%">
+      <stop offset="0%" stop-color="#FF578E"/>
+      <stop offset="100%" stop-color="#FE2C55"/>
+    </linearGradient>
+    <linearGradient id="b" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF4581"/>
+      <stop offset="100%" stop-color="#E5274C"/>
+    </linearGradient>
+    <linearGradient id="c" x1="-7.872%" x2="97.387%" y1="50%" y2="51.107%">
+      <stop offset="0%" stop-color="#CD1F58" stop-opacity=".8"/>
+      <stop offset="100%" stop-color="#B7092B"/>
+    </linearGradient>
+    <linearGradient id="d" x1="50%" x2="50%" y1="115.526%" y2="-13.884%">
+      <stop offset="0%" stop-color="#FFA6C3"/>
+      <stop offset="100%" stop-color="#FF5F7E"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd" transform="translate(2 2)">
+    <path fill="url(#a)" d="M2 10h16v7a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3v-7z"/>
+    <rect width="20" height="4" y="6" fill="url(#b)" rx="1.5"/>
+    <path fill="#FFFDE9" d="M8 17l2.013-1.049L12 17V6H8z"/>
+    <path fill="#FFD2EB" d="M8 17l2.013-1.065L12 17v-7H8z"/>
+    <path fill="url(#c)" fill-opacity=".3" d="M7.733 12.094c3.033 0 7.601.393 10.267.906v-3H2v2.52c1.777-.342 3.688-.484 5.733-.426z"/>
+    <path fill="url(#d)" fill-rule="nonzero" d="M2.75 5.5a2.75 2.75 0 1 1 0-5.5h.5C4.408 0 5.425.606 6 1.519A3.248 3.248 0 0 1 8.75 0h.5a2.75 2.75 0 1 1 0 5.5h-6.5zm.5-4h-.5a1.25 1.25 0 0 0 0 2.5H5v-.75A1.75 1.75 0 0 0 3.25 1.5zm6 0h-.5A1.75 1.75 0 0 0 7 3.25V4h2.25a1.25 1.25 0 0 0 0-2.5z" transform="translate(4 .5)"/>
+  </g>
+</svg>

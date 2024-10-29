@@ -1,0 +1,42 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../../app/pb";
+
+// 熟人关系
+message FamiliarItem{
+    uint64 id = 1; //唯一自增id
+    uint32 to_id = 2; //uid 或者 群ID
+    bool familiar = 3; //是否是是熟人
+    uint32 time = 4; //当前服务器时间
+}
+
+// 接口返回结构
+message ResFamiliar {
+    bool success = 1;
+    string msg = 2;
+    repeated FamiliarItem data = 3; //熟人
+}
+
+// 推送数据结构
+message FamiliarMsg {
+    FamiliarType type = 1; //用户 1 群 2
+    repeated FamiliarItem data = 2;
+}
+
+// 白名单 熟人关系
+message ResImFamiliarGs {
+    bool success = 1;
+    string msg = 2;
+    repeated ImFamiliarGs data = 3; //返回数据
+}
+
+message ImFamiliarGs {
+    uint32 uid = 1; //用户ID
+    uint32 type = 2;//gs类型
+}
+
+enum FamiliarType {
+    familiar = 0;
+    group = 1;
+}

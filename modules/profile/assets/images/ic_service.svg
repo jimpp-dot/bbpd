@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+  <title>bbpd_ic_profile_service</title>
+  <g id="ic_profile_service" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linejoin="round">
+    <path d="M3,18.9889491 L3,12 C3,7.02943725 7.02943725,3 12,3 C16.9705627,3 21,7.02943725 21,12 L21,18.2286978" id="路径" stroke="#313131" stroke-width="2"/>
+    <path d="M8.78338927,8.82034932 C9.51208318,7.7125943 10.6815483,6.99447457 12,6.99447457 C13.3184517,6.99447457 14.4879168,7.7125943 15.2166107,8.82034932" id="路径" stroke="#313131" stroke-width="2" stroke-linecap="round"/>
+    <path d="M3,12 L5,12 C7.209139,12 9,13.790861 9,16 L9,17 C9,18.6568542 7.65685425,20 6,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,12 L3,12 Z" id="矩形" stroke="#313131" stroke-width="2"/>
+    <path d="M15,12 L17,12 C19.209139,12 21,13.790861 21,16 L21,17 C21,18.6568542 19.6568542,20 18,20 L16,20 C15.4477153,20 15,19.5522847 15,19 L15,12 L15,12 Z" id="矩形" stroke="#313131" stroke-width="2" transform="translate(18.000000, 16.000000) scale(-1, 1) translate(-18.000000, -16.000000) "/>
+  </g>
+</svg>

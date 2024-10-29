@@ -1,0 +1,45 @@
+name: vip
+description: 会员商城.
+version: 0.0.1
+
+environment:
+  sdk: ">=2.18.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  shared:
+    path: ../shared
+
+  chat:
+    path: ../chat
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  assets_gen: ^1.5.0
+  flutter_lints: ^2.0.2
+  build_runner: ^2.0.0
+
+assets_gen:
+  omit_path_levels: 2
+  exclude:
+    - assets/images_*/**
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+  assets:
+    - assets/images/
+    - assets/images/mall/
+    - assets/images/level/
+    - assets/images/noble/
+    - assets/images/mount/
+    - assets/images/x4/
+#    - assets/images_zh_TW/
+#    - assets/images_en/
+#

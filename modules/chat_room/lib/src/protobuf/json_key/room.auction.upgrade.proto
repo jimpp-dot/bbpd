@@ -1,0 +1,28 @@
+syntax = "proto3";
+    
+package room.auction.upgrade;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message RoomAuctionUpgrade {
+    option (pb.register_name) = 'room.auction.upgrade';
+    option (pb.register_id) = 62;
+    uint32 defendLevel = 1;
+    string defendTitle = 2;
+    string frame = 3;
+    bool icongray = 4;
+    uint32 is_newer = 5;
+    uint32 rid = 6;
+    string rname = 7;
+    string toicon = 8;
+    string toname = 9;
+    uint32 tovip = 10;
+    string type = 11;
+    string uicon = 12;
+    string uname = 13;
+    string utitle = 14;
+    uint32 utitle_new = 15;
+    uint32 uvip = 16;
+}

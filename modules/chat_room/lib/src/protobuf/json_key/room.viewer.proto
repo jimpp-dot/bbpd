@@ -1,0 +1,14 @@
+syntax = "proto3";
+    
+package room.viewer;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message RoomViewer {
+    option (pb.register_name) = 'room.viewer';
+    option (pb.register_id) = 91;
+    uint32 num = 1;
+}

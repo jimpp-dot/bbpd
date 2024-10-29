@@ -1,0 +1,77 @@
+syntax = "proto3";
+package pb;
+
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message Song {
+  uint32 id = 1;          // 歌曲id
+  uint32 singer_uid = 2;  // 歌手id
+  string singer_name = 3; // 歌手名
+  string singer_icon = 4; // 歌手icon
+  string song_name = 5;   // 歌曲名
+  string language = 6;   // 语言(zh_cn, zh_tw, en, ar, ms, th, id, vi, ko, jp)
+  uint64 dateline = 7;   // 记录产生的时间
+  uint64 updateline = 8; // 记录更新的时间
+  int32 order_count = 9; // 累计点播次数
+  int32 play_count = 10; // 累计播放次数
+  uint32 index = 11; // 下标
+  uint32 flag = 12; // 歌曲标识 0-默认；1-随身听
+}
+
+message SongConfig {
+  uint32 uid = 1;        // 设置该配置的用户id
+  uint32 gift_id = 2;    // 礼物id
+  uint32 gift_count = 3; // 礼物数量
+  uint32 gift_price = 4; // 礼物价格
+}
+
+message SongsData {
+  repeated Song songs = 1; //返回的数据结果
+  SongConfig config = 2;   //歌曲礼物配置
+}
+
+// 查询歌单(热门，歌手，搜索共用该数据结构)
+message RespQuerySongs {
+  bool success = 1;
+  string msg = 2;
+  SongsData data = 3;
+}
+
+message OrderSong {
+  uint32 id = 1;          // 歌曲id
+  uint32 singer_uid = 2;  // 歌手id
+  string singer_name = 3; // 歌手名
+  string singer_icon = 4; // 歌手icon
+  string song_name = 5;   // 歌曲名
+  uint32 gift_id = 6;     // 礼物id
+  uint32 gift_count = 7;  // 礼物数量
+  uint32 gift_price = 8;  // 礼物价格
+  string state = 9; // 用户已点的歌状态 "pending":已支付待唱 "playing":正在播放 "finish":已唱
+  uint32 index = 10;      // 显示的下标，按index排序，从1开始
+  uint32 flag = 11; // 歌曲标识 0-默认；1-随身听
+}
+
+// 查询我点过的歌
+message RespMyOrderSongs {
+  bool success = 1;
+  string msg = 2;
+  repeated OrderSong songs = 3;
+}
+
+// 查询歌手列表
+message RespQuerySingers {
+  bool success = 1;
+  string msg = 2;
+  repeated SingerData singers = 3;
+}
+
+message SingerData {
+  int32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  int32 sex = 4;
+  int32 position = 5;
+}

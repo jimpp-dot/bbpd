@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <title>bbpd_&#x7F16;&#x7EC4;</title>
+  <g fill="none" fill-rule="evenodd" transform="translate(2 2)">
+    <circle cx="14" cy="14" r="14" stroke="#202020" stroke-opacity=".084" stroke-width=".5"/>
+    <path fill="#202020" d="M18.741 12.857l-6.134-3.988a1.366 1.366 0 0 0-2.107 1.144v7.974a1.364 1.364 0 0 0 2.107 1.144l6.134-3.988a1.364 1.364 0 0 0 0-2.286z"/>
+  </g>
+</svg>

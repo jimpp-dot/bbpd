@@ -1,0 +1,36 @@
+syntax = "proto3";
+package pb.room;
+/*
+用户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ResRoomGeneralSetting {
+    bool success = 1;
+    string msg = 2;
+    RoomGeneralSetting data = 3;
+}
+
+message RoomGeneralSetting {
+    RoomMuteData room_mute = 1;     //房间禁言信息
+    uint32 openPiaDramaJuben = 2;   // pia戏表演-关闭(默认)，1-开启
+    RoomGloryHourRankEntrance glory_rank = 3;   //荣耀小时榜
+    uint32 openReceptionRank = 4; // 开放接待排行榜入口
+}
+
+message RoomMuteData {
+    bool mute = 1;                  //是否被禁言
+    uint32 countdown = 2;           //禁言结束倒计时，单位秒
+}
+
+message RoomGloryHourRankEntrance {
+    bool show = 1;                      //是否展示荣耀小时榜，0-否，1-是
+    uint32 stage = 2;                   //展示阶段，1-荣耀时刻、高光之星轮播，2-倒计时
+    uint32 count_start = 3;             //倒计时开始分钟数50
+    uint32 count_end = 4;               //倒计时结束分钟数55
+    uint32 show_at = 5;                 //入口显示时间1200 (20:00:00)
+    uint32 hide_at = 6;                 //入口隐藏时间10 (00:10:00)
+}

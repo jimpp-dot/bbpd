@@ -1,0 +1,52 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ResMomConfig {
+	bool success = 1;
+	string msg = 2;
+	MomConfig config = 3;
+}
+
+message MomConfig {
+	string state = 1; //wait、guess、pre_result、result
+	repeated ShuffleMicItem shuffle_mic_list = 2; //[guess、pre_result、result]下发展示
+	string room_level = 3; // S\A\B\C [guess、pre_result]下发展示
+	string award_stage = 4;//特等奖、一等奖、二等奖、三等奖、四等奖、五等奖 [pre_result]下发展示
+	uint32 deadline = 5; //当前阶段截止时间
+	string upgrade_award_tips = 6; //升级奖励提示 [guess、pre_result]下发展示
+	string boss_name = 7; // 老板name，最终确认时展示
+}
+
+message ShuffleMicItem {
+	uint32 uid = 1;  
+	uint32 package = 2;
+	string name = 3;
+	string icon = 4;
+	uint32 position = 5;
+	uint32 guess_uid = 6; //老板猜的UID
+	string guess_name = 7;//老板猜的UID的name
+	string guess_icon = 8;//老板猜的UID的icon
+}
+
+
+message ResMomGsList {
+	bool success = 1;
+	string msg = 2;
+	repeated GsItem gs_list = 3;
+	uint32 guess_uid = 4;
+}
+
+message GsItem {
+	uint32 uid = 1;                 //用户UID
+	uint32 sex = 2;                 //用户性别 1男 2女
+	bool is_follow = 3;             //是否关注
+	string name  = 4;               //用户名称
+	string icon = 5;                //用户头像
+	string sign = 6;                //用户签名
+	repeated string icons = 7;      //用户头像、封面等
+	uint32 age = 8;                 //用户年龄
+}

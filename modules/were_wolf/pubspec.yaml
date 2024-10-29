@@ -1,0 +1,38 @@
+name: were_wolf
+description: 狼人杀.
+version: 0.0.1
+
+environment:
+  sdk: ">=2.18.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  shared:
+    path: ../shared
+
+  chat_room:
+    path: ../chat_room
+
+dev_dependencies:
+  flutter_lints: ^2.0.2
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+  assets:
+    - assets/images/
+    - assets/sound/
+    - assets/images/wolfv2/
+    - assets/images/wolfv2/day/
+    - assets/images/wolfv2/role/
+    - assets/images/wolfv2/end_dialog/
+    - assets/images/wolfv2/controller/
+    - assets/images/wolfv2/user_icon/
+    - assets/images/wolfv2/full_turn/

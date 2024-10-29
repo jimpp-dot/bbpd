@@ -1,0 +1,14 @@
+syntax = "proto3";
+    
+package trans.room.toast;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message TransRoomToast {
+    option (pb.register_name) = 'trans.room.toast';
+    option (pb.register_id) = 105;
+    string msg = 1;
+}

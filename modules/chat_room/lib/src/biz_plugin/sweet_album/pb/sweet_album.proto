@@ -1,0 +1,83 @@
+syntax = "proto3";
+package pb;
+/*
+账户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ApiSweetAlbumHomeResponse{
+  bool success = 1;
+  string message = 2;
+  SweetAlbumHomeData data = 3;
+}
+
+message SweetAlbumHomeData{
+  SweetImprintUser companion = 1; // 陪伴对象
+  repeated SweetAlbumCategory categories = 2; // 所有系列
+  repeated SweetAlbumNumConfig num_config = 3; // 送礼数量配置
+}
+
+// 送礼数量选择配置
+message SweetAlbumNumConfig {
+  uint32 num = 1;   //选择礼物的数量
+  string desc = 2;  //描述
+}
+
+// 陪伴对象数据结构
+message SweetImprintUser{
+  uint32 uid = 1; // uid
+  string name = 2; // 用户名称
+  string icon = 3; // 用户头像
+  uint32 current_level = 4; // 当前等级
+  uint32 age = 5; // 用户年龄
+  uint32 sex = 6; // 用户性别
+}
+
+// 甜蜜相册系列数据结构
+message SweetAlbumCategory{
+  string name = 1; // 系列名称
+  uint32 level_required = 2; // 系列解锁需要等级
+  uint32 unlocked = 3; // 系列是否已经解锁，0，未解锁，1，已经解锁
+  string description = 4; // 当前系列说明
+  string background = 5; // 背景图
+  repeated SweetAlbumGiftItem gifts = 6; // 当前系列的礼物
+  string seq_name = 7;
+  string chapter = 8;
+}
+
+// 甜蜜相册礼物数据
+message SweetAlbumGiftItem{
+  uint32 gift_id = 1; // 礼物ID
+  string gift_icon = 2; // 礼物图标
+  string gift_name = 3; // 礼物名称
+  uint32 price = 4; // 礼物价格
+  uint32 light = 5; // 是否点亮,>0 表示点亮次数
+}
+
+message ApiSweetAlbumPageResponse{
+  bool success = 1;
+  string message = 2;
+  SweetAlbumPageData data = 3;
+}
+
+message SweetAlbumPageData {
+  SweetImprintUser user1 = 1; // 陪伴用户（左）
+  SweetImprintUser user2 = 2; // 陪伴用户（右）
+  repeated SweetAlbumCategory categories = 3;// 相册篇章
+  repeated SweetAlbumNumConfig num_config = 4; // 送礼数量配置
+  uint32 current_level = 5; // 当前等级
+}
+
+message ApiSweetAlbumCompanionListResponse{
+  bool success = 1;
+  string message = 2;
+  SweetAlbumCompanionListData data = 3;
+}
+
+message SweetAlbumCompanionListData{
+  uint32 more = 1 ; // 0,没有更多，1，可以继续请求
+  repeated SweetImprintUser companions = 2; // 陪伴用户列表
+}

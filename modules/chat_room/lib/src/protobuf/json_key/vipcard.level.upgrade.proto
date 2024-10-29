@@ -1,0 +1,21 @@
+syntax = "proto3";
+    
+package vipcard.level.upgrade;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message VipcardLevelUpgrade {
+    option (pb.register_name) = 'vipcard.level.upgrade';
+    option (pb.register_id) = 106;
+    string icon = 1;
+    uint32 level_new = 2;
+    string message = 3;
+    string name = 4;
+    uint32 title_new = 5;
+    string type = 6;
+    uint32 uid = 7;
+    uint32 vip_level = 8;
+}

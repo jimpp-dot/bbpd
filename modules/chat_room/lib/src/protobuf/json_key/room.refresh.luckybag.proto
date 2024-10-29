@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package room.refresh.luckybag;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+
+message RoomRefreshLuckyBag {
+  option (pb.register_name) = 'room.refresh.luckybag';
+  option (pb.register_id) = 78;
+}

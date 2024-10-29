@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+  <title>bbpd_ic_male</title>
+  <defs>
+    <linearGradient id="a" x1="19.133%" x2="70.054%" y1="0%" y2="50%">
+      <stop offset="0%" stop-color="#2EFEFD"/>
+      <stop offset="100%" stop-color="#2ECEFE"/>
+    </linearGradient>
+    <path id="b" d="M12.04 1.994l1.047 3.599a1.19 1.19 0 0 1-.858 1.487l-.026.006a1.266 1.266 0 0 1-1.518-.876l-.186-.636-.81 1.467c1.384 1.408 1.694 3.677.618 5.54-1.283 2.221-4.048 3.025-6.177 1.796-2.129-1.23-2.815-4.026-1.533-6.247C3.642 6.32 5.672 5.45 7.54 5.856l.932-1.683-.896.22a1.294 1.294 0 0 1-1.55-.895 1.19 1.19 0 0 1 .857-1.487l3.615-.887.026-.006a1.266 1.266 0 0 1 1.517.876zM5.4 9.748c-.35.606-.162 1.369.419 1.704.58.335 1.335.116 1.684-.49.35-.605.163-1.368-.418-1.703-.58-.336-1.335-.116-1.684.49z"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <use fill="url(#a)" xlink:href="#b"/>
+    <use fill="#FFF" fill-opacity=".2" xlink:href="#b"/>
+  </g>
+</svg>

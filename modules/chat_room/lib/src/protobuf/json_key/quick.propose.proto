@@ -1,0 +1,24 @@
+syntax = "proto3";
+    
+package quick.propose;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message QuickPropose {
+    option (pb.register_name) = 'quick.propose';
+    option (pb.register_id) = 59;
+    string content = 1;
+    uint32 duration = 2;
+    uint32 gift_id = 3;
+    User user = 4;
+
+    message User {
+        string icon = 1;
+        string name = 2;
+        uint32 uid = 3;
+    }
+
+}

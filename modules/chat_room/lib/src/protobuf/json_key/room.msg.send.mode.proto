@@ -1,0 +1,14 @@
+syntax = "proto3";
+    
+package room.msg.send.mode;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message RoomMsgSendMode {
+    option (pb.register_name) = 'room.msg.send.mode';
+    option (pb.register_id) = 74;
+    uint32 msg_send_interval_mode = 1;
+}

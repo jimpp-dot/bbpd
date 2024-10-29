@@ -1,0 +1,27 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ForbiddenList {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 sex = 4;
+  int32 birthday = 5;
+  uint32 version = 6;
+  uint32 title = 7;
+  uint32 title_new = 8;
+  uint32 vip = 9;
+  uint32 year = 10;
+  uint32 dateline = 11;
+  uint32 duration = 12;
+}
+
+message ResForbiddenLog {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  repeated ForbiddenList data = 3; //返回的数据结果
+}

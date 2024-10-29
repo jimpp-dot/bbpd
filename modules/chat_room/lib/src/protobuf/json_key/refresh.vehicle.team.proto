@@ -1,0 +1,79 @@
+syntax = "proto3";
+    
+package refresh.vehicle.team;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message RefreshVehicleTeam {
+    option (pb.register_name) = 'refresh.vehicle.team';
+    option (pb.register_id) = 116;
+
+    VehicleTeamPush vehicle_team_push = 1;
+
+    message Mics {
+        uint32 mic_status = 1;
+        uint32 uid = 2;
+        uint32  position = 3;
+        string username = 4;
+        string ring = 5;
+        string frame = 6;
+        string frame_new = 7;
+        int32 vip = 14;
+        string icon = 15;
+    }
+
+    message Teams {
+        repeated Mics mics = 1;
+        uint32 rid = 2;
+        string name = 3;
+        string username = 4;
+        uint32 vip = 5;
+        string icon = 6;
+        uint32 is_started = 7;
+        string srv = 8;
+        string tag = 9;
+        uint32 mic_num = 10;
+        uint32 used_mic_num = 11;
+        string game_name = 12;
+        string game_icon = 13;
+        uint32 pk_id = 14;
+        uint32 fee_type = 15;
+        uint32 ftype = 16;
+        uint32 price = 17;
+        uint32 can_chartered = 18;
+        uint32 has_chartered = 19;
+        uint32 mic_close = 20;
+        uint32 buy_total = 21;
+        repeated uint32 buy_uids = 22;
+        string frame = 23;
+        string frame_new = 24;
+        string ring = 25;
+        int32 fvalue = 26;
+        VehicleTitle title = 27;
+    }
+
+    message VehicleTeamPush {
+        uint32 mic_num = 1;
+        repeated Teams teams = 2;
+        uint32 show_empty_team = 3;
+    }
+
+    message VehicleTitle {
+        uint32 id = 1; //称号ID
+        string title = 2; //称号名称
+        repeated VehicleTitleUser icons = 3; //头像数组
+        string bg = 4;//背景图
+        string desc = 5; //创建条件
+        bool wear  = 6;//是否穿戴外显
+        bool can_create = 7;//是否可以创建
+        uint32 rel_id = 8; //关系id
+        string home_bg = 9; //房间背景图
+    }
+
+    message VehicleTitleUser {
+        uint32 id = 1; //uid
+        string icon = 2; //icon
+    }
+}

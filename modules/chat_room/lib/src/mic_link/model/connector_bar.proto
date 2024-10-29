@@ -1,0 +1,39 @@
+syntax = "proto3";
+package pb;
+
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+
+// 返回连线吧-获取麦位标签列表
+message RespConnectorBarLabelList{
+  bool success = 1;
+  string msg = 2;
+  repeated PosLabelInfo data = 3;
+  uint32 audit_status = 4; // 标签审核状态：0-审核中 1-已通过
+}
+
+// 麦位标签信息
+message PosLabelInfo {
+  uint32 pos = 1; // 麦序
+  string label = 2; // 标签
+  uint32 status = 3; // 单个标签审核状态：0-审核中 1-已通过 2-已拒绝
+  string desc = 4; // 描述
+}
+
+// 返回连线吧-获取送礼用户列表
+message RespConnectorBarPresentsList{
+  bool success = 1;
+  string msg = 2;
+  repeated PresentsUserInfo data = 3;
+}
+message PresentsUserInfo {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 pos = 4; // 所在麦位1-6
+  uint32 charm = 5; // 魅力值
+  uint32 mic_status = 6; // 麦位状态：0-麦下 1-麦上 2-连线中
+}

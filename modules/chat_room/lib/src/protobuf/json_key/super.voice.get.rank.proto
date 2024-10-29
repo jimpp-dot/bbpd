@@ -1,0 +1,24 @@
+syntax = "proto3";
+    
+package super.voice.get.rank;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message SuperVoiceGetRank {
+    option (pb.register_name) = 'super.voice.get.rank';
+    option (pb.register_id) = 99;
+    repeated Rank rank = 1;
+    string rid = 2;
+    string version = 3;
+
+    message Rank {
+        string icon = 1;
+        string name = 2;
+        uint32 sort_score = 3;
+        uint32 uid = 4;
+    }
+
+}

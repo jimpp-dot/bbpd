@@ -1,0 +1,105 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message NestUserInfo{
+  uint32 uid = 1;
+  string icon = 2;
+  string name = 3;
+  uint32 sex = 4;
+}
+
+message NestGiftInfo{
+  uint32 giftId = 1;
+  uint32 giftNum = 2;
+  string giftName = 3;
+  string giftUrl = 4;
+  uint32 price = 5;
+}
+
+message NestGsListItem{
+  NestUserInfo gs = 1;
+  NestGiftInfo gift = 2;
+}
+
+message NestGiftCoupon{
+  uint32 ucid = 1;
+  string cname = 2;
+  uint32 discount = 3;      //折扣比例，介于0-100
+}
+
+message NestGsListData{
+  repeated NestGsListItem data = 1;
+  NestGiftCoupon coupon = 2;
+}
+
+message ApiNestGsListResponse{
+  bool Success = 1;
+  string message = 2;
+  NestGsListData data = 3;
+}
+
+message NestSuccessNotifyMessage{
+  NestUserInfo gs = 1;
+  NestUserInfo boss = 2;
+  string content = 3;
+}
+
+message NestRoomInfo{
+  uint32 rid = 1;
+  string name = 2;
+  string icon = 3;
+}
+
+message NestBossNestItem{
+  NestRoomInfo room = 1;
+  NestUserInfo user = 2;
+  bool gsInRoom = 3;
+}
+
+message ApiNestBossListResponse{
+  bool success = 1;
+  string message = 2;
+  repeated NestBossNestItem list = 3;
+}
+
+message NestChildrenItem{
+  uint32 rid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 total = 4;
+}
+
+message ApiNestChildrenResponse{
+  bool success = 1;
+  string message = 2;
+  repeated NestChildrenItem list = 3;
+}
+
+/************************************************************/
+
+message NestAcquireRequest{
+  uint32 gs_uid = 1;
+  uint32 master_rid = 2;
+}
+
+message NestAcquireResponse{
+  uint32 nest_rid = 1;
+}
+
+message NestReleaseRequest{
+  uint32 nest_rid = 1;
+}
+
+message NestReleaseResponse{
+  uint32 nest_rid = 1;
+  int32 status = 2;
+}
+
+service Nest{
+  rpc Acquire(NestAcquireRequest)returns(NestAcquireResponse);
+  rpc Release(NestReleaseRequest)returns(NestReleaseResponse);
+}

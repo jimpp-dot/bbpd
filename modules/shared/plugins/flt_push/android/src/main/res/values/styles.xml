@@ -1,0 +1,7 @@
+<resources>
+    <style name="hua_wei_transparent_theme" parent="@android:style/Theme.NoTitleBar">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+</resources>

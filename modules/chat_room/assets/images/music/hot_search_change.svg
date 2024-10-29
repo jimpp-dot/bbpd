@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 16 14">
+  <title>bbpd_ic_next@2x</title>
+  <g fill="none" fill-rule="evenodd">
+    <path d="M-2-3h20v20H-2z"/>
+    <path fill="#202020" d="M1.76 5.32l-.9 1.2A.3.3 0 0 0 1.1 7h1.8a.3.3 0 0 0 .24-.48l-.9-1.2a.3.3 0 0 0-.48 0zm12 3.36l-.9-1.2A.3.3 0 0 1 13.1 7h1.8a.3.3 0 0 1 .24.48l-.9 1.2a.3.3 0 0 1-.48 0z"/>
+    <path stroke="#202020" stroke-linecap="round" d="M2 7a6 6 0 0 0 6 6h0a5.985 5.985 0 0 0 4.243-1.757M14 7A6 6 0 0 0 3.757 2.757"/>
+  </g>
+</svg>

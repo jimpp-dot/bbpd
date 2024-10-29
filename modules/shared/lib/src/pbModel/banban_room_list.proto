@@ -1,0 +1,16 @@
+syntax = "proto3";
+package pb;
+
+// 首页房间列表信息
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "banban_home.proto";
+
+message RoomListRes {
+	bool success = 1;
+	string msg = 2;
+	repeated RoomListItem item = 3;
+	bool has_more = 4;
+}

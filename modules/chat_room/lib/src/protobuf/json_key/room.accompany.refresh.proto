@@ -1,0 +1,33 @@
+syntax = "proto3";
+    
+package room.accompany.refresh;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+
+message RoomAccompanyRefresh {
+    option (pb.register_name) = 'room.accompany.refresh';
+    option (pb.register_id) = 60;
+    repeated Banner banner = 2;
+    repeated CallList call_list = 3;
+    HeartEffect heart_effect = 4;
+
+    message Banner {
+        string icon = 1;
+        string title = 2;
+        uint32 value = 3;
+    }
+
+    message CallList {
+        string icon = 1;
+        string uid = 2;
+    }
+
+    message HeartEffect {
+        uint32 size = 1;
+        string url = 2;
+    }
+}

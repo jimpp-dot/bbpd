@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <title>bbpd_zhubo@2x</title>
+  <g fill="none" fill-rule="evenodd">
+    <path d="M0 0h24v24H0z"/>
+    <g stroke="#313131" stroke-width="2" transform="translate(2.652 1)">
+      <circle cx="9.688" cy="5.5" r="4.5"/>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12.348 16.525l.795.796 1.591 1.59 4.526-4.525"/>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M14 12.031c-1.465-.908-3.293-1.448-5.276-1.448C3.906 10.583 0 13.768 0 17.697c0 3.93 3.906 2.706 8.724 2.706.835 0 1.642.037 2.407.077"/>
+    </g>
+  </g>
+</svg>

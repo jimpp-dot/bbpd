@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package screen.msg.pull;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+message MicOnUserList {
+  option (pb.register_name) = 'Room.Refresh.Mic.On';
+  option (pb.register_id) = 10023;
+
+  uint32 type = 1;     // 1:全量 2:增量
+  repeated MicData on_mic_list = 2;
+}
+
+message MicData {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  string sex = 4;
+  uint32 age = 5;
+  uint32 position = 6;
+  uint32 lock = 7;
+  uint32 forbidden = 8;
+  uint32 package = 9;
+  uint32 counter = 10;
+  uint32 mic_status = 11 [json_name = "mic_status"];
+  string frame = 12;
+  string frame_new = 13 [json_name = "frame_new"]; //国内使用
+  string ring = 14;
+  uint32 role = 15;
+  string gameZone = 16;
+  string gameId = 17;
+  uint32 live_only = 18 [json_name = "live_only"]; //国内使用
+  string live_label = 19 [json_name = "live_label"]; //国内使用
+  uint32 knight_level = 20 [json_name = "knight_level"]; //国内使用
+  uint32 inflexion = 21; //国内使用
+  uint32 game_online = 22 [json_name = "game_online"];//游戏状态 0.离线 1.在线
+  uint32 position_role = 23 [json_name = "position_role"]; // 麦位角色 1:接待 2:boss
+  uint32 position_state = 24 [json_name = "position_state"]; // 麦位状态 0x00:正常 0x01:离开
+  string throne_img = 25 [json_name = "throne_img"]; //麦上宝座图片
+  string color_name = 26 [json_name = "color_name"];// 炫彩昵称
+  string position_label = 27 [json_name = "position_label"]; // 麦位标签文字
+  uint32 god_tag = 28 [json_name = "god_tag"];    //麦位标签
+}

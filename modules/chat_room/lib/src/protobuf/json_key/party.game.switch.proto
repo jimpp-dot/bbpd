@@ -1,0 +1,14 @@
+syntax = "proto3";
+    
+package party.game.switch;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message PartyGameSwitch {
+    option (pb.register_name) = 'party.game.switch';
+    option (pb.register_id) = 48;
+    string game_type = 1;
+}

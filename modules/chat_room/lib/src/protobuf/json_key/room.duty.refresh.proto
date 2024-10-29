@@ -1,0 +1,14 @@
+syntax = "proto3";
+    
+package room.duty.refresh;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message RoomDutyRefresh {
+    option (pb.register_name) = 'room.duty.refresh';
+    option (pb.register_id) = 66;
+    bool has_award = 1;
+}

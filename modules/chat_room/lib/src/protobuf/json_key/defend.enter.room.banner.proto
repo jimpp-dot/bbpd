@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package defend.enter.room.banner;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message DefendEnterRoomBanner {
+  option (pb.register_name) = 'defend.enter.room.banner';
+  option (pb.register_id) = 26;
+  uint32 rid = 1;
+  uint32 uid = 2;
+  string my_name = 3;
+  string my_icon = 4;
+  string to_name = 5;
+  string to_icon = 6;
+  string enter_suffix = 7;
+  string background = 8;
+  string font_color = 9;
+}

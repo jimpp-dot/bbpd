@@ -1,0 +1,17 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+// go/slp/config/dataCheck  持久化数据检查
+message ClientDataCheckerResponse {
+  bool success = 1;
+  string message = 2;
+  CheckData data = 3;
+}
+message CheckData {
+  int64 modify_time = 1; // 调整变更时间戳
+  bool is_global = 2; // 是否全局清本地,这个为true，客户端就不需要管invalid_img_urls
+  repeated string invalid_img_urls = 3; // 无效的图片地址（不含域名），需要清缓存的，如果是全局的清除就is_global
+}

@@ -1,0 +1,60 @@
+syntax = "proto3";
+package pb;
+/*
+骑士团的pb定义
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message TemUserInfo{
+  uint32 uid =1;//banban的用户的uid
+  string tem_pid = 2;//音速达的pid
+  string tem_sp = 3;//音速达的sp
+  string tem_uid = 4;//音速达的用户uid
+  string tem_token = 5;//音速达的token
+  uint32 token_expire_time = 6;//token到期时间
+  uint32 vip_expire_time = 7;//vip的到期时间
+  string device_id = 8;//厂商设备唯一标示，由 ascii 可见字符组成
+  string client_ip = 9;//实际接口使用者 ip
+  string tem_room_id = 10;//音速达的room_id
+  string pkg = 11;//包名
+  string anchorid = 12;//充值时主播的uid
+}
+
+
+
+message RepTemUserInfo{
+  bool success = 1;
+  string msg = 2;
+  TemUserInfo tem_user_info = 3;//用户信息
+}
+
+
+
+message SongTapItem{
+  string title= 1;        //tap的名称
+  uint32 type = 2;        //tap的类型
+  string platform = 3;    //平台
+  string playlistId = 4;  //列表标识
+}
+
+
+message RepSongTap{
+  bool success = 1;
+  string msg = 2;
+  repeated SongTapItem data = 3;
+  string search_type = 4;//使用谁的搜索
+  bool show_search = 5;//是否显示搜索
+  string pid = 6;//pid内容
+  string appkey = 7;//即构的qppkey
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,24 @@
+syntax = "proto3";
+package pb;
+
+/*
+碎片兑换珍珠相关proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message KillerExchangeResp {
+  bool success = 1;
+  string msg = 2;
+}
+
+// 物品出售价值
+message KillerCommodityValue{
+  bool success = 1;
+  string msg = 2;
+  map<string,uint32> value = 3;
+  map<string,uint32> period = 4;
+  string icon = 5;
+}

@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package slp;
+
+message ResKtvSongList{
+  bool success = 1;
+  string msg = 2;
+  KtvSongListData data = 3;
+}
+message KtvSongListData {
+  repeated KtvSongItem list = 1;
+  repeated KtvSongListTab tabs = 2;
+  bool show_search = 3;
+}
+message KtvSongListTab{
+  string title = 1;
+  int32  type = 2;
+}
+
+message KtvSongItem{
+  uint32 Id = 1;
+  string Name = 2;
+  string Photo = 3;
+  uint32 SingerId = 4;
+  string SingerName = 5;
+  string OriginalMp3 = 6;
+  uint32 Size = 7;
+  uint32 Playtime = 8;
+  string HqMusic = 9;
+  uint32 HqSize = 10;
+  uint32 HqPlaytime = 11;
+  string Brc = 12;
+  uint32 UploaderUid = 13;
+  string UploaderName = 14;
+  string Tag = 15;
+  string Type = 16;
+  int32 Status = 17;
+  string Language = 18;
+  int32  HqStatus = 19;
+  uint32 Dateline = 20;
+  uint32 Updateline = 21;
+  string Platform = 22;
+  string PlatformSongId = 23;
+  int32  PlatformRankId = 24;
+  int32  OrderedCount = 25;
+  int32  SingCount = 26;
+  string music_id = 27;
+  string order_uname = 28;
+  int32  choosed = 29;
+  string status_description = 30;
+}

@@ -1,0 +1,69 @@
+name: personaldata
+description: A new Flutter package.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ">=2.18.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  shared:
+    path: ../shared
+
+  chat:
+    path: ../chat
+
+  chat_room:
+    path: ../chat_room
+
+  moment:
+    path: ../moment
+
+  fmodifier:
+    path: ../shared/plugins/fmodifier
+
+#  loading_more_list: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  assets_gen: ^1.5.0
+  build_runner: ^2.0.0
+  flutter_lints: ^2.0.2
+
+assets_gen:
+  omit_path_levels: 2
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+  assets:
+    - assets/sound/
+    - assets/images/
+    - assets/images/credit/
+    - assets/images/defend/
+    - assets/images/nearby/
+    - assets/images/marry/
+    - assets/images/game_master/
+    - assets/images/mate/gift_wall/
+    - assets/images/accompany_house/
+    - assets/images/match/
+    - assets/images/achievement_wall/
+    - assets/images/achievement_wall/level/
+    - assets/images/accompany_remember/
+    - assets/images/mystery/
+    - assets/images/cp_house/
+    - assets/images/travel_wall/
+    - assets/images/collection_room/
+    - assets/images/gift_wall/
+    - assets/images/gift_wall/gift_bg/
+    - assets/images/gift_wall/task/
+    - assets/images/gift_wall/rank/
+    - assets/images/intimate_card/
+    - assets/images/healer/
+    - assets/images/star_exchange/

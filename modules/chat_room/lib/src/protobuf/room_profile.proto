@@ -1,0 +1,274 @@
+syntax = "proto3";
+package pb;
+/*
+用户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+
+/*******************************************************基本信息********************************************************/
+//个人基本信息
+message RoomCardProfileBase {
+    uint32 uid = 1;                      //uid
+    string name = 2;                    //昵称
+    string icon = 3;                    //头像
+    uint32  age = 4;                     //年龄
+    string birthday = 5;                //生日
+    string sign = 6;                    //签名
+    uint32 online_status = 7;            //在线状态
+    uint32 dateline = 8;                 //注册日期
+    uint32 online_dateline = 9;          //离线时间
+    string online_dateline_diff = 10;   //离线时间文本
+    uint32 job = 11;                     //职业
+    uint32 sex = 12;                     //性别
+    uint32 title = 13;                   //爵位
+    int32 deleted = 14;                 //封禁状态
+    uint32 block_un_auther_message = 15; //是否允许陌生人消息
+    string position = 16;               //街道位置
+    uint32 role = 17;                    //角色
+    uint32 vipLevel = 18;                //VIP等级
+    repeated string photos = 19;        //形象照
+    string mark_name = 20;              //备注名
+    bool icongray = 21;                 //是否置灰
+    uint32 topic = 22;                   //动态数量
+    uint32 need_verify = 23;             //是否需要身份认证
+    uint32 need_verify_new = 24;         //新版身份认证
+    uint32 official = 25;                //官方标识
+    uint32 is_newer = 26;                //萌新标识
+    uint32 popularity_level = 27;        //人气等级
+    uint32 follow_relation = 28;         //关注关系
+    uint32 fans_num = 29;                //粉丝数量
+    string distance = 30;               //距离
+    uint32 accompany_num = 31;          //陪伴榜人数
+    uint32 new_noble = 32;              //新贵标签
+    uint32 authentication = 33;         //是否红人认证
+    uint32 authenticationScore = 34;     //红人热度
+    string authenticationSign = 35;      //红人标签
+    uint32 defend_count = 36;            //守护人数
+    string frame = 37;                   //用户头像框
+    uint32 virtual_man = 38;             //这个人是不是模拟厅的假人
+    uint32 knight_level = 39;            //骑士团的等级
+    string live_label_header = 40;       //粉丝团的头像框
+    string live_label_bubble = 41;       //粉丝团的聊天气泡
+    string live_label_effect = 42;       //粉丝团的进场特效
+    uint32 live_only = 43;              //是否使用了直播专属头像框
+    string little_alarm = 44;            //小闹钟标签
+    string jukebox = 45;                 //点唱标签
+    bool consume_label = 46;              //消费标签
+    bool recharge_label = 47;             //充值标签
+    uint32 star_singer = 48;              //明星歌手标签
+    uint32 star_verify_tag = 49;          //明星用户认证
+    string star_verify_desc = 50;         //明星用户身份
+    bool ka_white_icon = 51;              //KA神壕标签
+    uint32 music_order_count = 52;         //点唱首推歌单个数
+}
+
+/*******************************************************房间信息********************************************************/
+//房间信息
+message RoomCardProfileRoom{
+    int32 rid = 1;                      //房间id
+    int32 uid = 2;                      //用户id
+    string name = 3;                    //房间名称
+    string icon = 4;                    //房间图标
+    string property = 5;                //房间属性
+    int32 onmic_num = 6;                //麦上人数
+    string role = 7;                    //房间角色
+    string label = 8;                   //房间标签
+}
+
+/*******************************************************礼物墙信息*******************************************************/
+message RoomCardProfileGift{
+    uint32 gid = 1;                      //礼物id
+    uint32 num = 2;                      //数量
+    string name = 3;                    //礼物名称
+    uint32 sum = 4;                     //总价值
+}
+
+//技能相关信息
+message RoomCardProfileGod{
+    uint32 god_num = 1;                  //技能数量
+    string god_category = 2;            //技能id列表，逗号分隔
+    uint32 service_pause = 3;            //暂停服务
+    uint32 service_busy = 4;             //当前是否接单中
+    int32 credit_god_level = 5;         //主播信用等级
+}
+
+/*******************************************************家族信息********************************************************/
+message RoomCardProfileFleet{
+    int32 gid = 1;                  //家族id
+    string name = 2;                //昵称
+    string icon = 3;                //头像
+    int32 total = 4;                //家族成员
+    int32 creator = 5;              //创建者uid
+    int32 in = 6;                   //todo
+}
+
+/***********************************************交友卡信息（删掉了些冲鸭特有的）*********************************************/
+message RoomCardProfileCard{
+    int32 uid = 1;                //用户id
+    string name = 2;              //昵称
+    string icon = 3;              //头像
+    string desc = 4;              //描述
+    string audio = 5;             //录音
+    string hometown_city = 6;     //家乡城市
+    int32 hometown_city_code = 7; //家乡城市编码
+    string duration = 8;          //持续时间
+    int32 age = 9;                //年龄
+    int32 liked_num = 10;         //被点赞次数
+}
+
+/******************************************************守护信息********************************************************/
+message RoomCardProfileDefend{
+    int32 uid = 1;                //用户id
+    string title = 2;             //守护名称
+    int32 defend_value = 3;       //守护值
+    int32 position = 4;           //守护等级
+    int32 expire = 5;             //过期时间
+    string name = 6;              //昵称
+    string icon = 7;              //头像
+    int32 border_index = 8;       //边框编号
+}
+
+/******************************************************联盟信息********************************************************/
+
+message RoomCardProfileUnion{
+    int32 un_id = 1;            //联盟id
+    string name = 2;            //联盟昵称
+    int32 create_uid = 3;       //创建者uid
+    string logo = 4;            //联盟logo
+    string user_title = 5;      //管理头衔，80：无头衔，10：盟主，20：副盟主，30：长老
+    string title_name = 6;      //用户头衔名称
+}
+
+/******************************************************专属群信息********************************************************/
+message RoomCardProfilePartyGroup{
+    int32 group_id = 1;       //群组id
+    string name = 2;          //群组名称
+    string cover = 3;          //群封面
+    string member_num = 4;    //群组人数
+    bool official = 5;        //官方群标识
+}
+
+/******************************************************贵族名片********************************************************/
+message RoomCardProfileBussinessCard{
+    string banner = 1;          //群组名称
+    string header = 2;          //群封面
+}
+
+/******************************************************感兴趣标签********************************************************/
+message RoomCardProfileInterest{
+    string name = 1;          //兴趣名称
+}
+
+/******************************************************游戏房互动礼物********************************************************/
+message RoomCardProfileGlist{
+    string id = 1;          //礼物ID
+    string name = 2;        //礼物名称
+    string price = 3;       //礼物价格
+    string icon = 4;        //礼物icon
+}
+
+/******************************************************新用户Tag信息********************************************************/
+message RoomCardProfileRookieTag{
+    int32 seven_new = 1;   //7天内新注册
+    int32 pay_level = 2;   //LN标识
+}
+
+/*******************************************************技能信息********************************************************/
+
+//技能价格信息
+message RoomCardProfileSkillPrice{
+    string uint = 1;                  //单位
+    int32 price = 2;                  //价格
+    int32 cheap = 3;                  //特惠
+}
+
+//主播信息
+message RoomCardProfileSkill{
+    int32 cid = 1;                    //技能id
+    string name = 2;                  //技能名称
+    string icon = 3;                  //技能图标
+    string _level = 4;                //技能等级
+    int32 num = 5;                    //接单数量
+    int32 is_default = 6;             //是否是默认技能
+    repeated RoomCardProfileSkillPrice price = 7;  //价格信息
+    repeated string user_god_tag_list = 8;     //主播tag
+}
+
+/*****************************************************游戏信息********************************************************/
+message RoomCardProfileGame{
+    string type = 1;        //游戏类型
+    string gameId = 2;      //游戏ID
+    string gameZone = 3;    //游戏区
+}
+
+/******************************************************亲密度信息********************************************************/
+message RoomCardProfileAccompanyInfo{
+    uint32 degree = 1;      //亲密度
+    uint32 stay_secs =2;    //陪伴时长
+}
+
+/******************************************************结婚信息********************************************************/
+message RoomCardProfileMarrySingleInfo{
+    string mid = 1;             //结婚ID
+    string cid = 2;             //戒指ID
+    string cName = 3;           //戒指名称
+    string img = 4;             //戒指资源
+}
+
+message RoomCardProfileMarryRelationInfo{
+    string mid = 1;             //结婚ID
+    string cid = 2;             //戒指ID
+    string img = 3;             //戒指资源
+    uint32 degree = 4;          //亲密度
+}
+
+message RoomCardProfileMarryInfo{
+    RoomCardProfileMarrySingleInfo single = 1;                //单身信息
+    RoomCardProfileMarryRelationInfo relation = 2;            //半路信息
+}
+
+/******************************************************游戏战绩********************************************************/
+message RoomCardProfileGameHistory{
+    uint32 populace = 1;                                 //卧底胜利次数
+    uint32 under = 2;                                    //卧底胜利次数
+    uint32 total = 3;                                    //画猜总场次
+    uint32 score = 4;                                    //画猜积分数、unity游戏积分、剧本积分
+    uint32 thumbs_up = 5;                                //画猜被点赞数
+    uint32 wolf_win = 6;                                 //狼人杀狼人局获胜次数
+    uint32 good_win = 7;                                 //狼人杀好人局获胜次数
+    uint32 level = 8;                                    //狼人杀等级、剧本等级
+    uint32 ju_count = 9;                                 //剧本杀局数
+    float win_rate = 10;                                 //剧本杀胜率
+    uint32 round = 11;                                   //unity游戏次数
+    uint32 champion = 12;                                //unity游戏获胜次数
+}
+
+message RoomCardProfileData{
+    RoomCardProfileBase base = 1;                             //个人基本信息
+    RoomCardProfileGod god = 2;                               //主播信息
+    repeated RoomCardProfileGift gift = 3;                    //礼物墙信息
+    RoomCardProfileFleet fleet = 4;                           //家族信息
+    RoomCardProfileCard card  = 5;                           //交友卡信息
+    repeated RoomCardProfileDefend defend_list = 6;          //守护信息
+    RoomCardProfileUnion union = 7;                          //联盟信息
+    repeated RoomCardProfilePartyGroup party_group = 8;      //专属群信息
+    RoomCardProfileBussinessCard business_card = 9;          //贵族名片信息
+    repeated RoomCardProfileInterest interest = 10;           //兴趣
+    repeated RoomCardProfileGlist glist = 11;                 //互动礼物列表
+    RoomCardProfileRookieTag rookie_tag  = 12;                //LN标识信息
+    repeated RoomCardProfileSkill skill = 13;                 //主播技能信息
+    RoomCardProfileGame game = 14;                            //游戏账号信息
+    RoomCardProfileAccompanyInfo accompany = 15;              //陪伴信息
+    RoomCardProfileMarryInfo  marry = 16;                     //结婚信息
+    RoomCardProfileGameHistory game_history = 17;             //游戏历史统计信息
+}
+
+message ResRoomCardProfile {
+    bool success = 1;                    //成功true，失败false
+    string msg = 2;                      //失败message
+    RoomCardProfileData data = 3;   //返回数据
+}

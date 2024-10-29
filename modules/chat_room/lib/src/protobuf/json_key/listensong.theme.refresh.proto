@@ -1,0 +1,28 @@
+syntax = "proto3";
+    
+package listensong.theme.refresh;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message ListensongThemeRefresh {
+    option (pb.register_name) = 'listensong.theme.refresh';
+    option (pb.register_id) = 42;
+    Theme theme = 1;
+
+    message Theme {
+        string bg_type = 1;
+        string bg_url = 2;
+        string dynamic_icon = 3;
+        string dynamic_static_icon = 4;
+        string dynamic_static_icon_type = 5;
+        bool enable = 6;
+        string icon_type = 7;
+        string name = 8;
+        string theme = 9;
+        string thumb = 10;
+    }
+
+}

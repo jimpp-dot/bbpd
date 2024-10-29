@@ -1,0 +1,25 @@
+syntax = "proto3";
+package pb;
+/*
+用户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+
+message ResHomeRankStrategy {
+	bool success = 1;
+	string msg = 2;
+	repeated HomeRankStrategy data = 3;
+}
+
+message HomeRankStrategy {
+    uint32 id = 1;              //榜单id
+    string key = 2;             //榜单标识
+    string name = 3;            //榜单名称
+    bool hide_rank = 4;         //是否隐藏榜单名次
+    bool hide_score = 5;        //是否隐藏榜单数值
+    bool hide_list = 6;         //是否隐藏榜单
+}

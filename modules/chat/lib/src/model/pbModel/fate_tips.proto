@@ -1,0 +1,17 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+message FateImContent {
+	uint32 id = 1;
+	string content = 2;
+}
+
+message ResFateIm {
+	bool success = 1;
+	string msg = 2;
+	repeated FateImContent contents = 3; //内容信息
+}

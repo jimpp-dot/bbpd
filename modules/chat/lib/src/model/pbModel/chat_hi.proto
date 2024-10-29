@@ -1,0 +1,45 @@
+syntax = "proto3";
+package pb;
+/*
+嗨歌proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "app/pb";
+
+message ResMathCount {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  uint32 leftNum = 3;   //剩余匹配次数
+  string utype = 4; //当前用户类型
+  repeated string female_list = 5; //女性头像列表
+  repeated string male_list = 6; //男性头像列表
+}
+
+message PreUser {
+  uint32 uid  = 1;
+  string name  = 2;
+  string icon = 3;
+}
+
+message LimitData {
+  uint32 jump_type = 1; //跳转类型: 0 不调整(仅提示), 1 实名认证页, 2 联盟广场页, 3 开通会员页
+  string tips = 2; //提示语
+}
+
+//匹配请求结果
+message ResMath {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  repeated PreUser list = 3;    //预选列表
+  uint32 leftNum = 4;  //剩余匹配次数
+  uint32 exception = 5; //异常情况: 0 正常, 1 资料完成度不足, 2 次数不足, 3 未知性别
+  LimitData limit = 6; //次数限制信息
+}
+
+message ResMsgList {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;
+  repeated string list = 3;
+}

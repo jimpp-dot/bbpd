@@ -1,0 +1,145 @@
+syntax = "proto3";
+package room.celebration;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "./pb";
+
+import "json_key/broadcast_extension.proto";
+
+/// 庆典进度
+message CelebrationProgress {
+  option (pb.register_name) = 'room.celebration.progress';
+  option (pb.register_id) = 20016;
+
+  string level = 1;//等级Lv0~Lv4
+  string image = 2;
+  uint32 total = 3;
+  uint32 score = 4;//当前达到的分数
+}
+
+/// 庆典特效
+message CelebrationEffect{
+  option (pb.register_name) = 'room.celebration.effect';
+  option (pb.register_id) = 20015;
+
+  string title = 1;
+  string effect = 2;
+  uint32 effect_size = 3;// 特效视频大小
+  uint32 operation = 4; //0不显示按钮，1显示开启庆典按钮，2显示结束庆典按钮
+  CelebrationProgress progress = 5;
+}
+
+message CelebrationConfigData {
+  string title = 1; // 庆典准备中,庆典进行中
+  uint32 operation = 2; //0不显示按钮，1显示开启庆典按钮，2显示结束庆典按钮
+  CelebrationProgress progress = 3;
+}
+
+/// 控制开启/关闭按钮的展示逻辑
+message CelebrationSwitch {
+  option (pb.register_name) = 'room.celebration.switch';
+  option (pb.register_id) = 20017;
+
+  uint32 operation = 1; //0不显示按钮，1显示开启庆典按钮，2显示结束庆典按钮
+}
+
+message ResCelebrationConfig {
+  string msg = 1;
+  bool success = 2;
+  CelebrationConfigData data=3;
+}
+
+message CelebrationLevel {
+  string name = 1;
+  string cur = 2;//等级Lv.0~Lv.4
+  uint32 cur_progress =3;//当前的进度
+  repeated CelebrationLevelItem items = 4;
+}
+
+message CelebrationLevelItem {
+  string level = 1;//等级Lv.0~Lv.4
+  string image = 2;
+  uint32 range_start = 3;
+  uint32 range_end = 4;
+  string award_icon = 5;
+  string award_name = 6;
+}
+
+message CelebrationContributorItem {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 score = 4;
+}
+
+/// 助力王
+message CelebrationContributor{
+  string king_image = 1;
+  repeated CelebrationContributorItem items =2;
+}
+
+
+message CelebrationWallItem{
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  string bless_word =4;
+  uint32 gift_id =5;
+}
+
+/// 祝福墙
+message CelebrationWall{
+  string default_bless_word =1;
+  repeated CelebrationWallItem items =2;
+}
+
+/// 详情
+message CelebrationDetailData {
+  CelebrationLevel level = 1; //等级信息
+  CelebrationContributor contributor = 2; //助力者的信息
+  CelebrationWall wall = 3; //祝福墙的信息
+}
+
+message ResCelebrationDetail {
+  string msg = 1;
+  bool success = 2;
+  CelebrationDetailData data=3;
+}
+
+/// 庆典统计
+message CelebrationStat{
+  uint32 people_count = 1;
+  uint32 word_count = 2;
+  string level = 3;
+  uint32 create_time = 4;
+}
+
+message CelebrationRetrospectData {
+  CelebrationStat stat = 1; //统计信息
+  CelebrationContributor contributor = 2; //助力者的信息
+  repeated CelebrationWallItem words = 3; //祝福墙的信息
+}
+
+/// 庆典回顾
+message ResCelebrationRetrospect {
+  string msg = 1;
+  bool success = 2;
+  CelebrationRetrospectData data=3;
+}
+
+message CelebrationHistoryData{
+  uint32 celebration_id =1;
+  string level = 2;//等级Lv.0~Lv.4
+  string image = 3;
+  string name = 4;
+  CelebrationContributor contributor = 5; //助力者的信息
+  uint32 create_time = 6;
+}
+
+/// 庆典历史
+message ResCelebrationHistory {
+  string msg = 1;
+  bool success = 2;
+  repeated CelebrationHistoryData data=3;
+}

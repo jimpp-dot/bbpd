@@ -1,0 +1,17 @@
+syntax = "proto3";
+    
+package heartrace.notice;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+message HeartraceNotice {
+	option (pb.register_name) = 'heartrace.notice';
+	option (pb.register_id) = 10007;
+	string left_icon = 1; 
+	string right_icon = 2; 
+	string title = 3; 
+	string sub_title = 4; 
+
+}

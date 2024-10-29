@@ -1,0 +1,65 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+
+import "json_key/broadcast_extension.proto";
+
+
+message RoomBoxNotify{
+  option (pb.register_name) = 'room.box.notify';
+  option (pb.register_id) = 20021;
+  string type = 1; //类型
+  string url = 2; //接口地址,获取实际字段和数据
+  int32 close = 3;    //默认0,不关闭, 1关闭
+}
+
+message AnnualPartyRoomBoxInfo {
+  uint32 id = 1;
+  uint32 total_num = 2; // 总库存
+  uint32 left_num = 3; // 剩余库存
+  uint32 status = 4; // 1 等待领取 2 可以领取 3 已领取
+  uint32 end_time = 5; // 倒计时
+  string icon = 6;
+}
+// 进房
+message ApiAnnualPartyRoomBoxRsp {
+  bool success = 1;
+  string message = 2;
+  message Data {
+    AnnualPartyRoomBoxInfo box_info = 1;
+    string act_url = 2;
+  }
+  Data data = 3;
+}
+
+message AnnualPartyOpenRoomBoxRwdMeta {
+  uint32 id = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 day = 4;
+  uint32 num = 5;
+  string typ = 6;
+  string desc = 7; // 看要不要拼
+}
+
+// 开宝箱
+message ApiAnnualPartyOpenRoomBoxRsp {
+  bool success = 1;
+  string message = 2;
+  message Data {
+    AnnualPartyOpenRoomBoxRwdMeta commodity_info = 1;
+    string act_url = 2;
+    bool is_opened = 3;
+    uint32 status = 4; // 1：正常领取 2：已领取过 3：宝箱被领取完了 4：领取时间已过
+  }
+  Data data = 3;
+}
+
+// 房间宝箱消息推送
+message BroadcastAnnualPartyRoomBox {
+  option (pb.register_name) = 'room.activity.box';
+  option (pb.register_id) = 70010;
+  AnnualPartyRoomBoxInfo box_info = 1;
+}

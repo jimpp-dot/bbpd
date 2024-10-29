@@ -1,0 +1,28 @@
+syntax = "proto3";
+package pb;
+/*
+账户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+message ResGetGeneralSetting {
+  bool success = 1;
+  string msg = 2;
+  GeneralSettingData data = 3;
+}
+
+message GeneralSettingData {
+  uint32 closeSpecialEffectsScene = 1;  // 1:开启关闭特效【关闭特效】；0:关闭关闭特效【开启特效】；setting_type=0
+  uint32 oneKeyProtection = 2;          // 1:开启一键防护；0:关闭一键防护；setting_type=1
+  uint32 privateMessageNoti = 3;        // 1:开启私信消息通知；0:关闭私信消息通知；setting_type=2
+  uint32 closeGloryDisplay = 4;         // 荣誉展示开关，0-公开(默认)，1-隐藏；setting_type=3
+  uint32 closeBirthdayRemind = 5;       // 1:关闭生日提醒；0:开启生日提醒；setting_type=4
+  uint32 closeAutoGreet = 6;            // 自动招呼开关v2(放弃老版本)，0-打开(默认)，1-关闭；setting_type=5
+  uint32 closeTopicChatRcm = 7;         // 关闭动态私聊推荐，0-打开(默认)，1-关闭；setting_type=6
+  uint32 openTitleExclusiveMic = 8;     // 开启贵族专属麦座，0-关闭(默认)，1-打开 ；setting_type=7
+  uint32 closeBootRoomRecommend = 9;     // 新厅引流推荐，0-打开(默认)，1-关闭 ；setting_type=8
+  uint32 closeReceiveGameOrder = 11;    // 开启后系统不会自动给您派发开黑订单 2不显示设置，1不接单(开启)，0接单(关闭)
+}

@@ -1,0 +1,24 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message Bglist {
+  string url = 1; //背景图片链接
+  string type = 2; //背景图片类型
+  bool enable = 3; //是否可使用
+  string message = 4; //提示的文案信息
+}
+
+message BglistData {
+	string current = 1;  //当前使用的背景
+  repeated Bglist list = 2; //可选择的背景列表
+}
+
+message ResBackgroundList {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  BglistData bglist = 3; //返回的背景列表数据
+}

@@ -1,0 +1,124 @@
+syntax = "proto3";
+package pb;
+/*
+打赏分类信息proto
+cd proto/api && protoc --go_out=../ category.proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+import "entity_xs_video.proto";
+
+message ResCategoryIndex {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  repeated CategoryList data = 3;
+  uint32 role = 4;
+  uint32 mobile = 5;
+  bool iconOk = 6;
+}
+
+message CategoryList {
+  string name = 1; //分类名称
+  repeated CategoryInfo list = 2; //资质列表
+}
+
+message CategoryInfo {
+  uint32 cid = 1;  //
+  uint32 pid = 2;  // 父类
+  string name = 3;  //
+  string icon = 4;  //
+  uint32 level = 5; //
+  uint32 dpath = 6; // 深度
+  int32 verify_state = 7; //-1待提交 0 待审核， 1 拒绝， 2 审核通过， 3 待人工审核
+}
+
+message CategoryRequested {
+  uint32 cid = 1; //
+  uint32 verifyState = 2; //
+}
+
+message ResCategoryDetail {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;
+  CategoryDetail category = 3;
+  CategoryVerify verify = 4;
+}
+
+message CategoryVerify {
+  uint32 verify_id = 1;  //
+  uint32 gift_cid = 2;
+  string game_id = 3;  //
+  string audio = 4;  //
+  string cover = 6;
+  string accompany = 7;
+  string game_system = 8;
+  uint32 level = 9; //
+  string order_description = 10;  //
+  int32 verify_state = 11; //0 待审核， 1 拒绝， 2 审核通过， 3 待人工审核
+}
+
+message CategoryDetail {
+  uint32 cid = 1;  //
+  uint32 game_id_need = 2; // 是否需要用户的game id
+  uint32 audio_need = 3; //
+  string description = 4; //
+  string cond = 5; // 技能资质要求
+  string name = 6;  //
+  string cover_example = 7;
+  string cover_description = 8; // 为空，则显示默认，请上传本人正面清晰照一张，无遮挡
+  string audio_description = 9;  //
+  repeated string audio_example = 10; //
+  string example = 11;
+  uint32 cover_need = 12;  //
+  repeated CategoryLevel level_list = 13;
+  repeated string systems = 14; //游戏使用系统
+  uint32 cancel_money = 15; //取消资质需要星钻
+}
+
+message CategoryLevel {
+  uint32 id = 1;
+  string title = 2;
+}
+
+message CategoryGift {
+  uint32 id = 1;
+  string name = 2;
+  double price = 3;
+  string icon = 4;
+  string gift_type = 5;
+}
+
+message ResCategoryVideo {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;
+  CategoryVideo data = 3;
+}
+
+message CategoryVideo {
+  CategoryVideoUser user = 1;
+  CategoryVideoDemo demo = 2;
+  uint32 num = 3;
+  repeated string user_god_tag_list = 4;
+  EntityXsVideo video = 5;
+}
+
+message CategoryVideoUser {
+  string name = 1;
+  string icon = 2;
+  string tmp_icon = 3;
+  string sign = 4;
+  uint32 sex = 5;
+  uint32 year = 6;
+}
+
+message CategoryVideoDemo {
+  string icon = 1;
+  string description = 2;
+}
+
+message ResNormal {
+  bool success = 1; //成功true，失败false
+  string msg = 2;
+}

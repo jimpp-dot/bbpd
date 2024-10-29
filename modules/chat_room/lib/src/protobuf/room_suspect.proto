@@ -1,0 +1,250 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+//0-未开始,1-过渡阶段,2-游戏阶段,3-结束阶段
+enum RoomSuspectStage {
+    ROOM_SUSPECT_STAGE_PENDING = 0;
+    ROOM_SUSPECT_STAGE_READY = 1;
+    ROOM_SUSPECT_STAGE_PLAYING = 2;
+    ROOM_SUSPECT_STAGE_END = 3;
+}
+
+//0-'none',1-'witness',2-'detective'
+enum RoomSuspectRole {
+    ROOM_SUSPECT_ROLE_NONE = 0;
+    ROOM_SUSPECT_ROLE_WITNESS = 1;
+    ROOM_SUSPECT_ROLE_DETECTIVE = 2;
+}
+
+//0-未排除嫌疑人，1-排除了嫌疑人， 2-排除了凶手
+enum RoomSuspectReleaseStatus {
+    ROOM_SUSPECT_RELEASE_NONE = 0;
+    ROOM_SUSPECT_RELEASE_TRUE = 1;
+    ROOM_SUSPECT_RELEASE_FALSE = 2;
+}
+
+message ResSuspectExchangeWitness {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+}
+
+message ResSuspectAgreeExchange {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+}
+
+message SuspectRoleList {
+    uint32 uid = 1; //uid
+    string name = 2; //name
+    string icon = 3; //name
+    uint32 position = 4; //麦位
+    bool prepare = 5; //是否已经准备好
+    RoomSuspectRole role = 6; //角色，'none','witness','detective'
+    uint32 release_count = 7; //该局游戏释放的人数
+}
+
+message SuspectPendingData {
+    string notice = 1;//通告
+    string name = 2;//署名
+    string date = 3;//日期
+}
+
+message SuspectReadyData {
+    string portrait = 1;//凶手画像
+    string news_date = 2; //新闻日期
+    string news_title = 3; //新闻标题
+    string news_serial_no = 4; //新闻期刊编号
+    string news_content = 5; //新闻区域内容
+    string detective_work = 6; //侦探工作介绍
+}
+
+message SuspectQuestionData {
+    uint32 id = 1;//问题id
+    string content = 2; //问题内容
+    uint32 round = 3; //第几轮
+    int64 total_time = 4; //答题倒计时
+}
+
+message SuspectAnswerData {
+    uint32 id = 1;//问题id
+    string content = 2; //问题内容
+    uint32 round = 3; //第几轮
+    bool answer = 4; //回答结果
+}
+
+message SuspectPersonList {
+    uint32 id = 1; //嫌疑人id
+    string suspect_image = 2; //嫌疑人图
+    RoomSuspectReleaseStatus suspect_status = 3; //0-未排除嫌疑人，1-排除了嫌疑人， 2-排除了凶手
+    uint32 detective_uid = 4; //排除他的侦探uid
+    string detective_icon = 5; //排除他的侦探icon
+    uint32 suspect_image_role = 6; //1-嫌疑人， 2:凶手
+}
+
+message SuspectPlayingData {
+    repeated SuspectPersonList person_list = 1;//嫌疑人士列表
+    uint32 round = 2;//轮次
+    uint32 release_count = 3;//该轮次释放的人数
+    bool show_clue = 4;//抽取线索的标志
+    int64 left_time = 5;//剩余时间（秒）
+    int64 detective_exclude_sec = 6;//侦探排查时间(秒)
+}
+
+message SuspectEndSuccessData {
+    string portrait = 1;//凶手画像
+    string des = 2;//描述文案
+}
+
+message SuspectEndFailureData {
+    uint32 failure_code = 1; //1-释放了凶手，2-分数用完
+    string des = 2;//描述文案
+}
+
+message SuspectEndData {
+    bool task_state = 1;//true:任务成功，false：任务失败
+    SuspectEndSuccessData success_data = 2; //任务成功数据
+    SuspectEndFailureData failure_data = 3;
+    string detective_icon = 4; //排除他的侦探icon
+}
+
+message SuspectRoleData {
+    repeated SuspectRoleList list = 1;//麦位角色表
+}
+
+// ResSuspectBase的根结构
+message ResSuspectBaseData {
+    RoomSuspectStage stage = 1;//游戏阶段
+    SuspectRoleData role_data = 2;//麦位角色表
+    SuspectPendingData pending_data = 3;//pending阶段数据
+    SuspectReadyData ready_data = 4;//过渡阶段数据
+    SuspectPlayingData playing_data = 5;//推理阶段数据
+    SuspectEndData end_data = 6;//结束阶段数据
+    ResSuspectTextList show_text = 7; //嫌疑人框上面的文案展示
+    uint32 NoAnswerQuestionNum = 8; //未回答的题目数
+}
+
+//嫌疑人基础业务数据
+message ResSuspectBase {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+    ResSuspectBaseData data = 3; //返回的嫌疑人业务数据
+}
+
+//交换身份弹窗消息
+message SuspectExchangeWitnessMsg {
+    uint32 from_uid = 1; //交换身份发起方
+    uint32 witness_position = 2; //交换身份发起方麦位
+    string name = 3;//交换身份发起方名字
+    uint32 to_uid = 4; //目标对象uid
+    int64  req_time = 5;//发起交换的时间
+}
+
+message ResSuspectStart {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+}
+
+message ResSuspectPrepare {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+}
+
+message ResSuspectGrabPosition {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+}
+
+message ResSuspectAnswer {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+}
+
+message SuspectReleaseData {
+    uint32 suspect_or_cri = 1;       //1-释放的是嫌疑人，2-释放的是罪犯
+    string desc = 2;                 //释放的文案
+}
+
+message ResSuspectRelease {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+    SuspectReleaseData data = 3;//释放嫌疑人的结果信息
+}
+
+message ResSuspectSelectClue {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+}
+
+message SuspectQuestionRecordList {
+    uint32 id = 1;                  //问题id
+    uint32 round = 2;               //轮次
+    string question = 3;            //问题内容
+    uint32 answer = 4;             //0-答false，1-答true，2没有作答
+}
+
+message SuspectQuestionRecord {
+    repeated SuspectQuestionRecordList list = 1;//问题列表
+    SuspectQuestionRecordList current_question = 2;//当前轮次的问题（如果没有答的话）
+}
+
+message ResSuspectQuestionList {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2;  //返回给客户端的必须有
+    SuspectQuestionRecord data = 3;//问题列表
+}
+
+message SuspectTimeRecordList {
+    uint32 round = 1;                //轮次
+    uint32 release_count = 2;        //释放人数
+    uint32 cost_time = 3;            //扣除时间
+}
+
+message SuspectTimeRecord {
+    repeated SuspectTimeRecordList list = 1;//时间花费列表
+}
+
+message ResSuspectTimeList {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2;  //返回给客户端的必须有
+    SuspectTimeRecord data = 3;//时间花费列表
+}
+
+message ResSuspectTextList {
+    string witness_text = 1; //目击者文案
+    string detective_text = 2;  //侦探文案
+    string other_text = 3;//其他文案
+}
+
+message NoviceGuidance {
+    bool success = 1;
+    string msg = 2;
+    NewUserPageInfo data = 3;
+}
+
+message NewUserPageInfo {
+    string who_murderer = 1; //谁是凶手
+    string play_title = 2; //玩家说明
+    string motion = 3;
+    string one_rule_content = 7;//谁是凶手，是一种根据主观判断推测凶手的语音互动游戏。其玩法是目击者获得给定问题后，根据凶手的外貌特征，主观判断是否与凶手相符，侦探家根据目击者的回答，逐一排除嫌疑人，找出真正凶手。而目击者只能以"是"或"否"来回答问题。
+    string one_game_time_text = 8;//游戏限时10分钟
+    string one_page_img_url = 9;//第一个页面对应背景图
+    string two_content = 10;//目击者回答问题
+    string two_pop_window_content = 11;//他抽烟吗?
+    string two_window_yes_answer = 12;//否
+    string two_window_no_answer = 13;//是
+    string two_page_img_url = 14;//第二个页面对应背景图
+    string three_content = 15;//侦探排除凶手
+    string three_pop_window_content = 16;//嘿,朋友！千万可别冤枉一个好人
+    string three_button_content = 17;//释放
+    string three_page_img_url = 18;//第三个页面对应背景图
+    string four_content = 19;//游戏结束
+    string four_success_content = 20;//任务成功
+    string four_success_content_url = 21;//任务成功对应的图片URL（该文案以图片展示）
+    string four_success_text = 22;//需要排除场上所有无辜的人后，剩下最后一个为嫌疑人方可获胜
+    string four_success_button = 23;//我知道了
+    string fore_page_img_url = 24;//第三个页面对应背景图
+}

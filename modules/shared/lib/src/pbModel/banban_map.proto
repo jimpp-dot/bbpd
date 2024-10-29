@@ -1,0 +1,22 @@
+syntax = "proto3";
+package pb;
+//百度地图接入
+
+option go_package = "../../app/pb";
+
+message RespPosition {
+  bool success = 1;               //成功true，失败false
+  string msg = 2;                 //失败message
+  repeated PositionData data = 3;       //返回数据
+}
+
+message PositionData {
+   string name = 1;
+   Location location = 2;
+   string address = 3;
+}
+
+message Location {
+    string lat = 1;
+    string lng = 2;
+}

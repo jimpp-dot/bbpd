@@ -1,0 +1,40 @@
+group 'ly.plugins.thinking_analytics'
+version '1.0'
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.0'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 16
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+}
+
+dependencies {
+    implementation 'cn.thinkingdata.android:ThinkingAnalyticsSDK:2.8.4'
+//    compileOnly fileTree(dir: 'libs', includes: ['flutter*.jar'])
+    compileOnly 'androidx.annotation:annotation:1.0.0'
+}

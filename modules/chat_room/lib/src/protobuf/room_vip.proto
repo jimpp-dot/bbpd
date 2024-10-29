@@ -1,0 +1,56 @@
+syntax = "proto3";
+package pb;
+/*
+房间贵宾等级proto
+*/
+
+option go_package = "../../app/pb";
+
+message GetRoomVipRankReq{
+  uint32 rid = 1;
+}
+
+message GetRoomVipRankResp{
+  bool success = 1;
+  string msg = 2;
+  RoomVipRankData data = 3;
+}
+
+message RoomVipRankData {
+  repeated RoomVipRankItem rank_list = 1;
+  RoomVipRankItem my_card = 2; //登录用户的贵宾卡信息，为空表示没有开卡
+  uint32 open_card_gift_id = 3; //开卡礼物id
+  bool is_reach_cards_limit = 4; //是否达到可以开卡的上限
+  string achieve_tips = 5; //成就墙提示
+}
+
+message RoomVipRankItem{
+  uint32 level = 1;
+  RoomVipRankUser user = 2;
+  uint32 points = 3; // 积分
+  uint32 gap = 4; // 和上一名相差分数, -1表示未上榜
+  string rank = 5; // 排行
+}
+
+message RoomVipRankUser{
+  uint32 uid = 1;
+  string icon = 2;
+  uint32 sex = 3;
+  uint32 title = 4; //爵位
+  uint32 title_new = 5;
+  string name = 6;
+  uint32 vip_level = 7;
+  uint32 popularity_level = 8;//用户的人气等级
+}
+
+message RoomVipRankDescResp{
+  bool success = 1;
+  string msg = 2;
+  string data = 3;
+}
+
+message RoomVipRankDescSetResp{
+  bool success = 1;
+  string msg = 2;
+  string data = 3;
+}

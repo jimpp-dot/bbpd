@@ -1,0 +1,14 @@
+syntax = "proto3";
+    
+package cplink.relation.refresh;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message CpLinkRelationRefresh {
+    option (pb.register_name) = 'cplink.relation.refresh';
+    option (pb.register_id) = 20;
+    bool config_refresh = 1;
+}

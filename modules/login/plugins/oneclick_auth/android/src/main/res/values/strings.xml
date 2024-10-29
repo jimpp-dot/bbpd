@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="agree_and_continue">同意并继续</string>
+    <string name="privacy_before">登录即表示已阅读并同意</string>
+</resources>

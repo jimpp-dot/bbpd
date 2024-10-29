@@ -1,0 +1,75 @@
+syntax = "proto3";
+package pb;
+/*
+用户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "entity_xs_chatroom.proto";
+
+message RoomTypeName {
+	string label = 1;
+	string val = 2;
+	string color = 3;
+	repeated string bg = 4;
+	string show = 5;
+	string icon = 6;
+	string home_icon = 7;
+}
+
+message RoomOmTab {
+	string label = 1;
+	string icon = 2;
+}
+
+//FormattedRoom 一个各种格式化后的房间信息，用于列表输出
+message FormattedRoom {
+	EntityXsChatroom room = 1;	
+	uint32 online_num = 2; //在线人数
+	uint32 real = 3; //最近的流水
+	uint32 score = 4; //热度
+	bool is_pk = 5; //是否在进行PK
+	bool has_password = 6; //是否有密码
+	string frame = 7; //房间头像框相关
+	string left_frame = 8;//房间头像框相关
+	RoomOmTab om_tab = 9; //房间的运营词语
+	RoomTypeName type_name = 10;//
+	uint32 vip = 11; //用户vip
+	string uname = 12; //用户名字
+	string uicon = 13; //用户ICON，客户端自己决定使用房间ICON还是用户icon
+	uint32 utitle = 14; //用户爵位，不知道还有没有用
+	uint32 sex = 15; //房间性别，不知道还有没有用
+	uint32 reception_uid = 16; //接待UID
+	uint32 boss_uid = 17;//老板UID
+	uint32 num_boy = 18; //麦上 boy
+	uint32 num_girl = 29; //麦上 girl
+	uint32 hour_rank = 20; //房间分类小时排名
+	string packet_icon = 21; //红包的红包icon
+	repeated string mic_icons = 22; //房间麦上用户的icon
+	string room_desc = 23; //客户端决定是否使用描述
+}
+
+//FormattedRooms 一个各种格式化后的房间信息，用于列表输出
+message FormattedRooms {
+	bool success = 1;
+	string msg = 2;
+	repeated FormattedRoom data = 3;
+}
+
+message InRoomFriends {
+	uint32 uid = 1;
+	string name = 2;
+	string icon = 3;
+}
+
+message TogetherPlayUser {
+	uint32 uid = 1;
+	string name = 2;
+	string icon = 3;
+	uint32 together_time = 4;
+	string room_type = 5;
+	uint32 dateline = 6;
+}

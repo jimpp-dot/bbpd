@@ -1,0 +1,63 @@
+syntax = "proto3";
+package pb;
+/*
+small account 相关proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+message ResSmallAccountList {
+	bool success = 1;
+	string msg = 2;
+	repeated SmallAccountList list = 3;
+}
+
+message ResSmallAccountListUid {
+	bool success = 1;
+	string msg = 2;
+	repeated UserItem list = 3;
+}
+
+message ResTipsSwitchState {
+	bool success = 1;
+	string msg = 2;
+	uint32 allow_tips = 3;// 状态 1打开  2关闭
+}
+
+message SmallAccountList {
+	uint32 uid = 1;
+	string name = 2;
+	string icon = 3;
+	uint32 state = 4; //1有效  2失效
+	string online_diff = 5; //最后登录时间
+	uint32 online_friend_count = 6; //好友在线人数
+	repeated UserItem online_friend_list = 7; //在线好友列表
+	string mobile = 8; //用户11位手机号
+	uint32 pretty_uid = 9; //用户靓号
+	uint32 online_dateline = 10;//用户最近在线时间
+	uint32 online_status = 11;//用户在线状态
+	uint32 msg_count = 12; //消息数
+	repeated UserItem msg_list = 13; //消息头像列表
+}
+
+message UserItem {
+	uint32 uid = 1;
+	string name = 2;
+	string icon = 3;
+}
+
+message SmallAccountEntry {
+	uint32 show_type = 1; //0不展示  1show_intval天展示一次  2只展示一次
+	uint32 show_interval = 2;//如果有小号, 展示间隔时间
+}
+
+message ResSmallAccountEntry {
+	bool success = 1;
+	string msg = 2;
+	SmallAccountEntry entry_info = 3; //小号入口信息
+}
+
+
+

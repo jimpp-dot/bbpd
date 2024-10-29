@@ -1,0 +1,53 @@
+syntax = "proto3";
+    
+package room.group.pk.new.result;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message RoomGroupPkNewResult {
+    option (pb.register_name) = 'room.group.pk.new.result';
+    option (pb.register_id) = 69;
+    repeated BlueList blue_list = 1;
+    uint32 blue_total = 2;
+    repeated Contribution contribution = 3;
+    repeated RedList red_list = 4;
+    uint32 red_total = 5;
+    string rule = 6;
+    string side = 7;
+    Card card = 8;
+
+    message BlueList {
+        string icon = 1;
+        string name = 2;
+        uint32 score = 3;
+        string sex = 4;
+        uint32 uid = 5;
+    }
+
+    message Contribution {
+        string gift_value = 1;
+        string icon = 2;
+        string name = 3;
+        string sex = 4;
+        uint32 uid = 5;
+    }
+
+    message RedList {
+        string icon = 1;
+        string name = 2;
+        uint32 score = 3;
+        string sex = 4;
+        uint32 uid = 5;
+    }
+
+    message Card {
+        string card_icon = 1;
+        string card_name = 2;
+        uint32 count = 3;
+        uint32 uid = 4;
+    }
+
+}

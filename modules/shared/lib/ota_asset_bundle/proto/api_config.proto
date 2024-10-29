@@ -1,0 +1,19 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+
+message ResAppAssetUpdateConfig {
+    bool success = 1;
+    string msg = 2;
+    AppAssetConfigData data = 3;
+  }
+  
+message AppAssetConfigData {
+    string target_version = 1;
+    string asset_manifest_md5 = 2;
+    string domain_url = 4;
+}
+  
+  

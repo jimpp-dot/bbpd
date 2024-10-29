@@ -1,0 +1,58 @@
+group 'ly.plugins.flt_push'
+version '1.0'
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven {url 'https://developer.huawei.com/repo/'}
+        maven {url 'https://developer.hihonor.com/repo'}
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.2.2'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()        
+        mavenCentral()
+        maven {url 'https://developer.huawei.com/repo/'}
+        maven {url 'https://developer.hihonor.com/repo'}
+        flatDir {
+            dirs project(':flt_push').file('libs')
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+
+
+android {
+    compileSdkVersion 31
+
+    defaultConfig {
+        minSdkVersion 21
+        consumerProguardFiles 'consumer-proguard-rules.txt'
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+}
+
+dependencies {
+    compileOnly 'com.huawei.hms:push:6.11.0.300'
+
+    implementation(name: 'com.heytap.msp_3.1.0', ext: 'aar')
+    implementation(name: 'MiPush_SDK_Client_5_7_8-C_3rd', ext: 'aar')
+    implementation(name: 'vivo_pushSDK_v3.0.0.7_488', ext: 'aar')
+
+    // Honor push
+    implementation 'com.hihonor.mcs:push:7.0.61.303'
+
+    // OPPO push 需要添加
+    implementation 'com.google.code.gson:gson:2.10'
+    implementation 'commons-codec:commons-codec:1.11'
+    implementation 'com.android.support:support-annotations:28.0.0'
+}

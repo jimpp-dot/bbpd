@@ -1,0 +1,33 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../../app/pb/api/popup;apiPopup";
+
+message ResHisongPopup {
+	bool success  = 1;
+	string msg   = 2;
+	HisongPopupRoom data = 3;
+	bool is_new = 4;
+	string pop_type = 5;
+	HisongPopupText text = 6;
+}
+
+message HisongPopupText {
+	string cancel = 1;
+	string ok = 2;
+	string content = 3;
+}
+
+message HisongPopupRoom {
+	uint32 uid = 1;
+	uint32 rid = 2;
+	uint32 age = 3;
+	string name = 4;
+	string icon = 5;
+	string distance_show = 6;
+	string channel_type = 7;
+	string room_factory_type = 8;
+	string alert_text = 9;
+	uint32 sex = 10;
+	uint32 singer_club_id = 11;
+}

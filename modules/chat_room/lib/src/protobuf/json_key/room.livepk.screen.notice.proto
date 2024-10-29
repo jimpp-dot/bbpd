@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package room.livepk.screen.notice;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+
+message RoomLivePkScreenNotice {
+  option (pb.register_name) = 'room.livepk.screen.notice';
+  option (pb.register_id) = 70;
+  string type = 1;
+  uint32 urid = 2;
+  string uname = 3;
+  string uicon = 4;
+  uint32 torid = 5;
+  string toname = 6;
+  string toicon = 7;
+  uint32 upk_score = 8;
+  uint32 topk_score = 9;
+  string screen_content = 10;
+  string punish_content = 11;
+}

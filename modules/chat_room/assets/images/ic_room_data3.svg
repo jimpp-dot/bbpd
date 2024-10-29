@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <title>bbpd_&#x68C0;&#x6D4B;&#x5B9E;&#x65F6;&#x6392;&#x884C;&#x5907;&#x4EFD;</title>
+  <defs>
+    <filter id="a">
+      <feColorMatrix in="SourceGraphic" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 1.000000 0"/>
+    </filter>
+  </defs>
+  <g fill="none" fill-rule="evenodd" filter="url(#a)">
+    <rect width="4.846" height="20" x="18.077" y="11" fill="#313131" rx="2.4"/>
+    <rect width="4.846" height="15.294" x="10" y="15.706" fill="#313131" rx="2.4"/>
+    <rect width="4.846" height="10.588" x="26.154" y="20.412" fill="#313131" rx="2.4"/>
+    <path d="M0 0h40v40H0z"/>
+  </g>
+</svg>

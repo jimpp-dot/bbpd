@@ -1,0 +1,32 @@
+syntax = "proto3";
+package pb;
+/*
+用户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message NormalNull {
+	bool success = 1;
+	string msg = 2;
+}
+
+message NormalString {
+	bool success = 1;
+	string msg = 2;
+	string data = 3;
+}
+
+message NormalNumber {
+	bool success = 1;
+	string msg = 2;
+	int64 data = 3;
+}
+
+
+message EasyResponse {
+    bool success = 1;
+    string msg = 2;
+}

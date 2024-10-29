@@ -1,0 +1,65 @@
+syntax = "proto3";
+package pb;
+
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "auction.proto";
+import "json_key/broadcast_extension.proto";
+
+message RespCplinkDefendProgressApi{
+  bool success = 1;
+  string message = 2;
+  CplinkMessage data = 3;
+}
+
+message CplinkMessage{
+  option (pb.register_name) = 'cplink.v2.sync';
+  option (pb.register_id) = 10010;
+
+  AuctionRelationTotalProgress progress = 1;
+  CplinkRelation relation = 2;
+}
+
+message CplinkRelation{
+  uint32 relation_id = 1;
+  string relation_name = 2;
+  uint32 current_days = 3;
+  uint32 next_days = 4;
+  uint32 next_days_score_need = 5;
+}
+
+// 连连看-拍拍守护榜单入口滚屏
+message RespCplinkDefendPatRankIndex {
+  bool success = 1;  //成功true，失败false
+  string msg = 2;  //失败message
+  PatRankUserData left_user = 3; //左边用户
+  PatRankUserData right_user = 4; //右边用户
+  string content = 5;
+}
+
+// 连连看-拍拍守护榜单
+message ResDefendPatRankList {
+    bool success = 1;  //成功true，失败false
+    string msg = 2;  //失败message
+    repeated DefendPatRankData list = 3;
+    DefendPatRankData myself = 4;
+    string link = 5;
+}
+message DefendPatRankData {
+    uint32 rank = 1; // 排名
+    PatRankUserData left_user = 2; //左边用户
+    PatRankUserData right_user = 3; //右边用户
+    uint32 score = 4; //数值
+    string relation_name = 5; // 关系名称
+    uint32 relation_start_time = 6; //守护开始时间
+    uint32 has_relation_day = 7; //已经守护多少天
+}
+message PatRankUserData {
+    uint32 uid = 1;                       //用户id
+    string name = 2;                      //用户昵称
+    string icon = 3;                      //用户头像
+}
+

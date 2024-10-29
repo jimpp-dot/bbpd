@@ -1,0 +1,57 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+/**
+ * 惩罚挂件，暂定系统配置一个常量
+ */
+message PunishGua{
+  string icon = 1;
+}
+
+/**
+ * 用户惩罚信息
+ * Uid 用户ID
+ * PunishId 惩罚项ID
+ * Type 惩罚类型Type
+ * Content 惩罚内容
+ * PaperCount 纸条数量
+ */
+message UserPunishItem{
+  uint32 uid = 1;
+  int32 punishId = 2;
+  string type = 3;
+  string content = 4;
+  int32 paperCount = 5;
+}
+
+/**
+ * gua 系统挂件
+ * Punish 一个数组，包含了多个用户的惩罚数据
+ */
+message UserPunish{
+  PunishGua gua = 1;
+  repeated UserPunishItem Punish = 2;
+}
+
+/**
+ *
+ */
+message SystemPunishConfigContent{
+  string strContent = 1;
+  map<int32,string> optionContent = 2;
+}
+
+message SystemPunishConfigItem{
+  int32 id = 1;
+  string name = 2;
+  string icon = 3;
+  SystemPunishConfigContent content = 4;
+  int32 duration = 5;
+  int32 type = 6;
+  string busiType = 7;
+}
+message SystemPunishConfig{
+  map<int32,SystemPunishConfigItem> config = 1;
+}

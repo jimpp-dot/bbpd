@@ -1,0 +1,19 @@
+syntax = "proto3";
+    
+package live.pk.onemore.notify;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message LivePkOnemoreNotify {
+    option (pb.register_name) = 'live.pk.onemore.notify';
+    option (pb.register_id) = 43;
+    uint32 expire_time = 1;
+    uint32 from_rid = 2;
+    uint32 from_uid = 3;
+    uint32 pk_time = 4;
+    uint32 to_rid = 5;
+    uint32 to_uid = 6;
+}

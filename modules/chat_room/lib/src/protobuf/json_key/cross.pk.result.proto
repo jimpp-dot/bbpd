@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package cross.pk.result;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message CrossPkResult {
+  option (pb.register_name) = 'cross.pk.result';
+  option (pb.register_id) = 23;
+  repeated uint32 pb = 1;
+}

@@ -1,0 +1,263 @@
+syntax = "proto3";
+package pb;
+/*
+pay_consume rpc 协议
+*/
+
+//到期时刻的时间戳
+//是否使用
+//是否解锁
+//系列的icon展示
+//系列的星级
+//是否升星 (如果当前在使用的下一个等级是否解锁)
+//续费价格显示当前正在使用的星级价格
+//加一个预览mp4字段
+
+
+option go_package = "../app/pb";
+
+message PretendCategory {
+	uint32 id = 2;
+	string name = 3;
+	uint32 sort = 4;
+}
+
+//装扮系列
+message PretendGroupInfo {
+	uint32 id = 1;
+	string name = 2;//系列列表展示的名称
+	string icon = 3;//组列表时候展示的icon
+	uint32 recharge_fragment_num = 4;//续费需要的碎片数
+	uint32 recharge_days = 5;//续费需要的碎片数
+	bool is_has = 6;//用户是否解锁该系列
+	uint32 use_pretend_id = 7;//用户该系列使用到的装扮id，未0表示未使用.is_has=true才有可能有值
+	uint32 star_num= 8;//当前用户是几星
+	uint64 period_end= 11;//到期时刻的时间戳
+	string period_end_fmt= 14;//到期时刻格式化
+	uint32 up_star_fragment_num = 15;//升星需要的碎片数
+	bool is_use = 16;//是否使用这个装扮
+	uint32 use_star_num = 17;//当前用户使用的是几星1
+	uint32 use_sex = 18;//当前用户使用的是哪个性别
+	uint32 sort = 19;//服务端排序使用
+	string got_url = 20;//系列获取活动url
+	uint32 one_star_score = 21;//1星获取的星耀分数
+	uint32 two_star_score = 22;//2星获取的星耀分数
+	uint32 three_star_score = 23;//3星获取的星耀分数
+	uint32 sex_state = 24;//0:不支持性别切换，1：支持性别切换
+	string got_type = 25; // 获取来源
+}
+
+message Mp4Source {
+    message ImageText {
+		string text=1;
+		string image=2;
+	}
+	string url=1;//mp4的播放url
+	uint32 vap_size=2;//资源大小
+	uint32 show_type=4;//0：默认；1：恩爱猫咪
+    repeated ImageText image_text =5;        //图文
+}
+
+message PretendInfo {
+	uint32 id = 2;
+	string name = 3;
+	uint32 sex = 4;
+	uint32 star_num = 5;
+	string url_source = 6;
+	string preview_source = 7;//预览资源
+	string desc = 8;
+	uint32 vap_size = 10;
+	bool is_lock= 11;//是否锁定：true：锁，false：已解锁
+	uint32 ext_id= 12;//gift_id
+	string font_color=13;//入场横幅专用的字体颜色
+	uint32 cate_id=14;
+    uint32 group_id=15;
+	Mp4Source mp4_source=16;
+}
+
+//系列详情，会把系列的装扮列表进行展示
+message PretendGroupDetail {
+	PretendGroupInfo group_info =1;
+	repeated PretendInfo pretend_list = 2;//装扮列表
+}
+
+
+message PretendMyInfo{
+	uint32 uid =1;
+	uint32 fragment_num =2;//用户碎片数
+	uint32 star_score =3;//用户的星耀积分
+	uint32 user_level =4;//用户在新装扮里面的等级
+	string user_level_icon =5;//用户在新装扮里面的等级对应icon（目前规则是10级换个图）
+	uint32 next_level_score =6;//下个用户等级对应的星耀积分数
+}
+
+
+message PretendUseReq{
+	uint32 uid =1;
+	uint32 pretend_cate_id =2;
+	uint32 group_id =3;
+	uint32 star_num =4;
+	uint32 sex =5;
+}
+message PretendUseResp{
+		PretendGroupDetail data = 1;
+}
+
+message PretendCancelReq{
+	uint32 uid =1;
+	uint32 pretend_cate_id =2;
+	uint32 group_id =3;
+}
+message PretendCancelResp{
+	PretendGroupDetail data = 1;
+}
+
+message PretendSetSexReq{
+	uint32 uid =1;
+	uint32 pretend_cate_id =2;
+	uint32 group_id =3;
+	uint32 sex =4;
+}
+message PretendSetSexResp{
+	PretendGroupDetail data = 1;
+}
+
+
+
+message PretendAddFragmentReq{
+	uint32 uid =1;
+	uint32 fragment_num =2;
+}
+message PretendAddFragmentResp{
+	uint32 fragment_num =1;
+}
+
+message PretendRechargePeriodEndReq{
+	uint32 uid =1;
+	uint32 pretend_cate_id =2;
+	uint32 group_id =3;
+}
+message PretendRechargePeriodEndResp{
+	PretendGroupDetail data = 1;
+}
+
+message PretendUpgradeReq{
+	uint32 uid =1;
+	uint32 pretend_cate_id =2;
+	uint32 group_id =3;
+}
+message PretendUpgradeResp{
+	PretendGroupDetail data = 1;
+}
+
+message PretendSendGroupPretendReq{
+	uint32 uid =1;
+	uint32 pretend_cate_id =2;
+	uint32 group_id =3;
+	int64 period_end =4;
+	string got_type =5;
+}
+message PretendSendGroupPretendResp{
+
+}
+
+message PretendGetUserCateGroupListReq{
+	uint32 uid =1;
+	uint32 pretend_cate_id =2;
+	uint32 page = 3;
+	uint32 limit =4;
+}
+message PretendGetUserCateGroupListResp{
+	repeated PretendGroupDetail data =1;
+}
+
+message PretendGetPretendCateListReq{
+
+}
+message PretendGetPretendCateListResp{
+	repeated PretendCategory data =1;
+}
+
+
+message PretendMyReq{
+	uint32 uid=1;
+}
+message PretendMyResp{
+	PretendMyInfo my =1;
+}
+
+
+message PretendGetUserDefaultPretendReq{
+	uint32 uid=1;
+}
+message PretendGetUserDefaultPretendResp{
+		uint32 ext_id=1;
+		uint32 vap_size=2;
+}
+
+
+message PretendGetUserCardDecoratePretendReq{
+	uint32 uid=1;
+}
+message PretendGetUserCardDecoratePretendResp{
+		uint32 ext_id=1;
+		uint32 vap_size=2;
+		string image=3;
+}
+
+message PretendGetUserEffectPretendReq{
+	uint32 uid=1;
+}
+message PretendGetUserEffectPretendResp{
+	uint32 ext_id=1;
+	uint32 vap_size=2;
+	string image=3;
+	string font_color=4;
+	uint32 pretend_id=5;
+}
+
+
+message PretendRandomChangeReq{
+	uint32 category = 1;
+	uint32 uid = 2;
+}
+
+message PretendRandomChangeRsp{
+	PretendInfo	pretend = 1;
+}
+
+service pretend{
+	// 用户使用某个分类下的哪个系列的具体那个装扮
+	rpc Use(PretendUseReq)returns(PretendUseResp);
+
+	// 用户取消那个分类的哪个系列
+	rpc Cancel(PretendCancelReq)returns(PretendCancelResp);
+
+	// 用户续期
+	rpc RechargePeriodEnd(PretendRechargePeriodEndReq)returns(PretendRechargePeriodEndResp);
+
+	// 用户升级
+	rpc Upgrade(PretendUpgradeReq)returns(PretendUpgradeResp);
+
+	// 赠送用户装扮,内部已实现，但暂不对外提供
+	rpc SendGroupPretend(PretendSendGroupPretendReq)returns(PretendSendGroupPretendResp);
+
+	// 获取用户某个分类下的系列列表
+	rpc GetUserCateGroupList(PretendGetUserCateGroupListReq)returns(PretendGetUserCateGroupListResp);
+
+	// 获取用户的某个分类下的某个系列
+	rpc GetPretendCateList(PretendGetPretendCateListReq)returns(PretendGetUserDefaultPretendResp);
+
+	// 获取用户的各自资料页的装扮，内部做随机
+	rpc GetUserDecoratePretend(PretendGetUserDefaultPretendReq)returns(PretendGetUserDefaultPretendResp);
+
+	// 获取用户的各自资料卡页的装扮，内部做随机
+	rpc GetUserCardDecoratePretend(PretendGetUserCardDecoratePretendReq)returns(PretendGetUserCardDecoratePretendResp);
+
+	// TODO describe here
+	rpc RandomChange(PretendRandomChangeReq)returns(PretendAddFragmentResp);
+
+	// 获取进场特效
+	rpc GetUserEffectPretend(PretendGetUserEffectPretendReq)returns(PretendGetUserEffectPretendResp);
+}
+

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package room.noble.add.hot;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+// 房间热度购买消息
+message RoomNobleAddHot {
+  option (pb.register_name) = 'room.noble.add.hot';
+  option (pb.register_id) = 20004;
+
+  string level_label = 1;
+  uint32 count = 2;
+  uint32 hot_num = 3;
+}

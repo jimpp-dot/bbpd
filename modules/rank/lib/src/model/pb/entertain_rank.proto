@@ -1,0 +1,33 @@
+syntax = "proto3";
+package pb;
+/*
+互娱关系榜单proto
+*/
+
+option go_package = "../app/pb";
+
+message ResEntertainRank {
+  bool success = 1;                     //成功true，失败false
+  string msg = 2;                       //失败message
+  EntertainRankData data = 3;           //返回数据
+}
+
+message EntertainRankData {
+  repeated EntertainRankItem list = 1;  //榜单列表
+  bool has_more = 2;                    //是否还有下一页
+}
+
+message EntertainRankItem {
+  EntertainRankUser left_user = 1;      //左边用户
+  EntertainRankUser right_user = 2;     //右边用户
+  uint32 rank = 3;                      //排名
+  uint32 score = 4;                     //数值
+  string relation = 5;                  //守护关系名
+  uint32 defend_level = 6;              //守护等级
+}
+
+message EntertainRankUser {
+  uint32 uid = 1;                       //用户id
+  string name = 2;                      //用户昵称
+  string icon = 3;                      //用户头像
+}

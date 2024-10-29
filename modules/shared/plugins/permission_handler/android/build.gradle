@@ -1,0 +1,51 @@
+group 'com.baseflow.permissionhandler'
+version '1.0'
+def args = ["-Xlint:deprecation","-Xlint:unchecked","-Werror"]
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.1.0'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+//project.getTasks().withType(JavaCompile){
+//    options.compilerArgs.addAll(args)
+//}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 33
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion 21
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+}
+
+dependencies {
+//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+//    compileOnly files('libs/flutter.jar')
+//    compileOnly files('libs/classes.jar')
+}

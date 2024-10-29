@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 46 46">
+  <title>bbpd_&#x5F39;&#x7A97;</title>
+  <defs>
+    <linearGradient id="a" x1="33.684%" x2="100%" y1="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#FFF" stop-opacity=".601"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <circle cx="23" cy="23" r="23" fill="#CF9AFF" fill-rule="nonzero"/>
+    <path fill="url(#a)" d="M23 14a9 9 0 1 1-4.622 16.724c-.14-.084-.282-.166-.423-.248l-2.203.6a.675.675 0 0 1-.828-.829l.6-2.2a27.626 27.626 0 0 1-.46-.8A9 9 0 0 1 23 14zm-2.156 11.596a.675.675 0 1 0-.863 1.039A4.709 4.709 0 0 0 23 27.725c1.117 0 2.177-.39 3.019-1.09a.675.675 0 1 0-.863-1.038 3.357 3.357 0 0 1-2.156.778 3.357 3.357 0 0 1-2.156-.779z"/>
+  </g>
+</svg>

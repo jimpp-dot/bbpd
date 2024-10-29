@@ -1,0 +1,22 @@
+syntax = "proto3";
+    
+package auction.gift.received;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message AuctionGiftReceived {
+    option (pb.register_name) = 'auction.gift.received';
+    option (pb.register_id) = 3;
+    string c_name = 1;
+    uint32 c_num = 2;
+    string c_url = 3;
+    string cid = 4;
+    string icon = 5;
+    string name = 6;
+    uint32 rid = 7;
+    string sex = 8;
+    string uid = 9;
+}

@@ -1,0 +1,32 @@
+name: agora
+description: Flutter plugin for Agora Video SDK.
+version: 4.0.6
+homepage: "https://www.agora.io"
+repository: "https://github.com/AgoraIO/Flutter-SDK"
+publish_to: none
+
+environment:
+  sdk: ">=2.12.0 <4.0.0"
+  flutter: ">=1.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  commonrtc_api:
+    path: ../commonrtc_api
+  aac_codec:
+    path: ../aac_codec
+
+  agora_rtc_engine:
+    git:
+      url: https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK.git
+      ref: 6.1.1-sp.41121.b.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  pedantic: ^1.11.0
+  build_runner: ^2.1.11
+  flutter_lints: ^1.0.4

@@ -1,0 +1,248 @@
+syntax = "proto3";
+package pb;
+
+// 房间数据信息proto
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+message RoomData {
+	uint32 rid = 1;										//房间RID
+	uint32 uid = 2;										//用户自己UID
+	uint32 state = 3;                             		//状态 1表示开通  0 表示未开通
+	repeated TabInfo currentStatistics = 4;         	//当前时段统计数据
+	repeated TabInfo todayStatistics   = 5;         	//今天统计数据
+	repeated TabInfo lastSevenDaysStatistics  = 6;  	//最近7天统计数据
+	uint64 phase_start = 7;                       		//时段开始
+	uint64 phase_end = 8;                         		//时段结束
+	string  stateDesc = 9;							    //未开通描述文案
+	repeated RankTab rankTab = 10;
+}
+
+message RankTab {
+	repeated RankItem list = 1;
+	RankItem myInfo = 2;
+	string Title = 3;
+	bool isRoom = 4;
+}
+
+message RoomDataList {
+	uint32 rid = 1;										//房间RID
+	repeated PackageItem packageList = 2;               //打赏列表
+	repeated PackageItem receiveList = 3;			    //收礼列表
+	repeated PackageItem newPayList = 4;				//新用户付费列表
+	bool more = 5;										//是否还有更多
+}
+
+message RoomDataPhaseDetail {
+	uint32 rid = 1;									    //房间RID				
+	repeated TabInfo currentStatistics = 2;         	//当前时段统计数据
+	uint32 enterRoomFromSystem = 3;						
+	uint32 enterRoomFromFriendPlaying = 4;
+	uint32 enterRoomFromOthers = 5;
+	uint32 enterRoomMale = 6;
+	uint32 enterRoomFeMale = 7;
+	uint32 enterRoomMengXin = 8;
+	uint32 enterRoomNotMengXin = 9;
+	repeated ReceptionInfo receptionList = 10;				    //接待数据
+	
+}
+
+message RoomDataTransferList {
+	repeated PackageItem receptionTransferList = 1;
+	bool more = 2;
+}
+
+message RoomDataPhaseList {
+	uint32 rid = 1;										//房间RID								
+	repeated PhaseInfo phaseList = 2;					//时段数据
+}
+
+message RoomDataPackageDetail {
+	repeated RoomDataPackageDetailItem packageList = 1;
+	bool more = 2;
+}
+
+message RoomDataPackageDetailItem {
+	uint32 sender = 1;
+	uint32 to = 2;
+	uint32 money = 3;
+	uint32 dateTime = 4;	
+	string senderName = 5;
+	string toName = 6;
+}
+
+message TabInfo {
+	uint32 num = 1;
+	string name = 2;
+	bool show = 3;
+	uint32 intdex = 4;
+	repeated LastSevenDaysDataInfo sevenDaysInfo = 5;     //最近7天信息
+}
+
+message RankItem {
+	uint32 rank = 1;                  //排名
+	string tag = 2;                    //房间标签
+	string name = 3;                  //房间名称
+	string icon = 4;                  //房间头像/接待头像
+	uint32 uid = 5;                    //接待UID
+	float  num = 6;                    //新转均付费
+	string diff = 7;                  //和上一名差值
+	string receptionName = 8;              //接待名称
+	uint32 rid = 9;                    //房间ID
+	float  rankScore = 10;                  //房间的排名的分数
+}
+
+//新用户付费列表item
+message PackageItem {
+	uint32 sender = 1;
+	uint32 to = 2;
+	string senderName = 3;
+	string toName = 4;
+	string senderIcon = 5;
+	string toIcon = 6;
+	uint32 money = 7;
+	uint32 rank = 8;	
+	string tag = 9;			
+}
+
+message ReceptionInfo {
+	uint32 rank = 1;
+	repeated TabInfo currentStatistics = 2;         		//当前时段统计数据
+	string name = 3;
+	string icon = 4;
+	uint32 uid = 5;
+
+}
+
+message LastSevenDaysDataInfo {
+	uint32 num = 1;
+	uint32 dateTime = 2;
+}
+
+message PhaseInfo {
+	uint32 rank = 1;
+	uint32 phase_start = 2;
+	uint32 phase_end = 3;
+	repeated TabInfo currentStatistics = 4;         		//当前时段统计数据
+}
+
+//房间数据首页返回数据
+message ResRoomData {
+	bool success = 1;                              //成功true，失败false
+	string msg = 2;                                //失败message
+	RoomData data = 3;   				           //返回数据
+}
+
+//房间数据打赏/收礼/新用户付费详情返回数据
+message ResRoomDataList {
+	bool success = 1;                              //成功true，失败false
+	string msg = 2;                                //失败message
+	RoomDataList data = 3;   				       //返回数据
+}
+
+//房间数据时段数据详情
+message ResRoomPhaseDetail {
+	bool success = 1;                              //成功true，失败false
+	string msg = 2;                                //失败message
+	RoomDataPhaseDetail data = 3;   			   //返回数据
+}
+
+//房间数据全部时段列表
+message ResRoomPhaseList {
+	bool success = 1;                              //成功true，失败false
+	string msg = 2;                                //失败message
+	RoomDataPhaseList data = 3;   				   //返回数据
+}
+
+message ResRoomPackageDetail {
+	bool success = 1;                              //成功true，失败false
+	string msg = 2;                                //失败message
+	RoomDataPackageDetail data = 3;   			   //返回数据
+}
+
+message ResRoomDataReceptionTransferList {
+	bool success = 1;                              //成功true，失败false
+	string msg = 2;                                //失败message
+	RoomDataTransferList data = 3;   			   //返回数据	
+}
+
+
+message ResRoomDataDesc {
+	bool success = 1;
+	string data = 2;
+	string msg = 3;
+}
+
+message ResMateRoomDesc {
+    bool success = 1;
+    string msg = 2;
+    MateRoomDescData data = 3;
+}
+
+message MateRoomDescData {
+    string room_desc = 1;//房间描述
+    string room_icon = 2;//房间图标
+    string room_name = 3;//房间名
+    uint32 rid = 4;
+    bool is_pretty = 5;//是否是靓号房
+    string label = 6;//房间便签
+    uint32 owner_uid = 7;//房主uid
+    string owner_name = 8;//房主名
+    string owner_sign = 9;//房主签名
+    bool like = 10;//是否已收藏
+    string owner_icon = 11;//房主icon
+    RoomHonor honorData = 12; // 房间成就数据
+}
+
+// 房间成就
+message RoomHonor {
+    uint32 rid = 1;
+    string icon = 2;   // 成就icon
+    string name = 3;  // 成就名
+    repeated RoomHonorProgress progress = 4; // 进度概述
+    repeated string bg = 5; // 背景，渐变
+    uint32 current = 6; //当前积分
+    uint32 total = 7;  // 总积分
+    uint32 nextDiff = 8; // 距离下等级相差积分
+    string nextLevelName = 9; // 下等级名称
+    repeated string pageBg = 10; // 成就详情页背景色
+}
+
+message RoomHonorProgress {
+    string name = 1;     // 名称
+    uint32 current = 2; //当前进度
+    uint32 total = 3;  // 总进度
+    string tips = 4;  // 提示
+}
+
+message ResRoomHonorDetail {
+    bool success = 1;
+    string msg = 2;
+    RoomHonorDetail data = 3;
+}
+
+message RoomHonorDetail {
+    RoomHonor base = 1; // 基础信息
+    repeated RoomHonorTab tabs = 2; // 成就子项列表
+}
+
+message RoomHonorTab {
+    uint32 idx = 1;
+    string name = 2;
+    repeated RoomHonorItem list = 3;
+}
+
+message RoomHonorItem {
+    uint32 id = 1;  // 任务id
+    string name = 2;  // 任务名称
+    uint32 score = 3;  // 可得积分
+    string schema = 4; // 跳转链接
+    uint32 status = 5; // 任务完成状态，0:未完成，1: 已完成
+    string icon = 6; // 成就图
+    RoomHonorProgress progress = 7; // 进度
+    uint32 stay = 8; // schema是否保持当前窗口
+    string desc = 9; // 任务描述
+    string levelName = 10; // 等级名
+    string levelColor = 11; // 等级颜色
+}

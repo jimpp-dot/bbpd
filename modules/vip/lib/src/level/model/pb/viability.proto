@@ -1,0 +1,90 @@
+syntax = "proto3";
+package pb;
+/*
+用户活跃值proto
+*/
+
+option go_package = "../../app/pb";
+
+// ResViabilityInfo 活跃升级宝典页面返回,接口:/go/slp/viability/viabilityInfo
+message ResViabilityInfo {
+  bool success = 1;
+  string msg = 2;
+  ViabilityInfoData data = 3;
+}
+
+message ViabilityInfoData {
+  uint32 start = 1;                  // 当前等级活跃值
+  uint32 end = 2;                    // 下一等级活跃值
+  uint32 current = 3;                // 用户活跃值
+  uint32 diff = 4;                   // 距离下一级升级需要的活跃值
+  int32 main_level = 5;              // 大等级
+  string title = 6;                  // 大等级称号
+  int32 sub_level = 7;               // 小等级
+  repeated ViabilityTask tasks = 8;   // 活跃值任务
+  repeated ViabilityRank rank = 9;    // 好友排行榜
+  ViabilityRank me = 10;              // 自己在好友中的排名
+}
+
+message ViabilityTask {
+  string condition = 1;             // 任务简要
+  string description = 2;           // 任务备注说明
+  string url = 3;                   // 客户端页面跳转
+  string button = 4;                // 完成任务条件说明
+  string tapToast = 5;              // 点击任务toast提示
+}
+
+message ViabilityRank {
+  uint32 uid = 1;
+  int32 rank = 2;                   // 排名
+  bool onRank = 3;                  // 是否上榜，未上榜显示${rank}+
+  uint32 viability = 4;              // 活跃值
+  string name = 5;                  // 用户名
+  string icon = 6;                  // 用户头像
+  int32 main_level = 7;             // 大等级
+  string title = 8;                 // 大等级称号
+  int32 sub_level = 9;              // 小等级
+}
+
+// ResViabilityInfo 活跃福利兑换页面返回,接口:/go/slp/viability/viabilityBenefit
+message ResViabilityBenefit {
+  bool success = 1;
+  string msg = 2;
+  ViabilityBenefitData data = 3;
+}
+
+message ViabilityBenefitData {
+  uint32 current = 1;                              // 用户活跃值
+  repeated ViabilityLevel levels = 2;               // 大等级称号
+  repeated ViabilityAccumulative accumulative = 3;  // 任务累计获得活跃值
+}
+
+message ViabilityLevel {
+  int32 main_level = 1;                          // 大等级
+  string title = 2;                             // 大等级名称
+  repeated SubViabilityLevel sub_levels = 3;     // 包含小等级
+  repeated ViabilityAward awards = 4;            // 奖励
+  bool unlock = 5;                              // 是否解锁,达到活跃值即解锁
+  bool awarded = 6;                             // 是否领取过
+  bool award_open = 7;                          // 奖励是否开放,未开放解锁也不能领取
+}
+
+message SubViabilityLevel {
+  int32 sub_level = 1;                // 小等级
+  uint32 need = 2;                    // 需要的活跃值
+  bool achieved = 3;                  // 是否达到
+}
+
+message ViabilityAward {
+  uint32 cid = 1;                 // 道具id
+  string name = 2;                // 道具名称
+  string icon = 3;                // 道具icon
+  int32 num = 4;                  // 数量
+}
+
+message ViabilityAccumulative {
+  string condition = 1;             // 任务项
+  uint32 viability = 2;              // 累计活跃值
+}
+
+// ResNull 活跃福利领取返回,接口:/go/slp/viability/drawBenefit

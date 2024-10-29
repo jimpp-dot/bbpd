@@ -1,0 +1,140 @@
+name: chat_room
+description: A new Flutter package.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ">=2.18.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  shared:
+    path: ../shared
+
+  marquee: ^2.2.3
+  qr_flutter: 4.0.0
+  carousel_slider: 4.2.1
+  sticky_headers: ^0.3.0+2
+  auto_size_text: ^3.0.0
+  gradient_borders: ^1.0.0
+  file_picker: 8.0.0
+
+  flutter_lyric:
+    path: plugins/flutter_lyric
+
+  xml: ^6.0.1
+
+  commonrtc_api:
+    path: ../../packages/pulse_rtc/commonrtc_api
+  agora:
+    path: ../../packages/pulse_rtc/flutter_agora
+
+  zego_express_engine:
+    path: ../../packages/pulse_rtc/zego-express-flutter-sdk
+
+  rtc_audio_effects:
+    path: ../../packages/rtc_audio_effects
+
+dependency_overrides:
+  path_provider: ^2.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.0.0
+  flutter_lints: ^2.0.2
+  assets_gen: ^1.5.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+assets_gen:
+  class_name: RoomAssets
+  omit_path_levels: 2
+  exclude:
+    - assets/images_*/**
+  plurals:
+    - assets/images/dice/dice_?.webp
+    - assets/images/gpk/contribution_?.webp
+    - assets/images/auction/ic_top?_crown.webp
+    - assets/images/defend/ic_defend_tips_?.webp
+    - assets/images/room_ranking_crown?.png
+    - assets/images/room_last_hour_rank?.png
+    - assets/images/guess/rank_?.svg
+    - assets/images/annual_celebration/room_battle_report_score_?.webp
+
+# The following section is specific to Flutter.
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/emote/
+    - assets/images/
+    - assets/images/activity/
+    - assets/images/atmosphere/
+    - assets/images/bottom_menu/
+    - assets/images/guess/
+    - assets/images/under/
+    - assets/images/rank/
+    - assets/images/ktv/
+    - assets/images/music/
+    - assets/images/wifi/
+    - assets/images/premade/
+    - assets/images/fans/
+    - assets/sound/
+    - assets/images/controller/
+    - assets/images/cplink/
+    - assets/images/defend/
+    - assets/images/live/
+    - assets/images/livev3/
+    - assets/images/message/
+    - assets/images/welcome/
+    - assets/images/gpk/
+    - assets/images/wedding/
+    - assets/images/theone/
+    - assets/images/punish/
+    - assets/images/bonus/
+    - assets/images/task/
+    - assets/images/bomb/
+    - assets/images/riskwheel/
+    - assets/images/grabmic/
+    - assets/images/speakguess/
+    - assets/images/talent/
+    - assets/images/talent_new/
+    - assets/images/emote/
+    - assets/images/accompany/
+    - assets/images/header/
+    - assets/images/guessgame/
+    - assets/images/auction/
+    - assets/images/heartpass/
+    - assets/images/jukemusic/
+    - assets/images/naming/
+    - assets/images/crosspk/
+    - assets/images/vote/
+    - assets/images/cplove/
+    - assets/images/debate_pk/
+    - assets/images/vindicate/
+    - assets/images/vip_seat/
+    - assets/images/confession/
+    - assets/images/confess_v2/
+    - assets/images/grab_hat/
+    - assets/images/guess_gift/
+    - assets/images/robmic/
+    - assets/images/new_room_privilege/
+    - assets/images/pretty_id/
+    - assets/images/svip_steward/
+    - assets/images/vindicate/single_user/
+    - assets/images/birthday_housekeeper/
+    - assets/images/invisible_man/
+    - assets/images/my_house/
+    - assets/images/mic_link/
+    - assets/images/horn/
+    - assets/images/sweet_album/
+    - assets/images/birthday_gift/
+    - assets/images/gift_red_envelope/
+    - assets/images/red_packet/
+    - assets/images/base/
+    - assets/images/associated/
+    - assets/images/setting/

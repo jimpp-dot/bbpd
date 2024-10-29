@@ -1,0 +1,105 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+// go/room/guessgift/preferences
+message ApiGuessGiftPreferencesResponse{
+  bool success = 1;
+  string message = 2;
+  GuessGiftPreferences data = 3;
+}
+
+message GuessGiftPreferences{
+  GuessGiftPreferencesSettings settings = 1; // 不存在正在使用中的玩法信息，可以设置的参选项
+  GuessGiftRankItem top_one = 2; /// 排行榜第一名
+}
+
+message GuessGiftPreferencesSettings{
+  GuessGiftPreferencesConfig config = 1; // preferences 页面 配置信息
+  repeated GuessGiftBoxGiftItem gifts = 2; // preferences 页面 礼物信息
+}
+
+
+// go/room/guessgift/rank
+message ApiGuessGiftRankResponse{
+  bool success = 1;
+  string message = 2;
+  GuessGiftRankData data = 3;
+}
+
+message GuessGiftRankData{
+  uint32 more = 1; // 0,no more ,1,more
+  repeated GuessGiftRankItem list = 2;
+  GuessGiftRankItem my = 3;
+}
+
+message GuessGiftRankItem{
+  int32 rank = 1; // 0 未上榜
+  GuessGiftUser user1 = 2;
+  GuessGiftUser user2 = 3;
+  uint64 score = 4;
+}
+
+message GuessGiftUser{
+  uint32 uid = 1;
+  string icon = 2;
+  string name = 3;
+  uint32 sex = 4;
+}
+
+message GuessGiftPreferencesMessage{
+  option (pb.register_name) = 'room.guess.gift.receiver';
+  option (pb.register_id) = 10033;
+
+  uint32 guess_id = 1; //当前guess_id
+  GuessGiftUser sender = 2; // 送出人
+  GuessGiftUser receiver = 3; // 接收人
+  uint32 duration = 4;// 消息持续多少时间
+  repeated GuessGiftBox boxes = 5; // 盒子信息，目前需求，固定为3个
+}
+
+message GuessGiftBox{
+  uint32 box_id = 1; // 盒子ID
+  repeated GuessGiftBoxGiftItem list = 2; //盒子里的礼物个数
+  uint32 max_box = 3; /// 是否为最大价值-默契盒
+  uint32 box_tacit = 4; /// 盒子默契值
+}
+
+message GuessGiftBoxGiftItem{
+  uint32 gift_id = 1; // 礼物ID
+  uint32 gift_num = 2; // 礼物个数
+  uint32 price = 3; // 礼物价格，单位钻
+  string name = 4; // 礼物名称
+  string url = 5; // 礼物image的url
+  uint32 cid = 6;
+  uint32 num_in_bag = 7;
+}
+
+message GuessGiftPreferencesConfig{
+  uint32 num_box = 1; // 多少个盒子
+  uint32 max_gift_categories = 2; // 每个盒子最多多少种礼物
+  uint32 max_gift_num = 3; // 每种礼物最多多少个
+}
+
+message GuessGiftFlyRole{
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+}
+
+// room.screen.fly.guess.gift
+message GuessGiftFlyMessage{
+  option (pb.register_name) = 'room.screen.fly.guess.gift';
+  option (pb.register_id) = 10034;
+
+  string type = 1;
+  uint32 rid = 2;
+  GuessGiftFlyRole role1 = 3;
+  GuessGiftFlyRole role2 = 4;
+  uint32 tacit = 5;
+}

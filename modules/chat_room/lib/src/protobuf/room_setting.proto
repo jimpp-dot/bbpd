@@ -1,0 +1,65 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+//房间右上角选项
+message ResRoomOption{
+  bool     success             = 1;  //返回给客户端的必须有
+  string   msg                 = 2;  //返回给客户端的必须有
+  RoomOption data = 3;
+}
+message RoomOption {
+  RoomOptionData base_item = 1;               //基础设置
+  RoomOptionData room_set = 2;                //更丰富的设置
+  RoomOptionData other_function = 3;          //其他功能
+  OptionSwitchData switch_room = 4;           //切换房间
+  RoomRcmdPlayingData recommend_list = 5;   //好友在玩
+}
+message RoomOptionData {
+  string title = 1;       //标题如:   房间玩法 房间配置
+  repeated RoomOptionItem items = 2;
+
+}
+message RoomOptionItem{
+  string key = 1;
+  string name = 2;
+  string icon = 3;
+  int32 order = 4;
+}
+
+//切换玩法
+message OptionSwitchData{
+  string title = 1;
+  repeated OptionSwitchItem items = 2;
+}
+message OptionSwitchItem{
+  string name = 1;
+  string party_type = 2;
+  string icon = 3;
+  string home_icon = 4;
+  string type = 5;
+}
+
+message RoomRcmdPlayingData{
+  string title = 1;
+  repeated RoomRcmdPlayingDataItem items = 2;
+}
+
+message RoomRcmdPlayingDataItem{
+  uint32 uid = 1;
+  uint32 in_room = 3;
+  string name = 2;
+  string icon = 4;
+  int32 online_status = 5;
+  PlayingRoomIcons mini_icon = 6; // 房间小图标信息， in_room>0时有值
+}
+
+message PlayingRoomIcons {
+  repeated string borders = 1;
+  string board_title = 2;
+  repeated string board_bg = 3;
+  string board_icon = 4;
+}

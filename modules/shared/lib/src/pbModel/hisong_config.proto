@@ -1,0 +1,21 @@
+syntax = "proto3";
+package pb;
+/*
+嗨歌相关的配置接口
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+message ResHiSongConfig{
+  bool success = 1;
+  string msg = 2;
+  HiSongConfig data = 3;
+}
+
+message HiSongConfig {
+  string novice = 1;
+  uint32 is_new = 2;
+  uint32 new_home = 3; //是否展示新首页，0-否，1-是
+}

@@ -1,0 +1,69 @@
+syntax = "proto3";
+package pb;
+/*
+用户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+// 新人礼/回归礼礼包详情
+message AwardUserDetail {
+  int32  cid = 1; // 物品cid
+  string name = 2; // 物品名称
+  string image = 3; // 物品图片
+  int32 period = 4; // 有效期
+  int32 num = 5; // 数量
+  bool can_use = 6; //是否可佩戴
+  string c_type = 7; //物品类型
+  int32 price = 8;//价格
+  bool is_get = 9; // 是否已获得
+  int32 day_num = 10; // 天数
+  bool is_can_get = 11; // 是否能领取
+}
+
+// 新人礼/回归礼礼包详情socket推送
+message AwardUserDetailPush {
+  string type = 1; // 类型 reg_gift注册礼，back_gift回归礼
+  string title = 2; // 标题
+  uint32 expire_time = 3; // 过期时间，second
+  repeated AwardUserDetail commodities = 4; // 礼包详情
+}
+
+// 礼包列表
+message RespRewardUserList {
+  bool success = 1;
+  string msg = 2;
+  string bag_type = 3;
+  AwardUserDetailPush data = 4;
+}
+
+// 礼包通用返回
+message RespGiftBagNormal {
+  bool success = 1;
+  string msg = 2;
+}
+
+// 礼包码领取
+message RespGiftBagSend {
+  bool success = 1;
+  string msg = 2;
+  repeated CommoditySimpleInfo reward_list = 3; // 奖励列表
+}
+
+// 抽奖物品信息
+message CommoditySimpleInfo {
+	int32  cid = 1; // 物品cid
+	string name = 2; // 物品名称
+	string image = 3; // 物品图片
+	int32 period = 4; // 有效期
+	int32 num = 5; // 数量
+	string msg = 6; // 获取消息
+	bool canUse = 7; //是否可佩戴
+	string ctype = 8; //物品类型
+	string image_bg = 9;//物品背景图
+	string desc = 10; //物品类型描述
+	int32 price = 11;//价格
+  bool is_probability = 12; // 是否概率得
+}

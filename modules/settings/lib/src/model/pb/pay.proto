@@ -1,0 +1,41 @@
+syntax = "proto3";
+package pb;
+/*
+限时充值
+cd proto/api &&  protoc --go_out=../.  pay.proto && cd -
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+// /go/slp/pay/productTimeLimit 限时充值商品列表
+message ResPayTimeLimitProduct {
+  bool success = 1;
+  string msg = 2;
+  PayTimeLimitProductData data = 3;
+}
+
+message PayTimeLimitProductData {
+  repeated PayTimeLimitProduct list = 1; //商品列表
+  uint32 left_time = 2; //剩余时间
+  repeated string platforms = 3; //平台信息
+  uint32 select_index = 4; //选中商品下标
+}
+
+message PayTimeLimitProduct {
+  uint32 id = 1; //商品id
+  uint32 money = 2; //商品价格，单位分
+  uint32 real = 3; //实际需要支付金额，单位分
+  uint32 give_money = 4; //赠送价格，单位分
+  string name = 5; //商品名称
+  repeated PayTimeLimitProductAward awards = 6; //奖励列表
+}
+
+message PayTimeLimitProductAward {
+  string title = 1; //标题
+  string name = 2; //奖励名称
+  string icon = 3; //奖励图标
+  uint32 type = 4; //奖励类型，1钻石，2物品
+  uint32 money = 5; //金额
+}

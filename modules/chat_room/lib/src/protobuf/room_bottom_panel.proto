@@ -1,0 +1,28 @@
+syntax = "proto3";
+package pb;
+
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ResRoomPluginPanel {
+  bool success = 1;
+  string msg = 2;
+  message PanelItem {
+    string key = 1;
+    string name = 2;
+    string icon = 3;
+    string url = 4;
+    string jump_type = 5;
+    bool in_use = 6;
+  }
+  message PanelConf {
+    string title = 1; // 标题
+    repeated PanelItem item_list = 2;
+  }
+  message BodyRoomPluginPanel {
+    repeated PanelConf list = 1;
+  }
+  BodyRoomPluginPanel data = 3;
+}

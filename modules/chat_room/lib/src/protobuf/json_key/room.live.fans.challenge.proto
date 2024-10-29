@@ -1,0 +1,19 @@
+syntax = "proto3";
+    
+package room.live.fans.challenge;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message RoomLiveFansChanllenge {
+    option (pb.register_name) = 'room.live.fans.challenge';
+    option (pb.register_id) = 111;
+    string type = 1;
+    string uname = 2;
+    string uicon = 3;
+    uint32 uvip = 4;
+    uint32 rid = 5;
+    string rname = 6;
+    uint32 level = 7;
+}

@@ -1,0 +1,244 @@
+syntax = "proto3";
+package pb;
+option go_package = "../../app/pb";
+
+// 礼物图鉴PB
+// https://docs.google.com/document/d/1ff0yojJoM_iewBghE84eAuc-SykAEjkzG3QHw5SNSik/edit
+
+// 概要rsp
+message GiftBookBriefInfoRsp {
+    bool success = 1;
+    string msg = 2;
+    GiftBookBriefInfo data = 3;
+}
+
+// 概要
+message GiftBookBriefInfo {
+    uint32 light_num = 1; // 点亮个数
+    uint32 awake_num = 2; // 觉醒个数
+    uint32 total = 3; // 总数
+    string title = 4; // title 星际图鉴
+    uint32 rank = 5; // 图鉴榜单名次
+    uint32 awake_total = 6; //可觉醒的总数
+    string icon = 7; // 图鉴icon
+    repeated GiftQualityMeta level_list = 8;
+}
+message GiftBookUserInfo {
+    uint32 uid = 1;
+    string name = 2;
+    string icon = 3;
+    uint32 room_id = 4;
+}
+// 系列信息
+message SeriesMeta {
+    string typ = 1; // 类型  九大类
+    string icon = 2; // icon
+    uint32 light_num = 3; // 点亮个数
+    uint32 total = 4; // 总数
+    string icon_webp = 5;
+    string name = 6; // 系列名称
+    string desc = 7; // 系列描述文案
+}
+
+message RuleMeta {
+    string k = 1;
+    string val = 2;
+}
+
+message GiftBookRuleInfo {
+    string title = 1;
+    repeated RuleMeta list = 2;
+}
+
+message GiftMeta {
+    uint32 id = 1; // giftId
+    string name = 2; // gift name
+    string icon = 3; // gift icon
+    uint32 num = 4; // 收集个数\赠送个数
+    bool is_on = 5; // 是否点亮
+    uint32 start_num = 6; // 星级
+    GiftBookUserInfo naming_user = 7; // 冠名用户
+    GiftBookUserInfo light_user = 8; // 点亮用户
+    uint32 awake_status = 9; // 0 不可觉醒 1 可以觉醒  2 已经觉醒
+    uint32 price = 10; // 价格
+    GiftBookRuleInfo rule_info = 11;
+    uint32 light_time = 12;
+    string level_up_info = 13;
+    int32 awake_vap_size = 14;
+    bool is_can_send = 15; // 是否需要跳转
+    uint32 quality_level = 16; // 1,2,3,4  普众\豪华\传奇\神迹
+    string quality_name = 17;
+    string source_desc = 18; // 来源
+    string series_type = 19; // 系列类型
+    uint32 eraser_remove_money  = 20;//擦除的价格
+    uint32 eraser_restore_money  = 21;//目前这个礼物的擦除类型 true-擦出,false-恢复了
+    bool is_erased  = 22;//目前这个礼物的擦除类型 true-擦出,false-恢复了
+}
+
+message GiftQualityMeta {
+    uint32 num = 1; // 点亮
+    uint32 total = 2; // 总数
+    string quality_name = 3; // 品质名称
+}
+
+message GiftBookLevelExp {
+    uint32 score = 1;
+    uint32 total = 2;
+    string next_level_name = 3;
+    string cur_level = 4; // 1-1 青铜1  3-2 黄金2...
+    string icon = 5; // icon
+}
+
+message GiftHandbookHomeRsp {
+    bool success = 1;
+    string msg = 2;
+    message Data {
+        string typ = 1; // send or receive  赠送 or 收集
+        GiftBookUserInfo me = 2;
+        GiftBookBriefInfo brief_info = 3;
+        repeated SeriesMeta series_list = 4; // 系列list
+        map<uint32, GiftBookRuleInfo> rule_info_map = 5;
+        repeated GiftQualityMeta level_list = 6;
+        GiftBookLevelExp level_exp = 7;
+        repeated GiftBookUserInfo rank_top = 8; // 榜单 top3 用户
+        string rank_url = 9; // 榜单url
+        string rule_url = 10;// 规则说明页 url
+        bool is_can_select = 11; // 是否能切换 send receive
+        bool is_hide_intimate_list = 12; // 是否隐藏亲密榜
+        string intimate_url = 13; // 亲密榜url
+        bool can_awake_reward = 14; // 是否有觉醒奖励可领取
+        string awake_reward_toast = 15; // 首页觉醒奖励弹窗文案
+        bool awake_road_switch_on = 16; // 首页觉醒之路入口是否打开
+    }
+    Data data = 3;
+}
+
+message GiftHandbookGiftListRsp {
+    bool success = 1;
+    string msg = 2;
+    message Data {
+        string typ = 1; // send or receive  赠送 or 收集
+        string series_type = 2; // 系列类型
+        repeated GiftMeta gift_list = 3; // 礼物list
+        int32 next_page = 4;
+        bool has_more = 5;
+        uint32 room_id = 6;
+        GiftMeta gift_info = 7;
+        repeated string rich_man_avatars = 8; //神豪家头像
+    }
+    Data data = 3;
+}
+
+//神豪家榜单
+message WealthyCollectorRankRsp{
+    bool success = 1;
+    string msg = 2;
+    message Data {
+        uint32 uid = 1;
+        string name = 2;
+        string icon = 3;
+        int32  rank = 4;
+        string time = 5; //点亮时间
+    }
+    repeated Data data = 3;
+}
+
+message GiftBookAwakeRsp {
+    bool success = 1;
+    string msg = 2;
+    message Data {
+        string effect_url = 1; // 动效url  为空时表示没配置
+        uint32 effect_size = 2;// 动效size 为0时表示没配置
+        string toast = 3; // 觉醒成功之后升级弹窗文案
+        uint32 level_new = 4; // 觉醒之后, 该系列的等级[只有升级才会返回]
+    }
+    Data data = 3;
+}
+
+message CommonRsp {
+    bool success = 1;
+    string msg = 2;
+    string code = 3;
+}
+
+message AwakeTaskRsp {
+    bool success = 1;
+    string msg = 2;
+    message Data {
+        message Reward {
+            uint32 cid = 1; // 奖励id
+            string name = 2; // 奖励name
+            string icon = 3; // 奖励icon
+            uint32 gid = 4; // 礼物id
+        }
+        message LevelTaskItem {
+            uint32 level = 1; // 当前等级
+            uint32 awake_num = 2; // 需要觉醒个数
+            uint32 reward_num = 3; // 奖励个数
+            uint32 reward_state = 4; // 0未领取 1已领取
+        }
+        repeated LevelTaskItem level_task_list = 1;
+        Reward reward_info = 2; // 奖励基本信息
+        uint32 awake_num = 3; // 用户已经觉醒的个数
+    }
+    Data data = 3;
+}
+
+message LightJumpRsp {
+    bool success = 1;
+    string msg = 2;
+    message Data {
+        uint32 rid = 1; // 跳转房间的rid
+    }
+    Data data = 3;
+}
+
+message AutoWakeInfoRsp {
+    bool success = 1;
+    string msg = 2;
+    message Data {
+        uint32 gid = 1; // 礼物的id
+        uint32 gift_num = 2; // 礼物的数量
+        uint32 gift_money = 3; // 礼物的钱
+    }
+    Data data = 3;
+}
+
+// 点亮积分
+message LightScoreHomeRsp {
+    bool success = 1;
+    string msg = 2;
+    message Data {
+        message UnlitGiftItem {
+            uint32 id = 1; // 礼物id
+            string name = 2; // 礼物名称
+            uint32 score = 3; // 礼物积分
+            string url = 4; // 礼物对应的活动url
+            bool send = 5; // 是否是送出未点亮
+            uint32 panel_tab = 6; // 默认0，特权1
+        }
+        uint32 self_score = 1; // 获得总积分
+        uint32 total_score = 2; // 总积分不做外显
+        string description = 3; // 积分规则
+        repeated UnlitGiftItem unlit_list = 4; // 未点亮的礼物
+        uint32 jump_rid = 5; // 跳转房间
+    }
+    Data data = 3;
+}
+
+// 点亮积分排行榜
+message LightScoreRankRsp {
+    bool success = 1;
+    string msg = 2;
+    message Data {
+        message Item {
+            uint32 uid = 1; // 用户uid
+            string name = 2; // 用户昵称
+            string icon = 3; // 用户头像
+            uint32 score = 4; // 用户积分
+        }
+        repeated Item rank_list = 1; // 排行榜用户数据
+        bool more = 2;
+    }
+    Data data = 3;
+}

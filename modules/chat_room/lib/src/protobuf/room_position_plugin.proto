@@ -1,0 +1,98 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+import "json_key/broadcast_extension.proto";
+import "room.refresh.mic.on.proto";
+
+message ResRoomPositionPluginRoomMessage {
+  option (pb.register_name) = 'room.position.plugin.message';
+  option (pb.register_id) = 10201;
+  ResRoomPositionPluginItem data = 1;//房间网关消息
+}
+
+message ResRoomPositionPluginItemStageInfo {
+  uint32 stage_id = 1; // 状态id
+  uint32 plugin_id = 2; // 插件id
+  string plugin_type = 3; // 插件类型
+  uint32 start_time = 4; // 开始时间
+  uint32 end_time = 5; // 结束时间
+  string end_time_type = 6; // 倒计时的类型 show -直接展示 countdown-倒计时
+  string click_type = 7; // 点击的类型 lottery 奖池 jump-跳转
+  string click_extra = 8; // 根据类型配置不同
+  string stage_mp4 = 9; // 当前状态播放的资源
+  uint32 end_show_type = 10; // 当前状态倒计时结束后展示的类型 1-消失 2-持续展示除非下个状态消息或者接口来了
+  uint64 msg_time = 11; // 消息的时间戳
+}
+
+message ResRoomPositionPluginItem {
+  uint32 plugin_id = 1;
+  string name = 2; // 插件的名称
+  uint32 act_id = 3; // 活动的id
+  repeated string preview_download = 4; // 需要预先下载的资源
+  ResRoomPositionPluginItemStageInfo stage_info = 5; // 当前状态的信息
+  uint32 weight = 6;//权重
+  string icon = 7;//插件的显示icon
+  string plugin_show_type = 8;//插件的展示类型。top 自上而下排列，round-轮播
+}
+
+message ResRoomPositionPluginData {
+  repeated ResRoomPositionPluginItem plugin_info = 1; // 返回的业务数据
+}
+
+message ResRoomPositionPlugin {
+  bool success = 1; // 返回给客户端的必须有
+  string msg = 2; // 返回给客户端的必须有
+  ResRoomPositionPluginData  data = 3;//
+}
+
+message ResRoomPositionPluginClickCheckInfo {
+  bool need_identification = 1; // 需要实名认证
+}
+
+message ResRoomPositionPluginClick {
+  bool success = 1;
+  string msg = 2;
+  ResRoomPositionPluginClickData data = 3;
+}
+
+message ResRoomPositionPluginClickData{
+  ResRoomPositionPluginClickCheckInfo check_info = 1;//实名认证信息
+  ResRoomPositionActPluginClickData act_data = 2;// 活动返回的信息
+}
+
+message ResRoomPositionActPluginClickData {
+  string back_icon = 1;
+  string button_icon = 2;
+  string jump_url = 3;
+  repeated RoomPositionActRewardData rewards = 4;
+}
+
+message RoomPositionActRewardData {
+  string name = 1;
+  string name_color = 2;
+  string icon = 3;
+  string icon_bg_color = 4; // icon背景颜色
+  string icon_bg_board_color = 5; // icon背景边框颜色
+  string dot_color = 6; // 多个奖励时底部圆点颜色
+}
+
+message RoomChildrenRoomListRsp {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  repeated RoomChildrenRoomListItem data = 3;//
+}
+
+message RoomChildrenRoomListItem {
+  option (pb.register_name) = 'room.associated.message';
+  option (pb.register_id) = 10048;
+  uint32 rid = 1; //主播的房间rid
+  string icon = 2;//主播的头像
+  string name = 3;//主播的名称
+  uint32 uid = 4;//主播的uid
+  uint32 parent_rid = 5;//父房间的rid
+  string desc = 6; // 主播的个性签名
+  uint32 id = 7;
+}

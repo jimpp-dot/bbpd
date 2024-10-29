@@ -1,0 +1,16 @@
+syntax = "proto3";
+    
+package room.hat.refresh;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message RoomHatRefresh {
+    option (pb.register_name) = 'room.hat.refresh';
+    option (pb.register_id) = 122;
+
+    int32 position = 1;
+    string icon = 2;
+    bool show_anim = 3;
+}

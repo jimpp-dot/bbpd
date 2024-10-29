@@ -1,0 +1,19 @@
+syntax = "proto3";
+    
+package room.screen.cast.state.pause;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+import "google/protobuf/struct.proto";
+
+message RoomScreenCastStatePause {
+    option (pb.register_name) = 'room.screen.cast.state.pause';
+    option (pb.register_id) = 81;
+    //todo:支持string，int，需要和客户端一起改
+    string playing_sec = 1;
+    uint32 state = 2;
+    string title = 3;
+    string url = 4;
+    int32 startTime = 5;
+}

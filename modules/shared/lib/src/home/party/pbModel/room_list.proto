@@ -1,0 +1,178 @@
+syntax = "proto3";
+package matepb;
+
+/*
+ /mate/room系列接口的结果定义
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 pb 目录下
+option go_package = "./pb";
+
+message RoomTypeName {
+    string show = 1;
+    string label = 2;
+    repeated string bg = 3;
+    string acute_icon = 4;
+    int32 party_style = 5;
+    string abstract_icon = 6;
+    string tag_color = 7;
+    string tag_icon = 8;
+    string type_icon = 9;
+    repeated string type_bg = 10;
+    string bottom_icon = 11;
+    string bottom_recommend_text = 12;
+    string corner_icon = 13; //角标
+    repeated string tag_bg_color = 14; // 背景渐变色
+    string room_text = 15; // 房间一句话描述文案
+    string room_decorate = 16; // 房间装扮
+}
+
+message RoomItem {
+    uint32 rid = 1;
+    uint32 uid = 2;
+    string name = 5;
+    string type = 6;
+    string property = 7;
+    string types = 8;
+    string icon = 10;
+    int32  num_boy = 16;
+    int32  num_girl = 17;
+    string uname = 19;
+    RoomTypeName typeName = 22;
+    int32 sex = 29;
+    int32 game_status = 36;
+    int32 pattern_style = 37;
+    repeated string mic_icons = 39;
+    int32 hot_num = 40;
+
+    //uint32 app_id = 3;
+    //string prefix = 4;
+    //int32  online_num = 9;
+    //uint32 dateline = 11;
+    //int32  password = 12;
+    //uint32 reception_uid = 13;
+    //uint32 boss_uid = 14;
+    //string boss_icon = 15;
+    //int32  deleted = 18;
+    //int32  utitle = 20;
+    //string effect = 21;
+    //string room_border = 23;
+    //string game = 24;
+    //int32 guestEnable = 25;
+    //int32 pay_room_money = 26;
+    //int32 vip = 27;
+    //int32 real = 28;
+    //string factory_type = 30;
+    //string room_factory_type = 31;
+    //int32  module_id = 32;
+    //int32  fixed_tag_id = 33;
+    //string settle_channel = 34;
+    //string settlement_channel = 35;
+    //string label_type = 38;
+    //string gicon = 41;
+}
+
+message RoomListData {
+    int32 page = 1;
+    int32 more = 2;
+    repeated RoomItem list = 5;
+}
+
+message ResRoomList {
+    bool success = 1;                    //成功true，失败false
+    string msg = 2;                      //失败message
+    RoomListData data = 3;         //返回数据
+}
+
+message RoomGuideIdleUserData {
+    uint32 rid = 1;
+    string room_name = 2;
+    uint32 room_num = 3;
+    string name = 4;
+    string icon = 5;
+    int32 age = 6;
+    uint32 sex = 7;
+}
+
+message ResRoomGuideIdleUser {
+    bool success = 1;                    //成功true，失败false
+    string msg = 2;                      //失败message
+    RoomGuideIdleUserData data = 3;         //返回数据
+}
+
+message ResRoomPkUserData{
+    string support_name = 1;
+    uint32 support = 2;
+    int64 blue_score = 3;
+    int64 red_score = 4;
+    repeated PkText tips = 5;
+}
+
+message PkText{
+    string tip_txt = 1;
+    repeated string highlight = 2;
+}
+
+message ResRoomPkUser{
+    bool success = 1;                    //成功true，失败false
+    string msg = 2;                      //失败message
+    ResRoomPkUserData data = 3;         //返回数据
+}
+message ResRoomPkRoomData{
+    int64 deadline = 1;
+    uint32 main_rid = 2;
+    uint32  guest_rid = 3;
+    string main_icon = 4;
+    string main_name = 5;
+    int64 main_score = 6;
+    string guest_icon = 7;
+    string guest_name = 8;
+    int64 guest_score = 9;
+    uint32 main_mvp_uid = 10;
+    uint32 guest_mvp_uid = 11;
+    string main_mvp_name = 12;
+    string guest_mvp_name = 13;
+    string main_mvp_icon = 14;
+    string guest_mvp_icon = 15;
+}
+message ResPkRoom{
+    bool success = 1;                    //成功true，失败false
+    string msg = 2;                      //失败message
+    ResRoomPkRoomData data = 3;         //返回数据
+}
+
+message ResRoomConfig{
+    bool success = 1;
+    string msg = 2;
+    RoomConfigEncounter data = 3;
+}
+
+message RoomConfigEncounter{
+    string title_pic=1;
+    string bg_planet = 2;
+    string bg_love = 3;
+    uint32 countdown= 4;
+    repeated string room_tip = 5;
+    bool follow = 6;
+    string title = 7;
+    string sbanner=8;
+    uint32 pay_amount = 9;
+    uint32 show_banner = 10;
+    uint32 encounter_state =11;
+    uint32 encounter_id = 12;
+    uint32 encounter_role = 13;
+    int32 action_type = 14;
+    uint32 third_id = 15;
+}
+
+message ResSlideRoomData{
+    repeated uint32 rids = 1;
+    string type = 2;
+}
+
+message ResSlideRoom{
+    bool success = 1;                    //成功true，失败false
+    string msg = 2;                      //失败message
+    ResSlideRoomData data = 3;         //返回数据
+}

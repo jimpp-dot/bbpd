@@ -1,0 +1,49 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+// AttributionReward 道具奖励,可用于礼盒和不同等级的专属奖励
+message AttributionReward {
+    uint32 cid = 1;
+    uint32 num = 2;
+    string icon = 3;
+    string name = 4;
+}
+
+// AttributionBag 礼盒
+message AttributionBag {
+    int32 id = 1;
+    repeated AttributionReward rewards = 2;
+}
+
+// AttributionRewardData 归因弹框数据
+message AttributionRewardData {
+    bool pop = 1;  // 是否弹框
+    repeated AttributionBag bags = 2; // 可选礼盒
+    repeated AttributionReward rewards = 3; // 道具(和用户的归因等级有关)
+    string description = 4; // 道具说明
+}
+
+// ResAttributionReward 归因弹框返回
+message ResAttributionReward {
+    bool success = 1;
+    string msg = 2;
+    AttributionRewardData data = 3;
+}
+
+// ClaimRewardData 归因奖励领取返回数据
+message ClaimRewardData {
+    AttributionBag bag = 1; // 选中礼盒
+    repeated AttributionReward rewards = 2; // 道具(和用户的归因等级有关)
+    uint32 pretty_id = 3; // 靓号
+}
+
+// ResClaimReward 归因奖励领取返回
+message ResClaimReward {
+    bool success = 1;
+    string msg = 2;
+    ClaimRewardData data = 3;
+}

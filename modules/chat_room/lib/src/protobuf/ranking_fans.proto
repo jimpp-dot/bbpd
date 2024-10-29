@@ -1,0 +1,44 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message LiveInfo {
+  uint32 live_uid = 1;
+  string name = 2;
+  string icon = 3;
+  string rank = 4;
+  uint32 money = 5;
+  uint32 follow = 6;
+}
+
+message FansList {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 sex = 4;
+  uint32 rank = 5;
+  uint32 credit = 6;
+  string label = 7;
+  uint32 level = 8;
+  string label_image = 9;
+  repeated string label_colors = 10;
+  uint32 is_fans = 11;
+  uint32 credit_need = 12;
+}
+
+message FansData {
+  uint32 fans_count = 3;
+  FansList current_rank = 4;
+  repeated FansList list = 5; //返回的数据结果
+  LiveInfo live_info = 6;
+}
+
+message ResRankingFans {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  FansData data = 3;
+  bool hideRank = 4;
+}

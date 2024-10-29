@@ -1,0 +1,30 @@
+syntax = "proto3";
+package pb;
+/*
+旅行机票 相关proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+message ResTravelWall{
+	bool success = 1;
+	string msg = 2;
+	TravelWall data = 3;
+}
+
+message TravelWall {
+	uint32 total = 1; //总共可旅行城市数量
+	uint32 light_num = 2; //已点亮城市数量
+	repeated TravelLightItem light_list = 3;//点亮元素
+}
+
+message TravelLightItem {
+	uint32 gift_id = 1; //礼物ID
+	uint32 city_id = 2;//城市ID
+	string city_name = 3;//城市名称
+	string gift_name = 4; //礼物名称
+	uint32 light_times = 5;//点亮次数
+	string city_icon = 6; //城市icon
+}

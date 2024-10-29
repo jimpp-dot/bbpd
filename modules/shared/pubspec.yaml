@@ -1,0 +1,339 @@
+name: shared
+description: 基础模块.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ">=2.18.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  pointycastle: 3.0.1
+  http_server: 1.0.0
+  crclib: 3.0.0
+  cupertino_icons: ^1.0.8
+  intl: ^0.19.0
+  carousel_slider: 4.2.1
+  crypto: ^3.0.3
+  http: ^1.2.1
+  dio: ^5.0.0
+  http2: ^2.3.0
+  archive: ^3.3.8
+  package_info: 2.0.2
+  shared_preferences: ^2.2.2
+  sqflite: ^2.3.3
+  path_provider: ^2.1.1
+  share: 2.0.4
+  flutter_gbk2utf8: 1.0.1
+  quick_actions: 0.6.0+8
+  lpinyin: 2.0.3
+  flutter_slidable: ^3.1.0
+  image: 3.2.0
+  date_format: 2.0.0
+  pull_to_refresh: 2.0.0
+  azlistview: 2.0.0
+  flutter_svg: ^2.0.10+1
+  flutter_jailbreak_detection: 1.10.0
+  flutter_staggered_grid_view: ^0.7.0
+  provider: 6.0.0
+  android_intent_plus: 4.0.3
+  flare_flutter: 3.0.2
+  extended_text_library: ^12.0.0
+  extended_text_field: ^15.0.0
+  extended_text: ^13.0.2
+  extended_nested_scroll_view: ^6.2.1
+  flutter_keyboard_visibility: 5.4.0
+  video_compress: ^3.1.0
+  flutter_staggered_animations: 1.0.0
+  visibility_detector: ^0.4.0+2
+  sembast: 3.1.0+2
+  lifecycle: ^0.4.2
+  equatable: 2.0.5
+  app_tracking_transparency: 2.0.5
+  community_charts_flutter: ^1.0.4
+  infinite_scroll_pagination: ^4.0.0
+  cached_network_image: ^3.3.1
+  device_info: ^2.0.2
+  flutter_advanced_switch: 3.0.1
+  # Hive 相关依赖
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  hive_generator: ^2.0.1
+  # 虚线边框
+  dotted_decoration: 2.0.0
+  gradient_borders: ^1.0.0
+  flutter_easyloading: 3.0.3
+  wakelock_plus: ^1.2.2
+
+  # 简单动画
+  animate_do: ^2.0.0
+
+  # ListView scrollToIndex
+  scroll_to_index: 2.1.1
+
+  shake_animation_widget: 3.0.4
+  get: ^4.6.6
+  flutter_cupertino_datetime_picker: 3.0.0
+  dart_extensions: ^2.2.4
+
+  #嗨歌匹配通知需要震动效果
+  vibration: 1.7.6
+  # 添加动画库 https://rive  https://pub:dev/packages/rive
+  rive: ^0.13.12
+  extended_image: ^8.2.1
+  image_editor: 1.1.0
+  quiver: ^3.1.0
+  flutter_screenutil: ^5.9.3
+  #文字滚动
+  text_scroll: ^0.2.0
+  auto_size_text: ^3.0.0
+
+  flutter_sliver_tracker:
+    path: ./plugins/flutter_sliver_tracker/
+  loading_more_list:
+    path: ./plugins/loading_more_list/
+
+  flt_push:
+    path: ./plugins/flt_push/
+  pulse_im:
+    path: ../../packages/pulse_im
+
+  flutter_bugly:
+    path: ./plugins/flutter_bugly/
+  extended_tabs:
+    path: ./plugins/extended_tabs/
+  flutter_picker:
+    path: ./plugins/flutter_picker/
+  ali_id_auth:
+    path: ./plugins/ali_id_auth/
+
+  ############
+  permission_handler:
+    path: ./plugins/permission_handler/
+  local_auth: ^2.2.0
+  #  location_system:
+  #    git:
+  #      url: http://114.55.7.123:3000/client_modules/location_system
+  #      ref: 1.0.0
+  #  geolocator: ^8.2.1
+  geolocator:
+    path: ./plugins/geolocator
+
+  flutter_local_notifications:
+    path: ./plugins/flutter_local_notifications/
+  flutter_sound:
+    path: ./plugins/flutter_sound/
+  image_picker:
+    path: ./plugins/image_picker/
+  photo_view: 0.14.0
+  webview_flutter:
+    path: ../../packages/webview_flutter/webview_flutter
+
+  flutter_swiper:
+    path: ./plugins/flutter_swiper/
+  photo:
+    path: ./plugins/flutter_photo/
+  shared_app_plugin:
+    path: ./plugins/shared_app_plugin/
+  tracker:
+    path: ./plugins/tracker/
+  flutter_markdown:
+    path: ./plugins/flutter_markdown
+
+  photo_manager: 3.2.0
+
+  flutter_drag_scale:
+    path: ./plugins/flutter_drag_scale/
+  url_launcher:
+    path: ./plugins/url_launcher/
+  uni_links:
+    path: ./plugins/uni_links/
+  flutter_vap_texture:
+    path: ../../packages/flutter_vap_texture
+
+  trusted_id:
+    path: ./plugins/trusted_id
+  easy_rich_text:
+    path: plugins/easy_rich_text
+
+  date_count_down:
+    path: plugins/date_count_down
+  native_screenshot:
+    path: plugins/native_screenshot
+  vap_player:
+    path: ../../packages/vap_player
+  video_player:
+    path: ../../packages/video_player/video_player
+
+  pulse_log:
+    path: ../../packages/pulse_log/pulse_log
+
+  base_attr_report:
+    path: ../../packages/attr_report
+
+  fmodifier:
+    path: plugins/fmodifier
+
+  audioplayers:
+    path: plugins/audioplayers-v1.1.1/packages/audioplayers
+
+  keframe:
+    path: ../../packages/keframe
+
+  ota_resource_bundle:
+    path: ../../packages/flt-ota_resource_bundle
+
+  fluwx:
+    path: ../shared/plugins/fluwx
+
+  logger: 2.3.0
+  pie_menu: 1.3.0
+  flutter_json_view: 1.1.5
+  mobx: ^2.3.1
+  flutter_mobx: 2.2.0+2
+
+dependency_overrides:
+  xml: 5.0.2
+  archive: ^3.3.2
+  connectivity_plus: 4.0.2
+  path_provider: ^2.1.1
+  crypto: ^3.0.3
+  platform: 3.0.0
+  file: ^6.0.0
+  http_parser: ^4.0.0
+  args: 2.0.0
+  plugin_platform_interface: ^2.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  build_runner: ^2.0.0
+  assets_gen: ^1.5.0
+  flutter_lints: ^4.0.0
+
+assets_gen:
+  class_name: BaseAssets
+  omit_path_levels: 2
+  exclude:
+    - assets/fonts/**
+    - assets/images_*/**
+  plurals:
+    - assets/images/popularity/popularity_*.webp
+    - assets/images/vip/vip_*.webp
+    - assets/images/vip_gray/vip_*.webp
+    - assets/images/rank/top_rank?.webp
+    - assets/images/ic_prize_cup_?.webp
+
+# The following section is specific to Flutter.
+flutter:
+  fonts:
+    - family: AldotheApache
+      fonts:
+        - asset: assets/fonts/AldotheApache.ttf
+          weight: 200
+        - asset: assets/fonts/AldotheApache.ttf
+          weight: 300
+        - asset: assets/fonts/AldotheApache.ttf
+          weight: 300
+        - asset: assets/fonts/AldotheApache.ttf
+          weight: 400
+        - asset: assets/fonts/AldotheApache.ttf
+          weight: 500
+        - asset: assets/fonts/AldotheApache.ttf
+          weight: 600
+        - asset: assets/fonts/AldotheApache.ttf
+          weight: 700
+        - asset: assets/fonts/AldotheApache.ttf
+          weight: 800
+        - asset: assets/fonts/AldotheApache.ttf
+          weight: 900
+    - family: YouSheBiaoTiHei
+      fonts:
+        - asset: assets/fonts/YouSheBiaoTiHei.ttf
+          weight: 200
+        - asset: assets/fonts/YouSheBiaoTiHei.ttf
+          weight: 300
+        - asset: assets/fonts/YouSheBiaoTiHei.ttf
+          weight: 400
+        - asset: assets/fonts/YouSheBiaoTiHei.ttf
+          weight: 500
+        - asset: assets/fonts/YouSheBiaoTiHei.ttf
+          weight: 600
+        - asset: assets/fonts/YouSheBiaoTiHei.ttf
+          weight: 700
+        - asset: assets/fonts/YouSheBiaoTiHei.ttf
+          weight: 800
+        - asset: assets/fonts/YouSheBiaoTiHei.ttf
+          weight: 900
+    - family: YouSheBiaoTiYuan
+      fonts:
+        - asset: assets/fonts/YouSheBiaoTiYuan.otf
+          weight: 200
+        - asset: assets/fonts/YouSheBiaoTiYuan.otf
+          weight: 300
+        - asset: assets/fonts/YouSheBiaoTiYuan.otf
+          weight: 400
+        - asset: assets/fonts/YouSheBiaoTiYuan.otf
+          weight: 500
+        - asset: assets/fonts/YouSheBiaoTiYuan.otf
+          weight: 600
+        - asset: assets/fonts/YouSheBiaoTiYuan.otf
+          weight: 700
+        - asset: assets/fonts/YouSheBiaoTiYuan.otf
+          weight: 800
+        - asset: assets/fonts/YouSheBiaoTiYuan.otf
+          weight: 900
+    - family: Impact
+      fonts:
+        - asset: assets/fonts/Impact.ttf
+          weight: 200
+        - asset: assets/fonts/Impact.ttf
+          weight: 300
+        - asset: assets/fonts/Impact.ttf
+          weight: 400
+        - asset: assets/fonts/Impact.ttf
+          weight: 500
+        - asset: assets/fonts/Impact.ttf
+          weight: 600
+        - asset: assets/fonts/Impact.ttf
+          weight: 700
+        - asset: assets/fonts/Impact.ttf
+          weight: 800
+        - asset: assets/fonts/Impact.ttf
+          weight: 900
+    - family: D-DINExp
+      fonts:
+        - asset: assets/fonts/D-DINExp.ttf
+          weight: 200
+        - asset: assets/fonts/D-DINExp.ttf
+          weight: 300
+        - asset: assets/fonts/D-DINExp.ttf
+          weight: 400
+        - asset: assets/fonts/D-DINExp.ttf
+          weight: 500
+        - asset: assets/fonts/D-DINExp.ttf
+          weight: 600
+        - asset: assets/fonts/D-DINExp-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/D-DINExp-Bold.ttf
+          weight: 800
+        - asset: assets/fonts/D-DINExp-Bold.ttf
+          weight: 900
+
+  assets:
+    - assets/images/
+    - assets/images/home/
+    - assets/images/room/
+    - assets/images/box/
+    - assets/images/titlebar/
+    - assets/images/giftbook/
+    - assets/images/login/
+    - assets/images/horn/
+    - assets/images/sign/
+    - assets/images/emotion/
+    - assets/images/rank/

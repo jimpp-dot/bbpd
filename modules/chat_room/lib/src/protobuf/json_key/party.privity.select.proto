@@ -1,0 +1,27 @@
+syntax = "proto3";
+    
+package party.privity.select;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message PartyPrivitySelect {
+    option (pb.register_name) = 'party.privity.select';
+    option (pb.register_id) = 51;
+    Privity privity = 1;
+
+    message User {
+        string icon = 1;
+        string name = 2;
+        uint32 uid = 3;
+    }
+
+    message Privity {
+        uint32 qid = 1;
+        uint32 select = 2;
+        User user = 3;
+    }
+
+}

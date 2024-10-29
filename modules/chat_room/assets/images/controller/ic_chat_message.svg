@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon-评论@3x</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="32" height="32" rx="16"></rect>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="语音房-1" transform="translate(-255, -740)">
+            <g id="底部操作栏" transform="translate(0, 734)">
+                <g id="编组-7" transform="translate(255, 6)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="背板2" fill-opacity="0.101960786" fill="#FFFFFF" xlink:href="#path-1"></use>
+                    <g id="icon-评论" mask="url(#mask-2)" stroke="#FFFFFF" stroke-width="1.66666663">
+                        <g transform="translate(8.5, 9)">
+                            <path d="M12.5,0 C13.880715,0 15,1.13505 15,2.53521 C15,2.53521 15,4.78873 15,9.29577 C15,10.69593 13.880715,11.83098 12.5,11.83098 C12.5,11.83098 11.8749983,11.83098 10.624995,11.83098 L7.291665,15 L4.375005,11.83098 L2.5,11.83098 C1.119285,11.83098 0,10.69593 0,9.29577 C0,9.29577 0,7.04225 0,2.53521 C0,1.13505 1.119285,0 2.5,0 C2.5,0 5.83333333,0 12.5,0 L12.5,0 Z" id="Rectangle-287" stroke-linejoin="round"></path>
+                            <line x1="3" y1="5" x2="11" y2="5.1" id="Vector-13" stroke-linecap="round"></line>
+                            <line x1="3" y1="8" x2="8" y2="8.1" id="Vector-14" stroke-linecap="round"></line>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

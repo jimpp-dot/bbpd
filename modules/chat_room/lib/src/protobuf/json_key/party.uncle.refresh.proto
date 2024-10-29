@@ -1,0 +1,68 @@
+syntax = "proto3";
+    
+package party.uncle.refresh;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+
+message PartyUncleRefresh {
+    option (pb.register_name) = 'party.uncle.refresh';
+    option (pb.register_id) = 53;
+    repeated Mics mics = 1;
+    repeated Punish punish = 2;
+    repeated Punlist punlist = 3;
+    Uncle uncle = 4;
+
+    message Mics {
+        uint32 is_bomb = 1;
+        string score = 2;
+        uint32 uid = 3;
+    }
+
+    message Punish {
+        uint32 paper_count = 1;
+        string system_changename_id = 2;
+        repeated uint32 system_ids = 3;
+        string system_voice_id = 4;
+        uint32 uid = 5;
+    }
+
+    message Punlist {
+        string content = 1;
+        uint32 id = 2;
+        string type = 3;
+    }
+
+    message Info {
+        string bomb_icon = 1;
+        uint32 bomb_num = 2;
+        uint32 column = 3;
+        string desc = 4;
+        string icon = 5;
+        uint32 row = 6;
+    }
+
+    message List {
+        uint32 id = 1;
+        uint32 state = 2;
+        uint32 uid = 3;
+    }
+
+    message User {
+        uint32 current = 1;
+        string icon = 2;
+        uint32 uid = 3;
+    }
+
+    message Uncle {
+        uint32 click_num = 1;
+        Info info = 2;
+        repeated List list = 3;
+        string state = 4;
+        repeated User user = 5;
+    }
+
+}

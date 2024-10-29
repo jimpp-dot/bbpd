@@ -1,0 +1,82 @@
+syntax = "proto3";
+package pb;
+/*
+荣誉中心proto
+*/
+
+option go_package = "../app/pb";
+
+message GloryCenterCate {
+  repeated GloryCenterCateItem cate_list = 1;
+  GloryCenterUserData user = 2;
+  uint32 total_mic_tag = 3;    //总的标签数
+  GloryCenterPlatformBadge platformBadges = 4;    //vip,爵位等级等等
+  repeated GloryCenterWearableBadge effect_list = 5;  //生效的勋章标签
+  repeated string mic_tag_list = 6;
+  repeated string achieve_badge_list = 7;      //成就墙穿戴的列表
+}
+
+message GloryCenterCateItem{
+  string name = 1;
+  uint32 id = 2;
+  bool show_all = 3; //true显示全部，false不显示
+}
+
+message GloryCenterUserData {
+  uint32 uid = 1;                                   //uid
+  string user_name = 2;                             //用户昵称
+  string user_icon = 3;                             //用户头像
+  uint32 show_glory = 4;                            //是否公开荣誉展示，1-公开，0-隐藏
+}
+
+message GloryCenterPlatformBadge {
+  uint32 title = 1;                     //爵位等级
+  uint32 vip_level = 2;                 //VIP等级
+  uint32 popularity_level = 3;          //人气等级
+  bool ka_white_icon = 4;               //KA神壕
+  string little_alarm = 5;              //小闹钟标签
+  uint32 star_singer = 6;               //明星歌手标签
+  uint32 star_verify_tag = 7;           //明星用户认证
+  uint32 seven_love_tag = 8;            //七夕活动勋章
+  GloryCenterActivity activity = 9;     //活跃等级标签
+  repeated string tags = 10;            //用户统一标签
+}
+
+message GloryCenterActivity {
+  uint32 activity_level = 1;            //活跃等级
+  string activity_level_title = 2;      //活跃等级名称
+  uint32 activity_sub_level = 3;        //活跃子等级
+}
+
+message ResGloryList {
+  bool success = 1;               //成功true，失败false
+  string msg = 2;                 //失败message
+  repeated GloryCenterWearableBadge data = 3;       //返回数据
+}
+
+message GloryCenterWearableBadge {
+  uint32 badge_id = 1;                  //勋章id
+  string title = 2;                     //勋章名称
+  string icon = 3;                      //勋章图标
+  string desc = 4;                      //勋章描述
+  bool effective = 5;                   //是否生效中
+  bool is_wear = 6;                     //是否穿戴
+  string allocate_time = 7;             //获得时间
+  string expire_time = 8;               //过期时间
+  string addition_name = 9;             //额外属性:礼物之王(id:118)/礼物之星(id:119)对应的礼物名称
+  uint32 gift_badge_type = 10;          //礼物勋章属性，1：礼物之王、2：礼物之星
+  bool awake_gift = 11;          // 是否觉醒礼物
+  string wear_condition_text = 12; // 佩戴条件文案
+  uint32 badge_type = 13; //勋章类型：0荣誉勋章，1定制勋章
+  uint32 wear_time = 14; //佩戴时间
+}
+
+message ResGloryCenterCate {
+  bool success = 1;               //成功true，失败false
+  string msg = 2;                 //失败message
+  GloryCenterCate data = 3;       //返回数据
+}
+
+
+
+

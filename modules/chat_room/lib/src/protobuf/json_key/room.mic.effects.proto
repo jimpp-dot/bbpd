@@ -1,0 +1,21 @@
+syntax = "proto3";
+    
+package room.mic.effects;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message RoomMicEffects {
+    option (pb.register_name) = 'room.mic.effects';
+    option (pb.register_id) = 73;
+    repeated Effects effects = 1;
+
+    message Effects {
+        uint32 expire = 1;
+        uint32 uid = 2;
+        string url = 3;
+    }
+
+}

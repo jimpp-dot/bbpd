@@ -1,0 +1,15 @@
+syntax = "proto3";
+    
+package award.title;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message AwardTitle {
+    option (pb.register_name) = 'award.title';
+    option (pb.register_id) = 6;
+    string name = 1;
+    string uid = 2;
+}

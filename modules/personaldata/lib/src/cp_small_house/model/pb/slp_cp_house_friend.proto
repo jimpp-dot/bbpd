@@ -1,0 +1,55 @@
+syntax = "proto3";
+package pb;
+/*
+cp小屋proto
+*/
+
+option go_package = "../../app/pb";
+
+message RoomTag {
+	string show = 1;
+	string label = 2;
+	repeated string bg = 3;
+	string acute_icon = 4;
+	string tag_color = 5;
+	string tag_icon = 6;
+	uint32 party_style = 7;
+	string abstract_icon = 8;
+	string type_icon = 9;
+	repeated string type_bg = 10;
+}
+
+//小屋个人页简略信息
+message FriendUser {
+	string uid = 1;
+	string app_id = 2;
+	string name = 3;
+	string icon = 4;
+	string title = 5;
+	string birthday = 6;
+	string sex = 7;
+	string sign = 8;
+	string online_status = 9;
+	string online_dateline = 10;
+	string tag = 11;
+	string dateline = 12;
+	string to = 13;
+	uint32 redpoint = 14;
+	uint32 online = 15;
+	string online_dateline_diff = 16;
+	uint32 official = 17;
+	uint32 room = 18;
+	string room_prefix = 19;
+	RoomTag	room_tag	= 20;
+	uint32 title_new = 21;
+	string mark = 22;
+	string roomicon = 23;
+	uint32 vip_level = 24;
+}
+
+message ResFriendData {
+	bool success = 1;                    //成功true，失败false
+	string msg = 2;                      //失败message
+	repeated FriendUser data = 3;
+	uint32 have_forbidden = 4;
+}

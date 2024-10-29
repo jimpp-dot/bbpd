@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+  <title>bbpd_&#x5207;&#x7247;</title>
+  <defs>
+    <radialGradient id="a" cx="23.417%" cy="0%" r="333.255%" fx="23.417%" fy="0%" gradientTransform="scale(.44252 1) rotate(63.311 .382 .24)">
+      <stop offset="0%" stop-color="#CAD0DC"/>
+      <stop offset="100%" stop-color="#848991"/>
+    </radialGradient>
+    <radialGradient id="b" cx="69.062%" cy="119.421%" r="139.981%" fx="69.062%" fy="119.421%" gradientTransform="matrix(-.27668 -.91421 .62417 -.40524 .136 2.31)">
+      <stop offset="0%" stop-color="#CAD0DC"/>
+      <stop offset="100%" stop-color="#848991"/>
+    </radialGradient>
+    <radialGradient id="c" cx="7.94%" cy="-7.7%" r="492.177%" fx="7.94%" fy="-7.7%" gradientTransform="scale(.24892 1) rotate(21.342 .2 .559)">
+      <stop offset="0%" stop-color="#CAD0DC"/>
+      <stop offset="100%" stop-color="#848991"/>
+    </radialGradient>
+    <linearGradient id="d" x1="50%" x2="50%" y1="0%" y2="162.271%">
+      <stop offset="0%" stop-color="#959CA6"/>
+      <stop offset="100%" stop-color="#BFC3CA" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#FFBACA" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd" opacity=".4">
+    <path fill="url(#a)" d="M46.402 5.011C44.62 1.685 42.484 0 40.056 0c-2.796 0-5.698 2.28-8.63 6.779-.364.56-.715 1.13-1.052 1.707a40.387 40.387 0 0 0-1.05-1.707C26.392 2.279 23.49 0 20.692 0c-2.428 0-4.562 1.685-6.342 5.011-1.333 2.49-.853 4.277-.216 5.338 1.149 1.911 3.716 3.2 7.847 3.936 3.173.566 6.53.65 8.25.65h.287c1.718 0 5.076-.084 8.25-.65 4.132-.737 6.699-2.025 7.847-3.936.638-1.061 1.118-2.849-.213-5.338z" transform="translate(10 11.25)"/>
+    <path fill="url(#b)" d="M56.25 21.656V48.5a9 9 0 0 1-9 9h-34.5a9 9 0 0 1-9-9V21.656h52.5zM30.553 31.704a1.25 1.25 0 0 0-1.674.567l-1.527 3.095a1.25 1.25 0 0 1-.941.683l-3.415.497a1.25 1.25 0 0 0-.693 2.132l2.471 2.408c.295.288.43.701.36 1.107l-.584 3.4a1.25 1.25 0 0 0 1.814 1.319l3.054-1.606a1.25 1.25 0 0 1 1.164 0l3.054 1.606a1.25 1.25 0 0 0 1.814-1.318l-.584-3.401a1.25 1.25 0 0 1 .36-1.107l2.47-2.408a1.25 1.25 0 0 0-.692-2.132l-3.415-.497a1.25 1.25 0 0 1-.94-.683L31.12 32.27a1.25 1.25 0 0 0-.568-.567z" transform="translate(10 11.25)"/>
+    <path fill="url(#c)" d="M60 23.65a2.492 2.492 0 0 1-2.5 2.486H2.502A2.494 2.494 0 0 1 0 23.649v-9.958c0-1.374 1.12-2.49 2.501-2.49h55c1.38 0 2.499 1.116 2.499 2.49v9.958z" transform="translate(10 11.25)"/>
+    <path fill="url(#d)" fill-rule="nonzero" d="M24 11.201h12v14.935H24z" transform="translate(10 11.25)"/>
+  </g>
+</svg>

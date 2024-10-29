@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28px" height="28px" viewBox="0 0 28 28" version="1.1">
+  <title>bbpd_ic_next_small@2x</title>
+  <defs>
+    <linearGradient x1="16.3440276%" y1="0%" x2="16.3440276%" y2="100%" id="linearGradient-1">
+      <stop stop-color="#926AFF" offset="0%"/>
+      <stop stop-color="#26C4FF" offset="49.6044234%"/>
+      <stop stop-color="#99FFBC" offset="100%"/>
+    </linearGradient>
+  </defs>
+  <g id="首页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="1首页-直播备份-2" transform="translate(-690.000000, -422.000000)">
+      <g id="编组-2" transform="translate(0.000000, 376.000000)">
+        <g id="ic_next_small" transform="translate(704.000000, 60.000000) rotate(90.000000) translate(-704.000000, -60.000000) translate(690.000000, 46.000000)">
+          <rect id="#" x="0" y="0" width="28" height="28"/>
+          <path d="M6.82192235,5.07192235 C7.28788883,4.60595587 8.01705028,4.56359528 8.53087039,4.94484058 L8.67807765,5.07192235 L19.6780777,16.0719223 C20.1440441,16.5378888 20.1864047,17.2670503 19.8051594,17.7808704 L19.6780777,17.9280777 L14.6780777,22.9280777 C14.1655145,23.4406408 13.3344855,23.4406408 12.8219223,22.9280777 C12.3559559,22.4621112 12.3135953,21.7329497 12.6948406,21.2191296 L12.8219223,21.0719223 L16.89325,17 L6.82192235,6.92807765 C6.35595587,6.46211117 6.31359528,5.73294972 6.69484058,5.21912961 L6.82192235,5.07192235 Z" id="arrow" fill="url(#linearGradient-1)" fill-rule="nonzero"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

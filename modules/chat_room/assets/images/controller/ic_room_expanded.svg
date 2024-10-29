@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48px" height="48px" viewBox="0 0 48 48" version="1.1">
+  <title>bbpd_公屏</title>
+  <g id="房间" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="房间底部bar切图" transform="translate(-410.000000, -29.000000)">
+      <g id="公屏" transform="translate(410.000000, 29.000000)">
+        <g id="ic_room_chat">
+          <circle id="base" cx="24" cy="24" r="24"/>
+          <g id="icon-评论" transform="translate(8.500000, 10.500000)" fill="#FFFFFF" fill-rule="nonzero" stroke="#FFFFFF" stroke-width="0.5225">
+            <path d="M23.5711712,0 L7.42882883,0 C3.32599996,0 0,3.54617141 0,7.92059553 L0,20.0794045 C0,24.4538286 3.32599996,28 7.42882883,28 L23.5711712,28 C27.674,28 31,24.4538286 31,20.0794045 L31,7.92059553 C31,3.54617141 27.674,0 23.5711712,0 Z M7.42882883,2.50124069 L23.5711712,2.50124069 C26.3783699,2.50124069 28.6540541,4.9275685 28.6540541,7.92059553 L28.6540541,20.0794045 C28.6540541,23.0724315 26.3783699,25.4987593 23.5711712,25.4987593 L7.42882883,25.4987593 C4.62163013,25.4987593 2.34594595,23.0724315 2.34594595,20.0794045 L2.34594595,7.92059553 C2.34594595,4.9275685 4.62163013,2.50124069 7.42882883,2.50124069 Z" id="形状结合"/>
+          </g>
+        </g>
+        <rect id="矩形" fill="#FFFFFF" x="15" y="22.5" width="4" height="4" rx="2"/>
+        <rect id="矩形备份-46" fill="#FFFFFF" x="22.5" y="22.5" width="4" height="4" rx="2"/>
+        <rect id="矩形备份-47" fill="#FFFFFF" x="30" y="22.5" width="4" height="4" rx="2"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,31 @@
+syntax = "proto3";
+package pb;
+/*
+合规协议
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message CollectInfo{
+  string title = 1;     //标题
+  string purpose = 2;   //使用目的
+  string scene = 3;     //使用场景
+  string info = 4;      //手机情况
+  string content = 5;   //信息内容
+  string url = 6;       //跳转地址
+}
+
+message ResCollectInfo{
+  bool Success = 1;
+  repeated CollectInfo info = 2;
+}
+
+
+//推荐规则文案
+message ResRecommendDesc {
+  bool   success = 1;
+  string msg = 2;
+  string desc = 3;
+}

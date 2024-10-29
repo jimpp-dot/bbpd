@@ -1,0 +1,14 @@
+syntax = "proto3";
+    
+package wedding.refresh;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message WeddingRefresh {
+    option (pb.register_name) = 'wedding.refresh';
+    option (pb.register_id) = 109;
+    uint32 blessing_score = 1;
+    uint32 stage = 2;
+}

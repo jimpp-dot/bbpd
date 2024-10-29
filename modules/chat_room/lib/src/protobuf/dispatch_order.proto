@@ -1,0 +1,36 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+
+message ResDispatchOrder {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+    string data = 3; //返回的数据
+}
+
+
+// 派单嘉宾需求结构
+message ResDispatchOrderDemand {
+   bool success = 1; //返回给客户端的必须有
+   string msg = 2; //返回给客户端的必须有
+   ResDispatchOrderDemandData data = 3; //返回的数据
+}
+// 派单嘉宾需求的data
+message ResDispatchOrderDemandData {
+    uint32 rid = 1;
+    string category = 2;
+    uint32 sex = 3;
+    string description = 4;
+}
+
+// 派单嘉宾需求Socket结构
+message ResDispatchOrderSocketDemand {
+    ResDispatchOrderSocketDemandData room_order = 1;
+}
+message ResDispatchOrderSocketDemandData {
+    uint32 show_demand_index = 1;
+}

@@ -1,0 +1,153 @@
+syntax = "proto3";
+package pb;
+/*
+账户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+message AccountInfoVideo {
+  string uid = 1;
+  string path = 2;
+  string cover = 3;
+  string duration = 4;
+  string state = 5;
+  string reason = 6;
+  string dateline = 7;
+  string dateline_complete = 8;
+  uint32 modify = 9;
+}
+
+message AccountInfoHeader {
+  string id = 1;
+  string uid = 2;
+  string path = 3;
+  string video = 4;
+  string deleted = 5;
+  string dateline = 6;
+  string ordering = 7;
+  string state = 8;
+  uint32 header = 9;
+}
+
+message AccountSexInfo {
+  bool first_time = 1;
+  string doc = 2;
+}
+
+message AccountCardTag {
+  string id = 1;
+  string name = 2;
+  string icon = 3;
+}
+
+message AccountDialog {
+  string title = 1;
+  string subtitle = 2;
+  string content = 3;
+}
+
+message AccountVideo {
+  uint32 id = 1;
+  string url = 2;
+  string cover = 3;
+  uint32 duration = 4;
+}
+
+message AccountInfoColor {
+  string bg_start = 1;
+  string bg_end= 2;
+  string border_start = 3;
+  string border_end = 4;
+}
+
+
+message AccountInfoCard {
+  uint32 uid = 1;
+  string app_id = 2;
+  string desc = 3;
+  string audio = 4;
+  string hometown_city = 5;
+  uint32 hometown_city_code =6;
+  uint32 liked_num = 7;
+  uint32 exposure = 8;
+  string click_num = 9;
+  uint32 checked = 10;
+  uint32 visiable = 11;
+  uint32 score = 12;
+  uint32 dateline = 13;
+  uint32 duration = 14;
+  string audioIcon = 15;
+  repeated AccountCardTag tags = 16;
+  AccountDialog dialog = 17;
+  AccountVideo video = 18;
+  repeated AccountInfoColor color = 19;
+  uint32 height = 20;
+  string industry = 21;
+  string education = 22;
+}
+
+message AccountTags {
+  string id = 1;
+  string name = 2;
+}
+
+message AccountInfo {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  string video = 4;
+  string cover = 5;
+  uint32 age = 6;
+  string birthday = 7;
+  string sign = 8;
+  string city = 9;
+  string city_code = 10;
+  uint32 online_status = 11;
+  uint32 dateline = 12;
+  uint32 online_dateline = 13;
+  string online_dateline_diff = 14;
+  uint32 job = 15;
+  uint32 sex = 16;
+  uint32 title = 17;
+  uint32 star = 18;
+  uint32 god_num = 19;
+  string god_category = 20;
+  uint32 deleted = 21;
+  uint32 block_un_auther_message = 22;
+  string tmp_icon = 23;
+  string position = 24;
+  uint32 pay_receive_today = 25;
+  uint32 service_pause = 26;
+  uint32 service_busy = 27;
+  uint32 credit_god_level = 28;
+  uint32 credit_user_level = 29;
+  uint32 tag = 30;
+  uint32 friend_state = 31;
+  uint32 has_video = 32;
+  uint32 role = 33;
+  uint32 vipLevel = 34;
+  float longitude = 35;
+  float latitude = 36;
+  uint32 virtual_man = 37;
+  uint32 title_new = 38;
+  uint32 app_id = 39;
+  repeated AccountInfoHeader photos = 40;
+  AccountInfoVideo videoInfo = 41;
+  uint32 _modifySexDisabled = 42;
+  AccountSexInfo sex_info = 43;
+  AccountInfoCard card = 44;
+  repeated AccountTags tags = 45;
+  repeated AccountTags friend_tags = 46;
+  uint32 header = 47;
+}
+
+message ResAccountInfo {
+  bool   success = 1;
+  string msg = 2;
+  AccountInfo data = 3;
+}
+
+

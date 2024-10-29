@@ -1,0 +1,83 @@
+syntax = "proto3";
+package pb;
+/*
+  年度盛典proto
+*/
+
+option go_package = "../../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+message BroadcastAnnualPartyPendant {
+	option (pb.register_name) = 'room.annual.pendant';
+	option (pb.register_id) = 70001;
+	uint32 type = 1; //0:rank 1:pk
+	BroadcastAnnualPartyRankPendant rank_data = 2;
+	BroadcastAnnualPartyPkPendant pk_data = 3;
+	BroadcastAnnualPartyMsgPendant msg_data = 4;
+}
+
+message BroadcastAnnualPartyMsgPendant {
+	string title = 1;
+	string content = 2;
+	string status_msg = 3;
+	uint32 status = 4;
+	string schema_url = 5;
+}
+
+message BroadcastAnnualPartyResult {
+	option (pb.register_name) = 'room.annual.result';
+	option (pb.register_id) = 70002;
+	uint32 type = 1; //0:cycle_result 1:final_result
+	BroadcastAnnualPartyCycleResult cycle_result = 2;
+	BroadcastAnnualPartyFinalResult final_result = 3;
+}
+
+message BroadcastAnnualPartyCycleResult {
+	ApResultData result1 = 1;
+	ApResultData result2 = 2;
+	uint32 win_rid = 3;
+}
+
+message BroadcastAnnualPartyFinalResult {
+	repeated ApResultData finals = 1;
+}
+
+message ApResultData {
+	uint32 rid = 1;
+	string name = 2;
+	string icon = 3;
+	string score = 4;
+	uint32 value = 5;
+}
+
+message BroadcastAnnualPartyRankPendant {
+	string title = 1;
+	string rank = 2;
+	string score = 3;
+	string desc = 4;
+	uint32 status = 5;
+	string status_msg = 6;
+	string schema_url = 7;
+}
+
+message BroadcastAnnualPartyPkPendant {
+	uint32 left = 1;
+	repeated ApPendantData pks = 2;
+	string schema_url = 3;
+	bool is_hunter = 4;
+	string desc = 5;
+}
+
+message ApPendantData {
+	uint32 rid = 1;
+	string name = 2;
+	string icon = 3;
+	uint32 score = 4;
+}
+
+message ApiAnnualPartyPendantInfoResponse {
+	bool success = 1;
+	string message = 2;
+	BroadcastAnnualPartyPendant pendant_info = 3;
+}

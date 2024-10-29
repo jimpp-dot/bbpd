@@ -1,0 +1,21 @@
+syntax = "proto3";
+    
+package wedding.role;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message WeddingRole {
+    option (pb.register_name) = 'wedding.role';
+    option (pb.register_id) = 110;
+    repeated List list = 1;
+
+    message List {
+        uint32 position = 1;
+        uint32 role = 2;
+        uint32 uid = 3;
+    }
+
+}

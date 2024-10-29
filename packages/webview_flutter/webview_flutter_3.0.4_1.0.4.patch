@@ -1,0 +1,3591 @@
+diff --git a/cli-webview_flutter/webview_flutter/example/android/.gitignore b/cli-webview_flutter/webview_flutter/example/android/.gitignore
+new file mode 100644
+index 0000000..6f56801
+--- /dev/null
++++ b/cli-webview_flutter/webview_flutter/example/android/.gitignore
+@@ -0,0 +1,13 @@
++gradle-wrapper.jar
++/.gradle
++/captures/
++/gradlew
++/gradlew.bat
++/local.properties
++GeneratedPluginRegistrant.java
++
++# Remember to never publicly share your keystore.
++# See https://flutter.dev/docs/deployment/android#reference-the-keystore-from-the-app
++key.properties
++**/*.keystore
++**/*.jks
+diff --git a/cli-webview_flutter/webview_flutter/example/ios/.gitignore b/cli-webview_flutter/webview_flutter/example/ios/.gitignore
+new file mode 100644
+index 0000000..7a7f987
+--- /dev/null
++++ b/cli-webview_flutter/webview_flutter/example/ios/.gitignore
+@@ -0,0 +1,34 @@
++**/dgph
++*.mode1v3
++*.mode2v3
++*.moved-aside
++*.pbxuser
++*.perspectivev3
++**/*sync/
++.sconsign.dblite
++.tags*
++**/.vagrant/
++**/DerivedData/
++Icon?
++**/Pods/
++**/.symlinks/
++profile
++xcuserdata
++**/.generated/
++Flutter/App.framework
++Flutter/Flutter.framework
++Flutter/Flutter.podspec
++Flutter/Generated.xcconfig
++Flutter/ephemeral/
++Flutter/app.flx
++Flutter/app.zip
++Flutter/flutter_assets/
++Flutter/flutter_export_environment.sh
++ServiceDefinitions.json
++Runner/GeneratedPluginRegistrant.*
++
++# Exceptions to above rules.
++!default.mode1v3
++!default.mode2v3
++!default.pbxuser
++!default.perspectivev3
+diff --git a/webview_flutter_3.0.4/webview_flutter/example/pubspec.yaml b/cli-webview_flutter/webview_flutter/example/pubspec.yaml
+index ae3b57e..642e023 100644
+--- a/webview_flutter_3.0.4/webview_flutter/example/pubspec.yaml
++++ b/cli-webview_flutter/webview_flutter/example/pubspec.yaml
+@@ -9,7 +9,7 @@ environment:
+ dependencies:
+   flutter:
+     sdk: flutter
+-  path_provider: ^2.0.6
++  path_provider: 2.0.6
+   webview_flutter:
+     # When depending on this package from a real application you should use:
+     #   webview_flutter: ^x.y.z
+diff --git a/webview_flutter_3.0.4/webview_flutter/lib/platform_interface.dart b/cli-webview_flutter/webview_flutter/lib/platform_interface.dart
+index 48f7434..4ff7346 100644
+--- a/webview_flutter_3.0.4/webview_flutter/lib/platform_interface.dart
++++ b/cli-webview_flutter/webview_flutter/lib/platform_interface.dart
+@@ -24,4 +24,5 @@ export 'package:webview_flutter_platform_interface/webview_flutter_platform_inte
+         WebResourceErrorType,
+         WebViewCookie,
+         WebViewRequest,
+-        WebViewRequestMethod;
++        WebViewRequestMethod,
++        WebError;
+diff --git a/webview_flutter_3.0.4/webview_flutter/lib/src/webview.dart b/cli-webview_flutter/webview_flutter/lib/src/webview.dart
+index 697eb48..a63b8ef 100644
+--- a/webview_flutter_3.0.4/webview_flutter/lib/src/webview.dart
++++ b/cli-webview_flutter/webview_flutter/lib/src/webview.dart
+@@ -10,6 +10,7 @@ import 'package:flutter/gestures.dart';
+ import 'package:flutter/widgets.dart';
+ import 'package:webview_flutter_android/webview_android_cookie_manager.dart';
+ import 'package:webview_flutter_android/webview_surface_android.dart';
++import 'package:webview_flutter_platform_interface/src/types/web_error.dart';
+ import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
+ import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
+ 
+@@ -63,6 +64,10 @@ typedef PageLoadingCallback = void Function(int progress);
+ /// Signature for when a [WebView] has failed to load a resource.
+ typedef WebResourceErrorCallback = void Function(WebResourceError error);
+ 
++typedef WebErrorCallback = void Function(WebError error);
++
++typedef WebConsoleMessageCallback = void Function(String tag,String message);
++
+ /// A web view widget for showing html content.
+ ///
+ /// There is a known issue that on iOS 13.4 and 13.5, other flutter widgets covering
+@@ -80,7 +85,7 @@ class WebView extends StatefulWidget {
+     this.onWebViewCreated,
+     this.initialUrl,
+     this.initialCookies = const <WebViewCookie>[],
+-    this.javascriptMode = JavascriptMode.disabled,
++    this.javascriptMode = JavascriptMode.unrestricted, //默认javascript可用
+     this.javascriptChannels,
+     this.navigationDelegate,
+     this.gestureRecognizers,
+@@ -88,6 +93,8 @@ class WebView extends StatefulWidget {
+     this.onPageFinished,
+     this.onProgress,
+     this.onWebResourceError,
++    this.onWebErrorCallback,
++    this.onWebConsoleMessageCallback,
+     this.debuggingEnabled = false,
+     this.gestureNavigationEnabled = false,
+     this.userAgent,
+@@ -96,6 +103,11 @@ class WebView extends StatefulWidget {
+         AutoMediaPlaybackPolicy.require_user_action_for_all_media_types,
+     this.allowsInlineMediaPlayback = false,
+     this.backgroundColor,
++    this.cornerRadius,
++    this.headers,
++    this.useAndroidDefaultChromeClient = false,
++    this.iosVideoFullScreen = false,
++    this.alertSslError = false,
+   })  : assert(javascriptMode != null),
+         assert(initialMediaPlaybackPolicy != null),
+         assert(allowsInlineMediaPlayback != null),
+@@ -240,6 +252,10 @@ class WebView extends StatefulWidget {
+   /// This callback is only called for the main page.
+   final WebResourceErrorCallback? onWebResourceError;
+ 
++  final WebErrorCallback? onWebErrorCallback;
++
++  final WebConsoleMessageCallback? onWebConsoleMessageCallback;
++
+   /// Controls whether WebView debugging is enabled.
+   ///
+   /// Setting this to true enables [WebView debugging on Android](https://developers.google.com/web/tools/chrome-devtools/remote-debugging/).
+@@ -297,6 +313,19 @@ class WebView extends StatefulWidget {
+   /// default [backgroundColor] is `null`.
+   final Color? backgroundColor;
+ 
++  ///webview圆角，android平台使用[SurfaceAndroidWebView]时，圆角需要插件实现
++  final double? cornerRadius;
++
++  final Map<String,String>? headers;
++
++  final bool? useAndroidDefaultChromeClient;
++
++  ///iOS是否默认全屏播放
++  final bool? iosVideoFullScreen;
++
++  ///是否显示ssl错误弹窗
++  final bool? alertSslError;
++
+   @override
+   State<StatefulWidget> createState() => _WebViewState();
+ }
+@@ -368,8 +397,12 @@ CreationParams _creationParamsfromWidget(WebView widget) {
+     javascriptChannelNames: _extractChannelNames(widget.javascriptChannels),
+     userAgent: widget.userAgent,
+     autoMediaPlaybackPolicy: widget.initialMediaPlaybackPolicy,
+-    backgroundColor: widget.backgroundColor,
++    backgroundColor: widget.backgroundColor??Color.fromARGB(0x00, 0x00, 0x00, 0x00),
+     cookies: widget.initialCookies,
++    headers: widget.headers,
++    cornerRadius: widget.cornerRadius,
++    useAndroidDefaultChromeClient: widget.useAndroidDefaultChromeClient,
++    iosVideoFullScreen: widget.iosVideoFullScreen,
+   );
+ }
+ 
+@@ -383,6 +416,8 @@ WebSettings _webSettingsFromWidget(WebView widget) {
+     allowsInlineMediaPlayback: widget.allowsInlineMediaPlayback,
+     userAgent: WebSetting<String?>.of(widget.userAgent),
+     zoomEnabled: widget.zoomEnabled,
++    alertSslError: widget.alertSslError??false,
++    hasConsoleMessageTracking: widget.onWebConsoleMessageCallback != null,
+   );
+ }
+ 
+@@ -406,6 +441,7 @@ WebSettings _clearUnchangedWebSettings(
+   bool? debuggingEnabled;
+   WebSetting<String?> userAgent = const WebSetting<String?>.absent();
+   bool? zoomEnabled;
++  bool? hasConsoleMessageTracking;
+   if (currentValue.javascriptMode != newValue.javascriptMode) {
+     javascriptMode = newValue.javascriptMode;
+   }
+@@ -424,6 +460,9 @@ WebSettings _clearUnchangedWebSettings(
+   if (currentValue.zoomEnabled != newValue.zoomEnabled) {
+     zoomEnabled = newValue.zoomEnabled;
+   }
++  if(currentValue.hasConsoleMessageTracking != newValue.hasConsoleMessageTracking){
++    hasConsoleMessageTracking = newValue.hasConsoleMessageTracking;
++  }
+ 
+   return WebSettings(
+     javascriptMode: javascriptMode,
+@@ -432,6 +471,7 @@ WebSettings _clearUnchangedWebSettings(
+     debuggingEnabled: debuggingEnabled,
+     userAgent: userAgent,
+     zoomEnabled: zoomEnabled,
++    hasConsoleMessageTracking: hasConsoleMessageTracking,
+   );
+ }
+ 
+@@ -469,6 +509,7 @@ class _PlatformCallbacksHandler implements WebViewPlatformCallbacksHandler {
+ 
+   @override
+   void onPageFinished(String url) {
++    // print('onPageFinished url=$url');
+     if (_widget.onPageFinished != null) {
+       _widget.onPageFinished!(url);
+     }
+@@ -487,6 +528,21 @@ class _PlatformCallbacksHandler implements WebViewPlatformCallbacksHandler {
+       _widget.onWebResourceError!(error);
+     }
+   }
++
++  @override
++  void onReceivedHttpError(WebError webError) {
++    // print('onReceivedHttpError webError=${webError.toString()}');
++    if (_widget.onWebErrorCallback != null) {
++      _widget.onWebErrorCallback!(webError);
++    }
++  }
++
++  @override
++  void onConsoleMessage(String tag, String message) {
++    if(_widget.onWebConsoleMessageCallback != null){
++      _widget.onWebConsoleMessageCallback!(tag,message);
++    }
++  }
+ }
+ 
+ /// Controls a [WebView].
+diff --git a/webview_flutter_3.0.4/webview_flutter/pubspec.yaml b/cli-webview_flutter/webview_flutter/pubspec.yaml
+index 9639b6a..6f471e2 100644
+--- a/webview_flutter_3.0.4/webview_flutter/pubspec.yaml
++++ b/cli-webview_flutter/webview_flutter/pubspec.yaml
+@@ -19,9 +19,21 @@ flutter:
+ dependencies:
+   flutter:
+     sdk: flutter
+-  webview_flutter_android: ^2.8.0
+-  webview_flutter_platform_interface: ^1.8.0
+-  webview_flutter_wkwebview: ^2.7.0
++  webview_flutter_android:
++    git:
++      url: git@github.com:olaola-chat/cli-webview_flutter.git
++      path: webview_flutter_android
++      ref: dev_1.0.4
++  webview_flutter_platform_interface:
++    git:
++      url: git@github.com:olaola-chat/cli-webview_flutter.git
++      path: webview_flutter_platform_interface
++      ref: dev_1.0.4
++  webview_flutter_wkwebview:
++    git:
++      url: git@github.com:olaola-chat/cli-webview_flutter.git
++      path: webview_flutter_wkwebview
++      ref: dev_1.0.4
+ 
+ dev_dependencies:
+   build_runner: ^2.1.5
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/AndroidManifest.xml b/cli-webview_flutter/webview_flutter_android/android/src/main/AndroidManifest.xml
+index a087f2c..1dc09b1 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/AndroidManifest.xml
++++ b/cli-webview_flutter/webview_flutter_android/android/src/main/AndroidManifest.xml
+@@ -1,2 +1,11 @@
+-<manifest package="io.flutter.plugins.webviewflutter">
++<manifest package="io.flutter.plugins.webviewflutter"
++    xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools">
++
++    <application>
++        <activity
++            android:name="io.flutter.plugins.webviewflutter.FileChooseActivity"
++            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
++    </application>
++
+ </manifest>
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/DownloadListenerFlutterApiImpl.java b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/DownloadListenerFlutterApiImpl.java
+index 2dd98c4..d7b6723 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/DownloadListenerFlutterApiImpl.java
++++ b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/DownloadListenerFlutterApiImpl.java
+@@ -4,7 +4,13 @@
+ 
+ package io.flutter.plugins.webviewflutter;
+ 
++import android.content.Context;
++import android.content.Intent;
++import android.net.Uri;
+ import android.webkit.DownloadListener;
++
++import androidx.annotation.Nullable;
++
+ import io.flutter.plugin.common.BinaryMessenger;
+ import io.flutter.plugins.webviewflutter.GeneratedAndroidWebView.DownloadListenerFlutterApi;
+ 
+@@ -15,6 +21,7 @@ import io.flutter.plugins.webviewflutter.GeneratedAndroidWebView.DownloadListene
+  */
+ public class DownloadListenerFlutterApiImpl extends DownloadListenerFlutterApi {
+   private final InstanceManager instanceManager;
++  @Nullable private Context context;
+ 
+   /**
+    * Creates a Flutter api that sends messages to Dart.
+@@ -23,9 +30,10 @@ public class DownloadListenerFlutterApiImpl extends DownloadListenerFlutterApi {
+    * @param instanceManager maintains instances stored to communicate with Dart objects
+    */
+   public DownloadListenerFlutterApiImpl(
+-      BinaryMessenger binaryMessenger, InstanceManager instanceManager) {
++      BinaryMessenger binaryMessenger, InstanceManager instanceManager, @Nullable Context context) {
+     super(binaryMessenger);
+     this.instanceManager = instanceManager;
++    this.context = context;
+   }
+ 
+   /** Passes arguments from {@link DownloadListener#onDownloadStart} to Dart. */
+@@ -37,14 +45,15 @@ public class DownloadListenerFlutterApiImpl extends DownloadListenerFlutterApi {
+       String mimetype,
+       long contentLength,
+       Reply<Void> callback) {
+-    onDownloadStart(
+-        instanceManager.getInstanceId(downloadListener),
+-        url,
+-        userAgent,
+-        contentDisposition,
+-        mimetype,
+-        contentLength,
+-        callback);
++//    onDownloadStart(
++//        instanceManager.getInstanceId(downloadListener),
++//        url,
++//        userAgent,
++//        contentDisposition,
++//        mimetype,
++//        contentLength,
++//        callback);
++    downloadByBrowser(context, url);
+   }
+ 
+   /**
+@@ -61,4 +70,12 @@ public class DownloadListenerFlutterApiImpl extends DownloadListenerFlutterApi {
+       callback.reply(null);
+     }
+   }
++
++  private void downloadByBrowser(Context context, String url) {
++    Intent intent = new Intent(Intent.ACTION_VIEW);
++    intent.addCategory(Intent.CATEGORY_BROWSABLE);
++    intent.setData(Uri.parse(url));
++    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
++    context.getApplicationContext().startActivity(intent);
++  }
+ }
+diff --git a/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/FileChooseActivity.java b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/FileChooseActivity.java
+new file mode 100644
+index 0000000..9311665
+--- /dev/null
++++ b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/FileChooseActivity.java
+@@ -0,0 +1,90 @@
++package io.flutter.plugins.webviewflutter;
++
++import android.app.Activity;
++import android.content.ClipData;
++import android.content.Intent;
++import android.net.Uri;
++import android.os.Build;
++import android.os.Bundle;
++import android.view.WindowManager;
++import android.webkit.ValueCallback;
++import android.webkit.WebChromeClient;
++
++import androidx.annotation.Nullable;
++
++import java.io.File;
++
++public class FileChooseActivity extends Activity {
++  private static ValueCallback<Uri[]> sUploadMessages;
++  private static WebChromeClient.FileChooserParams sFileChooserParams;
++  private Object Utils;
++  private File outputFile;
++  private Uri mOutputFileUri;
++  private Uri image;
++
++  public static void setFilePathCallback(ValueCallback<Uri[]> filePathCallback){
++    sUploadMessages = filePathCallback;
++  }
++
++  public static void setFileChooserParams(WebChromeClient.FileChooserParams fileChooserParams){
++    sFileChooserParams = fileChooserParams;
++  }
++
++  @Override
++  protected void onCreate(@Nullable Bundle savedInstanceState) {
++    super.onCreate(savedInstanceState);
++
++    getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
++
++    openFileIntent();
++  }
++
++  private void openFileIntent() {
++    Intent intent;
++    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
++      intent = new Intent(Intent.ACTION_GET_CONTENT);
++    } else {
++      intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
++      intent.addCategory(Intent.CATEGORY_OPENABLE);
++    }
++    intent.setType("*/*");
++    try {
++      startActivityForResult(intent, 42);
++    } catch (Exception e) {
++      e.printStackTrace();
++    }
++  }
++
++  @Override
++  protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
++    super.onActivityResult(requestCode, resultCode, intent);
++    Uri[] results = null;
++    try {
++      if (resultCode != RESULT_OK) {
++        results = null;
++      } else {
++        if (intent != null) {
++          String dataString = intent.getDataString();
++          ClipData clipData = intent.getClipData();
++          if (clipData != null) {
++            results = new Uri[clipData.getItemCount()];
++            for (int i = 0; i < clipData.getItemCount(); i++) {
++              ClipData.Item item = clipData.getItemAt(i);
++              results[i] = item.getUri();
++            }
++          }
++          if (dataString != null) {
++            results = new Uri[]{Uri.parse(dataString)};
++          }
++        } else {
++          results = new Uri[]{mOutputFileUri};
++        }
++      }
++    } catch (Exception e) {
++      e.printStackTrace();
++    }
++    if (sUploadMessages != null) sUploadMessages.onReceiveValue(results);
++    sUploadMessages = null;
++    finish();
++  }
++}
+diff --git a/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/FileChooseManager.java b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/FileChooseManager.java
+new file mode 100644
+index 0000000..0f38f82
+--- /dev/null
++++ b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/FileChooseManager.java
+@@ -0,0 +1,67 @@
++package io.flutter.plugins.webviewflutter;
++
++import android.app.Activity;
++import android.content.ClipData;
++import android.content.Intent;
++import android.net.Uri;
++import android.os.Build;
++import android.webkit.ValueCallback;
++import android.webkit.WebChromeClient;
++
++import androidx.annotation.Nullable;
++
++import java.util.Arrays;
++
++import io.flutter.Log;
++import io.flutter.plugin.common.PluginRegistry;
++
++public class FileChooseManager implements PluginRegistry.ActivityResultListener {
++
++    private final static int FILECHOOSER_RESULTCODE = 42;
++
++    private ValueCallback<Uri[]> sUploadMessages;
++
++    public void openFileIntent(ValueCallback<Uri[]> filePathCallback) {
++        try {
++            sUploadMessages = filePathCallback;
++            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
++            intent.addCategory(Intent.CATEGORY_OPENABLE);
++            intent.setType("*/*");
++            WebViewFlutterPlugin.mActivity.startActivityForResult(intent, FILECHOOSER_RESULTCODE);
++        } catch (Exception e) {
++            e.printStackTrace();
++            sUploadMessages = null;
++        }
++    }
++
++    @Override
++    public boolean onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
++        if (requestCode == FILECHOOSER_RESULTCODE) {
++            Uri[] results = null;
++            try {
++                if (resultCode == Activity.RESULT_OK) {
++                    if (data != null) {
++                        String dataString = data.getDataString();
++                        ClipData clipData = data.getClipData();
++                        if (clipData != null) {
++                            results = new Uri[clipData.getItemCount()];
++                            for (int i = 0; i < clipData.getItemCount(); i++) {
++                                ClipData.Item item = clipData.getItemAt(i);
++                                results[i] = item.getUri();
++                            }
++                        }
++                        if (dataString != null) {
++                            results = new Uri[]{Uri.parse(dataString)};
++                        }
++                    }
++                }
++            } catch (Exception e) {
++                e.printStackTrace();
++            }
++            if (sUploadMessages != null) sUploadMessages.onReceiveValue(results);
++            sUploadMessages = null;
++            return true;
++        }
++        return false;
++    }
++}
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/GeneratedAndroidWebView.java b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/GeneratedAndroidWebView.java
+index 2e16331..73f7afc 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/GeneratedAndroidWebView.java
++++ b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/GeneratedAndroidWebView.java
+@@ -438,6 +438,10 @@ public class GeneratedAndroidWebView {
+ 
+     void setBackgroundColor(@NonNull Long instanceId, @NonNull Long color);
+ 
++    void setCornerRadius(@NonNull Long instanceId, @NonNull Double cornerRadius);
++
++    void setVerticalScrollbarPosition(@NonNull Long instanceId, @NonNull Integer position);
++
+     /** The codec used by WebViewHostApi. */
+     static MessageCodec<Object> getCodec() {
+       return WebViewHostApiCodec.INSTANCE;
+@@ -1252,6 +1256,72 @@ public class GeneratedAndroidWebView {
+           channel.setMessageHandler(null);
+         }
+       }
++      {
++        BasicMessageChannel<Object> channel =
++                new BasicMessageChannel<>(
++                        binaryMessenger,
++                        "dev.flutter.pigeon.WebViewHostApi.setCornerRadius",
++                        getCodec());
++        if (api != null) {
++          channel.setMessageHandler(
++                  (message, reply) -> {
++                    Map<String, Object> wrapped = new HashMap<>();
++                    try {
++                      ArrayList<Object> args = (ArrayList<Object>) message;
++                      Number instanceIdArg = (Number) args.get(0);
++                      if (instanceIdArg == null) {
++                        throw new NullPointerException("instanceIdArg unexpectedly null.");
++                      }
++                      Double radiusArg = (Double) args.get(1);
++                      if (radiusArg == null) {
++                        throw new NullPointerException("colorArg unexpectedly null.");
++                      }
++                      api.setCornerRadius(
++                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
++                              (radiusArg == null) ? null : radiusArg);
++                      wrapped.put("result", null);
++                    } catch (Error | RuntimeException exception) {
++                      wrapped.put("error", wrapError(exception));
++                    }
++                    reply.reply(wrapped);
++                  });
++        } else {
++          channel.setMessageHandler(null);
++        }
++      }
++      {
++        BasicMessageChannel<Object> channel =
++                new BasicMessageChannel<>(
++                        binaryMessenger,
++                        "dev.flutter.pigeon.WebViewHostApi.setVerticalScrollbarPosition",
++                        getCodec());
++        if (api != null) {
++          channel.setMessageHandler(
++                  (message, reply) -> {
++                    Map<String, Object> wrapped = new HashMap<>();
++                    try {
++                      ArrayList<Object> args = (ArrayList<Object>) message;
++                      Number instanceIdArg = (Number) args.get(0);
++                      if (instanceIdArg == null) {
++                        throw new NullPointerException("instanceIdArg unexpectedly null.");
++                      }
++                      Integer positionArg = (Integer) args.get(1);
++                      if (positionArg == null) {
++                        throw new NullPointerException("colorArg unexpectedly null.");
++                      }
++                      api.setVerticalScrollbarPosition(
++                              (instanceIdArg == null) ? null : instanceIdArg.longValue(),
++                              (positionArg == null) ? null : positionArg);
++                      wrapped.put("result", null);
++                    } catch (Error | RuntimeException exception) {
++                      wrapped.put("error", wrapError(exception));
++                    }
++                    reply.reply(wrapped);
++                  });
++        } else {
++          channel.setMessageHandler(null);
++        }
++      }
+     }
+   }
+ 
+@@ -1291,6 +1361,16 @@ public class GeneratedAndroidWebView {
+ 
+     void setAllowFileAccess(@NonNull Long instanceId, @NonNull Boolean enabled);
+ 
++    void setAllowContentAccess(@NonNull Long instanceId, @NonNull Boolean enabled);
++
++    void setAllowFileAccessFromFileURLs(@NonNull Long instanceId, @NonNull Boolean enabled);
++
++    void setAllowUniversalAccessFromFileURLs(@NonNull Long instanceId, @NonNull Boolean enabled);
++
++    void setGeolocationEnabled(@NonNull Long instanceId, @NonNull Boolean enabled);
++
++    void setMixedContentModeAllow(@NonNull Long instanceId, @NonNull Boolean enabled);
++
+     /** The codec used by WebSettingsHostApi. */
+     static MessageCodec<Object> getCodec() {
+       return WebSettingsHostApiCodec.INSTANCE;
+@@ -1738,6 +1818,166 @@ public class GeneratedAndroidWebView {
+           channel.setMessageHandler(null);
+         }
+       }
++      {
++        BasicMessageChannel<Object> channel =
++                new BasicMessageChannel<>(
++                        binaryMessenger,
++                        "dev.flutter.pigeon.WebSettingsHostApi.setAllowContentAccess",
++                        getCodec());
++        if (api != null) {
++          channel.setMessageHandler(
++                  (message, reply) -> {
++                    Map<String, Object> wrapped = new HashMap<>();
++                    try {
++                      ArrayList<Object> args = (ArrayList<Object>) message;
++                      Number instanceIdArg = (Number) args.get(0);
++                      if (instanceIdArg == null) {
++                        throw new NullPointerException("instanceIdArg unexpectedly null.");
++                      }
++                      Boolean enabledArg = (Boolean) args.get(1);
++                      if (enabledArg == null) {
++                        throw new NullPointerException("enabledArg unexpectedly null.");
++                      }
++                      api.setAllowContentAccess(
++                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), enabledArg);
++                      wrapped.put("result", null);
++                    } catch (Error | RuntimeException exception) {
++                      wrapped.put("error", wrapError(exception));
++                    }
++                    reply.reply(wrapped);
++                  });
++        } else {
++          channel.setMessageHandler(null);
++        }
++      }
++      {
++        BasicMessageChannel<Object> channel =
++                new BasicMessageChannel<>(
++                        binaryMessenger,
++                        "dev.flutter.pigeon.WebSettingsHostApi.setAllowFileAccessFromFileURLs",
++                        getCodec());
++        if (api != null) {
++          channel.setMessageHandler(
++                  (message, reply) -> {
++                    Map<String, Object> wrapped = new HashMap<>();
++                    try {
++                      ArrayList<Object> args = (ArrayList<Object>) message;
++                      Number instanceIdArg = (Number) args.get(0);
++                      if (instanceIdArg == null) {
++                        throw new NullPointerException("instanceIdArg unexpectedly null.");
++                      }
++                      Boolean enabledArg = (Boolean) args.get(1);
++                      if (enabledArg == null) {
++                        throw new NullPointerException("enabledArg unexpectedly null.");
++                      }
++                      api.setAllowFileAccessFromFileURLs(
++                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), enabledArg);
++                      wrapped.put("result", null);
++                    } catch (Error | RuntimeException exception) {
++                      wrapped.put("error", wrapError(exception));
++                    }
++                    reply.reply(wrapped);
++                  });
++        } else {
++          channel.setMessageHandler(null);
++        }
++      }
++      {
++        BasicMessageChannel<Object> channel =
++                new BasicMessageChannel<>(
++                        binaryMessenger,
++                        "dev.flutter.pigeon.WebSettingsHostApi.setAllowUniversalAccessFromFileURLs",
++                        getCodec());
++        if (api != null) {
++          channel.setMessageHandler(
++                  (message, reply) -> {
++                    Map<String, Object> wrapped = new HashMap<>();
++                    try {
++                      ArrayList<Object> args = (ArrayList<Object>) message;
++                      Number instanceIdArg = (Number) args.get(0);
++                      if (instanceIdArg == null) {
++                        throw new NullPointerException("instanceIdArg unexpectedly null.");
++                      }
++                      Boolean enabledArg = (Boolean) args.get(1);
++                      if (enabledArg == null) {
++                        throw new NullPointerException("enabledArg unexpectedly null.");
++                      }
++                      api.setAllowUniversalAccessFromFileURLs(
++                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), enabledArg);
++                      wrapped.put("result", null);
++                    } catch (Error | RuntimeException exception) {
++                      wrapped.put("error", wrapError(exception));
++                    }
++                    reply.reply(wrapped);
++                  });
++        } else {
++          channel.setMessageHandler(null);
++        }
++      }
++      {
++        BasicMessageChannel<Object> channel =
++                new BasicMessageChannel<>(
++                        binaryMessenger,
++                        "dev.flutter.pigeon.WebSettingsHostApi.setGeolocationEnabled",
++                        getCodec());
++        if (api != null) {
++          channel.setMessageHandler(
++                  (message, reply) -> {
++                    Map<String, Object> wrapped = new HashMap<>();
++                    try {
++                      ArrayList<Object> args = (ArrayList<Object>) message;
++                      Number instanceIdArg = (Number) args.get(0);
++                      if (instanceIdArg == null) {
++                        throw new NullPointerException("instanceIdArg unexpectedly null.");
++                      }
++                      Boolean enabledArg = (Boolean) args.get(1);
++                      if (enabledArg == null) {
++                        throw new NullPointerException("enabledArg unexpectedly null.");
++                      }
++                      api.setGeolocationEnabled(
++                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), enabledArg);
++                      wrapped.put("result", null);
++                    } catch (Error | RuntimeException exception) {
++                      wrapped.put("error", wrapError(exception));
++                    }
++                    reply.reply(wrapped);
++                  });
++        } else {
++          channel.setMessageHandler(null);
++        }
++      }
++      {
++        BasicMessageChannel<Object> channel =
++                new BasicMessageChannel<>(
++                        binaryMessenger,
++                        "dev.flutter.pigeon.WebSettingsHostApi.setMixedContentModeAllow",
++                        getCodec());
++        if (api != null) {
++          channel.setMessageHandler(
++                  (message, reply) -> {
++                    Map<String, Object> wrapped = new HashMap<>();
++                    try {
++                      ArrayList<Object> args = (ArrayList<Object>) message;
++                      Number instanceIdArg = (Number) args.get(0);
++                      if (instanceIdArg == null) {
++                        throw new NullPointerException("instanceIdArg unexpectedly null.");
++                      }
++                      Boolean enabledArg = (Boolean) args.get(1);
++                      if (enabledArg == null) {
++                        throw new NullPointerException("enabledArg unexpectedly null.");
++                      }
++                      api.setMixedContentModeAllow(
++                              (instanceIdArg == null) ? null : instanceIdArg.longValue(), enabledArg);
++                      wrapped.put("result", null);
++                    } catch (Error | RuntimeException exception) {
++                      wrapped.put("error", wrapError(exception));
++                    }
++                    reply.reply(wrapped);
++                  });
++        } else {
++          channel.setMessageHandler(null);
++        }
++      }
+     }
+   }
+ 
+@@ -1854,7 +2094,7 @@ public class GeneratedAndroidWebView {
+ 
+   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
+   public interface WebViewClientHostApi {
+-    void create(@NonNull Long instanceId, @NonNull Boolean shouldOverrideUrlLoading);
++    void create(@NonNull Long instanceId, @NonNull Boolean shouldOverrideUrlLoading, @NonNull Boolean alertSslError);
+ 
+     /** The codec used by WebViewClientHostApi. */
+     static MessageCodec<Object> getCodec() {
+@@ -1885,9 +2125,14 @@ public class GeneratedAndroidWebView {
+                     throw new NullPointerException(
+                         "shouldOverrideUrlLoadingArg unexpectedly null.");
+                   }
++                  Boolean alertSslErrorArg = (Boolean) args.get(2);
++                  if (alertSslErrorArg == null) {
++                    throw new NullPointerException(
++                            "alertSslErrorArg unexpectedly null.");
++                  }
+                   api.create(
+                       (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+-                      shouldOverrideUrlLoadingArg);
++                      shouldOverrideUrlLoadingArg, alertSslErrorArg);
+                   wrapped.put("result", null);
+                 } catch (Error | RuntimeException exception) {
+                   wrapped.put("error", wrapError(exception));
+@@ -2039,6 +2284,31 @@ public class GeneratedAndroidWebView {
+           });
+     }
+ 
++    public void onReceivedHttpError(
++            @NonNull Long instanceIdArg,
++            @NonNull Long webViewInstanceIdArg,
++            @NonNull Long errorCodeArg,
++            @NonNull String descriptionArg,
++            @NonNull String failingUrlArg,
++            Reply<Void> callback) {
++      BasicMessageChannel<Object> channel =
++              new BasicMessageChannel<>(
++                      binaryMessenger,
++                      "dev.flutter.pigeon.WebViewClientFlutterApi.onReceivedHttpError",
++                      getCodec());
++      channel.send(
++              new ArrayList<Object>(
++                      Arrays.asList(
++                              instanceIdArg,
++                              webViewInstanceIdArg,
++                              errorCodeArg,
++                              descriptionArg,
++                              failingUrlArg)),
++              channelReply -> {
++                callback.reply(null);
++              });
++    }
++
+     public void requestLoading(
+         @NonNull Long instanceIdArg,
+         @NonNull Long webViewInstanceIdArg,
+@@ -2190,7 +2460,7 @@ public class GeneratedAndroidWebView {
+ 
+   /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
+   public interface WebChromeClientHostApi {
+-    void create(@NonNull Long instanceId, @NonNull Long webViewClientInstanceId);
++    void create(@NonNull Long instanceId, @NonNull Long webViewClientInstanceId, @NonNull Boolean flag);
+ 
+     /** The codec used by WebChromeClientHostApi. */
+     static MessageCodec<Object> getCodec() {
+@@ -2220,11 +2490,14 @@ public class GeneratedAndroidWebView {
+                   if (webViewClientInstanceIdArg == null) {
+                     throw new NullPointerException("webViewClientInstanceIdArg unexpectedly null.");
+                   }
++                  Boolean useAndroidDefaultChromeClient = (Boolean) args.get(2);
++
+                   api.create(
+                       (instanceIdArg == null) ? null : instanceIdArg.longValue(),
+                       (webViewClientInstanceIdArg == null)
+                           ? null
+-                          : webViewClientInstanceIdArg.longValue());
++                          : webViewClientInstanceIdArg.longValue(),
++                          useAndroidDefaultChromeClient);
+                   wrapped.put("result", null);
+                 } catch (Error | RuntimeException exception) {
+                   wrapped.put("error", wrapError(exception));
+@@ -2368,6 +2641,18 @@ public class GeneratedAndroidWebView {
+             callback.reply(null);
+           });
+     }
++
++    public void onConsoleMessage(long id,String tag,String message,Reply<Void> callback){
++      BasicMessageChannel<Object> channel =
++              new BasicMessageChannel<>(
++                      binaryMessenger,
++                      "dev.flutter.pigeon.WebChromeClientFlutterApi.onConsoleMessage",
++                      getCodec());
++      channel.send(
++              new ArrayList<Object>(Arrays.asList(id,tag, message)),channelReply -> {
++                callback.reply(null);
++              });
++    }
+   }
+ 
+   private static class WebStorageHostApiCodec extends StandardMessageCodec {
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/InstanceManager.java b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/InstanceManager.java
+index a368baf..0f9899b 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/InstanceManager.java
++++ b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/InstanceManager.java
+@@ -81,4 +81,8 @@ public class InstanceManager {
+   public Long getInstanceId(Object instance) {
+     return instancesToInstanceIds.get(instance);
+   }
++
++  public boolean containsInstance(Object instance) {
++    return instancesToInstanceIds.containsKey(instance);
++  }
+ }
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebChromeClientFlutterApiImpl.java b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebChromeClientFlutterApiImpl.java
+index 2ab9275..10ebb45 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebChromeClientFlutterApiImpl.java
++++ b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebChromeClientFlutterApiImpl.java
+@@ -4,6 +4,7 @@
+ 
+ package io.flutter.plugins.webviewflutter;
+ 
++import android.webkit.ConsoleMessage;
+ import android.webkit.WebChromeClient;
+ import android.webkit.WebView;
+ import io.flutter.plugin.common.BinaryMessenger;
+@@ -39,6 +40,15 @@ public class WebChromeClientFlutterApiImpl extends WebChromeClientFlutterApi {
+         callback);
+   }
+ 
++  public void onConsoleMessage(WebChromeClient webChromeClient, ConsoleMessage message, Reply<Void> callback) {
++    super.onConsoleMessage(
++            instanceManager.getInstanceId(webChromeClient),
++            message.messageLevel().toString(),
++            message.message(),
++            callback
++    );
++  }
++
+   /**
+    * Communicates to Dart that the reference to a {@link WebChromeClient}} was removed.
+    *
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebChromeClientHostApiImpl.java b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebChromeClientHostApiImpl.java
+index d2e1e59..c44a860 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebChromeClientHostApiImpl.java
++++ b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebChromeClientHostApiImpl.java
+@@ -4,12 +4,21 @@
+ 
+ package io.flutter.plugins.webviewflutter;
+ 
++import android.annotation.SuppressLint;
++import android.content.Intent;
++import android.net.Uri;
+ import android.os.Build;
+ import android.os.Message;
++import android.util.Log;
++import android.view.View;
++import android.webkit.ConsoleMessage;
++import android.webkit.ValueCallback;
+ import android.webkit.WebChromeClient;
+ import android.webkit.WebResourceRequest;
+ import android.webkit.WebView;
+ import android.webkit.WebViewClient;
++import android.widget.FrameLayout;
++
+ import androidx.annotation.NonNull;
+ import androidx.annotation.Nullable;
+ import androidx.annotation.RequiresApi;
+@@ -33,6 +42,11 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
+     @Nullable private WebChromeClientFlutterApiImpl flutterApi;
+     private WebViewClient webViewClient;
+ 
++    private View mCustomView; //用于全屏渲染视频的View
++    private WebChromeClient.CustomViewCallback mCustomViewCallback;
++    private int mOriginalOrientation;
++    private int mOriginalSystemUiVisibility;
++
+     /**
+      * Creates a {@link WebChromeClient} that passes arguments of callbacks methods to Dart.
+      *
+@@ -69,18 +83,22 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
+         final WebView view, Message resultMsg, @Nullable WebView onCreateWindowWebView) {
+       final WebViewClient windowWebViewClient =
+           new WebViewClient() {
++            @SuppressLint("LongLogTag")
+             @RequiresApi(api = Build.VERSION_CODES.N)
+             @Override
+             public boolean shouldOverrideUrlLoading(
+                 @NonNull WebView windowWebView, @NonNull WebResourceRequest request) {
++//              Log.d("WebChromeClientHostApiImpl", "shouldOverrideUrlLoading request");
+               if (!webViewClient.shouldOverrideUrlLoading(view, request)) {
+                 view.loadUrl(request.getUrl().toString());
+               }
+               return true;
+             }
+ 
++            @SuppressLint("LongLogTag")
+             @Override
+             public boolean shouldOverrideUrlLoading(WebView windowWebView, String url) {
++//              Log.d("WebChromeClientHostApiImpl", "shouldOverrideUrlLoading url");
+               if (!webViewClient.shouldOverrideUrlLoading(view, url)) {
+                 view.loadUrl(url);
+               }
+@@ -107,6 +125,162 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
+       }
+     }
+ 
++    @Override
++    public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
++      if(flutterApi != null){
++        flutterApi.onConsoleMessage(this, consoleMessage,reply -> {});
++      }
++      return super.onConsoleMessage(consoleMessage);
++    }
++
++    /**
++     * Set the {@link WebViewClient} that calls to {@link WebChromeClient#onCreateWindow} are passed
++     * to.
++     *
++     * @param webViewClient the forwarding {@link WebViewClient}
++     */
++    public void setWebViewClient(WebViewClient webViewClient) {
++      this.webViewClient = webViewClient;
++    }
++
++    @Override
++    public void release() {
++      if (flutterApi != null) {
++        flutterApi.dispose(this, reply -> {});
++      }
++      flutterApi = null;
++    }
++
++    @Override
++    public void onShowCustomView(View view, CustomViewCallback callback) {
++      if (WebViewFlutterPlugin.mActivity != null) {
++        if (mCustomView != null)
++        {
++          onHideCustomView();
++          return;
++        }
++
++        mCustomView = view;
++        mOriginalSystemUiVisibility = WebViewFlutterPlugin.mActivity.getWindow().getDecorView().getSystemUiVisibility();
++        mOriginalOrientation = WebViewFlutterPlugin.mActivity.getRequestedOrientation();
++        mCustomViewCallback = callback;
++        ((FrameLayout)WebViewFlutterPlugin.mActivity.getWindow().getDecorView()).addView(mCustomView, new FrameLayout.LayoutParams(-1, -1));
++        WebViewFlutterPlugin.mActivity.getWindow().getDecorView().setSystemUiVisibility(0x00000400);
++      }
++    }
++
++    @Override
++    public void onHideCustomView() {
++      if (WebViewFlutterPlugin.mActivity != null) {
++        ((FrameLayout)WebViewFlutterPlugin.mActivity.getWindow().getDecorView()).removeView(mCustomView);
++        mCustomView = null;
++        WebViewFlutterPlugin.mActivity.getWindow().getDecorView().setSystemUiVisibility(mOriginalSystemUiVisibility);
++        WebViewFlutterPlugin.mActivity.setRequestedOrientation(mOriginalOrientation);
++        mCustomViewCallback.onCustomViewHidden();
++        mCustomViewCallback = null;
++      }
++    }
++
++    @Override
++    public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
++      if (WebViewFlutterPlugin.fileChooseManager != null) {
++        WebViewFlutterPlugin.fileChooseManager.openFileIntent(filePathCallback);
++        return true;
++      }
++      return false;
++    }
++  }
++
++  public static class WebChromeClientDefaultImpl extends WebChromeClient implements Releasable {
++    @Nullable private WebChromeClientFlutterApiImpl flutterApi;
++    private WebViewClient webViewClient;
++
++    /**
++     * Creates a {@link WebChromeClient} that passes arguments of callbacks methods to Dart.
++     *
++     * @param flutterApi handles sending messages to Dart
++     * @param webViewClient receives forwarded calls from {@link WebChromeClient#onCreateWindow}
++     */
++    public WebChromeClientDefaultImpl(
++            @NonNull WebChromeClientFlutterApiImpl flutterApi, WebViewClient webViewClient) {
++      this.flutterApi = flutterApi;
++      this.webViewClient = webViewClient;
++    }
++
++    @Override
++    public boolean onCreateWindow(
++            final WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
++      return onCreateWindow(view, resultMsg, new WebView(view.getContext()));
++    }
++
++    /**
++     * Verifies that a url opened by `Window.open` has a secure url.
++     *
++     * @param view the WebView from which the request for a new window originated.
++     * @param resultMsg the message to send when once a new WebView has been created. resultMsg.obj
++     *     is a {@link WebView.WebViewTransport} object. This should be used to transport the new
++     *     WebView, by calling WebView.WebViewTransport.setWebView(WebView)
++     * @param onCreateWindowWebView the temporary WebView used to verify the url is secure
++     * @return this method should return true if the host application will create a new window, in
++     *     which case resultMsg should be sent to its target. Otherwise, this method should return
++     *     false. Returning false from this method but also sending resultMsg will result in
++     *     undefined behavior
++     */
++    @VisibleForTesting
++    boolean onCreateWindow(
++            final WebView view, Message resultMsg, @Nullable WebView onCreateWindowWebView) {
++      final WebViewClient windowWebViewClient =
++              new WebViewClient() {
++                @SuppressLint("LongLogTag")
++                @RequiresApi(api = Build.VERSION_CODES.N)
++                @Override
++                public boolean shouldOverrideUrlLoading(
++                        @NonNull WebView windowWebView, @NonNull WebResourceRequest request) {
++//              Log.d("WebChromeClientHostApiImpl", "shouldOverrideUrlLoading request");
++                  if (!webViewClient.shouldOverrideUrlLoading(view, request)) {
++                    view.loadUrl(request.getUrl().toString());
++                  }
++                  return true;
++                }
++
++                @SuppressLint("LongLogTag")
++                @Override
++                public boolean shouldOverrideUrlLoading(WebView windowWebView, String url) {
++//              Log.d("WebChromeClientHostApiImpl", "shouldOverrideUrlLoading url");
++                  if (!webViewClient.shouldOverrideUrlLoading(view, url)) {
++                    view.loadUrl(url);
++                  }
++                  return true;
++                }
++              };
++
++      if (onCreateWindowWebView == null) {
++        onCreateWindowWebView = new WebView(view.getContext());
++      }
++      onCreateWindowWebView.setWebViewClient(windowWebViewClient);
++
++      final WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
++      transport.setWebView(onCreateWindowWebView);
++      resultMsg.sendToTarget();
++
++      return true;
++    }
++
++    @Override
++    public void onProgressChanged(WebView view, int progress) {
++      if (flutterApi != null) {
++        flutterApi.onProgressChanged(this, view, (long) progress, reply -> {});
++      }
++    }
++
++    @Override
++    public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
++      if(flutterApi != null){
++        flutterApi.onConsoleMessage(this,consoleMessage,reply -> {});
++      }
++      return super.onConsoleMessage(consoleMessage);
++    }
++
+     /**
+      * Set the {@link WebViewClient} that calls to {@link WebChromeClient#onCreateWindow} are passed
+      * to.
+@@ -139,6 +313,11 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
+         WebChromeClientFlutterApiImpl flutterApi, WebViewClient webViewClient) {
+       return new WebChromeClientImpl(flutterApi, webViewClient);
+     }
++
++    public WebChromeClientDefaultImpl createWebChromeDefaultClient(
++            WebChromeClientFlutterApiImpl flutterApi, WebViewClient webViewClient) {
++      return new WebChromeClientDefaultImpl(flutterApi, webViewClient);
++    }
+   }
+ 
+   /**
+@@ -158,11 +337,15 @@ public class WebChromeClientHostApiImpl implements WebChromeClientHostApi {
+   }
+ 
+   @Override
+-  public void create(Long instanceId, Long webViewClientInstanceId) {
+-    final WebViewClient webViewClient =
+-        (WebViewClient) instanceManager.getInstance(webViewClientInstanceId);
+-    final WebChromeClient webChromeClient =
+-        webChromeClientCreator.createWebChromeClient(flutterApi, webViewClient);
++  public void create(Long instanceId, Long webViewClientInstanceId, Boolean flag) {
++//    Log.d("WebChromeClientHostImpl", "create flag="+flag);
++    final WebViewClient webViewClient = (WebViewClient) instanceManager.getInstance(webViewClientInstanceId);
++    final WebChromeClient webChromeClient;
++    if (flag != null && flag) {
++      webChromeClient = webChromeClientCreator.createWebChromeDefaultClient(flutterApi, webViewClient);
++    } else {
++      webChromeClient = webChromeClientCreator.createWebChromeClient(flutterApi, webViewClient);
++    }
+     instanceManager.addInstance(webChromeClient, instanceId);
+   }
+ }
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebSettingsHostApiImpl.java b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebSettingsHostApiImpl.java
+index b168e20..7e62f07 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebSettingsHostApiImpl.java
++++ b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebSettingsHostApiImpl.java
+@@ -4,8 +4,13 @@
+ 
+ package io.flutter.plugins.webviewflutter;
+ 
++import android.os.Build;
++import android.util.Log;
+ import android.webkit.WebSettings;
+ import android.webkit.WebView;
++
++import androidx.annotation.NonNull;
++
+ import io.flutter.plugins.webviewflutter.GeneratedAndroidWebView.WebSettingsHostApi;
+ 
+ /**
+@@ -57,71 +62,124 @@ public class WebSettingsHostApiImpl implements WebSettingsHostApi {
+   public void setDomStorageEnabled(Long instanceId, Boolean flag) {
+     final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
+     webSettings.setDomStorageEnabled(flag);
++//    Log.d("WebSettingsHostApiImpl", "setDomStorageEnabled flag="+flag);
+   }
+ 
+   @Override
+   public void setJavaScriptCanOpenWindowsAutomatically(Long instanceId, Boolean flag) {
+     final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
+     webSettings.setJavaScriptCanOpenWindowsAutomatically(flag);
++//    Log.d("WebSettingsHostApiImpl", "setJavaScriptCanOpenWindowsAutomatically flag="+flag);
+   }
+ 
+   @Override
+   public void setSupportMultipleWindows(Long instanceId, Boolean support) {
+     final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
+     webSettings.setSupportMultipleWindows(support);
++//    Log.d("WebSettingsHostApiImpl", "setSupportMultipleWindows support="+support);
+   }
+ 
+   @Override
+   public void setJavaScriptEnabled(Long instanceId, Boolean flag) {
+     final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
+     webSettings.setJavaScriptEnabled(flag);
++//    Log.d("WebSettingsHostApiImpl", "setJavaScriptEnabled flag="+flag);
+   }
+ 
+   @Override
+   public void setUserAgentString(Long instanceId, String userAgentString) {
+     final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
+     webSettings.setUserAgentString(userAgentString);
++//    Log.d("WebSettingsHostApiImpl", "setUserAgentString userAgentString="+userAgentString);
+   }
+ 
+   @Override
+   public void setMediaPlaybackRequiresUserGesture(Long instanceId, Boolean require) {
+     final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
+     webSettings.setMediaPlaybackRequiresUserGesture(require);
++//    Log.d("WebSettingsHostApiImpl", "setMediaPlaybackRequiresUserGesture require="+require);
+   }
+ 
+   @Override
+   public void setSupportZoom(Long instanceId, Boolean support) {
+     final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
+     webSettings.setSupportZoom(support);
++//    Log.d("WebSettingsHostApiImpl", "setSupportZoom support="+support);
+   }
+ 
+   @Override
+   public void setLoadWithOverviewMode(Long instanceId, Boolean overview) {
+     final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
+     webSettings.setLoadWithOverviewMode(overview);
++//    Log.d("WebSettingsHostApiImpl", "setLoadWithOverviewMode overview="+overview);
+   }
+ 
+   @Override
+   public void setUseWideViewPort(Long instanceId, Boolean use) {
+     final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
+     webSettings.setUseWideViewPort(use);
++//    Log.d("WebSettingsHostApiImpl", "setUseWideViewPort use="+use);
+   }
+ 
+   @Override
+   public void setDisplayZoomControls(Long instanceId, Boolean enabled) {
+     final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
+     webSettings.setDisplayZoomControls(enabled);
++//    Log.d("WebSettingsHostApiImpl", "setDisplayZoomControls enabled="+enabled);
+   }
+ 
+   @Override
+   public void setBuiltInZoomControls(Long instanceId, Boolean enabled) {
+     final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
+     webSettings.setBuiltInZoomControls(enabled);
++//    Log.d("WebSettingsHostApiImpl", "setBuiltInZoomControls enabled="+enabled);
+   }
+ 
+   @Override
+   public void setAllowFileAccess(Long instanceId, Boolean enabled) {
+     final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
+     webSettings.setAllowFileAccess(enabled);
++//    Log.d("WebSettingsHostApiImpl", "setAllowFileAccess enabled="+enabled);
++  }
++
++  @Override
++  public void setAllowContentAccess(@NonNull Long instanceId, @NonNull Boolean enabled) {
++    final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
++    webSettings.setAllowContentAccess(enabled);
++//    Log.d("WebSettingsHostApiImpl", "setAllowContentAccess enabled="+enabled);
++  }
++
++  @Override
++  public void setAllowFileAccessFromFileURLs(@NonNull Long instanceId, @NonNull Boolean enabled) {
++    final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
++    webSettings.setAllowFileAccessFromFileURLs(enabled);
++//    Log.d("WebSettingsHostApiImpl", "setAllowFileAccessFromFileURLs enabled="+enabled);
++  }
++
++  @Override
++  public void setAllowUniversalAccessFromFileURLs(@NonNull Long instanceId, @NonNull Boolean enabled) {
++    final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
++    webSettings.setAllowUniversalAccessFromFileURLs(enabled);
++//    Log.d("WebSettingsHostApiImpl", "setAllowUniversalAccessFromFileURLs enabled="+enabled);
++  }
++
++  @Override
++  public void setGeolocationEnabled(@NonNull Long instanceId, @NonNull Boolean enabled) {
++    final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
++    webSettings.setGeolocationEnabled(enabled);
++//    Log.d("WebSettingsHostApiImpl", "setGeolocationEnabled enabled="+enabled);
+   }
++
++  @Override
++  public void setMixedContentModeAllow(@NonNull Long instanceId, @NonNull Boolean enabled) {
++    final WebSettings webSettings = (WebSettings) instanceManager.getInstance(instanceId);
++    if (enabled != null && enabled) {
++      // 支持微信公众号文章中视频播放
++      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
++        webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
++      }
++    }
++//    Log.d("WebSettingsHostApiImpl", "setMixedContentModeAllow enabled="+enabled);
++  }
++
+ }
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebViewClientFlutterApiImpl.java b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebViewClientFlutterApiImpl.java
+index b488568..942b6b3 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebViewClientFlutterApiImpl.java
++++ b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebViewClientFlutterApiImpl.java
+@@ -6,6 +6,7 @@ package io.flutter.plugins.webviewflutter;
+ 
+ import android.annotation.SuppressLint;
+ import android.os.Build;
++import android.util.Log;
+ import android.webkit.WebResourceError;
+ import android.webkit.WebResourceRequest;
+ import android.webkit.WebView;
+@@ -23,6 +24,8 @@ import java.util.HashMap;
+  */
+ public class WebViewClientFlutterApiImpl extends WebViewClientFlutterApi {
+   private final InstanceManager instanceManager;
++  private boolean mLastLoadFailed = false;
++  private static final String BRIDGE_NAME = "Bridge";
+ 
+   @RequiresApi(api = Build.VERSION_CODES.M)
+   static GeneratedAndroidWebView.WebResourceErrorData createWebResourceErrorData(
+@@ -82,6 +85,7 @@ public class WebViewClientFlutterApiImpl extends WebViewClientFlutterApi {
+         instanceManager.getInstanceId(webView),
+         urlArg,
+         callback);
++    mLastLoadFailed = false;
+   }
+ 
+   /** Passes arguments from {@link WebViewClient#onPageFinished} to Dart. */
+@@ -92,6 +96,10 @@ public class WebViewClientFlutterApiImpl extends WebViewClientFlutterApi {
+         instanceManager.getInstanceId(webView),
+         urlArg,
+         callback);
++    if (!mLastLoadFailed) {
++      mLastLoadFailed = true;
++      injectBridge(webView);
++    }
+   }
+ 
+   /**
+@@ -152,6 +160,23 @@ public class WebViewClientFlutterApiImpl extends WebViewClientFlutterApi {
+         callback);
+   }
+ 
++  public void onReceivedHttpError(
++          WebViewClient webViewClient,
++          WebView webView,
++          Long errorCodeArg,
++          String descriptionArg,
++          String failingUrlArg,
++          Reply<Void> callback) {
++    onReceivedHttpError(
++            instanceManager.getInstanceId(webViewClient),
++            instanceManager.getInstanceId(webView),
++            errorCodeArg,
++            descriptionArg,
++            failingUrlArg,
++            callback
++    );
++  }
++
+   /**
+    * Passes arguments from {@link WebViewClient#shouldOverrideUrlLoading(WebView,
+    * WebResourceRequest)} to Dart.
+@@ -195,4 +220,15 @@ public class WebViewClientFlutterApiImpl extends WebViewClientFlutterApi {
+       callback.reply(null);
+     }
+   }
++
++  @SuppressLint("LongLogTag")
++  private void injectBridge(WebView view) {
++    view.loadUrl("javascript:(" +
++            "window.originalPostMessage = window.postMessage," +
++            "window.postMessage = function(data) {" +
++            BRIDGE_NAME + ".postMessage(JSON.stringify(data));" +
++            "}" +
++            ")");
++//    Log.d("WebViewClientFlutterApiImpl", "injectBridge");
++  }
+ }
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebViewClientHostApiImpl.java b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebViewClientHostApiImpl.java
+index 6b659fa..9bbc2f3 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebViewClientHostApiImpl.java
++++ b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebViewClientHostApiImpl.java
+@@ -6,11 +6,20 @@ package io.flutter.plugins.webviewflutter;
+ 
+ import android.annotation.SuppressLint;
+ import android.annotation.TargetApi;
++import android.app.AlertDialog;
++import android.content.Context;
++import android.content.DialogInterface;
++import android.content.Intent;
+ import android.graphics.Bitmap;
++import android.net.Uri;
++import android.net.http.SslError;
+ import android.os.Build;
++import android.util.Log;
+ import android.view.KeyEvent;
++import android.webkit.SslErrorHandler;
+ import android.webkit.WebResourceError;
+ import android.webkit.WebResourceRequest;
++import android.webkit.WebResourceResponse;
+ import android.webkit.WebView;
+ import android.webkit.WebViewClient;
+ import androidx.annotation.NonNull;
+@@ -39,6 +48,7 @@ public class WebViewClientHostApiImpl implements GeneratedAndroidWebView.WebView
+   public static class WebViewClientImpl extends WebViewClient implements ReleasableWebViewClient {
+     @Nullable private WebViewClientFlutterApiImpl flutterApi;
+     private final boolean shouldOverrideUrlLoading;
++    private final boolean alertSslError;
+ 
+     /**
+      * Creates a {@link WebViewClient} that passes arguments of callbacks methods to Dart.
+@@ -47,8 +57,9 @@ public class WebViewClientHostApiImpl implements GeneratedAndroidWebView.WebView
+      * @param shouldOverrideUrlLoading whether loading a url should be overridden
+      */
+     public WebViewClientImpl(
+-        @NonNull WebViewClientFlutterApiImpl flutterApi, boolean shouldOverrideUrlLoading) {
++        @NonNull WebViewClientFlutterApiImpl flutterApi, boolean shouldOverrideUrlLoading, boolean alertSslError) {
+       this.shouldOverrideUrlLoading = shouldOverrideUrlLoading;
++      this.alertSslError = alertSslError;
+       this.flutterApi = flutterApi;
+     }
+ 
+@@ -82,8 +93,47 @@ public class WebViewClientHostApiImpl implements GeneratedAndroidWebView.WebView
+       }
+     }
+ 
++    @Override
++    public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
++      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
++        if (flutterApi != null) {
++          flutterApi.onReceivedHttpError(
++                  this,
++                  view,
++                  (long) errorResponse.getStatusCode(),
++                  errorResponse.getReasonPhrase(),
++                  request.getUrl().toString(),
++                  reply -> {}
++          );
++        }
++      }
++
++    }
++
++    @Override
++    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
++      if (alertSslError) {
++        showSslError(view.getContext(), handler);
++      } else {
++        super.onReceivedSslError(view, handler, error);
++      }
++    }
++
+     @Override
+     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
++      if (request != null) {
++        try {
++          String url = request.getUrl().toString();
++          if (url.startsWith("weixin://dl/business")) {
++            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
++            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
++            view.getContext().startActivity(intent);
++            return true;
++          }
++        } catch (Exception e) { //防止crash (如果手机上没有安装处理某个scheme开头的url的APP, 会导致crash
++          return true;//没有安装该app时，返回true，表示拦截自定义链接，但不跳转，避免弹出上面的错误页面
++        }
++      }
+       if (flutterApi != null) {
+         flutterApi.requestLoading(this, view, request, reply -> {});
+       }
+@@ -92,6 +142,18 @@ public class WebViewClientHostApiImpl implements GeneratedAndroidWebView.WebView
+ 
+     @Override
+     public boolean shouldOverrideUrlLoading(WebView view, String url) {
++      if (url != null) {
++        try {
++          if (url.startsWith("weixin://dl/business")) {
++            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
++            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
++            view.getContext().startActivity(intent);
++            return true;
++          }
++        } catch (Exception e) { //防止crash (如果手机上没有安装处理某个scheme开头的url的APP, 会导致crash
++          return true;//没有安装该app时，返回true，表示拦截自定义链接，但不跳转，避免弹出上面的错误页面
++        }
++      }
+       if (flutterApi != null) {
+         flutterApi.urlLoading(this, view, url, reply -> {});
+       }
+@@ -111,6 +173,25 @@ public class WebViewClientHostApiImpl implements GeneratedAndroidWebView.WebView
+       }
+       flutterApi = null;
+     }
++
++    private void showSslError(Context context, SslErrorHandler handler) {
++      AlertDialog.Builder builder = new AlertDialog.Builder(context);
++      builder.setTitle("SSL Certificate Error")
++              .setMessage("Do you want to continue anyway?")
++              .setPositiveButton("continue", new DialogInterface.OnClickListener (){
++                @Override
++                public void onClick(DialogInterface dialog, int which) {
++                  handler.proceed();
++                }
++              })
++              .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
++                @Override
++                public void onClick(DialogInterface dialog, int which) {
++                  handler.cancel();
++                }
++              });
++      builder.create().show();
++    }
+   }
+ 
+   /**
+@@ -169,6 +250,19 @@ public class WebViewClientHostApiImpl implements GeneratedAndroidWebView.WebView
+     @Override
+     public boolean shouldOverrideUrlLoading(
+         @NonNull WebView view, @NonNull WebResourceRequest request) {
++      if (request != null) {
++        try {
++          String url = request.getUrl().toString();
++          if (url.startsWith("weixin://dl/business")) {
++            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
++            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
++            view.getContext().startActivity(intent);
++            return true;
++          }
++        } catch (Exception e) { //防止crash (如果手机上没有安装处理某个scheme开头的url的APP, 会导致crash
++          return true;//没有安装该app时，返回true，表示拦截自定义链接，但不跳转，避免弹出上面的错误页面
++        }
++      }
+       if (flutterApi != null) {
+         flutterApi.requestLoading(this, view, request, reply -> {});
+       }
+@@ -177,6 +271,18 @@ public class WebViewClientHostApiImpl implements GeneratedAndroidWebView.WebView
+ 
+     @Override
+     public boolean shouldOverrideUrlLoading(WebView view, String url) {
++      if (url != null) {
++        try {
++          if (url.startsWith("weixin://dl/business")) {
++            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
++            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
++            view.getContext().startActivity(intent);
++            return true;
++          }
++        } catch (Exception e) { //防止crash (如果手机上没有安装处理某个scheme开头的url的APP, 会导致crash
++          return true;//没有安装该app时，返回true，表示拦截自定义链接，但不跳转，避免弹出上面的错误页面
++        }
++      }
+       if (flutterApi != null) {
+         flutterApi.urlLoading(this, view, url, reply -> {});
+       }
+@@ -207,7 +313,7 @@ public class WebViewClientHostApiImpl implements GeneratedAndroidWebView.WebView
+      * @return the created {@link WebViewClient}
+      */
+     public WebViewClient createWebViewClient(
+-        WebViewClientFlutterApiImpl flutterApi, boolean shouldOverrideUrlLoading) {
++        WebViewClientFlutterApiImpl flutterApi, boolean shouldOverrideUrlLoading, boolean alertSslError) {
+       // WebViewClientCompat is used to get
+       // shouldOverrideUrlLoading(WebView view, WebResourceRequest request)
+       // invoked by the webview on older Android devices, without it pages that use iframes will
+@@ -217,7 +323,7 @@ public class WebViewClientHostApiImpl implements GeneratedAndroidWebView.WebView
+       // to bug https://bugs.chromium.org/p/chromium/issues/detail?id=925887. Also, see
+       // https://github.com/flutter/flutter/issues/29446.
+       if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+-        return new WebViewClientImpl(flutterApi, shouldOverrideUrlLoading);
++        return new WebViewClientImpl(flutterApi, shouldOverrideUrlLoading, alertSslError);
+       } else {
+         return new WebViewClientCompatImpl(flutterApi, shouldOverrideUrlLoading);
+       }
+@@ -241,9 +347,9 @@ public class WebViewClientHostApiImpl implements GeneratedAndroidWebView.WebView
+   }
+ 
+   @Override
+-  public void create(Long instanceId, Boolean shouldOverrideUrlLoading) {
++  public void create(Long instanceId, Boolean shouldOverrideUrlLoading, Boolean alertSslError) {
+     final WebViewClient webViewClient =
+-        webViewClientCreator.createWebViewClient(flutterApi, shouldOverrideUrlLoading);
++        webViewClientCreator.createWebViewClient(flutterApi, shouldOverrideUrlLoading, alertSslError);
+     instanceManager.addInstance(webViewClient, instanceId);
+   }
+ }
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebViewFlutterPlugin.java b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebViewFlutterPlugin.java
+index 67202eb..771fa2f 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebViewFlutterPlugin.java
++++ b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebViewFlutterPlugin.java
+@@ -4,6 +4,7 @@
+ 
+ package io.flutter.plugins.webviewflutter;
+ 
++import android.app.Activity;
+ import android.content.Context;
+ import android.os.Handler;
+ import android.view.View;
+@@ -34,6 +35,8 @@ public class WebViewFlutterPlugin implements FlutterPlugin, ActivityAware {
+   private FlutterPluginBinding pluginBinding;
+   private WebViewHostApiImpl webViewHostApi;
+   private JavaScriptChannelHostApiImpl javaScriptChannelHostApi;
++  static Activity mActivity;
++  static FileChooseManager fileChooseManager;
+ 
+   /**
+    * Add an instance of this to {@link io.flutter.embedding.engine.plugins.PluginRegistry} to
+@@ -58,6 +61,10 @@ public class WebViewFlutterPlugin implements FlutterPlugin, ActivityAware {
+    */
+   @SuppressWarnings({"unused", "deprecation"})
+   public static void registerWith(io.flutter.plugin.common.PluginRegistry.Registrar registrar) {
++    if (fileChooseManager == null) {
++      fileChooseManager = new FileChooseManager();
++      registrar.addActivityResultListener(fileChooseManager);
++    }
+     new WebViewFlutterPlugin()
+         .setUp(
+             registrar.messenger(),
+@@ -104,12 +111,13 @@ public class WebViewFlutterPlugin implements FlutterPlugin, ActivityAware {
+             instanceManager,
+             new WebChromeClientHostApiImpl.WebChromeClientCreator(),
+             new WebChromeClientFlutterApiImpl(binaryMessenger, instanceManager)));
++    ///下载设置
+     DownloadListenerHostApi.setup(
+         binaryMessenger,
+         new DownloadListenerHostApiImpl(
+             instanceManager,
+             new DownloadListenerHostApiImpl.DownloadListenerCreator(),
+-            new DownloadListenerFlutterApiImpl(binaryMessenger, instanceManager)));
++            new DownloadListenerFlutterApiImpl(binaryMessenger, instanceManager, context)));
+     WebSettingsHostApi.setup(
+         binaryMessenger,
+         new WebSettingsHostApiImpl(
+@@ -139,6 +147,11 @@ public class WebViewFlutterPlugin implements FlutterPlugin, ActivityAware {
+ 
+   @Override
+   public void onAttachedToActivity(@NonNull ActivityPluginBinding activityPluginBinding) {
++    mActivity = activityPluginBinding.getActivity();
++    if (fileChooseManager == null) {
++      fileChooseManager = new FileChooseManager();
++      activityPluginBinding.addActivityResultListener(fileChooseManager);
++    }
+     updateContext(activityPluginBinding.getActivity());
+   }
+ 
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebViewHostApiImpl.java b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebViewHostApiImpl.java
+index afc3efe..527cd4d 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebViewHostApiImpl.java
++++ b/cli-webview_flutter/webview_flutter_android/android/src/main/java/io/flutter/plugins/webviewflutter/WebViewHostApiImpl.java
+@@ -6,8 +6,12 @@ package io.flutter.plugins.webviewflutter;
+ 
+ import android.annotation.SuppressLint;
+ import android.content.Context;
++import android.graphics.Outline;
+ import android.hardware.display.DisplayManager;
++import android.os.Build;
++import android.util.Log;
+ import android.view.View;
++import android.view.ViewOutlineProvider;
+ import android.webkit.DownloadListener;
+ import android.webkit.WebChromeClient;
+ import android.webkit.WebView;
+@@ -18,6 +22,7 @@ import io.flutter.plugin.platform.PlatformView;
+ import io.flutter.plugins.webviewflutter.DownloadListenerHostApiImpl.DownloadListenerImpl;
+ import io.flutter.plugins.webviewflutter.GeneratedAndroidWebView.WebViewHostApi;
+ import io.flutter.plugins.webviewflutter.WebChromeClientHostApiImpl.WebChromeClientImpl;
++import io.flutter.plugins.webviewflutter.WebChromeClientHostApiImpl.WebChromeClientDefaultImpl;
+ import io.flutter.plugins.webviewflutter.WebViewClientHostApiImpl.ReleasableWebViewClient;
+ import java.util.HashMap;
+ import java.util.Map;
+@@ -104,6 +109,8 @@ public class WebViewHostApiImpl implements WebViewHostApi {
+         new ReleasableValue<>();
+     private final ReleasableValue<WebChromeClientImpl> currentWebChromeClient =
+         new ReleasableValue<>();
++    private final ReleasableValue<WebChromeClientDefaultImpl> currentWebChromeClientDefault =
++            new ReleasableValue<>();
+     private final Map<String, ReleasableValue<JavaScriptChannel>> javaScriptInterfaces =
+         new HashMap<>();
+ 
+@@ -133,7 +140,12 @@ public class WebViewHostApiImpl implements WebViewHostApi {
+ 
+       final WebChromeClientImpl webChromeClient = currentWebChromeClient.get();
+       if (webChromeClient != null) {
+-        ((WebChromeClientImpl) webChromeClient).setWebViewClient(webViewClient);
++        webChromeClient.setWebViewClient(webViewClient);
++      } else {
++        final WebChromeClientDefaultImpl webChromeClientDefault = currentWebChromeClientDefault.get();
++        if (webChromeClientDefault != null) {
++          webChromeClientDefault.setWebViewClient(webViewClient);
++        }
+       }
+     }
+ 
+@@ -146,7 +158,11 @@ public class WebViewHostApiImpl implements WebViewHostApi {
+     @Override
+     public void setWebChromeClient(WebChromeClient client) {
+       super.setWebChromeClient(client);
+-      currentWebChromeClient.set((WebChromeClientImpl) client);
++      if (client instanceof WebChromeClientImpl) {
++        currentWebChromeClient.set((WebChromeClientImpl) client);
++      } else if (client instanceof WebChromeClientDefaultImpl) {
++        currentWebChromeClientDefault.set((WebChromeClientDefaultImpl) client);
++      }
+     }
+ 
+     @SuppressLint("JavascriptInterface")
+@@ -175,6 +191,7 @@ public class WebViewHostApiImpl implements WebViewHostApi {
+       currentWebViewClient.release();
+       currentDownloadListener.release();
+       currentWebChromeClient.release();
++      currentWebChromeClientDefault.release();
+       for (ReleasableValue<JavaScriptChannel> channel : javaScriptInterfaces.values()) {
+         channel.release();
+       }
+@@ -195,6 +212,8 @@ public class WebViewHostApiImpl implements WebViewHostApi {
+         new ReleasableValue<>();
+     private final ReleasableValue<WebChromeClientImpl> currentWebChromeClient =
+         new ReleasableValue<>();
++    private final ReleasableValue<WebChromeClientDefaultImpl> currentWebChromeClientDefault =
++            new ReleasableValue<>();
+     private final Map<String, ReleasableValue<JavaScriptChannel>> javaScriptInterfaces =
+         new HashMap<>();
+ 
+@@ -246,6 +265,11 @@ public class WebViewHostApiImpl implements WebViewHostApi {
+       final WebChromeClientImpl webChromeClient = currentWebChromeClient.get();
+       if (webChromeClient != null) {
+         webChromeClient.setWebViewClient(webViewClient);
++      } else {
++        final WebChromeClientDefaultImpl webChromeClientDefault = currentWebChromeClientDefault.get();
++        if (webChromeClientDefault != null) {
++          webChromeClientDefault.setWebViewClient(webViewClient);
++        }
+       }
+     }
+ 
+@@ -258,7 +282,11 @@ public class WebViewHostApiImpl implements WebViewHostApi {
+     @Override
+     public void setWebChromeClient(WebChromeClient client) {
+       super.setWebChromeClient(client);
+-      currentWebChromeClient.set((WebChromeClientImpl) client);
++      if (client instanceof WebChromeClientImpl) {
++        currentWebChromeClient.set((WebChromeClientImpl) client);
++      } else if (client instanceof WebChromeClientDefaultImpl) {
++        currentWebChromeClientDefault.set((WebChromeClientDefaultImpl) client);
++      }
+     }
+ 
+     @SuppressLint("JavascriptInterface")
+@@ -287,6 +315,7 @@ public class WebViewHostApiImpl implements WebViewHostApi {
+       currentWebViewClient.release();
+       currentDownloadListener.release();
+       currentWebChromeClient.release();
++      currentWebChromeClientDefault.release();
+       for (ReleasableValue<JavaScriptChannel> channel : javaScriptInterfaces.values()) {
+         channel.release();
+       }
+@@ -369,6 +398,7 @@ public class WebViewHostApiImpl implements WebViewHostApi {
+   public void loadUrl(Long instanceId, String url, Map<String, String> headers) {
+     final WebView webView = (WebView) instanceManager.getInstance(instanceId);
+     webView.loadUrl(url, headers);
++//    Log.d("WebViewHostApiImpl", "loadUrl headers="+(headers != null?headers.toString():""));
+   }
+ 
+   @Override
+@@ -500,4 +530,42 @@ public class WebViewHostApiImpl implements WebViewHostApi {
+     final WebView webView = (WebView) instanceManager.getInstance(instanceId);
+     webView.setBackgroundColor(color.intValue());
+   }
++
++  @Override
++  public void setCornerRadius(@NonNull Long instanceId, @NonNull Double cornerRadius) {
++    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
++      if (cornerRadius != null) {
++        float radius = cornerRadius.floatValue();
++
++        final WebView webView = (WebView) instanceManager.getInstance(instanceId);
++        webView.setOutlineProvider(new ViewOutlineProvider() {
++          @Override
++          public void getOutline(View view, Outline outline) {
++            outline.setRoundRect(
++                    0, 0, view.getRight(), view.getBottom(),
++                    radius * webView.getResources().getDisplayMetrics().density
++            );
++          }
++        });
++        webView.setClipToOutline(true);
++//        Log.d("WebViewHostApiImpl", "setCornerRadius cornerRadius="+(cornerRadius != null?cornerRadius.toString():""));
++      }
++    }
++  }
++
++  @Override
++  public void setVerticalScrollbarPosition(@NonNull Long instanceId, @NonNull Integer position) {
++    final WebView webView = (WebView) instanceManager.getInstance(instanceId);
++    int pos = View.SCROLLBAR_POSITION_RIGHT;
++    if (position != null) {
++      if (position == View.SCROLLBAR_POSITION_DEFAULT
++              || position == View.SCROLLBAR_POSITION_LEFT
++              || position == View.SCROLLBAR_POSITION_RIGHT) {
++        pos = position;
++      }
++    }
++    webView.setVerticalScrollbarPosition(pos);
++//    Log.d("WebViewHostApiImpl", "setVerticalScrollbarPosition pos="+pos);
++  }
++
+ }
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/android/src/test/java/io/flutter/plugins/webviewflutter/WebChromeClientTest.java b/cli-webview_flutter/webview_flutter_android/android/src/test/java/io/flutter/plugins/webviewflutter/WebChromeClientTest.java
+index 63cd310..805793c 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/android/src/test/java/io/flutter/plugins/webviewflutter/WebChromeClientTest.java
++++ b/cli-webview_flutter/webview_flutter_android/android/src/test/java/io/flutter/plugins/webviewflutter/WebChromeClientTest.java
+@@ -62,7 +62,7 @@ public class WebChromeClientTest {
+ 
+     hostApiImpl =
+         new WebChromeClientHostApiImpl(instanceManager, webChromeClientCreator, mockFlutterApi);
+-    hostApiImpl.create(2L, 1L);
++    hostApiImpl.create(2L, 1L, false);
+   }
+ 
+   @Test
+diff --git a/cli-webview_flutter/webview_flutter_android/example/android/.gitignore b/cli-webview_flutter/webview_flutter_android/example/android/.gitignore
+new file mode 100644
+index 0000000..6f56801
+--- /dev/null
++++ b/cli-webview_flutter/webview_flutter_android/example/android/.gitignore
+@@ -0,0 +1,13 @@
++gradle-wrapper.jar
++/.gradle
++/captures/
++/gradlew
++/gradlew.bat
++/local.properties
++GeneratedPluginRegistrant.java
++
++# Remember to never publicly share your keystore.
++# See https://flutter.dev/docs/deployment/android#reference-the-keystore-from-the-app
++key.properties
++**/*.keystore
++**/*.jks
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/example/lib/web_view.dart b/cli-webview_flutter/webview_flutter_android/example/lib/web_view.dart
+index 5674531..ff5bc21 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/example/lib/web_view.dart
++++ b/cli-webview_flutter/webview_flutter_android/example/lib/web_view.dart
+@@ -10,6 +10,7 @@ import 'package:flutter/gestures.dart';
+ import 'package:flutter/material.dart';
+ import 'package:webview_flutter_android/webview_android.dart';
+ import 'package:webview_flutter_android/webview_android_cookie_manager.dart';
++import 'package:webview_flutter_platform_interface/src/types/web_error.dart';
+ import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
+ 
+ import 'navigation_decision.dart';
+@@ -40,6 +41,8 @@ typedef PageLoadingCallback = void Function(int progress);
+ /// Signature for when a [WebView] has failed to load a resource.
+ typedef WebResourceErrorCallback = void Function(WebResourceError error);
+ 
++typedef WebConsoleMessageCallback = void Function(String tag,String message);
++
+ /// A web view widget for showing html content.
+ ///
+ /// The [WebView] widget wraps around the [AndroidWebView] or
+@@ -72,6 +75,7 @@ class WebView extends StatefulWidget {
+     this.onPageFinished,
+     this.onProgress,
+     this.onWebResourceError,
++    this.onWebConsoleMessage,
+     this.debuggingEnabled = false,
+     this.gestureNavigationEnabled = false,
+     this.userAgent,
+@@ -196,6 +200,8 @@ class WebView extends StatefulWidget {
+   /// This callback is only called for the main page.
+   final WebResourceErrorCallback? onWebResourceError;
+ 
++  final WebConsoleMessageCallback? onWebConsoleMessage;
++
+   /// Controls whether WebView debugging is enabled.
+   ///
+   /// Setting this to true enables [WebView debugging on Android](https://developers.google.com/web/tools/chrome-devtools/remote-debugging/).
+@@ -353,6 +359,18 @@ class _PlatformCallbacksHandler implements WebViewPlatformCallbacksHandler {
+       _webView.onWebResourceError!(error);
+     }
+   }
++
++  @override
++  void onReceivedHttpError(WebError httpError) {
++    // print('onReceivedHttpError 444');
++  }
++
++  @override
++  void onConsoleMessage(String tag, String message) {
++    if(_webView.onWebConsoleMessage != null){
++      _webView.onWebConsoleMessage!(tag,message);
++    }
++  }
+ }
+ 
+ /// Controls a [WebView].
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/example/pubspec.yaml b/cli-webview_flutter/webview_flutter_android/example/pubspec.yaml
+index 85990bd..1bd37f2 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/example/pubspec.yaml
++++ b/cli-webview_flutter/webview_flutter_android/example/pubspec.yaml
+@@ -9,7 +9,7 @@ dependencies:
+   flutter:
+     sdk: flutter
+   
+-  path_provider: ^2.0.6
++  path_provider: 2.0.6
+   
+   webview_flutter_android:
+     # When depending on this package from a real application you should use:
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/lib/src/android_webview.dart b/cli-webview_flutter/webview_flutter_android/lib/src/android_webview.dart
+index f858fb3..ea5e954 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/lib/src/android_webview.dart
++++ b/cli-webview_flutter/webview_flutter_android/lib/src/android_webview.dart
+@@ -332,7 +332,7 @@ class WebView {
+   /// This is an implementation of [WebChromeClient] for use in handling
+   /// JavaScript dialogs, favicons, titles, and the progress. This will replace
+   /// the current handler.
+-  Future<void> setWebChromeClient(WebChromeClient? client) async {
++  Future<void> setWebChromeClient(WebChromeClient? client, bool? enable) async {
+     // WebView requires a WebViewClient because of a bug fix that makes
+     // calls to WebViewClient.requestLoading/WebViewClient.urlLoading when a new
+     // window is opened. This is to make sure a url opened by `Window.open` has
+@@ -343,7 +343,7 @@ class WebView {
+     );
+     await Future.wait(<Future<void>>[
+       if (client != null)
+-        WebChromeClient.api.createFromInstance(client, _currentWebViewClient!),
++        WebChromeClient.api.createFromInstance(client, _currentWebViewClient!, enable!),
+       api.setWebChromeClientFromInstance(this, client),
+     ]);
+   }
+@@ -353,6 +353,16 @@ class WebView {
+     return api.setBackgroundColorFromInstance(this, color.value);
+   }
+ 
++  ///
++  Future<void> setCornerRadius(double radius) {
++    return api.setCornerRadiusFromInstance(this, radius);
++  }
++
++  ///
++  Future<void> setVerticalScrollbarPosition(int position) {
++    return api.setVerticalScrollbarPositionFromInstance(this, position);
++  }
++
+   /// Releases all resources used by the [WebView].
+   ///
+   /// Any methods called after [release] will throw an exception.
+@@ -544,6 +554,32 @@ class WebSettings {
+   Future<void> setAllowFileAccess(bool enabled) {
+     return api.setAllowFileAccessFromInstance(this, enabled);
+   }
++
++  ///
++  Future<void> setAllowContentAccess(bool enabled) {
++    return api.setAllowContentAccessFromInstance(this, enabled);
++  }
++
++  ///
++  Future<void> setAllowFileAccessFromFileURLs(bool enabled) {
++    return api.setAllowFileAccessFromFileURLsFromInstance(this, enabled);
++  }
++
++  ///
++  Future<void> setAllowUniversalAccessFromFileURLs(bool enabled) {
++    return api.setAllowUniversalAccessFromFileURLsFromInstance(this, enabled);
++  }
++
++  ///
++  Future<void> setGeolocationEnabled(bool enabled) {
++    return api.setGeolocationEnabledFromInstance(this, enabled);
++  }
++
++  ///
++  Future<void> setMixedContentModeAllow(bool enabled) {
++    return api.setMixedContentModeAllowFromInstance(this, enabled);
++  }
++
+ }
+ 
+ /// Exposes a channel to receive calls from javaScript.
+@@ -569,7 +605,7 @@ abstract class JavaScriptChannel {
+ /// Receive various notifications and requests for [WebView].
+ abstract class WebViewClient {
+   /// Constructs a [WebViewClient].
+-  WebViewClient({this.shouldOverrideUrlLoading = true}) {
++  WebViewClient({this.shouldOverrideUrlLoading = true, this.alertSslError = false}) {
+     AndroidWebViewFlutterApis.instance.ensureSetUp();
+   }
+ 
+@@ -671,6 +707,8 @@ abstract class WebViewClient {
+   /// Defaults to true.
+   final bool shouldOverrideUrlLoading;
+ 
++  final bool alertSslError;
++
+   /// Notify the host application that a page has started loading.
+   ///
+   /// This method is called once for each main frame load so a page with iframes
+@@ -714,6 +752,13 @@ abstract class WebViewClient {
+     String failingUrl,
+   ) {}
+ 
++  void onReceivedHttpError(
++      WebView webView,
++      int errorCode,
++      String description,
++      String failingUrl,
++      ) {}
++
+   // TODO(bparrishMines): Update documentation once synchronous url handling is supported.
+   /// When a URL is about to be loaded in the current [WebView].
+   ///
+@@ -769,6 +814,8 @@ abstract class WebChromeClient {
+ 
+   /// Notify the host application that a file should be downloaded.
+   void onProgressChanged(WebView webView, int progress) {}
++
++  void onConsoleMessage(String tag,String message){}
+ }
+ 
+ /// Encompasses parameters to the [WebViewClient.requestLoading] method.
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/lib/src/android_webview.pigeon.dart b/cli-webview_flutter/webview_flutter_android/lib/src/android_webview.pigeon.dart
+index 4491e16..d5eaf07 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/lib/src/android_webview.pigeon.dart
++++ b/cli-webview_flutter/webview_flutter_android/lib/src/android_webview.pigeon.dart
+@@ -840,6 +840,54 @@ class WebViewHostApi {
+       return;
+     }
+   }
++
++  Future<void> setCornerRadius(int arg_instanceId, double arg_radius) async {
++    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
++        'dev.flutter.pigeon.WebViewHostApi.setCornerRadius', codec,
++        binaryMessenger: _binaryMessenger);
++    final Map<Object?, Object?>? replyMap = await channel
++        .send(<Object?>[arg_instanceId, arg_radius]) as Map<Object?, Object?>?;
++    if (replyMap == null) {
++      throw PlatformException(
++        code: 'channel-error',
++        message: 'Unable to establish connection on channel.',
++      );
++    } else if (replyMap['error'] != null) {
++      final Map<Object?, Object?> error =
++      (replyMap['error'] as Map<Object?, Object?>?)!;
++      throw PlatformException(
++        code: (error['code'] as String?)!,
++        message: error['message'] as String?,
++        details: error['details'],
++      );
++    } else {
++      return;
++    }
++  }
++
++  Future<void> setVerticalScrollbarPosition(int arg_instanceId, int arg_position) async {
++    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
++        'dev.flutter.pigeon.WebViewHostApi.setVerticalScrollbarPosition', codec,
++        binaryMessenger: _binaryMessenger);
++    final Map<Object?, Object?>? replyMap = await channel
++        .send(<Object?>[arg_instanceId, arg_position]) as Map<Object?, Object?>?;
++    if (replyMap == null) {
++      throw PlatformException(
++        code: 'channel-error',
++        message: 'Unable to establish connection on channel.',
++      );
++    } else if (replyMap['error'] != null) {
++      final Map<Object?, Object?> error =
++      (replyMap['error'] as Map<Object?, Object?>?)!;
++      throw PlatformException(
++        code: (error['code'] as String?)!,
++        message: error['message'] as String?,
++        details: error['details'],
++      );
++    } else {
++      return;
++    }
++  }
+ }
+ 
+ class _WebSettingsHostApiCodec extends StandardMessageCodec {
+@@ -1205,6 +1253,126 @@ class WebSettingsHostApi {
+       return;
+     }
+   }
++
++  Future<void> setAllowContentAccess(int arg_instanceId, bool arg_enabled) async {
++    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
++        'dev.flutter.pigeon.WebSettingsHostApi.setAllowContentAccess', codec,
++        binaryMessenger: _binaryMessenger);
++    final Map<Object?, Object?>? replyMap = await channel
++        .send(<Object?>[arg_instanceId, arg_enabled]) as Map<Object?, Object?>?;
++    if (replyMap == null) {
++      throw PlatformException(
++        code: 'channel-error',
++        message: 'Unable to establish connection on channel.',
++      );
++    } else if (replyMap['error'] != null) {
++      final Map<Object?, Object?> error =
++      (replyMap['error'] as Map<Object?, Object?>?)!;
++      throw PlatformException(
++        code: (error['code'] as String?)!,
++        message: error['message'] as String?,
++        details: error['details'],
++      );
++    } else {
++      return;
++    }
++  }
++
++  Future<void> setAllowFileAccessFromFileURLs(int arg_instanceId, bool arg_enabled) async {
++    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
++        'dev.flutter.pigeon.WebSettingsHostApi.setAllowFileAccessFromFileURLs', codec,
++        binaryMessenger: _binaryMessenger);
++    final Map<Object?, Object?>? replyMap = await channel
++        .send(<Object?>[arg_instanceId, arg_enabled]) as Map<Object?, Object?>?;
++    if (replyMap == null) {
++      throw PlatformException(
++        code: 'channel-error',
++        message: 'Unable to establish connection on channel.',
++      );
++    } else if (replyMap['error'] != null) {
++      final Map<Object?, Object?> error =
++      (replyMap['error'] as Map<Object?, Object?>?)!;
++      throw PlatformException(
++        code: (error['code'] as String?)!,
++        message: error['message'] as String?,
++        details: error['details'],
++      );
++    } else {
++      return;
++    }
++  }
++
++  Future<void> setAllowUniversalAccessFromFileURLs(int arg_instanceId, bool arg_enabled) async {
++    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
++        'dev.flutter.pigeon.WebSettingsHostApi.setAllowUniversalAccessFromFileURLs', codec,
++        binaryMessenger: _binaryMessenger);
++    final Map<Object?, Object?>? replyMap = await channel
++        .send(<Object?>[arg_instanceId, arg_enabled]) as Map<Object?, Object?>?;
++    if (replyMap == null) {
++      throw PlatformException(
++        code: 'channel-error',
++        message: 'Unable to establish connection on channel.',
++      );
++    } else if (replyMap['error'] != null) {
++      final Map<Object?, Object?> error =
++      (replyMap['error'] as Map<Object?, Object?>?)!;
++      throw PlatformException(
++        code: (error['code'] as String?)!,
++        message: error['message'] as String?,
++        details: error['details'],
++      );
++    } else {
++      return;
++    }
++  }
++
++  Future<void> setGeolocationEnabled(int arg_instanceId, bool arg_enabled) async {
++    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
++        'dev.flutter.pigeon.WebSettingsHostApi.setGeolocationEnabled', codec,
++        binaryMessenger: _binaryMessenger);
++    final Map<Object?, Object?>? replyMap = await channel
++        .send(<Object?>[arg_instanceId, arg_enabled]) as Map<Object?, Object?>?;
++    if (replyMap == null) {
++      throw PlatformException(
++        code: 'channel-error',
++        message: 'Unable to establish connection on channel.',
++      );
++    } else if (replyMap['error'] != null) {
++      final Map<Object?, Object?> error =
++      (replyMap['error'] as Map<Object?, Object?>?)!;
++      throw PlatformException(
++        code: (error['code'] as String?)!,
++        message: error['message'] as String?,
++        details: error['details'],
++      );
++    } else {
++      return;
++    }
++  }
++
++  Future<void> setMixedContentModeAllow(int arg_instanceId, bool arg_enabled) async {
++    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
++        'dev.flutter.pigeon.WebSettingsHostApi.setMixedContentModeAllow', codec,
++        binaryMessenger: _binaryMessenger);
++    final Map<Object?, Object?>? replyMap = await channel
++        .send(<Object?>[arg_instanceId, arg_enabled]) as Map<Object?, Object?>?;
++    if (replyMap == null) {
++      throw PlatformException(
++        code: 'channel-error',
++        message: 'Unable to establish connection on channel.',
++      );
++    } else if (replyMap['error'] != null) {
++      final Map<Object?, Object?> error =
++      (replyMap['error'] as Map<Object?, Object?>?)!;
++      throw PlatformException(
++        code: (error['code'] as String?)!,
++        message: error['message'] as String?,
++        details: error['details'],
++      );
++    } else {
++      return;
++    }
++  }
+ }
+ 
+ class _JavaScriptChannelHostApiCodec extends StandardMessageCodec {
+@@ -1320,12 +1488,12 @@ class WebViewClientHostApi {
+   static const MessageCodec<Object?> codec = _WebViewClientHostApiCodec();
+ 
+   Future<void> create(
+-      int arg_instanceId, bool arg_shouldOverrideUrlLoading) async {
++      int arg_instanceId, bool arg_shouldOverrideUrlLoading, bool arg_alertSslError) async {
+     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+         'dev.flutter.pigeon.WebViewClientHostApi.create', codec,
+         binaryMessenger: _binaryMessenger);
+     final Map<Object?, Object?>? replyMap = await channel
+-            .send(<Object?>[arg_instanceId, arg_shouldOverrideUrlLoading])
++            .send(<Object?>[arg_instanceId, arg_shouldOverrideUrlLoading, arg_alertSslError])
+         as Map<Object?, Object?>?;
+     if (replyMap == null) {
+       throw PlatformException(
+@@ -1386,9 +1554,12 @@ abstract class WebViewClientFlutterApi {
+       WebResourceRequestData request, WebResourceErrorData error);
+   void onReceivedError(int instanceId, int webViewInstanceId, int errorCode,
+       String description, String failingUrl);
++  void onReceivedHttpError(int instanceId, int webViewInstanceId, int errorCode,
++      String description, String failingUrl);
+   void requestLoading(
+       int instanceId, int webViewInstanceId, WebResourceRequestData request);
+   void urlLoading(int instanceId, int webViewInstanceId, String url);
++  void onConsoleMessage(int instanceId,String tag,String message);
+   static void setup(WebViewClientFlutterApi? api,
+       {BinaryMessenger? binaryMessenger}) {
+     {
+@@ -1524,6 +1695,38 @@ abstract class WebViewClientFlutterApi {
+         });
+       }
+     }
++    {
++      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
++          'dev.flutter.pigeon.WebViewClientFlutterApi.onReceivedHttpError', codec,
++          binaryMessenger: binaryMessenger);
++      if (api == null) {
++        channel.setMessageHandler(null);
++      } else {
++        channel.setMessageHandler((Object? message) async {
++          assert(message != null,
++          'Argument for dev.flutter.pigeon.WebViewClientFlutterApi.onReceivedHttpError was null.');
++          final List<Object?> args = (message as List<Object?>?)!;
++          final int? arg_instanceId = (args[0] as int?);
++          assert(arg_instanceId != null,
++          'Argument for dev.flutter.pigeon.WebViewClientFlutterApi.onReceivedHttpError was null, expected non-null int.');
++          final int? arg_webViewInstanceId = (args[1] as int?);
++          assert(arg_webViewInstanceId != null,
++          'Argument for dev.flutter.pigeon.WebViewClientFlutterApi.onReceivedHttpError was null, expected non-null int.');
++          final int? arg_errorCode = (args[2] as int?);
++          assert(arg_errorCode != null,
++          'Argument for dev.flutter.pigeon.WebViewClientFlutterApi.onReceivedHttpError was null, expected non-null int.');
++          final String? arg_description = (args[3] as String?);
++          assert(arg_description != null,
++          'Argument for dev.flutter.pigeon.WebViewClientFlutterApi.onReceivedHttpError was null, expected non-null String.');
++          final String? arg_failingUrl = (args[4] as String?);
++          assert(arg_failingUrl != null,
++          'Argument for dev.flutter.pigeon.WebViewClientFlutterApi.onReceivedHttpError was null, expected non-null String.');
++          api.onReceivedHttpError(arg_instanceId!, arg_webViewInstanceId!,
++              arg_errorCode!, arg_description!, arg_failingUrl!);
++          return;
++        });
++      }
++    }
+     {
+       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+           'dev.flutter.pigeon.WebViewClientFlutterApi.requestLoading', codec,
+@@ -1576,6 +1779,33 @@ abstract class WebViewClientFlutterApi {
+         });
+       }
+     }
++    {
++      final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
++          'dev.flutter.pigeon.WebChromeClientFlutterApi.onConsoleMessage',
++          codec,
++          binaryMessenger: binaryMessenger);
++      if (api == null) {
++        channel.setMessageHandler(null);
++      } else {
++        channel.setMessageHandler((Object? message) async {
++          assert(message != null,
++          'Argument for dev.flutter.pigeon.WebChromeClientFlutterApi.onConsoleMessage was null.');
++          final List<Object?> args = (message as List<Object?>?)!;
++          final int? arg_instanceId = (args[0] as int?);
++          assert(arg_instanceId != null,
++          'Argument for dev.flutter.pigeon.WebChromeClientFlutterApi.onConsoleMessage was null, expected non-null int.');
++          final String? tag = (args[1] as String?);
++          assert(tag != null,
++          'Argument for dev.flutter.pigeon.WebChromeClientFlutterApi.onConsoleMessage was null, expected non-null int.');
++          final String? msg = (args[2] as String?);
++          assert(msg != null,
++          'Argument for dev.flutter.pigeon.WebChromeClientFlutterApi.onConsoleMessage was null, expected non-null int.');
++          api.onConsoleMessage(
++              arg_instanceId!, tag!, msg!);
++          return;
++        });
++      }
++    }
+   }
+ }
+ 
+@@ -1705,12 +1935,12 @@ class WebChromeClientHostApi {
+   static const MessageCodec<Object?> codec = _WebChromeClientHostApiCodec();
+ 
+   Future<void> create(
+-      int arg_instanceId, int arg_webViewClientInstanceId) async {
++      int arg_instanceId, int arg_webViewClientInstanceId, bool enable) async {
+     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+         'dev.flutter.pigeon.WebChromeClientHostApi.create', codec,
+         binaryMessenger: _binaryMessenger);
+     final Map<Object?, Object?>? replyMap = await channel
+-            .send(<Object?>[arg_instanceId, arg_webViewClientInstanceId])
++            .send(<Object?>[arg_instanceId, arg_webViewClientInstanceId, enable])
+         as Map<Object?, Object?>?;
+     if (replyMap == null) {
+       throw PlatformException(
+@@ -1815,6 +2045,8 @@ abstract class WebChromeClientFlutterApi {
+ 
+   void dispose(int instanceId);
+   void onProgressChanged(int instanceId, int webViewInstanceId, int progress);
++  void onConsoleMessage(int instanceId,String tag,String message);
++
+   static void setup(WebChromeClientFlutterApi? api,
+       {BinaryMessenger? binaryMessenger}) {
+     {
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/lib/src/android_webview_api_impls.dart b/cli-webview_flutter/webview_flutter_android/lib/src/android_webview_api_impls.dart
+index b40a051..024a28f 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/lib/src/android_webview_api_impls.dart
++++ b/cli-webview_flutter/webview_flutter_android/lib/src/android_webview_api_impls.dart
+@@ -295,6 +295,16 @@ class WebViewHostApiImpl extends WebViewHostApi {
+   Future<void> setBackgroundColorFromInstance(WebView instance, int color) {
+     return setBackgroundColor(instanceManager.getInstanceId(instance)!, color);
+   }
++
++  //
++  Future<void> setCornerRadiusFromInstance(WebView instance, double radius) {
++    return setCornerRadius(instanceManager.getInstanceId(instance)!, radius);
++  }
++
++  //
++  Future<void> setVerticalScrollbarPositionFromInstance(WebView instance, int position) {
++    return setVerticalScrollbarPosition(instanceManager.getInstanceId(instance)!, position);
++  }
+ }
+ 
+ /// Host api implementation for [WebSettings].
+@@ -449,6 +459,61 @@ class WebSettingsHostApiImpl extends WebSettingsHostApi {
+       enabled,
+     );
+   }
++
++  ///
++  Future<void> setAllowContentAccessFromInstance(
++      WebSettings instance,
++      bool enabled,
++      ) {
++    return setAllowContentAccess(
++      instanceManager.getInstanceId(instance)!,
++      enabled,
++    );
++  }
++
++  ///
++  Future<void> setAllowFileAccessFromFileURLsFromInstance(
++      WebSettings instance,
++      bool enabled,
++      ) {
++    return setAllowFileAccessFromFileURLs(
++      instanceManager.getInstanceId(instance)!,
++      enabled,
++    );
++  }
++
++  ///
++  Future<void> setAllowUniversalAccessFromFileURLsFromInstance(
++      WebSettings instance,
++      bool enabled,
++      ) {
++    return setAllowUniversalAccessFromFileURLs(
++      instanceManager.getInstanceId(instance)!,
++      enabled,
++    );
++  }
++
++  ///
++  Future<void> setGeolocationEnabledFromInstance(
++      WebSettings instance,
++      bool enabled,
++      ) {
++    return setGeolocationEnabled(
++      instanceManager.getInstanceId(instance)!,
++      enabled,
++    );
++  }
++
++  ///
++  Future<void> setMixedContentModeAllowFromInstance(
++      WebSettings instance,
++      bool enabled,
++      ) {
++    return setMixedContentModeAllow(
++      instanceManager.getInstanceId(instance)!,
++      enabled,
++    );
++  }
+ }
+ 
+ /// Host api implementation for [JavaScriptChannel].
+@@ -517,7 +582,7 @@ class WebViewClientHostApiImpl extends WebViewClientHostApi {
+   Future<void> createFromInstance(WebViewClient instance) async {
+     final int? instanceId = instanceManager.tryAddInstance(instance);
+     if (instanceId != null) {
+-      return create(instanceId, instance.shouldOverrideUrlLoading);
++      return create(instanceId, instance.shouldOverrideUrlLoading, instance.alertSslError);
+     }
+   }
+ }
+@@ -600,6 +665,29 @@ class WebViewClientFlutterApiImpl extends WebViewClientFlutterApi {
+     );
+   }
+ 
++  @override
++  void onReceivedHttpError(int instanceId, int webViewInstanceId, int errorCode, String description, String failingUrl) {
++    // print("onReceivedHttpError 111");
++    final WebViewClient? instance =
++    instanceManager.getInstance(instanceId) as WebViewClient?;
++    final WebView? webViewInstance =
++    instanceManager.getInstance(webViewInstanceId) as WebView?;
++    assert(
++    instance != null,
++    'InstanceManager does not contain an WebViewClient with instanceId: $instanceId',
++    );
++    assert(
++    webViewInstance != null,
++    'InstanceManager does not contain an WebView with instanceId: $webViewInstanceId',
++    );
++    instance!.onReceivedHttpError(
++      webViewInstance!,
++      errorCode,
++      description,
++      failingUrl,
++    );
++  }
++
+   @override
+   void onReceivedRequestError(
+     int instanceId,
+@@ -667,6 +755,13 @@ class WebViewClientFlutterApiImpl extends WebViewClientFlutterApi {
+     );
+     instance!.urlLoading(webViewInstance!, url);
+   }
++
++  @override
++  void onConsoleMessage(int instanceId, String tag, String message) {
++    final WebChromeClient? instance = instanceManager
++        .getInstance(instanceId) as WebChromeClient?;
++    instance?.onConsoleMessage(tag, message);
++  }
+ }
+ 
+ /// Host api implementation for [DownloadListener].
+@@ -748,10 +843,11 @@ class WebChromeClientHostApiImpl extends WebChromeClientHostApi {
+   Future<void> createFromInstance(
+     WebChromeClient instance,
+     WebViewClient webViewClient,
++    bool? enable
+   ) async {
+     final int? instanceId = instanceManager.tryAddInstance(instance);
+     if (instanceId != null) {
+-      return create(instanceId, instanceManager.getInstanceId(webViewClient)!);
++      return create(instanceId, instanceManager.getInstanceId(webViewClient)!, enable!);
+     }
+   }
+ }
+@@ -787,6 +883,13 @@ class WebChromeClientFlutterApiImpl extends WebChromeClientFlutterApi {
+     );
+     instance!.onProgressChanged(webViewInstance!, progress);
+   }
++
++  @override
++  void onConsoleMessage(int instanceId, String tag, String message) {
++    final WebChromeClient? instance = instanceManager
++        .getInstance(instanceId) as WebChromeClient?;
++    instance?.onConsoleMessage(tag, message);
++  }
+ }
+ 
+ /// Host api implementation for [WebStorage].
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/lib/webview_android_widget.dart b/cli-webview_flutter/webview_flutter_android/lib/webview_android_widget.dart
+index f1b130c..a307c6a 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/lib/webview_android_widget.dart
++++ b/cli-webview_flutter/webview_flutter_android/lib/webview_android_widget.dart
+@@ -123,14 +123,21 @@ class WebViewAndroidPlatformController extends WebViewPlatformController {
+     webView.settings.setUseWideViewPort(true);
+     webView.settings.setDisplayZoomControls(false);
+     webView.settings.setBuiltInZoomControls(true);
++    webView.settings.setAllowContentAccess(true);
++    webView.settings.setAllowFileAccessFromFileURLs(true);
++    webView.settings.setAllowFileAccess(true);
++    webView.settings.setAllowUniversalAccessFromFileURLs(true);
++    webView.settings.setGeolocationEnabled(true);
++    webView.settings.setMixedContentModeAllow(true);
+ 
+     _setCreationParams(creationParams);
+     webView.setDownloadListener(downloadListener);
+-    webView.setWebChromeClient(webChromeClient);
++
++    webView.setWebChromeClient(webChromeClient, creationParams.useAndroidDefaultChromeClient);
+ 
+     final String? initialUrl = creationParams.initialUrl;
+     if (initialUrl != null) {
+-      loadUrl(initialUrl, <String, String>{});
++      loadUrl(initialUrl, creationParams.headers??<String, String>{});
+     }
+   }
+ 
+@@ -277,12 +284,13 @@ class WebViewAndroidPlatformController extends WebViewPlatformController {
+       if (setting.hasProgressTracking != null)
+         _setHasProgressTracking(setting.hasProgressTracking!),
+       if (setting.hasNavigationDelegate != null)
+-        _setHasNavigationDelegate(setting.hasNavigationDelegate!),
++        _setHasNavigationDelegate(setting.hasNavigationDelegate!, setting.alertSslError),
+       if (setting.javascriptMode != null)
+         _setJavaScriptMode(setting.javascriptMode!),
+       if (setting.debuggingEnabled != null)
+         _setDebuggingEnabled(setting.debuggingEnabled!),
+       if (setting.zoomEnabled != null) _setZoomEnabled(setting.zoomEnabled!),
++      if (setting.hasConsoleMessageTracking != null) _setConsoleMessage(),
+     ]);
+   }
+ 
+@@ -378,6 +386,13 @@ class WebViewAndroidPlatformController extends WebViewPlatformController {
+       webView.setBackgroundColor(backgroundColor);
+     }
+ 
++    final double? cornerRadius = creationParams.cornerRadius;
++    if (cornerRadius != null && cornerRadius > 0) {
++      webView.setCornerRadius(cornerRadius);
++    }
++
++    webView.setVerticalScrollbarPosition(2); //进度条右边
++
+     addJavascriptChannels(creationParams.javascriptChannelNames);
+ 
+     // TODO(BeMacized): Remove once platform implementations
+@@ -397,7 +412,11 @@ class WebViewAndroidPlatformController extends WebViewPlatformController {
+     }
+   }
+ 
+-  Future<void> _setHasNavigationDelegate(bool hasNavigationDelegate) {
++  Future<void> _setConsoleMessage() async {
++    webChromeClient._onConsoleMessage = callbacksHandler.onConsoleMessage;
++  }
++
++  Future<void> _setHasNavigationDelegate(bool hasNavigationDelegate, bool alertSslError) {
+     if (hasNavigationDelegate) {
+       downloadListener._onNavigationRequest =
+           callbacksHandler.onNavigationRequest;
+@@ -407,6 +426,8 @@ class WebViewAndroidPlatformController extends WebViewPlatformController {
+         onWebResourceErrorCallback: callbacksHandler.onWebResourceError,
+         loadUrl: loadUrl,
+         onNavigationRequestCallback: callbacksHandler.onNavigationRequest,
++        onReceivedHttpErrorCallback: callbacksHandler.onReceivedHttpError,
++        alertSslError: alertSslError
+       );
+     } else {
+       downloadListener._onNavigationRequest = null;
+@@ -414,6 +435,8 @@ class WebViewAndroidPlatformController extends WebViewPlatformController {
+         onPageStartedCallback: callbacksHandler.onPageStarted,
+         onPageFinishedCallback: callbacksHandler.onPageFinished,
+         onWebResourceErrorCallback: callbacksHandler.onWebResourceError,
++        onReceivedHttpErrorCallback: callbacksHandler.onReceivedHttpError,
++        alertSslError: alertSslError,
+       );
+     }
+     return webView.setWebViewClient(_webViewClient);
+@@ -521,9 +544,11 @@ class WebViewAndroidWebViewClient extends android_webview.WebViewClient {
+     required this.onPageStartedCallback,
+     required this.onPageFinishedCallback,
+     required this.onWebResourceErrorCallback,
++    required this.onReceivedHttpErrorCallback,
++    bool alertSslError = false,
+   })  : loadUrl = null,
+         onNavigationRequestCallback = null,
+-        super(shouldOverrideUrlLoading: false);
++        super(shouldOverrideUrlLoading: false, alertSslError: alertSslError);
+ 
+   /// Creates a [WebViewAndroidWebViewClient] that handles navigation requests.
+   WebViewAndroidWebViewClient.handlesNavigation({
+@@ -532,7 +557,9 @@ class WebViewAndroidWebViewClient extends android_webview.WebViewClient {
+     required this.onWebResourceErrorCallback,
+     required this.onNavigationRequestCallback,
+     required this.loadUrl,
+-  }) : super(shouldOverrideUrlLoading: true);
++    required this.onReceivedHttpErrorCallback,
++    bool alertSslError = false,
++  }) : super(shouldOverrideUrlLoading: true, alertSslError: alertSslError);
+ 
+   /// Callback when [android_webview.WebViewClient] receives a callback from [android_webview.WebViewClient].onPageStarted.
+   final void Function(String url) onPageStartedCallback;
+@@ -543,6 +570,8 @@ class WebViewAndroidWebViewClient extends android_webview.WebViewClient {
+   /// Callback when [android_webview.WebViewClient] receives an error callback.
+   void Function(WebResourceError error) onWebResourceErrorCallback;
+ 
++  void Function(WebError error) onReceivedHttpErrorCallback;
++
+   /// Checks whether a navigation request should be approved or disaproved.
+   final FutureOr<bool> Function({
+     required String url,
+@@ -623,6 +652,17 @@ class WebViewAndroidWebViewClient extends android_webview.WebViewClient {
+     ));
+   }
+ 
++  @override
++  void onReceivedHttpError(android_webview.WebView webView, int errorCode, String description, String failingUrl) {
++    onReceivedHttpErrorCallback(
++      WebError(
++        code: errorCode,
++        msg: description,
++        url: failingUrl,
++      ),
++    );
++  }
++
+   @override
+   void onReceivedRequestError(
+     android_webview.WebView webView,
+@@ -692,12 +732,21 @@ class WebViewAndroidWebChromeClient extends android_webview.WebChromeClient {
+   // Changed by WebViewAndroidPlatformController.
+   void Function(int progress)? _onProgress;
+ 
++  void Function(String tag,String message)? _onConsoleMessage;
++
+   @override
+   void onProgressChanged(android_webview.WebView webView, int progress) {
+     if (_onProgress != null) {
+       _onProgress!(progress);
+     }
+   }
++
++  @override
++  void onConsoleMessage(String tag, String message) {
++    if(_onConsoleMessage!=null){
++      _onConsoleMessage!(tag,message);
++    }
++  }
+ }
+ 
+ /// Handles constructing [android_webview.WebView]s and calling static methods.
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/pigeons/android_webview.dart b/cli-webview_flutter/webview_flutter_android/pigeons/android_webview.dart
+index 70ecd99..736da71 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/pigeons/android_webview.dart
++++ b/cli-webview_flutter/webview_flutter_android/pigeons/android_webview.dart
+@@ -136,6 +136,10 @@ abstract class WebViewHostApi {
+   void setWebChromeClient(int instanceId, int? clientInstanceId);
+ 
+   void setBackgroundColor(int instanceId, int color);
++
++  void setCornerRadius(int instanceId, double radius);
++
++  void setVerticalScrollbarPosition(int instanceId, int position);
+ }
+ 
+ @HostApi(dartHostTestHandler: 'TestWebSettingsHostApi')
+@@ -167,6 +171,16 @@ abstract class WebSettingsHostApi {
+   void setBuiltInZoomControls(int instanceId, bool enabled);
+ 
+   void setAllowFileAccess(int instanceId, bool enabled);
++
++  void setAllowContentAccess(int instanceId, bool enabled);
++
++  void setAllowFileAccessFromFileURLs(int instanceId, bool enabled);
++
++  void setAllowUniversalAccessFromFileURLs(int instanceId, bool enabled);
++
++  void setGeolocationEnabled(int instanceId, bool enabled);
++
++  void setMixedContentModeAllow(int instanceId, bool enabled);
+ }
+ 
+ @HostApi(dartHostTestHandler: 'TestJavaScriptChannelHostApi')
+@@ -209,6 +223,14 @@ abstract class WebViewClientFlutterApi {
+     String failingUrl,
+   );
+ 
++  void onReceivedHttpError(
++      int instanceId,
++      int webViewInstanceId,
++      int errorCode,
++      String description,
++      String failingUrl,
++      );
++
+   void requestLoading(
+     int instanceId,
+     int webViewInstanceId,
+@@ -216,6 +238,8 @@ abstract class WebViewClientFlutterApi {
+   );
+ 
+   void urlLoading(int instanceId, int webViewInstanceId, String url);
++
++  void onConsoleMessage(String tag, String message);
+ }
+ 
+ @HostApi(dartHostTestHandler: 'TestDownloadListenerHostApi')
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/pubspec.yaml b/cli-webview_flutter/webview_flutter_android/pubspec.yaml
+index d6cf2b2..e4049ab 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/pubspec.yaml
++++ b/cli-webview_flutter/webview_flutter_android/pubspec.yaml
+@@ -19,7 +19,11 @@ flutter:
+ dependencies:
+   flutter:
+     sdk: flutter
+-  webview_flutter_platform_interface: ^1.8.0
++  webview_flutter_platform_interface:
++    git:
++      url: git@github.com:olaola-chat/cli-webview_flutter.git
++      path: webview_flutter_platform_interface
++      ref: dev_1.0.4
+ 
+ dev_dependencies:
+   build_runner: ^2.1.4
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/test/android_webview_test.dart b/cli-webview_flutter/webview_flutter_android/test/android_webview_test.dart
+index 4c63ab0..e8b9906 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/test/android_webview_test.dart
++++ b/cli-webview_flutter/webview_flutter_android/test/android_webview_test.dart
+@@ -294,7 +294,7 @@ void main() {
+         );
+ 
+         final WebChromeClient mockWebChromeClient = MockWebChromeClient();
+-        webView.setWebChromeClient(mockWebChromeClient);
++        webView.setWebChromeClient(mockWebChromeClient, false);
+ 
+         final int webChromeClientInstanceId =
+             instanceManager.getInstanceId(mockWebChromeClient)!;
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/test/android_webview_test.mocks.dart b/cli-webview_flutter/webview_flutter_android/test/android_webview_test.mocks.dart
+index 85ab668..272cfac 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/test/android_webview_test.mocks.dart
++++ b/cli-webview_flutter/webview_flutter_android/test/android_webview_test.mocks.dart
+@@ -540,8 +540,8 @@ class MockWebView extends _i1.Mock implements _i2.WebView {
+           returnValue: Future<void>.value(),
+           returnValueForMissingStub: Future<void>.value()) as _i4.Future<void>);
+   @override
+-  _i4.Future<void> setWebChromeClient(_i2.WebChromeClient? client) =>
+-      (super.noSuchMethod(Invocation.method(#setWebChromeClient, [client]),
++  _i4.Future<void> setWebChromeClient(_i2.WebChromeClient? client, bool? enable) =>
++      (super.noSuchMethod(Invocation.method(#setWebChromeClient, [client, enable]),
+           returnValue: Future<void>.value(),
+           returnValueForMissingStub: Future<void>.value()) as _i4.Future<void>);
+   @override
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/test/webview_android_widget_test.dart b/cli-webview_flutter/webview_flutter_android/test/webview_android_widget_test.dart
+index a987f1c..283f08f 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/test/webview_android_widget_test.dart
++++ b/cli-webview_flutter/webview_flutter_android/test/webview_android_widget_test.dart
+@@ -114,7 +114,7 @@ void main() {
+       verifyInOrder(<Future<void>>[
+         mockWebView.setWebViewClient(webViewClient),
+         mockWebView.setDownloadListener(downloadListener),
+-        mockWebView.setWebChromeClient(webChromeClient),
++        mockWebView.setWebChromeClient(webChromeClient, false),
+       ]);
+     });
+ 
+diff --git a/webview_flutter_3.0.4/webview_flutter_android/test/webview_android_widget_test.mocks.dart b/cli-webview_flutter/webview_flutter_android/test/webview_android_widget_test.mocks.dart
+index 3385e79..6b0824d 100644
+--- a/webview_flutter_3.0.4/webview_flutter_android/test/webview_android_widget_test.mocks.dart
++++ b/cli-webview_flutter/webview_flutter_android/test/webview_android_widget_test.mocks.dart
+@@ -270,8 +270,8 @@ class MockWebView extends _i1.Mock implements _i2.WebView {
+           returnValue: Future<void>.value(),
+           returnValueForMissingStub: Future<void>.value()) as _i4.Future<void>);
+   @override
+-  _i4.Future<void> setWebChromeClient(_i2.WebChromeClient? client) =>
+-      (super.noSuchMethod(Invocation.method(#setWebChromeClient, [client]),
++  _i4.Future<void> setWebChromeClient(_i2.WebChromeClient? client, bool? enable) =>
++      (super.noSuchMethod(Invocation.method(#setWebChromeClient, [client, enable]),
+           returnValue: Future<void>.value(),
+           returnValueForMissingStub: Future<void>.value()) as _i4.Future<void>);
+   @override
+diff --git a/webview_flutter_3.0.4/webview_flutter_platform_interface/lib/src/method_channel/webview_method_channel.dart b/cli-webview_flutter/webview_flutter_platform_interface/lib/src/method_channel/webview_method_channel.dart
+index f328817..ac0fafe 100644
+--- a/webview_flutter_3.0.4/webview_flutter_platform_interface/lib/src/method_channel/webview_method_channel.dart
++++ b/cli-webview_flutter/webview_flutter_platform_interface/lib/src/method_channel/webview_method_channel.dart
+@@ -292,7 +292,8 @@ class MethodChannelWebViewPlatform implements WebViewPlatformController {
+       'backgroundColor': creationParams.backgroundColor?.value,
+       'cookies': creationParams.cookies
+           .map((WebViewCookie cookie) => cookie.toJson())
+-          .toList()
++          .toList(),
++      'iosVideoFullScreen': creationParams.iosVideoFullScreen
+     };
+   }
+ }
+diff --git a/webview_flutter_3.0.4/webview_flutter_platform_interface/lib/src/platform_interface/webview_platform_callbacks_handler.dart b/cli-webview_flutter/webview_flutter_platform_interface/lib/src/platform_interface/webview_platform_callbacks_handler.dart
+index 44dae2e..5627fd1 100644
+--- a/webview_flutter_3.0.4/webview_flutter_platform_interface/lib/src/platform_interface/webview_platform_callbacks_handler.dart
++++ b/cli-webview_flutter/webview_flutter_platform_interface/lib/src/platform_interface/webview_platform_callbacks_handler.dart
+@@ -4,6 +4,8 @@
+ 
+ import 'dart:async';
+ 
++import 'package:webview_flutter_platform_interface/src/types/web_error.dart';
++
+ import '../types/types.dart';
+ 
+ /// Interface for callbacks made by [WebViewPlatformController].
+@@ -29,4 +31,8 @@ abstract class WebViewPlatformCallbacksHandler {
+ 
+   /// Report web resource loading error to the host application.
+   void onWebResourceError(WebResourceError error);
++
++  void onReceivedHttpError(WebError webError);
++
++  void onConsoleMessage(String tag, String message);
+ }
+diff --git a/webview_flutter_3.0.4/webview_flutter_platform_interface/lib/src/types/creation_params.dart b/cli-webview_flutter/webview_flutter_platform_interface/lib/src/types/creation_params.dart
+index c1763cd..453fbd8 100644
+--- a/webview_flutter_3.0.4/webview_flutter_platform_interface/lib/src/types/creation_params.dart
++++ b/cli-webview_flutter/webview_flutter_platform_interface/lib/src/types/creation_params.dart
+@@ -22,6 +22,10 @@ class CreationParams {
+         AutoMediaPlaybackPolicy.require_user_action_for_all_media_types,
+     this.backgroundColor,
+     this.cookies = const <WebViewCookie>[],
++    this.headers,
++    this.cornerRadius,
++    this.useAndroidDefaultChromeClient,
++    this.iosVideoFullScreen,
+   }) : assert(autoMediaPlaybackPolicy != null);
+ 
+   /// The initialUrl to load in the webview.
+@@ -63,8 +67,17 @@ class CreationParams {
+   /// The initial set of cookies to set before the webview does its first load.
+   final List<WebViewCookie> cookies;
+ 
++  final Map<String,String>? headers;
++
++  ///webview圆角，android平台使用[SurfaceAndroidWebView]时，圆角需要插件实现
++  final double? cornerRadius;
++
++  final bool? useAndroidDefaultChromeClient;
++
++  final bool? iosVideoFullScreen;
++
+   @override
+   String toString() {
+-    return 'CreationParams(initialUrl: $initialUrl, settings: $webSettings, javascriptChannelNames: $javascriptChannelNames, UserAgent: $userAgent, backgroundColor: $backgroundColor, cookies: $cookies)';
++    return 'CreationParams(initialUrl: $initialUrl, settings: $webSettings, javascriptChannelNames: $javascriptChannelNames, UserAgent: $userAgent, backgroundColor: $backgroundColor, cookies: $cookies , headers: ${headers??''}, cornerRadius=${cornerRadius??0}, useAndroidDefaultChromeClient=${useAndroidDefaultChromeClient??false},iosVideoFullScreen=${iosVideoFullScreen??false})';
+   }
+ }
+diff --git a/webview_flutter_3.0.4/webview_flutter_platform_interface/lib/src/types/javascript_channel.dart b/cli-webview_flutter/webview_flutter_platform_interface/lib/src/types/javascript_channel.dart
+index e68cc2e..567f444 100644
+--- a/webview_flutter_3.0.4/webview_flutter_platform_interface/lib/src/types/javascript_channel.dart
++++ b/cli-webview_flutter/webview_flutter_platform_interface/lib/src/types/javascript_channel.dart
+@@ -36,4 +36,9 @@ class JavascriptChannel {
+ 
+   /// A callback that's invoked when a message is received through the channel.
+   final JavascriptMessageHandler onMessageReceived;
++
++  /// 默认的 postMessage 对象
++  static JavascriptChannel BRIDGE(JavascriptMessageHandler onMessageReceived){
++    return JavascriptChannel(name: 'Bridge', onMessageReceived: onMessageReceived);
++  }
+ }
+diff --git a/webview_flutter_3.0.4/webview_flutter_platform_interface/lib/src/types/types.dart b/cli-webview_flutter/webview_flutter_platform_interface/lib/src/types/types.dart
+index f2bcf19..af25503 100644
+--- a/webview_flutter_3.0.4/webview_flutter_platform_interface/lib/src/types/types.dart
++++ b/cli-webview_flutter/webview_flutter_platform_interface/lib/src/types/types.dart
+@@ -12,3 +12,4 @@ export 'web_resource_error_type.dart';
+ export 'web_settings.dart';
+ export 'webview_cookie.dart';
+ export 'webview_request.dart';
++export 'web_error.dart';
+diff --git a/cli-webview_flutter/webview_flutter_platform_interface/lib/src/types/web_error.dart b/cli-webview_flutter/webview_flutter_platform_interface/lib/src/types/web_error.dart
+new file mode 100644
+index 0000000..3f28dc0
+--- /dev/null
++++ b/cli-webview_flutter/webview_flutter_platform_interface/lib/src/types/web_error.dart
+@@ -0,0 +1,12 @@
++class WebError{
++  String? url;
++  String? msg;
++  int? code;
++
++  WebError({this.code, required this.url,this.msg});
++
++  @override
++  String toString() {
++    return 'url=$url msg=$msg code=$code';
++  }
++}
+\ No newline at end of file
+diff --git a/webview_flutter_3.0.4/webview_flutter_platform_interface/lib/src/types/web_settings.dart b/cli-webview_flutter/webview_flutter_platform_interface/lib/src/types/web_settings.dart
+index 102ab10..ae57062 100644
+--- a/webview_flutter_3.0.4/webview_flutter_platform_interface/lib/src/types/web_settings.dart
++++ b/cli-webview_flutter/webview_flutter_platform_interface/lib/src/types/web_settings.dart
+@@ -80,10 +80,12 @@ class WebSettings {
+     this.javascriptMode,
+     this.hasNavigationDelegate,
+     this.hasProgressTracking,
++    this.hasConsoleMessageTracking,
+     this.debuggingEnabled,
+     this.gestureNavigationEnabled,
+     this.allowsInlineMediaPlayback,
+     this.zoomEnabled,
++    this.alertSslError=false,
+     required this.userAgent,
+   }) : assert(userAgent != null);
+ 
+@@ -97,6 +99,8 @@ class WebSettings {
+   /// See also: [WebViewPlatformCallbacksHandler.onProgress] to get the progress.
+   final bool? hasProgressTracking;
+ 
++  final bool? hasConsoleMessageTracking;
++
+   /// Whether to enable the platform's webview content debugging tools.
+   ///
+   /// See also: [WebView.debuggingEnabled].
+@@ -125,6 +129,8 @@ class WebSettings {
+   /// See also: [WebView.gestureNavigationEnabled]
+   final bool? gestureNavigationEnabled;
+ 
++  final bool alertSslError;
++
+   @override
+   String toString() {
+     return 'WebSettings(javascriptMode: $javascriptMode, hasNavigationDelegate: $hasNavigationDelegate, hasProgressTracking: $hasProgressTracking, debuggingEnabled: $debuggingEnabled, gestureNavigationEnabled: $gestureNavigationEnabled, userAgent: $userAgent, allowsInlineMediaPlayback: $allowsInlineMediaPlayback)';
+diff --git a/webview_flutter_3.0.4/webview_flutter_platform_interface/pubspec.yaml b/cli-webview_flutter/webview_flutter_platform_interface/pubspec.yaml
+index f9e7549..57ea929 100644
+--- a/webview_flutter_3.0.4/webview_flutter_platform_interface/pubspec.yaml
++++ b/cli-webview_flutter/webview_flutter_platform_interface/pubspec.yaml
+@@ -13,7 +13,7 @@ environment:
+ dependencies:
+   flutter:
+     sdk: flutter
+-  plugin_platform_interface: ^2.1.0
++  plugin_platform_interface: ^2.1.2
+ 
+ dev_dependencies:
+   flutter_test:
+diff --git a/webview_flutter_3.0.4/webview_flutter_web/example/lib/web_view.dart b/cli-webview_flutter/webview_flutter_web/example/lib/web_view.dart
+index ffd3367..f1ba3ef 100644
+--- a/webview_flutter_3.0.4/webview_flutter_web/example/lib/web_view.dart
++++ b/cli-webview_flutter/webview_flutter_web/example/lib/web_view.dart
+@@ -5,6 +5,7 @@
+ import 'dart:async';
+ 
+ import 'package:flutter/material.dart';
++import 'package:webview_flutter_platform_interface/src/types/web_error.dart';
+ import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
+ import 'package:webview_flutter_web/webview_flutter_web.dart';
+ 
+@@ -115,6 +116,14 @@ class _PlatformCallbacksHandler implements WebViewPlatformCallbacksHandler {
+ 
+   @override
+   void onWebResourceError(WebResourceError error) {}
++
++  @override
++  void onReceivedHttpError(WebError httpError) {}
++
++  @override
++  void onConsoleMessage(String tag, String message) {
++    
++  }
+ }
+ 
+ /// Controls a [WebView].
+diff --git a/webview_flutter_3.0.4/webview_flutter_web/pubspec.yaml b/cli-webview_flutter/webview_flutter_web/pubspec.yaml
+index a834c9b..d0c79e9 100644
+--- a/webview_flutter_3.0.4/webview_flutter_web/pubspec.yaml
++++ b/cli-webview_flutter/webview_flutter_web/pubspec.yaml
+@@ -21,7 +21,11 @@ dependencies:
+     sdk: flutter
+   flutter_web_plugins:
+     sdk: flutter
+-  webview_flutter_platform_interface: ^1.8.0
++  webview_flutter_platform_interface:
++    git:
++      url: git@github.com:olaola-chat/cli-webview_flutter.git
++      path: webview_flutter_platform_interface
++      ref: dev_1.0.4
+ 
+ dev_dependencies:
+   build_runner: ^2.1.5
+diff --git a/cli-webview_flutter/webview_flutter_wkwebview/example/ios/.gitignore b/cli-webview_flutter/webview_flutter_wkwebview/example/ios/.gitignore
+new file mode 100644
+index 0000000..7a7f987
+--- /dev/null
++++ b/cli-webview_flutter/webview_flutter_wkwebview/example/ios/.gitignore
+@@ -0,0 +1,34 @@
++**/dgph
++*.mode1v3
++*.mode2v3
++*.moved-aside
++*.pbxuser
++*.perspectivev3
++**/*sync/
++.sconsign.dblite
++.tags*
++**/.vagrant/
++**/DerivedData/
++Icon?
++**/Pods/
++**/.symlinks/
++profile
++xcuserdata
++**/.generated/
++Flutter/App.framework
++Flutter/Flutter.framework
++Flutter/Flutter.podspec
++Flutter/Generated.xcconfig
++Flutter/ephemeral/
++Flutter/app.flx
++Flutter/app.zip
++Flutter/flutter_assets/
++Flutter/flutter_export_environment.sh
++ServiceDefinitions.json
++Runner/GeneratedPluginRegistrant.*
++
++# Exceptions to above rules.
++!default.mode1v3
++!default.mode2v3
++!default.pbxuser
++!default.perspectivev3
+diff --git a/webview_flutter_3.0.4/webview_flutter_wkwebview/example/lib/web_view.dart b/cli-webview_flutter/webview_flutter_wkwebview/example/lib/web_view.dart
+index c44c4e7..684836c 100644
+--- a/webview_flutter_3.0.4/webview_flutter_wkwebview/example/lib/web_view.dart
++++ b/cli-webview_flutter/webview_flutter_wkwebview/example/lib/web_view.dart
+@@ -8,6 +8,7 @@ import 'dart:io';
+ import 'package:flutter/foundation.dart';
+ import 'package:flutter/gestures.dart';
+ import 'package:flutter/widgets.dart';
++import 'package:webview_flutter_platform_interface/src/types/web_error.dart';
+ import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
+ import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
+ 
+@@ -673,6 +674,14 @@ class _PlatformCallbacksHandler implements WebViewPlatformCallbacksHandler {
+       _webView.onWebResourceError!(error);
+     }
+   }
++
++  @override
++  void onReceivedHttpError(WebError httpError) {}
++
++  @override
++  void onConsoleMessage(String tag, String message) {
++    
++  }
+ }
+ 
+ /// App-facing cookie manager that exposes the correct platform implementation.
+diff --git a/cli-webview_flutter/webview_flutter_wkwebview/ios/Classes/FLTGestureInterceptView.h b/cli-webview_flutter/webview_flutter_wkwebview/ios/Classes/FLTGestureInterceptView.h
+new file mode 100644
+index 0000000..97b0991
+--- /dev/null
++++ b/cli-webview_flutter/webview_flutter_wkwebview/ios/Classes/FLTGestureInterceptView.h
+@@ -0,0 +1,18 @@
++//
++//  FLTGestureInterceptView.h
++//  webview_flutter
++//
++//  Created by 陈恩裕 on 2022/6/9.
++//
++
++#import <UIKit/UIKit.h>
++
++NS_ASSUME_NONNULL_BEGIN
++
++@interface FLTGestureInterceptView : UIView
++
++
++
++@end
++
++NS_ASSUME_NONNULL_END
+diff --git a/cli-webview_flutter/webview_flutter_wkwebview/ios/Classes/FLTGestureInterceptView.m b/cli-webview_flutter/webview_flutter_wkwebview/ios/Classes/FLTGestureInterceptView.m
+new file mode 100644
+index 0000000..2e9c656
+--- /dev/null
++++ b/cli-webview_flutter/webview_flutter_wkwebview/ios/Classes/FLTGestureInterceptView.m
+@@ -0,0 +1,76 @@
++//
++//  FLTGestureInterceptView.m
++//  webview_flutter
++//  用于解决webview上面盖有flutter widget时，对widget执行的手势操作会被透传到webview(platformview)
++//
++//  Created by 陈恩裕 on 2022/6/9.
++//
++
++#import "FLTGestureInterceptView.h"
++
++@implementation FLTGestureInterceptView
++
++{
++    NSMutableArray<UIView*> *_overlayViews;
++}
++
++// 查找FlutterOverlayView
++// 深度优先遍历(先序)
++-(void)findFlutterOverlayView:(UIView*)superView{
++    for(int i=0;i<superView.subviews.count;i++){
++        UIView *subView = superView.subviews[i];
++        // 先查找到自己，在自己上层的才可以放入数组
++        if(subView == self){
++            _overlayViews = @[].mutableCopy;
++        }
++        if(_overlayViews){
++            NSString *className = NSStringFromClass([subView class]);
++            if([className isEqualToString:@"FlutterOverlayView"]){
++                // subview的clipsToBounds = YES; 用来裁剪子view
++                [_overlayViews addObject:subView];
++                // 如果找到了，就不需要递归查找自己的子view
++                // 经调试发现，子view是一个frame为全屏的FlutterOverlayView，会影响坐标判断，所以只记录当前view即可
++                continue;
++            }
++        }
++        [self findFlutterOverlayView:subView];
++    }
++}
++
++- (nullable UIView *)hitTest:(CGPoint)point withEvent:(nullable UIEvent *)event{
++    _overlayViews = nil; // 每次点击事件，都要重置数组
++    UIView *rootView = [UIApplication sharedApplication].keyWindow;
++    [self findFlutterOverlayView:rootView];
++
++    // 从后往前找，即从上往下
++    for(NSInteger i = _overlayViews.count - 1; i >= 0; i--){
++        UIView *subView = _overlayViews[i];
++        CGPoint p = [self getGlobalPoint:point OfView:self];
++        if(CGRectContainsPoint([self getGlobalFrameOfView:subView], p)){
++            return subView;
++        }
++    }
++    return [super hitTest:point withEvent:event];
++}
++
++-(CGPoint)getGlobalPoint:(CGPoint)point OfView:(UIView*)view{
++    UIView *superView = view;
++    CGPoint globalPoint = point;
++    while (superView) {
++        globalPoint = CGPointMake(globalPoint.x+superView.frame.origin.x, globalPoint.y+superView.frame.origin.y);
++        superView = superView.superview;
++    }
++    return globalPoint;
++}
++
++-(CGRect)getGlobalFrameOfView:(UIView*)view{
++    CGRect globalFrame = view.frame;
++    UIView *superView = view.superview;
++    while (superView) {
++        globalFrame = CGRectMake(globalFrame.origin.x+superView.frame.origin.x, globalFrame.origin.y+superView.frame.origin.y, globalFrame.size.width, globalFrame.size.height);
++        superView = superView.superview;
++    }
++    return globalFrame;
++}
++
++@end
+diff --git a/webview_flutter_3.0.4/webview_flutter_wkwebview/ios/Classes/FLTWKNavigationDelegate.m b/cli-webview_flutter/webview_flutter_wkwebview/ios/Classes/FLTWKNavigationDelegate.m
+index 125d3ca..c502780 100644
+--- a/webview_flutter_3.0.4/webview_flutter_wkwebview/ios/Classes/FLTWKNavigationDelegate.m
++++ b/cli-webview_flutter/webview_flutter_wkwebview/ios/Classes/FLTWKNavigationDelegate.m
+@@ -4,14 +4,18 @@
+ 
+ #import "FLTWKNavigationDelegate.h"
+ 
++NSString *const BRIDGE_NAME = @"Bridge";
++
+ @implementation FLTWKNavigationDelegate {
+   FlutterMethodChannel *_methodChannel;
++  Boolean _notInitBridge;
+ }
+ 
+ - (instancetype)initWithChannel:(FlutterMethodChannel *)channel {
+   self = [super init];
+   if (self) {
+     _methodChannel = channel;
++    _notInitBridge = TRUE;
+   }
+   return self;
+ }
+@@ -22,9 +26,45 @@ - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation
+   [_methodChannel invokeMethod:@"onPageStarted" arguments:@{@"url" : webView.URL.absoluteString}];
+ }
+ 
++- (NSDictionary *)getUrlParameterWithUrl:(NSURL *)url {
++    NSMutableDictionary *parm = [[NSMutableDictionary alloc]init];
++    //传入url创建url组件类
++    NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithString:url.absoluteString];
++    //回调遍历所有参数，添加入字典
++    [urlComponents.queryItems enumerateObjectsUsingBlock:^(NSURLQueryItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
++        if (obj.value != nil) {
++            [parm setObject:obj.value forKey:obj.name];
++        }
++    }];
++    return parm;
++}
++
++// 在发送请求之前，决定是否跳转
+ - (void)webView:(WKWebView *)webView
+     decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction
+                     decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
++    
++    NSLog(@"decidePolicyForNavigationAction%@",navigationAction.request.URL.absoluteString);
++
++    NSDictionary *params = [self getUrlParameterWithUrl:navigationAction.request.URL];
++    NSString *clientDownload = [params objectForKey:@"clientDownload"];
++    if ([navigationAction.request.URL.absoluteString hasPrefix:@"weixin://dl/business"]) {
++        decisionHandler(WKNavigationActionPolicyCancel);
++        NSURL *url = [NSURL URLWithString:navigationAction.request.URL.absoluteString];
++        if ([[UIApplication sharedApplication] canOpenURL:url]) {
++            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:navigationAction.request.URL.absoluteString]];
++        }
++        return;
++    } else if ([@"1" isEqualToString:clientDownload]) {
++        // 跟前端约定好，url里的querystring里带了clientDownload=1参数,就认为是要下载的链接
++        decisionHandler(WKNavigationActionPolicyCancel);
++        NSURL *url = [NSURL URLWithString:navigationAction.request.URL.absoluteString];
++        if ([[UIApplication sharedApplication] canOpenURL:url]) {
++            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:navigationAction.request.URL.absoluteString]];
++        }
++    return;
++    }
++    
+   if (!self.hasDartNavigationDelegate) {
+     decisionHandler(WKNavigationActionPolicyAllow);
+     return;
+@@ -75,6 +115,17 @@ - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigat
+   }
+ 
+   [_methodChannel invokeMethod:@"onPageFinished" arguments:@{@"url" : webView.URL.absoluteString}];
++    
++        if (_notInitBridge) {
++            _notInitBridge = FALSE;
++            //注入默认的bridge
++            NSString *jsBridge = [NSString stringWithFormat:
++                                  @"window.originalPostMessage = window.postMessage;"
++                                  "window.postMessage = function(data) {"
++                                  "%@.postMessage(JSON.stringify(data));"
++                                  "};", BRIDGE_NAME];
++            [webView evaluateJavaScript:jsBridge completionHandler:nil];
++        }
+ }
+ 
+ + (id)errorCodeToString:(NSUInteger)code {
+diff --git a/webview_flutter_3.0.4/webview_flutter_wkwebview/ios/Classes/FlutterWebView.m b/cli-webview_flutter/webview_flutter_wkwebview/ios/Classes/FlutterWebView.m
+index 5bb81fc..3981d26 100644
+--- a/webview_flutter_3.0.4/webview_flutter_wkwebview/ios/Classes/FlutterWebView.m
++++ b/cli-webview_flutter/webview_flutter_wkwebview/ios/Classes/FlutterWebView.m
+@@ -7,6 +7,7 @@
+ #import "FLTWKProgressionDelegate.h"
+ #import "FlutterWebView_Test.h"
+ #import "JavaScriptChannelHandler.h"
++#import "FLTGestureInterceptView.h"
+ 
+ @implementation FLTWebViewFactory {
+   NSObject<FlutterBinaryMessenger> *_messenger;
+@@ -43,6 +44,13 @@ - (instancetype)initWithMessenger:(NSObject<FlutterBinaryMessenger> *)messenger
+ 
+ @end
+ 
++// UIWebViewDelegate
++@interface FLTWebViewController() <WKNavigationDelegate, UIScrollViewDelegate, WKUIDelegate> {
++    BOOL _enableZoom;
++    NSDictionary<NSString*, NSString*> *_headers;
++}
++@end
++
+ @implementation FLTWKWebView
+ 
+ - (void)setFrame:(CGRect)frame {
+@@ -74,6 +82,7 @@ @implementation FLTWebViewController {
+   NSMutableSet *_javaScriptChannelNames;
+   FLTWKNavigationDelegate *_navigationDelegate;
+   FLTWKProgressionDelegate *_progressionDelegate;
++  FLTGestureInterceptView *_gestureInterceptView;
+ }
+ 
+ - (instancetype)initWithFrame:(CGRect)frame
+@@ -102,6 +111,10 @@ - (instancetype)initWithFrame:(CGRect)frame
+     [self updateAutoMediaPlaybackPolicy:args[@"autoMediaPlaybackPolicy"]
+                         inConfiguration:configuration];
+ 
++    configuration.allowsInlineMediaPlayback = ![args[@"iosVideoFullScreen"] boolValue];
++    [configuration.preferences setValue:@YES forKey:@"allowFileAccessFromFileURLs"];
++    [configuration setValue:@YES forKey:@"allowUniversalAccessFromFileURLs"];
++      
+     _webView = [[FLTWKWebView alloc] initWithFrame:frame configuration:configuration];
+ 
+     // Background color
+@@ -120,6 +133,17 @@ - (instancetype)initWithFrame:(CGRect)frame
+     _navigationDelegate = [[FLTWKNavigationDelegate alloc] initWithChannel:_channel];
+     _webView.UIDelegate = self;
+     _webView.navigationDelegate = _navigationDelegate;
++    _webView.scrollView.delegate = self;
++    _webView.scrollView.bounces = false;
++      
++    //    // 拦截透传过来的手势
++    //    _gestureInterceptView = [FLTGestureInterceptView new];
++    //    [_gestureInterceptView addSubview:_webView];
++    //    _gestureInterceptView.frame = frame;
++    //    _gestureInterceptView.autoresizesSubviews = YES;
++    //    _gestureInterceptView.translatesAutoresizingMaskIntoConstraints = NO;
++    //    _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
++      
+     __weak __typeof__(self) weakSelf = self;
+     [_channel setMethodCallHandler:^(FlutterMethodCall *call, FlutterResult result) {
+       [weakSelf onMethodCall:call result:result];
+@@ -141,18 +165,27 @@ - (instancetype)initWithFrame:(CGRect)frame
+       NSURL *url = [NSURL URLWithString:initialUrl];
+       if (url) {
+         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+-        [_webView loadRequest:request];
++        if (_headers != nil) {
++          [request setAllHTTPHeaderFields:_headers];
++        }
++         //fix ios12加载本地文件file:///xxx/xx 失败问题
++         if([url.scheme isEqualToString:@"file"]){
++            // NSLog(@"debug~~onLoadFile~init~allowingReadAccessToURL:%@",baseUrl);
++            [_webView loadFileURL:url allowingReadAccessToURL:[self getReadAccessUrl:url]];
++          }else{
++            [_webView loadRequest:request];
++          }
+       }
+     }
+   }
+   return self;
+ }
+ 
+-- (void)dealloc {
+-  if (_progressionDelegate != nil) {
+-    [_progressionDelegate stopObservingProgress:_webView];
+-  }
+-}
++//- (void)dealloc {
++//  if (_progressionDelegate != nil) {
++//    [_progressionDelegate stopObservingProgress:_webView];
++//  }
++//}
+ 
+ - (UIView *)view {
+   return _webView;
+@@ -227,9 +260,14 @@ - (void)onLoadFile:(FlutterMethodCall *)call result:(FlutterResult)result {
+                                details:error]);
+     return;
+   }
+-
+-  NSURL *url = [NSURL fileURLWithPath:[call arguments] isDirectory:NO];
+-
++    NSURL *url = nil;
++    NSString *st = [call arguments];
++    if ([st hasPrefix:@"file://"]) {
++        url = [NSURL URLWithString:st];
++    } else {
++        url = [NSURL fileURLWithPath:st isDirectory:NO];
++    }
++    
+   if (!url) {
+     NSString *errorDetails = [NSString stringWithFormat:@"Initializing NSURL with the supplied "
+                                                         @"'%@' path resulted in a nil value.",
+@@ -240,12 +278,19 @@ - (void)onLoadFile:(FlutterMethodCall *)call result:(FlutterResult)result {
+     return;
+   }
+ 
+-  NSURL *baseUrl = [url URLByDeletingLastPathComponent];
+-
+-  [_webView loadFileURL:url allowingReadAccessToURL:baseUrl];
++  [_webView loadFileURL:url allowingReadAccessToURL:[self getReadAccessUrl:url]];
+   result(nil);
+ }
+ 
++- (NSURL *)getReadAccessUrl:(NSURL *) fileUrl {
++    NSURL *baseUrl = [fileUrl URLByDeletingLastPathComponent];
++     if ([[baseUrl path] containsString:@"room_game"]) {
++        NSString *basePath = [[baseUrl path] componentsSeparatedByString:@"room_game"][0];
++        baseUrl = [NSURL URLWithString: [NSString stringWithFormat:@"file://%@room_game/", basePath]];
++     }
++    return baseUrl;
++}
++
+ - (void)onLoadFlutterAsset:(FlutterMethodCall *)call result:(FlutterResult)result {
+   NSString *error = nil;
+   if (![FLTWebViewController isValidStringArgument:[call arguments] withErrorMessage:&error]) {
+@@ -305,6 +350,13 @@ - (void)onLoadUrl:(FlutterMethodCall *)call result:(FlutterResult)result {
+   NSMutableDictionary *requestData = [[NSMutableDictionary alloc] init];
+   if (call.arguments[@"url"]) {
+     requestData[@"uri"] = call.arguments[@"url"];
++      NSURL *url = [NSURL URLWithString:requestData[@"uri"]];
++      if(url.fileURL){
++         if (@available(iOS 9.0, *)) {
++              [_webView loadFileURL:url allowingReadAccessToURL:[url URLByDeletingLastPathComponent]];
++             result(nil);
++          }
++      }
+   }
+   if (call.arguments[@"headers"]) {
+     requestData[@"headers"] = call.arguments[@"headers"];
+@@ -336,12 +388,12 @@ - (void)onLoadRequest:(FlutterMethodCall *)call result:(FlutterResult)result {
+ 
+ - (void)onCanGoBack:(FlutterMethodCall *)call result:(FlutterResult)result {
+   BOOL canGoBack = [_webView canGoBack];
+-  result(@(canGoBack));
++  result([NSNumber numberWithBool:canGoBack]);
+ }
+ 
+ - (void)onCanGoForward:(FlutterMethodCall *)call result:(FlutterResult)result {
+   BOOL canGoForward = [_webView canGoForward];
+-  result(@(canGoForward));
++  result([NSNumber numberWithBool:canGoForward]);
+ }
+ 
+ - (void)onGoBack:(FlutterMethodCall *)call result:(FlutterResult)result {
+@@ -486,12 +538,12 @@ - (void)onScrollBy:(FlutterMethodCall *)call result:(FlutterResult)result {
+ 
+ - (void)getScrollX:(FlutterMethodCall *)call result:(FlutterResult)result {
+   int offsetX = _webView.scrollView.contentOffset.x;
+-  result(@(offsetX));
++  result([NSNumber numberWithInt:offsetX]);
+ }
+ 
+ - (void)getScrollY:(FlutterMethodCall *)call result:(FlutterResult)result {
+   int offsetY = _webView.scrollView.contentOffset.y;
+-  result(@(offsetY));
++  result([NSNumber numberWithInt:offsetY]);
+ }
+ 
+ // Returns nil when successful, or an error message when one or more keys are unknown.
+@@ -523,7 +575,15 @@ - (NSString *)applySettings:(NSDictionary<NSString *, id> *)settings {
+     } else if ([key isEqualToString:@"zoomEnabled"]) {
+       NSNumber *zoomEnabled = settings[key];
+       _navigationDelegate.shouldEnableZoom = [zoomEnabled boolValue];
+-    } else {
++    } else if ([key isEqualToString:@"headers"]) {
++        NSDictionary *headers = settings[key];
++        if (headers != nil) {
++            _headers = headers;
++        }
++    } else if ([key isEqualToString:@"supportZoom"]) {
++        NSNumber *withZoom = settings[key];
++        _enableZoom = [withZoom boolValue];
++    }  else {
+       [unknownKeys addObject:key];
+     }
+   }
+@@ -683,6 +743,13 @@ + (BOOL)isValidStringArgument:(id)argument withErrorMessage:(NSString **)errorDe
+   return YES;
+ }
+ 
++#pragma mark -- UIScrollViewDelegate
++- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
++    if (scrollView.pinchGestureRecognizer.isEnabled != _enableZoom) {
++        scrollView.pinchGestureRecognizer.enabled = _enableZoom;
++    }
++}
++
+ #pragma mark WKUIDelegate
+ 
+ - (WKWebView *)webView:(WKWebView *)webView
+@@ -696,4 +763,15 @@ - (WKWebView *)webView:(WKWebView *)webView
+   return nil;
+ }
+ 
++-(void)dealloc{
++    if (_progressionDelegate != nil) {
++      [_progressionDelegate stopObservingProgress:_webView];
++    }
++    if (@available(iOS 10, *)) {
++    }else{
++        _webView.scrollView.delegate = nil;
++    }
++}
++
++
+ @end
+diff --git a/webview_flutter_3.0.4/webview_flutter_wkwebview/ios/Classes/JavaScriptChannelHandler.h b/cli-webview_flutter/webview_flutter_wkwebview/ios/Classes/JavaScriptChannelHandler.h
+index f442d7a..f70d594 100644
+--- a/webview_flutter_3.0.4/webview_flutter_wkwebview/ios/Classes/JavaScriptChannelHandler.h
++++ b/cli-webview_flutter/webview_flutter_wkwebview/ios/Classes/JavaScriptChannelHandler.h
+@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
+ - (instancetype)initWithMethodChannel:(FlutterMethodChannel *)methodChannel
+                 javaScriptChannelName:(NSString *)javaScriptChannelName;
+ 
++- (void)invoke:(NSString *)params;
++
+ @end
+ 
+ NS_ASSUME_NONNULL_END
+diff --git a/webview_flutter_3.0.4/webview_flutter_wkwebview/ios/Classes/JavaScriptChannelHandler.m b/cli-webview_flutter/webview_flutter_wkwebview/ios/Classes/JavaScriptChannelHandler.m
+index 1aed25f..dd02645 100644
+--- a/webview_flutter_3.0.4/webview_flutter_wkwebview/ios/Classes/JavaScriptChannelHandler.m
++++ b/cli-webview_flutter/webview_flutter_wkwebview/ios/Classes/JavaScriptChannelHandler.m
+@@ -33,4 +33,14 @@ - (void)userContentController:(WKUserContentController *)userContentController
+   [_methodChannel invokeMethod:@"javascriptChannelMessage" arguments:arguments];
+ }
+ 
++- (void)invoke:(NSString *)params{
++    NSDictionary* arguments = @{
++                                @"channel" : _javaScriptChannelName,
++                                @"message" : [NSString stringWithFormat:@"%@", params]
++                                };
++    [_methodChannel invokeMethod:@"javascriptChannelMessage" arguments:arguments];
++
++}
++
++
+ @end
+diff --git a/webview_flutter_3.0.4/webview_flutter_wkwebview/lib/src/web_kit_webview_widget.dart b/cli-webview_flutter/webview_flutter_wkwebview/lib/src/web_kit_webview_widget.dart
+index 19051af..4012453 100644
+--- a/webview_flutter_3.0.4/webview_flutter_wkwebview/lib/src/web_kit_webview_widget.dart
++++ b/cli-webview_flutter/webview_flutter_wkwebview/lib/src/web_kit_webview_widget.dart
+@@ -181,7 +181,7 @@ class WebKitWebViewPlatformController extends WebViewPlatformController {
+     }
+ 
+     if (params.initialUrl != null) {
+-      await loadUrl(params.initialUrl!, null);
++      await loadUrl(params.initialUrl!, params.headers??<String, String>{});
+     }
+   }
+ 
+diff --git a/webview_flutter_3.0.4/webview_flutter_wkwebview/pubspec.yaml b/cli-webview_flutter/webview_flutter_wkwebview/pubspec.yaml
+index d85bf32..686ecab 100644
+--- a/webview_flutter_3.0.4/webview_flutter_wkwebview/pubspec.yaml
++++ b/cli-webview_flutter/webview_flutter_wkwebview/pubspec.yaml
+@@ -19,7 +19,11 @@ dependencies:
+   flutter:
+     sdk: flutter
+   path: ^1.8.0
+-  webview_flutter_platform_interface: ^1.8.0
++  webview_flutter_platform_interface:
++    git:
++      url: git@github.com:olaola-chat/cli-webview_flutter.git
++      path: webview_flutter_platform_interface
++      ref: dev_1.0.4
+ 
+ dev_dependencies:
+   build_runner: ^2.1.5

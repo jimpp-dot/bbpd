@@ -1,0 +1,59 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+message ExhibitTabData{
+    string name = 1;
+    string type = 2;
+}
+
+message ResExhibitTab{
+    bool success =1;
+    string msg = 2;
+    repeated ExhibitTabData data = 3;
+}
+
+//此处修改字段后需要同步修改mate_profile.proto
+message ExhibitCommodityItem{
+    string condition  =1; //获得条件
+	uint32 cid  =2;
+	string type  =3;
+	string name  =4;
+	string image  =5;
+	string image_bg  =6;
+    string grade =7;
+    string grade_icon  =8; //图片链接
+    uint32 lock =9; //1是锁，2为否
+    uint32 get_time =10;
+    string desc  =11;
+    uint32 pinned =12; //1是已经推荐展示，2为否
+    uint32 vap_size = 13;
+    uint32 gift_id =14;
+}
+
+message ExhibitIndexData{
+    string grade = 1;
+    string grade_icon  =2; //图片链接
+    repeated ExhibitCommodityItem grade_commodity = 3;
+}
+
+message ResExhibitIndex{
+    bool success =1;
+    string msg = 2;
+    repeated ExhibitIndexData data = 3;
+}
+
+message ResExhibitMore{
+    bool success =1;
+    string msg = 2;
+    repeated ExhibitCommodityItem data = 3;
+}
+
+message ResExhibitRecommend{
+    bool success =1;
+    string msg = 2;
+    repeated ExhibitCommodityItem data = 3;
+}

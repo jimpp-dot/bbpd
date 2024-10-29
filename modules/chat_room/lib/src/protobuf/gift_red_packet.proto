@@ -1,0 +1,112 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+message ResRedPacketHome {
+  bool success = 1;               // 成功true，失败false
+  string msg = 2;                 // 失败message
+  RedPacketHomeData data = 3;
+}
+
+//房间红包首页
+message RedPacketHomeData {
+  repeated RedPacket red_items = 1;
+  RedPacketDurationCfg duration_config = 2;
+  RedPacketBeginTimeCfg begin_time_config = 3;
+}
+
+message RedPacketDurationCfg {//红包时长配置结构
+  string name = 1;
+  repeated RedPacketDuration red_packet_duration = 2;
+}
+message RedPacketBeginTimeCfg {//红包开启时间配置结构
+  string name = 1;
+  repeated RedPacketBeginTime red_packet_begin_duration = 2;
+}
+
+message ResRobRedList {
+  bool success = 1;               //成功true，失败false
+  string msg = 2;                 //失败message
+  RedListData data = 3;
+}
+
+message RedListData {
+  repeated RobRedPacket red_list = 1;
+}
+
+message ResRedPacketDetail {
+  bool success = 1;               //成功true，失败false
+  string msg = 2;                 //失败message
+  RedPacketDetailData data = 3;
+}
+
+message RedPacketDetailData {
+	uint32 id=1;//红包被用户创建后的唯一id，后面展示详情用该id
+	uint32 red_id=2;//红包id
+	string name=3;//红包名称
+	uint32 rob_num=4;//已经被抢的数量
+	uint32 red_sum=5;//红包设置的份额数量
+	repeated RedPacketUser user =6;
+	string red_author_text=7;//红包创作者的显示文案
+	bool is_already_rob=8;//用户是否抢过的状态;true:已抢到
+	string goods_text=9;//物品获取文案
+	string goods_icon=10;//物品获取的icon
+	string goods_whither_text=11;//物品去处文案
+}
+
+message ResRobRedPacket {
+  bool success = 1;               //成功true，失败false
+  string msg = 2;                 //失败message
+}
+
+//红包时长选择配置列表
+message RedPacketDuration {
+  uint32 id = 1;
+  string name = 2;
+  int64 seconds = 3;
+}
+
+//红包开启时长选择配置列表
+message RedPacketBeginTime {
+  uint32 id = 1;
+  string name = 2;
+  int64 seconds = 3;
+}
+
+message RedPacket {
+	uint32 red_id=1;//红包id
+	string name=2;//红包名称
+	uint32 price=3;//支付钻石价格
+	string fmt_price_text=4;//支付钻石价格文案显示
+	string fmt_desc_text=5;//共计40个的这个显示文案
+	repeated RedPacketMembers members=6;
+}
+
+message RedPacketMembers {
+  uint32 id = 1;
+  uint32 source_type = 2;
+  uint32 num = 3;//数量
+  string icon = 4;//icon
+  string name = 5;//名称
+}
+
+message RedPacketUser {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  string gift_icon = 4;//抢到的礼物的icon
+  uint32 got_time = 5;//获取时间
+}
+
+//抢红包的结构体协议
+message RobRedPacket {
+  uint32 id = 1;//红包被用户创建后的唯一id，后面展示详情用该id
+  uint32 red_id = 2;//红包id
+  string name = 3;//红包名称
+  uint32 start_time = 4;//红包开始时间
+  uint32 end_time = 5;//红包截止时间
+  uint32 state = 6;//状态;0:未抢；1：已抢；2：过期
+  RedPacketUser user = 7;
+  uint32 weight = 8;//排序,客户端忽略该字段
+}

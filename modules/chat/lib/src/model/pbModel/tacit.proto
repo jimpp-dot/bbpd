@@ -1,0 +1,61 @@
+syntax = "proto3";
+package pb;
+/*
+账户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+message TacitQuestion {
+   uint32 id = 1;
+   string question = 2;
+   string answer1 = 3;
+   string answer2 = 4;
+   string answer3 = 5;
+   string answer4 = 6;
+}
+
+
+message ResTacitQuestion{
+  bool   success = 1;
+  string msg = 2;
+  TacitQuestion question =3;
+}
+
+message ResSendTacitQuestion{
+  bool   success = 1;
+  string msg = 2;
+  int64 msg_id =3;
+}
+
+message ResAnswerTacitQuestion{
+  bool   success = 1;
+  string msg = 2;
+}
+
+message ResQueryTacitQuestion{
+  bool   success = 1;
+  string msg = 2;
+  int32 answer = 3;
+}
+
+// go/slp/heartflip/answer/  心动问答
+message ResSendHeartFlipAnswer{
+  bool   success = 1;
+  string msg = 2;
+  AnswerHeartFlipData data =3;
+}
+
+message AnswerHeartFlipData{
+  bool toolate = 1;
+  AnswerHeartFlipGift gift = 2;
+}
+
+message AnswerHeartFlipGift{
+  int32 gift_id = 1;
+  string gift_name = 2;
+  uint32 gift_num = 3;
+  string gift_icon = 4;
+}

@@ -1,0 +1,170 @@
+syntax = "proto3";
+package pb;
+/*
+用户转化匹配任务台
+*/
+
+option go_package = "../../app/pb";
+
+message ResAnchorCenter {
+	bool success = 1;               //成功true，失败false
+	string msg = 2;                 //失败message
+	AnchorCenter data = 3;         //返回数据
+}
+
+message AnchorInfo {
+	string time_desc = 1; //时间周期文案
+	uint32 behavior_credit = 2; //行为分
+	uint32 result_credit = 3; //结果分
+	uint32 income = 4; //收入
+	uint32 next_level_income = 5; //下一档
+	string level = 6; //档位 A / B
+	string text = 7;  //两行文案描述
+	string award_desc = 8; //奖励日期
+	uint32 award_pct = 9; //最高奖励比例
+	uint32 award_b_pct = 10; //行为分奖励比例
+	uint32 award_r_pct = 11; //结果分奖励比例
+	uint32 award_c_pct = 12; //流水奖励比例
+	bool show_pct = 13; //是否显示奖励比例
+	uint32 live_duration_credit = 14; //排档时长
+	uint32 award_ld_pct = 15; //排档奖励比例
+	uint32 week_flow_credit = 16; //周流水
+	uint32 award_wf_pct = 17; //周流水奖励比例
+}
+
+message AnchorTab {
+	string name = 1; //tab文案
+	string filter = 2;  // match party r
+	repeated AnchorSubTab anchor_sub_tab = 3; //子tab
+	repeated AnchorSubTab anchor_sub_filter = 4; //子筛选项
+	bool show_date_filter = 5; //是否显示日期筛选项
+}
+
+message AnchorSubTab {
+	string name = 1; //子tab文案
+	string filter = 2; // party_transfer party_log misson prev_misson misson_log
+}
+
+message  AnchorBannerInfo {
+	string banner_url = 1; //banner 跳转
+	string banner_text = 2;//banner text
+}
+
+message AnchorCenter {
+	AnchorBannerInfo banner_info = 1;
+	AnchorInfo anchor_info = 2;
+	repeated AnchorTab anchor_tab = 3;
+}
+
+message ResAnchorUserList {
+	bool success = 1;               //成功true，失败false
+	string msg = 2;                 //失败message
+	AnchorUserList data = 3;         //返回数据
+	bool has_more = 4; //是否还有数据
+}
+
+message AnchorUserList {
+	repeated AnchorUserItem user = 1;
+}
+
+message AnchorUserItem {
+	string name = 1;
+	string icon = 2;
+	uint32 uid = 3;
+	uint32 online_status = 4; //0不在线 1在线
+	uint32 vip = 5;
+	string dateline_diff = 6; //注册7天文案
+	uint32 add_behavior_credit = 7;
+	uint32 add_result_credit = 8;
+	uint32 rid = 9;
+	uint32 rid_add_time = 10;
+	uint32 online_dateline_diff = 11;
+	repeated string tags = 12; //用户标签
+}
+
+message ResAnchorUserChangeList {
+	bool success = 1;               //成功true，失败false
+	string msg = 2;                 //失败message
+	AnchorUserChangeList data = 3;         //返回数据
+	bool has_more = 4; //是否还有数据
+}
+
+message AnchorUserChangeList {
+	repeated AnchorUserChangeItem user = 1;
+}
+
+message AnchorUserChangeItem {
+	string name = 1;
+	string icon = 2;
+	uint32 uid = 3;
+	string reason = 4; //移除或者增加原因
+	string op_text = 5; //移除或者增加文案
+	uint32 op_time = 6; //移除或者增加时间
+	uint32 vip = 7;
+}
+
+message ResAnchorMissionList {
+	bool success = 1;               //成功true，失败false
+	string msg = 2;                 //失败message
+	AnchorMissionList data = 3;         //返回数据
+}
+
+message AnchorMissionList {
+	repeated AnchorMissionItem mission = 1;
+}
+
+message AnchorMissionItem {
+	uint32 id = 1; //任务ID
+	string name = 2; //任务名称
+	string desc = 3; //任务描述  200行为分/人
+	uint32 add_credit = 4; //以增加积分
+	uint32 limit_credit = 5; //上限
+	uint32 has_detail = 6; //是否有详情
+	uint32 type = 9; //任务类型 1 行为分  2结果分',
+}
+
+
+message ResAnchorMissionDetailList {
+	bool success = 1;               //成功true，失败false
+	string msg = 2;                 //失败message
+	AnchorMissionDetailList data = 3;         //返回数据
+	bool has_more = 4; //是否还有数据
+}
+
+message AnchorMissionDetailList {
+	repeated AnchorMissionDetail detail = 1;
+}
+
+message AnchorMissionDetail {
+	string name = 1;
+	string icon = 2;
+	uint32 uid = 3;
+	uint32 add_time = 4; //增加时间
+	string add_text = 5; // 行为分 / 结果分
+	uint32 add_credit = 6; //增加数量
+	uint32 vip = 7;
+	string dateline_diff = 8; //注册文案
+}
+
+
+message ResHistoryAnchorInfo {
+	bool success = 1;               //成功true，失败false
+	string msg = 2;                 //失败message
+	HistoryAnchorInfo data = 3;         //返回数据
+}
+
+message HistoryAnchorInfo {
+	repeated HistoryAnchorInfoItem hisory = 1;
+}
+
+message HistoryAnchorInfoItem {
+	string time_desc = 1; //周期描述
+	uint32 live_duration_credit = 2; //排档时长
+	uint32 behavior_credit = 3; //行为分
+	uint32 week_flow_credit = 4; // 周流水
+	uint32 uid = 6; //用户ID
+	string name = 7; //用户名称
+	string icon = 8; //用户icon
+	uint32 vip = 9; //用户VIP等级
+	bool is_finished = 10; //是否计算完成
+}

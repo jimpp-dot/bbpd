@@ -1,0 +1,29 @@
+syntax = "proto3";
+package pb;
+/*
+用户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "room.proto";
+
+message ResGamesTogetherPlayUser {
+	bool success = 1;
+	string msg = 2;
+	repeated GamesTogetherPlayUserItem data = 3;
+}
+
+message GamesTogetherPlayUserItem {
+	uint32 uid = 1; //用户ID或者群组ID
+	string name = 2;
+	string icon = 3;
+	bool is_online = 4; //是否在线
+	bool in_room = 5;
+	uint32 rid = 6;
+	RoomTypeName type_name = 7;
+	string desc = 8; //描述
+	uint32 title_new = 9;
+}

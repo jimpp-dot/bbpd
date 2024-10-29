@@ -1,0 +1,56 @@
+group 'ly.plugins.ali_id_auth'
+version '1.0'
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.1.0'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+
+        flatDir {
+            dirs project(':ali_id_auth').file('libs')
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 31
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion 21
+    }
+}
+
+dependencies {
+     // 实人认证SDK
+   implementation(name: 'aliyun-face-v2.1.2-20221027112723', ext: 'aar')
+   implementation(name: 'aliyun-facelanguage-v2.1.2-20221027112723', ext: 'aar')
+   implementation(name: 'aliyun-ocr-v2.1.2-20221027112723', ext: 'aar')
+   implementation(name: 'aliyun-photinus-v2.1.2-20221027112723', ext: 'aar')
+   implementation(name: 'aliyun-wishverify-v2.1.2-20221027112723', ext: 'aar')
+   implementation(name: 'Android-AliyunFaceGuard-10033', ext: 'aar')
+   implementation(name: 'APSecuritySDK-DeepSec-7.0.1.20220813.jiagu', ext: 'aar')
+
+    // 实人认证三方依赖库
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'com.squareup.okio:okio:1.14.0'
+    implementation 'com.alibaba:fastjson:1.2.83_noneautotype'
+    implementation 'com.aliyun.dpa:oss-android-sdk:2.9.11'
+}

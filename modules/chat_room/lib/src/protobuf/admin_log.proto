@@ -1,0 +1,23 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message LogItem {
+  string k = 1;
+  uint32 v = 2;
+}
+
+message LogList {
+  uint32 id = 1;//记录id
+  repeated LogItem strs = 2;//操作记录
+  string dateline = 3;//操作时间
+}
+
+message ResAdminLog {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  repeated LogList data = 3; //返回的数据结果
+}

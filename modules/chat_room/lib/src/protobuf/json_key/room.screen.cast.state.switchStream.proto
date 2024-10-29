@@ -1,0 +1,18 @@
+syntax = "proto3";
+    
+package room.screen.cast.state.switchStream;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+import "google/protobuf/struct.proto";
+
+message RoomScreenCastStateSwitchStream {
+    option (pb.register_name) = 'room.screen.cast.state.switchStream';
+    option (pb.register_id) = 86;
+    uint32 state = 1;
+    string title = 2;
+    string url = 3;
+    google.protobuf.Value playing_sec = 4;
+    int32 startTime = 5;
+}

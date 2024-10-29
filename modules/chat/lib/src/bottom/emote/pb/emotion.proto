@@ -1,0 +1,44 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+enum EmojiDurationType {
+  EmojiDurationNone = 0;
+  EmojiDurationMonth = 1;
+  EmojiDurationQuarter = 2;
+  EmojiDurationYear = 3;
+}
+
+message EmojiItem {
+  string key = 1;
+  string name = 2;
+  bool onlyInMic = 3;
+}
+message EmojiPrice {
+  EmojiDurationType duration_type = 1;
+  uint32 price = 2;
+  uint32 coupon_cid = 3; //咘咘星语表情包单人包年8折卷cid
+  uint32 coupon_count = 4; //咘咘星语表情包单人包年8折卷数量
+  uint32 duction_money = 5; //单张8折卷优惠价格
+}
+message EmojiTab {
+  string icon_key = 1;
+  string tab_name = 2;
+  int32 left_seconds = 3; // 表情包有效期剩余时间，-1为永久
+  repeated EmojiItem list = 4;
+  repeated EmojiPrice price = 5;
+  uint32 es_id = 6; // 表情包系列id
+  string desc = 7; //表情包系列说明文案
+  string background = 8; // 背景图
+}
+
+message BodyEmojiConfig {
+  repeated EmojiTab emoji_tab_list = 1;
+}
+
+message ResEmojiConfig {
+  bool success = 1;
+  string msg = 2;
+  BodyEmojiConfig data = 3;
+}

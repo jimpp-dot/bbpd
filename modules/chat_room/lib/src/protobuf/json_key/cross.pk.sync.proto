@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package cross.pk.sync;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message CrossPkSync {
+  option (pb.register_name) = 'cross.pk.sync';
+  option (pb.register_id) = 25;
+  repeated uint32 pb = 1;
+}

@@ -1,0 +1,82 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+
+//演唱位信息
+message ShowMicPosData {
+    option (pb.register_name) = 'show.mic.refresh';
+    option (pb.register_id) = 30004;
+    uint32 uid = 1; //用户ID
+    string name = 2; //用户昵称
+    string icon = 3; //用户头像
+    uint32 gift_total = 4; //礼物总价值
+    uint32 defense_num = 5; //防御值
+    uint32 alarm_deadline = 6; //演唱位上出现大数字倒计时截止时间戳(为0则不倒计时)
+    uint32 is_offline = 7; //是否已离线
+}
+
+//抢麦位信息
+message RobMicPosData {
+  uint32 uid = 1; //用户ID
+  string name = 2; //用户昵称
+  string icon = 3; //用户头像
+  uint32 rob_deadline = 4; //底部的抢麦倒计时(为0则不倒计时)
+  uint32 rob_state = 5; //抢麦状态: 0 正常, 1 击穿防御, 2, 抢麦倒计时 (0的情况底部不展示标识)
+  uint32 gift_total = 6; //礼物总价值
+  uint32 position = 7; //位置(0-3)
+}
+
+message RobMicConfigData {
+    ShowMicPosData show_mic_pos = 1; //演唱位数据(没有人的uid=0)
+    repeated RobMicPosData rob_mic_pos = 2; //抢唱位数据(总共4条数据,没有人的uid=0)
+}
+
+//抢麦房进房接口数据
+message ResRobMicConfig {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  RobMicConfigData data = 3;
+}
+
+
+//抢麦成功消息
+message RobSuccessData {
+  option (pb.register_name) = 'rob.mic.success';
+  option (pb.register_id) = 30005;
+  uint32 uid = 1; //抢麦成功的人
+  repeated RobSuccessUser list = 2; //抢麦成功的人信息(2)
+}
+
+message RobSuccessUser {
+  uint32 uid = 1; //用户ID
+  string name = 2; //用户昵称
+  string icon = 3; //用户头像
+  uint32 sex = 4; //性别
+  uint32 gift_total = 5; //礼物总价值
+}
+
+
+//抢麦位刷新
+message RobPosRefresh {
+  option (pb.register_name) = 'rob.mic.refresh';
+  option (pb.register_id) = 30003;
+  repeated  RobMicPosData list = 1; //抢麦位信息
+}
+
+//公屏动画
+message RobMicTips {
+  option (pb.register_name) = 'rob.mic.toast';
+  option (pb.register_id) = 30006;
+  uint32 r_type = 1; //1 我要抢麦，2 击穿防御, 3 抢麦倒计时30s, 4 保麦成功
+  string name = 2; //用户名称
+  string icon = 3; //用户头像
+  string desc = 4; //提示语
+}
+
+

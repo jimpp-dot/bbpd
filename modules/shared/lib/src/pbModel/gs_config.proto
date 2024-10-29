@@ -1,0 +1,32 @@
+syntax = "proto3";
+package pb;
+import "gift_handbook.proto";
+/*
+ /mate/gs系列接口的结果定义
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 pb 目录下
+option go_package = "../../app/pb";
+
+message ConfigProfileData {
+    uint64 anchor_show = 1; //是否展示主播中心 0不展示
+    uint32 gs_sayhi = 3; //GS自动搭讪功能开启，0表示不展示
+    uint32 is_new_invite = 4; //是否是新的邀请
+    uint32 anchor_match_show = 5; //是否展示主播匹配转化中心
+    GiftBookBriefInfo brief_info = 6; // 礼物图鉴 概要信息
+    bool is_tone = 7; // 是否展示启动音
+}
+
+// 概要rsp
+message BriefInfoRsp {
+  bool success = 1;
+  string msg = 2;
+  GiftBookBriefInfo data = 3;
+}
+
+message ResConfigProfile {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  ConfigProfileData data = 3;         //返回数据
+}

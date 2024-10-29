@@ -1,0 +1,45 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../../app/pb";
+
+message ResPopupRoom {
+	bool success  = 1;
+	string msg   = 2;
+	PopupRoom data = 3;
+	bool is_new = 4  [json_name = "is_new"];
+	string pop_type = 5 [json_name = "pop_type"];
+	PopupText text = 6;
+}
+
+message PopupText {
+	string cancel = 1;
+	string ok = 2;
+	string content = 3;
+}
+
+message PopupRoom {
+	uint32 uid = 1;
+	uint32 rid = 2;
+	uint32 age = 3;
+	string name = 4;
+	string icon = 5;
+	string distance_show = 6 [json_name = "distance_show"];
+	string channel_type = 7 [json_name = "channel_type"];
+	string room_factory_type = 8 [json_name = "room_factory_type"];
+	string alert_text = 9 [json_name = "alert_text"];
+	uint32 sex = 10;
+}
+
+message ResHomePopUpAuth{
+	bool success = 1;
+	string msg = 2;
+	HomePopUpAuth data = 3;
+}
+
+message HomePopUpAuth {
+	bool show = 1;
+	string first_tips = 2;
+	string second_tips = 3;
+	bool support_cancel = 4;
+}

@@ -1,0 +1,1514 @@
+syntax = "proto3";
+
+package room.refersh;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+import "google/protobuf/struct.proto";
+
+message RoomRefersh {
+  option (pb.register_name) = 'room.refersh';
+  option (pb.register_id) = 77;
+  Options _options = 1;
+  Config config = 2;
+  Creator createor = 3;
+  CrossPk crosspk = 4;
+  GiftWish gift_wish = 5;
+  bool gpk_enable = 6;
+  repeated string gpk_uids = 7;
+  uint32 now = 8;
+  repeated OffMicList offMicList = 9;
+  repeated string plugin_list = 10;
+  bool show_gpk = 11;
+  bool show_packet = 12;
+  uint32 is_hidden_mic_room = 13;
+  uint32 is_newer_guide_room = 14;
+  repeated List list = 15;
+  bool show_lucky_bag = 16;
+  uint32 micQueueModify = 17;
+  google.protobuf.ListValue wait = 18;
+  google.protobuf.ListValue waitForAuction = 19;
+  google.protobuf.ListValue waitForBoss = 20;
+  bool unity_gaming = 21;
+  JuConfig ju_config = 22;
+  Match match = 23;
+  KtvPkRank ktv_pk_rank = 24;
+  uint32 ame_virtual_rid = 25;
+  GamePlayList game_play_list = 26;
+  uint32 cplink_assist = 27;
+  repeated uint32 cplink_line_colors_money = 28;
+  uint32 cplink_notice = 29;
+  repeated uint32 admins = 30;
+  repeated RoomDefend room_defend = 31;
+  google.protobuf.Value rid = 32;
+  ArtCenter art_center = 33;
+  uint32 cloud_game_want_play_count = 34;
+  string regulation = 35;
+  CloudGameInfo cloud_game_info = 36;
+  Nest nest = 37;
+  PrivateNest private_nest = 38;
+  VipMic vipmic = 39;
+  Tower tower = 40;
+  VehicleTeam vehicle_team = 41;
+  string room_pretty_id = 42;
+  uint32 wave_show = 43;
+  int32 ktv_source_type = 45;
+
+  message VehicleTeam {
+    uint32 mic_num = 1;
+    google.protobuf.ListValue teams = 2;
+    repeated NewTeams new_teams = 3;
+    uint32 show_empty_team = 4;
+
+    message Mics {
+      uint32 uid = 1;
+      uint32 position = 2;
+      uint32 mic_status = 3;
+      string icon = 4;
+      string username = 5;
+      uint32 vip = 6;
+      string frame = 7;
+      string frame_new = 8;
+      string ring = 9;
+    }
+
+    message NewTeams {
+      repeated Mics mics = 1;
+      uint32 rid = 2;
+      string name = 3;
+      string username = 4;
+      uint32 vip = 5;
+      string icon = 6;
+      uint32 is_started = 7;
+      string srv = 8;
+      string tag = 9;
+      string mic_num = 10;
+      uint32 used_mic_num = 11;
+      string game_name = 12;
+      string game_icon = 13;
+      uint32 pk_id = 14;
+      uint32 fee_type = 15;
+      uint32 ftype = 16;
+      uint32 price = 17;
+      uint32 can_chartered = 18;
+      uint32 has_chartered = 19;
+      uint32 mic_close = 20;
+      uint32 buy_total = 21;
+      google.protobuf.ListValue buy_uids = 22;
+    }
+  }
+
+  message Tower {
+    string bid = 1;
+    string t_uid = 2;
+    string state = 3;
+    string back_img = 4;
+    google.protobuf.ListValue list = 5;
+    map<string, Profile> profileMap = 6;
+    MySetting my_setting = 7;
+
+    message MySetting {
+      string b_name = 1;
+      uint32 num = 2;
+    }
+
+    message Profile {
+      string uid = 1;
+      string name = 2;
+      string icon = 3;
+    }
+  }
+
+  message VipMic {
+    google.protobuf.Value show = 1;
+  }
+
+  message PrivateNest {
+    uint32 showList = 1;
+  }
+
+  message Nest {
+    uint32 show = 1;
+    uint32 free = 2;
+  }
+
+  message Options {
+    string op = 1;
+    //string,int
+    google.protobuf.Value uid = 2;
+    string type = 3;
+    // string, bool
+    google.protobuf.Value value = 4;
+    repeated uint32 close_mic_uids = 5;
+    //OptionsData data = 6;
+    //map<string, string> data = 6;
+    google.protobuf.Value data = 6;
+    repeated DefendInfo defend_info = 7;
+    repeated MarryInfo marry_info = 8;
+    string message = 9;
+    string turns = 10;
+    string status = 11;
+    string url = 12;
+    uint32 size = 13;
+    repeated User users = 14;
+    string auction_duration = 15;
+    string auction_name = 16;
+    string success_img = 17;
+    google.protobuf.Value live_uid = 18;
+    uint32 refresh_follow = 19;
+    repeated uint32 positions = 20;
+    string text = 21;
+    uint32 op_uid = 22;
+    uint32 rid = 23;
+    google.protobuf.ListValue uids = 24;
+    uint32 scene = 25;
+    Camp camp = 26;
+    // string, int todo:类型发生变化
+    string win = 27;
+    uint32 ouid = 28;
+
+    message Camp {
+      message Good {
+        string id = 1;
+        string rid = 2;
+        string position = 3;
+        string origin = 4;
+        string role = 5;
+        string price = 6;
+        string target = 7;
+        string antidoteTarget = 8;
+        string poison_target = 9;
+        string guard_target = 10;
+        string voteTarget = 11;
+        string count = 12;
+        string deadCount = 13;
+        string isDead = 14;
+        string deadPub = 15;
+        string isDesc = 16;
+        string lastwords_type = 17;
+        string voteDead = 18;
+        string killDead = 19;
+        string is_ready = 20;
+        string gun_dead = 21;
+        string poison_dead = 22;
+        string explode_dead = 23;
+        string is_police_join = 24;
+        string is_police = 25;
+        string start_time = 26;
+      }
+
+      message Bad {
+        string id = 1;
+        string rid = 2;
+        string position = 3;
+        string origin = 4;
+        string role = 5;
+        string price = 6;
+        string target = 7;
+        string antidoteTarget = 8;
+        string poison_target = 9;
+        string guard_target = 10;
+        string voteTarget = 11;
+        string count = 12;
+        string deadCount = 13;
+        string isDead = 14;
+        string deadPub = 15;
+        string isDesc = 16;
+        string lastwords_type = 17;
+        string voteDead = 18;
+        string killDead = 19;
+        string is_ready = 20;
+        string gun_dead = 21;
+        string poison_dead = 22;
+        string explode_dead = 23;
+        string is_police_join = 24;
+        string is_police = 25;
+        string start_time = 26;
+      }
+
+      repeated Good good = 1;
+      repeated Bad bad = 2;
+    }
+
+    message User {
+      string uid = 1;
+      string name = 2;
+      string icon = 3;
+    }
+
+    message OptionsData {
+      Antidote antidote = 1;
+      string main_con_win = 2;
+      string compete_con_win = 3;
+      string msg = 4;
+      string name = 5;
+      uint32 rid = 6;
+      User user_a = 7;
+      User user_b = 8;
+      uint32 level = 9;
+      uint32 dateline = 10;
+      uint32 package = 11;
+      string rname = 12;
+      string word = 13;
+      string sub_word = 14;
+      uint32 webp_start = 15;
+      uint32 webp_end = 16;
+      string webp_url = 17;
+      string num_word = 18;
+      int32 position = 19;
+      uint32 is_ready = 20;
+      uint32 uid = 21;
+      map<string, uint32> oneStates = 22;
+      map<string, uint32> readStates = 23;
+      uint32 cate_id = 24;
+      uint32 turns = 25;
+      string image = 26;
+      uint32 score = 27;
+      string origin = 28;
+      string thumbs_up = 29;
+      string start_time = 30;
+      string icon = 31;
+      uint32 change_word_price = 32;
+      string change_word_price_type = 33;
+      repeated Scene scene = 34;
+      uint32 is_public = 35;
+      //可以是int或string
+      //uint32 populace = 36;
+      //string populace = 36;
+      google.protobuf.Value populace = 36;
+      google.protobuf.Value under = 37;
+      //特殊处理，pos可能为数组，也可能是map
+      //repeated string pos = 38;
+      //map<string, string> pos = 38;
+      google.protobuf.Value pos = 38;
+      string contributor_name = 39;
+      google.protobuf.Value data = 40;
+      //特殊处理，data可能为数组，也可能是map
+      //SeerArray data = 40;
+      //repeated string data = 40;
+      uint32 vvc = 41;
+      string success = 42;
+      //{"6":[0],"2":[1],"7":[2],"5":[3],"-1":[4,5,6,7]}
+      //[[1,2],[4]]
+      //map<string, google.protobuf.ListValue> votes = 43;
+      google.protobuf.Value votes = 43;
+      repeated DeadList deadList = 44;
+      bool hasLastWords = 45;
+      uint32 killTarget = 46;
+      uint32 follow = 47;
+      uint32 clueId = 48;
+      Poison poison = 49;
+      repeated string pkPosition = 50;
+      string killPosition = 51;
+      string type = 52;
+      uint32 vrid = 53;
+      uint32 inviter_uid = 54;
+      string inviter_name = 55;
+
+      message Poison {
+        bool hasPoison = 1;
+        string antidoteTarget = 2;
+        uint32 killTarget = 3;
+      }
+
+      message Scene {
+        uint32 sid = 1;
+        uint32 surplusClues = 2;
+      }
+
+      message Antidote {
+        bool hasAntidote = 1;
+        uint32 killTarget = 2;
+      }
+
+      message User {
+        uint32 uid = 1;
+        string name = 2;
+        string icon = 3;
+        uint32 hat_level = 4;
+      }
+
+      message SeerArray {
+        repeated Seer seer = 1;
+      }
+
+      message Seer {
+        string id = 1;
+        string rid = 2;
+        string position = 3;
+        string origin = 4;
+        string role = 5;
+        string price = 6;
+        string target = 7;
+        string antidoteTarget = 8;
+        string poison_target = 9;
+        string guard_target = 10;
+        string voteTarget = 11;
+        string count = 12;
+        string deadCount = 13;
+        string isDead = 14;
+        string deadPub = 15;
+        string isDesc = 16;
+        string lastwords_type = 17;
+        string voteDead = 18;
+        string killDead = 19;
+        string is_ready = 20;
+        string gun_dead = 21;
+        string poison_dead = 22;
+        string explode_dead = 23;
+        string is_police_join = 24;
+        string is_police = 25;
+        string start_time = 26;
+      }
+
+      message DeadList {
+        string uid = 1;
+        string role = 2;
+        string position = 3;
+        string deadCount = 4;
+        string deadPub = 5;
+        string voteDead = 6;
+        string killDead = 7;
+        string gunDead = 8;
+        string poisonDead = 9;
+        string isPolice = 10;
+      }
+    }
+
+    message DefendInfo {
+      uint32 uid = 1;
+      uint32 defend_uid = 2;
+      string title = 3;
+      uint32 position = 4;
+      uint32 defend_level = 5;
+      string defend_level_name = 6;
+      uint32 upgrade = 7;
+      uint32 category = 8;
+    }
+
+    message MarryInfo {
+      uint32 uid = 1;
+      uint32 marry_from_uid = 2;
+      string ring_img = 3;
+      string line_img = 4;
+    }
+  }
+
+  message Config {
+    string app_id = 1;
+    string auction = 2;
+    uint32 auto_mic = 3;
+    string background = 4;
+    string background_url = 5;
+    string bicon = 6;
+    string boss = 7;
+    string close_box = 8;
+    uint32 counter = 9;
+    uint32 dateline = 10;
+    int32 deleted = 11;
+    google.protobuf.Value description = 12;
+    string description_text = 13;
+    uint32 display_chat = 14;
+    google.protobuf.Value display_message = 15;
+    uint32 display_rank = 16;
+    string fixed_tag_id = 17;
+    string game = 18;
+    string gift_wish = 19;
+    uint32 has_lock = 20;
+    uint32 have_task = 21;
+    string icon = 22;
+    uint32 level = 23;
+    string mode = 24;
+    string name = 25;
+    uint32 nine = 26;
+    uint32 o_duration = 27;
+    string o_num = 28;
+    string o_total = 29;
+    string online_admin = 30;
+    uint32 online_num = 31;
+    bool option_enable = 32;
+    uint32 package = 33;
+    uint32 paier = 34;
+    uint32 password = 35;
+    string prefix = 36;
+    string property = 37;
+    // uint或float，todo可以尝试强转
+    google.protobuf.Value real = 38;
+    uint32 reception = 39;
+    uint32 rid = 40;
+    string room_factory_type = 41;
+    string room_module_id = 42;
+    string room_task_type = 43;
+    RtcExtra rtc_extra = 44;
+    uint32 rtc_type = 45;
+    string settlement_channel = 46;
+    string sex = 47;
+    string state = 48;
+    string theme = 49;
+    string type = 50;
+    repeated string type_bg = 51;
+    string type_label = 52;
+    string types = 53;
+    google.protobuf.Value uid = 54;
+    uint64 version = 55;
+    string weight = 56;
+    string area = 57;
+    string language = 58;
+    string entry_limit = 59;
+    uint32 chat_limit = 60;
+    MateData mate_data = 61;
+    string cp_state = 62;
+    UnionData union_data = 63;
+    Accompany accompany = 64;
+    AuctionInfo auction_info = 65;
+    string background_mp4 = 66;
+    CpNamingInfo cp_naming_info = 67;
+    CpSceneInfo cp_scene_info = 68;
+    CpLinkInfo cplink_info = 69;
+    GrabmicInfo grabmic_info = 71;
+    string gu_state = 72;
+    GuessQueueData guess_queue_data = 73;
+    KtvInfo ktv_info = 74;
+    string live_challenge = 75;
+    PartyGameInfo party_game_info = 76;
+    PuzzleInfo   puzzle_info = 77;
+    RoomGroupPk room_group_pk = 78;
+    string room_module_type = 79;
+    bool show_intimate = 80;
+    string un_state = 81;
+    string wo_state = 82;
+    ZegoGameConfig zego_game_config = 83;
+    LivePkV3 live_pk_v3 = 84;
+    uint32 live_pk_version = 85;
+    string number_mode = 86;
+    string room_background_new_cplink = 87;
+    uint32 gu_vvc = 88;
+    uint32 un_vvc = 89;
+    uint32 wo_vvc = 90;
+    uint32 gu_count = 91;
+    uint32 un_count = 92;
+    uint32 wo_count = 93;
+    uint32 gu_strict = 94;
+    uint32 un_strict = 95;
+    uint32 wo_mode = 96;
+    string knight_king_icon = 97;
+    google.protobuf.Value knight_king_level = 98;
+    string knight_king_name = 99;
+    bool has_king_rank = 100;
+    Live live = 101;
+    uint32 wo_ispk = 102;
+    int32 wo_start = 103;
+    string wo_turns = 104;
+    int32 wo_current = 105;
+    uint32 wo_player_num_type = 106;
+    uint32 wo_server_version = 107;
+    uint32 wo_state_type = 108;
+    uint32 wo_can_explode = 109;
+    uint32 wo_is_open_card = 110;
+    uint32 wo_jump_mic_type = 111;
+    google.protobuf.Value         wo_dataMap = 112;
+    int32 gu_current = 113;
+    uint32 gu_version = 114;
+    uint32 gu_change_word_price = 115;
+    string gu_change_word_price_type = 116;
+    uint32 un_ispk = 117;
+    google.protobuf.Value un_current = 118;
+    UnDataMap         un_dataMap = 119;
+    string gu_image = 120;
+    string gu_prompt = 121;
+    string background_multiframe = 122;
+    string reception_name = 123;
+    int32 extra_mic = 124;
+    string bless_words = 125;
+    int32 hot = 127;
+    map<string,string> background_extra = 128;
+
+    message UnDataMap {
+      //可以是int或string
+      //uint32 populace = 1;
+      //string populace = 1;
+      google.protobuf.Value populace = 1;
+      //可以是int或string
+      //uint32 under = 2;
+      //string under = 2;
+      google.protobuf.Value under = 2;
+      //可能是[]string或map
+      //            repeated string pos = 3;
+      //            map<string, string> pos = 3;
+      google.protobuf.Value pos = 3;
+      string contributor_name = 4;
+      // 可能是[]int, 也可能是[]string
+      repeated uint32 data = 5;
+      //            repeated string data = 5;
+      //            google.protobuf.ListValue data = 5;
+      string success = 6;
+      //map<string, google.protobuf.ListValue> votes = 7;
+      google.protobuf.Value votes = 7;
+      string type = 8;
+    }
+  }
+
+  message Live {
+    string fans_label = 1;
+    uint32 online_num = 3;
+  }
+
+  message LivePkV3 {
+    Base base = 1;
+    map<string, google.protobuf.ListValue> rank = 2;
+    Punish punish = 3;
+    uint32 isUse = 4;
+
+    message Base {
+      Main main = 1;
+      Compete compete = 2;
+      uint32 pk_id = 3;
+      string state = 4;
+      google.protobuf.Value win = 5;
+      string punish = 6;
+
+      message Main {
+        string uid = 1;
+        string origin = 2;
+        string rid = 3;
+        string name = 4;
+        string icon = 5;
+        string sex = 6;
+        uint32 score = 7;
+        uint32 mic = 8;
+        uint32 con_win = 9;
+      }
+
+      message Compete {
+        string uid = 1;
+        string origin = 2;
+        string rid = 3;
+        string name = 4;
+        string icon = 5;
+        string sex = 6;
+        uint32 score = 7;
+        uint32 mic = 8;
+        uint32 con_win = 9;
+      }
+    }
+
+    message Rank {
+      uint32 uid = 1;
+      string icon = 2;
+      double score = 3;
+      uint32 is_first_kill = 4;
+    }
+
+    message Punish {
+      Gua gua = 1;
+      repeated Data data = 2;
+      message Gua {
+        string icon = 1;
+      }
+
+      message Data {
+        string uid = 1;
+        uint32 id = 2;
+        string type = 3;
+        string content = 4;
+        uint32 paper_count = 5;
+      }
+    }
+  }
+
+  message Accompany {
+    string decorate = 1;
+    string effect = 2;
+    //bool, string, int
+    google.protobuf.Value value = 3;
+    uint32 duration = 4;
+    uint32 truth_enable = 5;
+    string foreground = 6;
+    uint32 total_time = 7;
+    uint32 room_is_lock = 8;
+    uint32 room_auto_mic = 9;
+  }
+
+  message AuctionInfo {
+    string uid = 1;
+    string state = 2;
+    google.protobuf.Value vvc = 3;
+    string commodity = 4;
+    string time = 5;
+    uint32 gift_price = 6;
+    uint32 gift_id = 7;
+    repeated Rank rank = 8;
+    string version = 9;
+  }
+
+  message Rank {
+    uint32 uid = 1;
+    string name = 2;
+    string icon = 3;
+    //可以是float，int或string
+    google.protobuf.Value giftNum = 4;
+    double giftMoney = 5;
+  }
+
+  message CpNamingInfo {
+    string icon = 1;
+    string name = 2;
+    string uid = 3;
+  }
+
+  message CpSceneInfo {
+    uint32 heart_num = 1;
+    string scene_background = 2;
+    string background = 3;
+    string title_image = 4;
+  }
+
+  message CpLinkInfo {
+    string cplink_stage = 1;
+    repeated uint32 cplink_top_list = 2;
+    AuctionConfig auction_config = 3;
+    repeated SceneConfig scene_config = 4;
+    repeated SceneConfigNew scene_config_new = 5;
+
+    message AuctionConfig {
+      string id = 1;
+      string name = 2;
+    }
+
+    message SceneConfig {
+      uint32 scene = 1;
+      uint32 money = 2;
+      string name = 3;
+    }
+
+    message SceneConfigNew {
+      uint32 scene = 1;
+      uint32 money = 2;
+      string name = 3;
+      string icon = 4;
+    }
+  }
+
+  message GrabmicInfo {
+    uint32 grabmic_version = 1;
+    GrabmicInfoMap map = 2;
+    repeated SceneGift scene_gift = 3;
+    string state = 4;
+    repeated GamingList gaming_list = 5;
+
+    message GamingList {
+      uint32 position = 1;
+      uint32 origin = 2;
+      string name = 3;
+      string icon = 4;
+      uint32 points = 5;
+      uint32 health = 6;
+      uint32 is_out = 7;
+      uint32 rank_num = 8;
+      uint32 is_offline = 9;
+    }
+
+    message GrabmicInfoMap {
+      EffectList effect_list = 1;
+      uint32 max_count = 2;
+      Song song = 3;
+      string title = 4;
+      repeated Rank rank = 5;
+      google.protobuf.Value current_origin = 6;
+      repeated string grab_uids = 7;
+      uint32 start_grab_second = 8;
+      string type = 9;
+      uint32 grab_max_second = 10;
+      string song_result = 11;
+      uint32 song_second = 12;
+      string sub_title = 13;
+      string effect_info = 14;
+      uint32 count = 15;
+
+      message SceneGift {
+        string id = 1;
+        string name = 2;
+        string name_zh_tw = 3;
+        string name_en = 4;
+        string price = 5;
+        string display = 6;
+        string sub_display = 7;
+        string type = 8;
+        string gift_type = 9;
+        string income_type = 10;
+        string with_end = 11;
+        string size = 12;
+        string size_big = 13;
+        string ordering = 14;
+        string deleted = 15;
+        string title = 16;
+        string naming = 17;
+        string xratio = 18;
+        string xtype = 19;
+        string excludes = 20;
+        string tag_url = 21;
+        string tag_ids = 22;
+        string description = 23;
+        string jump_page = 24;
+        string unlock_limit = 25;
+        string ext_id = 26;
+        string is_skin = 27;
+        string is_combo = 28;
+        string version = 29;
+        string vap_type = 30;
+        string vap_size = 31;
+        string vap_header = 32;
+        string vap_header_start = 33;
+        string vap_header_end = 34;
+        string magic = 35;
+        string magic_size = 36;
+        string category = 37;
+        string app_id = 38;
+        string is_app_public = 39;
+      }
+
+      message EffectList {
+        string none_grab = 1;
+        string grab_success = 2;
+        string grab_fail = 3;
+      }
+
+      message Song {
+        string id = 1;
+        string name = 2;
+        string singer_name = 3;
+        repeated google.protobuf.ListValue lyric = 4;
+        string path = 5;
+        string duration = 6;
+        string uploader_uid = 7;
+        string uploader_name = 8;
+        string tag = 9;
+        string status = 10;
+        string play_count = 11;
+        string good_count = 12;
+        string bad_count = 13;
+        string sing_success_count = 14;
+        string sing_fail_count = 15;
+        string dateline = 16;
+        string score = 17;
+        string user_is_auth = 18;
+        string area = 19;
+        string app_id = 20;
+        string sing_mode = 21;
+        string uploader_icon = 22;
+      }
+    }
+  }
+
+
+  message SceneGift {
+    string id = 1;
+    string name = 2;
+    string name_zh_tw = 3;
+    string name_en = 4;
+    string price = 5;
+    string display = 6;
+    string sub_display = 7;
+    string type = 8;
+    string gift_type = 9;
+    string income_type = 10;
+    string with_end = 11;
+    string size = 12;
+    string size_big = 13;
+    string ordering = 14;
+    uint32 deleted = 15;
+    string title = 16;
+    string naming = 17;
+    string xratio = 18;
+    string xtype = 19;
+    string excludes = 20;
+    string tag_url = 21;
+    string tag_ids = 22;
+    string description = 23;
+    string jump_page = 24;
+    string unlock_limit = 25;
+    string ext_id = 26;
+    string is_skin = 27;
+    string is_combo = 28;
+    string version = 29;
+    string vap_type = 30;
+    string vap_size = 31;
+    string vap_header = 32;
+    string vap_header_start = 33;
+    string vap_header_end = 34;
+    string magic = 35;
+    string magic_size = 36;
+    string category = 37;
+    string app_id = 38;
+    string is_app_public = 39;
+  }
+
+  message RtcExtra {
+    message ExtraList {
+      string rid = 1;
+      string uid = 2;
+      string stream_id = 3;
+      uint32 mic = 4;
+      string zego_link_type = 5;
+    }
+
+    repeated ExtraList extra_list = 1;
+  }
+
+  message GuessQueueData {
+    uint32 version = 1;
+    uint32 state = 2;
+    uint32 turns = 3;
+    uint32 cate_id = 4;
+    string cate_name = 5;
+    uint32 state_deadline = 6;
+    uint32 replay_start_time = 7;
+    repeated Gift gift = 8;
+    uint32 line_uid = 9;
+    Replay replay = 10;
+    ReplayComment replay_comment = 11;
+    ReplayLike replay_like = 12;
+
+    message Replay {
+      OwnerInfo owner_info = 1;
+      DrawerInfo drawer_info = 2;
+      GuesserInfo guesser_info = 3;
+      uint32 total_turns = 4;
+      uint32 current_turns = 5;
+      uint32 line_uid = 6;
+
+      message OwnerInfo {
+        string uid = 1;
+        string icon = 2;
+        string word = 3;
+        string line_id = 4;
+      }
+
+      message DrawerInfo {
+        string uid = 1;
+        string icon = 2;
+        string guess_image = 3;
+        string last_guess_word = 4;
+      }
+
+      message GuesserInfo {
+        string uid = 1;
+        string icon = 2;
+        string guess_word = 3;
+      }
+    }
+
+    message ReplayComment {
+      string from_word = 1;
+      string line_id = 2;
+      string to_word = 3;
+      string image = 4;
+      map<string, string> vote = 5;
+      uint32 line_uid = 6;
+      repeated VoteList vote_list = 7;
+
+      message VoteList {
+        uint32 uid = 1;
+        string state = 2;
+      }
+    }
+
+    message ReplayLike {
+      string line_id = 1;
+      Like like = 2;
+      repeated Images images = 3;
+      string line_uid = 4;
+      string line_icon = 5;
+
+      message Images {
+        string uid = 1;
+        string guess_image = 2;
+      }
+
+      message Like {
+        string uid = 1;
+        bytes guess_image = 2;
+        string name = 3;
+        string icon = 4;
+      }
+    }
+  }
+
+  message Gift {
+    string id = 1;
+    string name = 2;
+    string price = 3;
+    string gift_type = 4;
+  }
+
+  message ChorusUser {
+    uint32 uid = 1;
+    string name = 2;
+    string icon = 3;
+    uint32 week_musical_notes = 4;
+    string rtc_stream_id = 5;
+  }
+
+  message SongDetail {
+    uint32 id = 1;
+    string name = 2;
+    string photo = 3;
+    string original_mp3 = 4;
+    google.protobuf.Value size = 5;
+    string hq_music = 6;
+    uint32 hq_size = 7;
+    uint32 hq_status = 8;
+    uint32 singer_id = 9;
+    string singer_name = 10;
+    string uploader_uid = 11;
+    string uploader_name = 12;
+    string uploader_photo = 13;
+    string brc = 14;
+    uint32 choosed = 15;
+    bool show_accuse = 16;
+    //[string, int]
+    google.protobuf.Value status = 17;
+    string status_description = 18;
+    string platform = 19;
+    uint32 playtime = 20;
+    uint64 platform_song_id = 21;
+    string song_mv = 22; //歌曲的mv地址
+  }
+
+  message CurrentSong {
+    uint32 uid = 1;
+    string name = 2;
+    string icon = 3;
+    string brc = 4;
+    uint32 back_track = 5;
+    uint32 play_time = 6;
+    uint32 brc_progress = 7;
+    string singer_name = 8;
+    uint32 sid = 9;
+    string sname = 10;
+    string status = 11;
+    uint64 count_down = 12;
+    string platform = 13;
+    google.protobuf.Value platform_song_id = 14;
+    google.protobuf.Value platform_rank_id = 15;
+    uint32 need_report = 16;
+    uint32 week_musical_notes = 17;
+    string rtc_stream_id = 18;
+    uint32 chorus_switch = 19;
+    string music_id = 20;
+  }
+
+  message KtvInfo {
+    uint32 prop_show_time = 1;
+    uint32 prop_use_time = 2;
+    uint32 list_count = 3;
+    string pid = 4;
+    string appkey = 5;
+    CurrentSong current_song = 6;
+    repeated string song_list = 7;
+    ChorusUser chorus_user = 8;
+    SongDetail song_detail = 9;
+    repeated OffMicList offMicList = 10;
+
+    message OffMicList {
+      uint32 uid = 1;
+      string icon = 2;
+      string name = 3;
+      string frame = 4;
+    }
+  }
+
+  message PartyGameInfo {
+    string game_type = 1;
+    bool seize = 2;
+  }
+
+  message OffMicUser {
+    string uid = 1;
+    string icon = 2;
+    string name = 3;
+    string frame = 4;
+  }
+
+  message PuzzleInfo {
+    string id = 1;
+    string name = 2;
+    string content = 3;
+    string description = 4;
+    string deleted = 5;
+    string difficulty = 6;
+    string type = 7;
+    string like_num = 8;
+    string author_uid = 9;
+    string verify_state = 10;
+    string dateline = 11;
+    string create_type = 12;
+    string label = 13;
+    string quality = 14;
+    string author_name = 15;
+    string author_image = 16;
+    string state = 17;
+    string puzzle_times_id = 18;
+    repeated string second_time_uid = 19;
+    repeated OffMicUser off_mic_user = 20;
+    repeated Clues clues = 21;
+    bool is_dm_room = 22;
+    int32 commit_num = 23;
+
+    message Clues {
+      string clue_id = 1;
+      string puzzle_id = 2;
+      string name = 3;
+      string content = 4;
+      string price = 5;
+      string dateline = 6;
+    }
+  }
+
+  message RoomGroupPk {
+    string state = 1;
+    LeftSide left_side = 2;
+    RightSide right_side = 3;
+    uint32 pk_rule = 4;
+    PkResult pk_result = 5;
+    repeated Top3Sender top3_sender = 6;
+    uint32 pk_time_left = 7;
+    uint32 punish_time_left = 8;
+    string punish_name = 9;
+    BestReceiver best_receiver = 10;
+    BestSender best_sender = 11;
+    string gs_icon = 13;
+
+    message LeftSide {
+      uint32 total = 1;
+      repeated List list = 2;
+    }
+
+    message RightSide {
+      uint32 total = 1;
+      repeated List list = 2;
+    }
+
+    message PkResult {
+      uint32 winner_value = 1;
+      uint32 loser_value = 2;
+      string winner_side = 3;
+      repeated WinnerList winner_list = 4;
+      uint32 show_time = 5;
+      uint32 mvp_uid = 6;
+
+      message WinnerList {
+        uint32 uid = 1;
+        string name = 2;
+        string icon = 3;
+        uint32 score = 4;
+        string frame = 5;
+        string frame_new = 6;
+        int32 position = 7;
+        string status = 8;
+      }
+    }
+
+    message List {
+      uint32 uid = 1;
+      string name = 2;
+      string icon = 3;
+      uint32 score = 4;
+      string frame = 5;
+      string frame_new = 6;
+      int32 position = 7;
+      string status = 8;
+      repeated Punish punish = 9;
+      repeated PunishNew punish_new = 10;
+      string gs_icon = 11;
+      string gameZone = 12;
+
+      message Punish {
+        uint32 type = 1;
+        string content = 2;
+      }
+
+      message PunishNew {
+        uint32 uid = 1;
+        uint32 id = 2;
+        string type = 3;
+        string content = 4;
+        uint32 paper_count = 5;
+      }
+    }
+  }
+
+  message BestReceiver {
+    uint32 uid = 1;
+    string name = 2;
+    string icon = 3;
+    uint32 score = 4;
+    string frame = 5;
+    string frame_new = 6;
+    string gs_icon = 7;
+  }
+
+  message BestSender {
+    uint32 uid = 1;
+    string gift_value = 2;
+    string frame = 3;
+    string frame_new = 4;
+    string icon = 5;
+    string name = 6;
+  }
+
+  message ZegoGameConfig {
+    string game_id = 1;
+    uint32 min_mic_num = 2;
+    uint32 max_mic_num = 3;
+    uint32 game_state = 4;
+  }
+
+  message Creator {
+    uint32 age = 1;
+    string gameId = 2;
+    string gameZone = 3;
+    string icon = 4;
+    string name = 5;
+    uint32 role = 6;
+    uint32 sex = 7;
+    uint32 uid = 8;
+    uint32 package = 9;
+  }
+
+  message CrossPk {
+    uint32 cross_pk_enable = 1;
+    uint32 show_cross_pk = 2;
+  }
+
+  message GiftWish {
+    bool show = 1;
+    repeated Gifts gifts = 2;
+    uint32 percent = 3;
+    Champion champion = 4;
+
+    message Gifts {
+      uint32 gift_id = 1;
+      string name = 2;
+    }
+
+    message Champion {
+      string uid = 1;
+      string icon = 2;
+    }
+  }
+
+  message OffMicList {
+    string frame = 1;
+    string icon = 2;
+    string name = 3;
+    uint32 uid = 4;
+  }
+
+  message List {
+    uint32 position = 1;
+    uint32 uid = 2;
+    uint32 lock = 3;
+    uint32 forbidden = 4;
+    uint32 counter = 5;
+    uint32 package = 6;
+    uint32 mic_status = 7;
+    uint32 inflexion = 8;
+    google.protobuf.Value credit_score = 9;
+    string name = 10;
+    google.protobuf.Value sex = 11;
+    uint32 age = 12;
+    string icon = 13;
+    uint32 role = 14;
+    uint32 dateline = 15;
+    string frame_new = 16;
+    string frame = 17;
+    string ring = 18;
+    uint32 cp_display = 19;
+    uint32 cp_target = 20;
+    uint32 title_new = 21;
+    google.protobuf.Value gu_origin = 22;
+    uint32 is_playing_cloud_game = 23;
+    uint32 sort_score = 24;
+    repeated Punish punish = 25;
+    repeated PunishNew punish_new = 26;
+    uint32 guess_queue_line_id = 27;
+    uint32 guess_queue_is_finish = 28;
+    bool guess_queue_word_choosed = 29;
+    bool is_new_shower = 30;
+    uint32 want_play_cloud_game = 31;
+    string gu_role = 32;
+    uint32 gu_aid = 33;
+    uint32 gu_score = 34;
+    uint32 gu_thumbs_up = 35;
+    string gu_guess_text = 36;
+    uint32 gu_guess_right = 37;
+    uint32 knight_level = 38;
+    uint32 wo_origin = 39;
+    uint32 wo_vote = 40;
+    string wo_role = 41;
+    uint32 wo_aid = 42;
+    uint32 wo_price = 43;
+    uint32 wo_isDesc = 44;
+    uint32 wo_count = 45;
+    uint32 wo_target = 46;
+    uint32 wo_voteTarget = 47;
+    uint32 wo_can_action = 48;
+    uint32 wo_can_be_selected = 49;
+    uint32 wo_action_uid = 50;
+    uint32 wo_is_ready = 51;
+    uint32 wo_is_police = 52;
+    uint32 wo_action_status = 53;
+    uint32 wo_is_publish_role = 54;
+    string wo_dead_type = 55;
+    string wo_title_url = 56;
+    uint32 wo_isDead = 57;
+    uint32 un_origin = 58;
+    int32 un_vote = 59;
+    string un_role = 60;
+    uint32 un_aid = 61;
+    uint32 un_enable = 62;
+    uint32 un_admin = 63;
+    string music_name = 64;
+    uint32 live_only = 65;
+    string live_label = 66;
+    string gameZone = 67;
+    string gameId = 68;
+    int32 game_online = 69;
+    uint32 position_role = 70; // 麦位角色 1:接待 2:boss
+    uint32 position_state = 71; // 麦位状态 0x00:正常 0x01:离开
+    string throne_img = 72;  //宝座图片
+    string position_label = 74; // 麦位标签文字
+    string color_name = 75; // 炫彩昵称
+
+    message Punish {
+      uint32 type = 1;
+      string content = 2;
+    }
+
+    message PunishNew {
+      uint32 uid = 1;
+      uint32 id = 2;
+      string type = 3;
+      string content = 4;
+      uint32 paper_count = 5;
+    }
+  }
+
+  message DmConfig {
+    uint32 age = 1;
+    uint32 counter = 2;
+    uint32 forbidden = 3;
+    string frame = 4;
+    string icon = 5;
+    uint32 lock = 6;
+    uint32 mic_status = 7;
+    string name = 8;
+    uint32 package = 9;
+    uint32 position = 10;
+    uint32 prepared = 11;
+    uint32 role = 12;
+    uint32 sex = 13;
+    uint32 uid = 14;
+    uint32 title_new = 15;
+  }
+
+  message MicExtra {
+    uint32 credit_restoring = 1;
+    uint32 play_again = 2;
+    RunInfo run_info = 3;
+    uint32 uid = 4;
+
+    message RunInfo {
+      uint32 uid = 1;
+      uint32 out_time = 2;
+      uint32 duration = 3;
+    }
+  }
+
+  message JuConfig {
+    uint32 autoJoinMic = 1;
+    string back_img = 2;
+    string back_img_md5 = 3;
+    string cover = 4;
+    DmConfig dmConfig = 5;
+    string icon = 6;
+    uint32 isLimitVisit = 7;
+    uint32 isRecruit = 8;
+    uint32 jid = 9;
+    repeated JuConfigList list = 10;
+    //repeated MicGroup micGroup = 11;
+    map<string, string> micGroup = 11;
+    repeated uint32 micList = 12;
+    repeated MicExtra mic_extra = 13;
+    string name = 14;
+    uint32 show_bag = 15;
+    string show_index = 16;
+    string state = 17;
+    google.protobuf.ListValue steps = 18;   //无法定义pb,需要特殊处理
+    string turns = 19;
+    string type = 20;
+    map<string, UserCommodity> user_commodity = 21;
+
+    message MicGroup {
+      uint32 uid = 1;
+      string header = 2;
+    }
+
+    message UserCommodity {
+      uint32 cid = 1;
+      string image = 2;
+      string image_bg = 3;
+    }
+
+    message JuConfigList {
+      string collectClue = 1;
+      string current_show = 2;
+      string dateline = 3;
+      string id = 4;
+      string isOut = 5;
+      string isWin = 6;
+      string jid = 7;
+      string meeting = 8;
+      string multi_win = 9;
+      string offline = 10;
+      string oneSearch = 11;
+      string twoSearch = 12;
+      string oneSearchClueSurplus = 13;
+      string position = 14;
+      string public = 15;
+      string read = 16;
+      string ready = 17;
+      string rid = 18;
+      string roleGroupName = 19;
+      string roleIcon = 20;
+      string roleId = 21;
+      string roleName = 22;
+      string rolePosition = 23;
+      string score = 24;
+      string self = 25;
+      string show = 26;
+      string threeSearch = 27;
+      string threeSearchClueSurplus = 28;
+      string turns = 29;
+      string twoSearchClueSurplus = 30;
+      string uid = 31;
+      string userEndTime = 32;
+      string userStartTime = 33;
+      string vote = 34;
+    }
+
+    message Steps {
+      string readStory = 1;
+      string selfIntroduction = 2;
+      string meeting = 3;
+      string vote = 4;
+      string oneSearch = 5;
+      string twoSearch = 6;
+      string publicStory = 7;
+    }
+  }
+
+  message Match {
+    uint32 left_seconds = 1;
+    uint32 status = 2;
+  }
+
+  message KtvPkRank {
+    int32 before_score = 1;
+    google.protobuf.Value chorus_before_score = 2;
+    google.protobuf.Value chorus_current_score = 3;
+    uint32 chorus_uid = 4;
+    int32 current_score = 5;
+    uint32 on_mic_uid = 6;
+    uint32 pk_mode = 7;
+  }
+
+  message GamePlayList {
+    uint32 show = 1;
+  }
+
+  message RoomDefend {
+    uint32 level = 1;
+    double next_level_score = 2;
+    double score = 3;
+    bool show_next = 4;
+    uint32 uid = 5;
+  }
+
+  message ArtCenter {
+    bool is_admin = 1;
+    string room_factory_type = 2;
+  }
+
+  message MateData {
+    bool show_intimate = 1;
+    bool show_order = 2;
+    bool show_confess = 3;
+    bool can_slide = 4;
+    bool can_scroll = 5;
+    uint32 broker_user = 6;
+    bool show_week_star = 7;
+    uint32 hat_state = 8;
+  }
+
+  message UnionData{
+    string name = 1;
+    string icon = 2;
+    string owner_uid = 3;
+    string owner_name = 4;
+    uint32 un_id = 5;
+  }
+
+  message Top3Sender {
+    uint32 uid = 1;
+    string gift_value = 2;
+    string frame = 3;
+    string frame_new = 4;
+    string icon = 5;
+    string name = 6;
+  }
+
+  message CloudGameInfo {
+    string id = 1;
+    string instance_id = 2;
+    string name = 3;
+    string icon = 4;
+    uint32 is_horizontal = 5;
+    repeated string tag = 6;
+    string game_type = 7;
+    uint32 archive_support = 8;
+    string service_provider = 9;
+    string machine_type = 10;
+    uint32 is_free = 11;
+    string landscape_icon = 12;
+    string tab = 13;
+    uint32 cgi_id = 14;
+    string border = 15;
+    uint32 state = 16;
+    repeated UserList user_list = 17;
+    Authentication authentication = 18;
+    string vendor = 19;
+    string live_url = 20;
+    uint32 hide_mouse = 21;
+
+    message UserList {
+      uint32 uid = 1;
+      int32 role_index = 2;
+      uint32 want_play_cloud_game = 3;
+    }
+
+    message Authentication {
+      string bid = 1;
+      uint32 channel_id = 2;
+      string game_channel = 3;
+      string game_pkg = 4;
+      string c_token = 5;
+      string cid = 6;
+      string pin_code = 7;
+      int32 stream_type = 8;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+syntax = "proto3";
+package pb;
+
+/*
+充值礼包相关proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message RespShare {
+  bool success = 1;
+  string msg = 2;
+  uint32 share = 3;
+  string title = 4;
+  string icon = 5;
+  string desc = 6;
+  string url = 7;
+  string wxUserName = 8;
+  string wxIcon = 9;
+  string wxPath = 10;
+  string info = 11;
+}

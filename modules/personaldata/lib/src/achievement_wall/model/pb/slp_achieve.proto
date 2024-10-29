@@ -1,0 +1,111 @@
+syntax = "proto3";
+package pb;
+/*
+成就墙proto
+*/
+
+option go_package = "../app/pb";
+
+message ResAchieveWall {
+  bool success = 1;               //成功true，失败false
+  string msg = 2;                 //失败message
+  AchieveWallData data = 3;       //返回数据
+}
+
+message AchieveWallData {
+  uint32 unlock_num = 1;                //解锁数量
+  uint32 total_num = 2;                 //勋章总数
+  repeated AchieveBadgeTab tab = 3;     //勋章类别Tab
+  repeated UserAchieveBadge list = 4;   //勋章列表
+  uint32 friend_rank = 5;               //好友中排名
+  UserAchieve user = 6;
+  repeated AchieveSkin skin_list = 7;//皮肤列表
+}
+
+message UserAchieve {
+  uint32 uid = 1;                      //勋章类别名称
+  string name = 2;                      //勋章类别名称
+  string icon = 3;
+  repeated UserAchieveLevel level = 4;
+  uint32 achieve_num = 5;//成就点
+  uint32 skin_id = 6;//使用的皮肤id，0：未使用
+  bool is_wear = 7;             //用户是否佩戴
+}
+
+message AchieveSkin {
+  uint32 skin_id = 1; //皮肤id
+  string name = 2;     //皮肤名称
+  //string icon = 3;//皮肤logo图,这个考虑到用户体验，客户端直接存了
+  //string image = 4;//皮肤背景图,这个考虑到用户体验，客户端直接存了
+  uint32 achieve_num = 5;//佩戴的成就点要求最低值
+}
+
+message UserAchieveLevel {
+  uint32 level=1;//勋章等级
+  uint32 num=2;//用户该等级下的勋章数量
+  string icon=3;
+}
+
+message AchieveBadgeTab {
+  uint32 category = 1;                  //勋章类别id
+  string name = 2;                      //勋章类别名称
+}
+
+message UserAchieveBadge {
+  uint32 badge_id = 1;                  //勋章id
+  string name = 2;                      //勋章名称
+  string description = 3;               //勋章描述
+  repeated string images = 4;           //勋章图片
+  uint32 level = 5;                     //勋章等级
+  uint32 unlock = 6;                    //是否解锁，0-未解锁，1-解锁
+  uint32 score = 7;                     //当前分值
+  repeated string level_rules = 8;      //各等级达成规则
+  string date = 9;                      //勋章获得日期
+  string redirect = 10;                 //通用跳转
+  uint32 unlock_count = 11;             //已解锁的总人数
+  repeated string level_rules_text = 12;      //各等级达成规则text
+  repeated uint32 level_scores = 13;
+  uint32 progress_type = 14;      //0:数字进度类型；1：非数字类型
+  uint32 sort = 15;      //服务端排序
+  repeated string level_date = 16;                      //获取日期数组
+}
+
+message ResAchieveBadgeRank {
+  bool success = 1;                     //成功true，失败false
+  string msg = 2;                       //失败message
+  AchieveBadgeRankData data = 3;        //返回数据
+}
+
+message AchieveBadgeRankData {
+  repeated AchieveBadgeRankItem list = 1;
+  AchieveBadgeRankItem my = 2;
+}
+
+message AchieveBadgeRankItem {
+  uint32 rank = 1;                      //排名
+  uint32 uid = 2;                       //用户id
+  string name = 3;                      //用户昵称
+  string icon = 4;                      //用户头像
+  uint32 score = 5;                     //勋章数量
+}
+
+
+message ResAchieveWearBadge {
+  bool success = 1;                     //成功true，失败false
+  string msg = 2;                       //失败message
+}
+
+message ResAchieveChangeSkin {
+  bool success = 1;                     //成功true，失败false
+  string msg = 2;                       //失败message
+}
+
+message ResGetRedirect {
+  bool success = 1;                     //成功true，失败false
+  string msg = 2;                       //失败message
+  GetRedirectData data = 3;        //返回数据
+}
+
+message GetRedirectData {
+  string redirect=1;
+}

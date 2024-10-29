@@ -1,0 +1,122 @@
+syntax = "proto3";
+package pb;
+/*
+KTV榜单proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ResKtvThisWeekRank {
+  bool success = 1;                         //成功true，失败false
+  string msg = 2;                           //失败message
+  repeated KtvThisWeekRankData data = 3;    //本周演唱榜
+  KtvThisWeekRankData my = 4;               //我的排名
+}
+
+message KtvThisWeekRankData {
+  uint32 rank = 1;          //排名
+  uint32 uid = 2;           //用户id
+  string name = 3;          //用户名称
+  string icon = 4;          //用户头像
+  uint32 score = 5;         //用户得分
+  string desc = 6;          //描述
+  uint32 diff_score = 7;    //距离上榜差的分数
+}
+
+message ResKtvHotSongRank {
+  bool success = 1;                         //成功true，失败false
+  string msg = 2;                           //失败message
+  repeated KtvHotSongRankData data = 3;     //最热单曲榜
+}
+
+message KtvHotSongRankData {
+  uint32 rank = 1;              //排名
+  uint32 song_id = 2;           //歌曲id
+  string name = 3;              //歌曲名称
+  uint32 score = 4;             //歌曲得分
+  repeated string singers = 5;  //演唱者头像
+}
+
+message ResKtvSingleSongRank {
+  bool success = 1;                             //成功true，失败false
+  string msg = 2;                               //失败message
+  repeated KtvSingleSongRankData data = 3;      //单曲榜
+  string song_name = 4;                         //歌曲信息
+}
+
+message KtvSingleSongRankData {
+  uint32 rank = 1;              //排名
+  uint32 score = 2;             //歌曲得分
+  uint32 singer_uid = 3;        //演唱者id
+  string singer_name = 4;       //演唱者名称
+  string singer_icon = 5;       //演唱者头像
+}
+
+
+/*
+  KTV 声网、Zego、曲库 proto
+*/
+
+message ResMusicTapList {
+  bool success = 1;               //成功true，失败false
+  string msg = 2;                 //失败message
+  MusicTabData data = 3;       //返回数据
+}
+
+message ResMusicSearch {
+  bool success = 1;
+  string msg = 2;
+  SearchMusics data = 3;
+}
+
+message MusicTabData {
+  repeated MusicInfoSet info = 1;
+  MusicBaseInfo base = 2;
+}
+
+message MusicBaseInfo{
+  string description = 1;
+  int64 music_num = 2;
+  string playlistId = 3;
+  string title = 4;
+  string platform = 5;
+}
+
+message SearchMusics{
+  repeated MusicInfoSet info = 1;
+  string platform = 2;
+}
+
+message MusicInfoSet{
+  uint32 duration = 1;
+  string music_id = 2;
+  string name = 3;
+  repeated string singer_set = 4;
+  bool choosed = 5;
+  string song_cover = 6;
+}
+
+message ResMusicToken {
+  bool success = 1;
+  string msg = 2;
+  MusicTokenData data = 3;
+}
+
+message MusicTokenData {
+  string token = 1;
+}
+
+/// 背景音乐配置接口
+message ResBgMConfig{
+  bool success = 1;
+  string msg = 2;
+  BgMConfig data = 3;
+}
+
+message BgMConfig{
+  bool allow_upload = 1;
+  bool show_zego_music = 2;
+  bool show_kugou_music = 3;
+}

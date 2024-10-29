@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package screen.msg.pull;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+message ScreenMsgPull{
+  option (pb.register_name) = 'Room.DanmuPullMode';
+  option (pb.register_id) = 10004;
+
+  bool pull_switch = 1;          // false:关闭 true:开启
+  string url = 2;
+  int64 current_time = 3;   //当前时间戳us
+}

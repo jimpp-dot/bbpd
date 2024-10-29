@@ -1,0 +1,70 @@
+syntax = "proto3";
+package matepb;
+
+// 礼物周星榜
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message GiftRankConfigRes{
+  string msg = 1;
+  bool success = 2;
+  GiftRankConfig data=4;
+}
+
+message GiftRankConfig{
+  string rule_url = 1;
+  string background=2;
+  repeated GiftObj this_week_gifts=3; // 本周礼物列表
+  repeated GiftObj last_week_gifts=4; // 上周礼物列表
+  repeated WeekStar week_star=5;
+  repeated RankTab rank_tab=6;
+  string background_bottom=7;
+}
+
+message RankTab{
+  string tab_name=1;
+  uint32 rank_type = 2;
+}
+
+message GiftObj{
+  uint32 gift_id = 1;
+  string gift_name =2;
+  string gift_icon = 3;
+}
+
+message WeekStar{
+  uint32 gift_id = 1;
+  string gift_name =2;
+  string gift_icon = 3;
+  uint32 uid = 4;
+  string user_icon =5;
+  string user_name =6;
+  uint32 gift_num = 7;
+}
+
+message GiftRankListRes{
+  bool success=1;
+  string msg =2;
+  GiftRankList data =3;
+}
+
+message MyRank{
+  uint32 gift_num = 1;
+  uint32 rank = 2;
+  string name = 3;
+  uint32 uid = 4;
+  string icon = 5;
+}
+
+message RankList{
+  string icon = 1;
+  string name = 2;
+  uint32 uid =3;
+  uint32 gift_num = 4;
+}
+
+message GiftRankList{
+  MyRank my_rank = 1;
+  repeated RankList rank_list = 2;
+}

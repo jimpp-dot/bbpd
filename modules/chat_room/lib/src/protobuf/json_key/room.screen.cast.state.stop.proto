@@ -1,0 +1,19 @@
+syntax = "proto3";
+    
+package room.screen.cast.state.stop;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+import "google/protobuf/struct.proto";
+
+message RoomScreenCastStateStop {
+    option (pb.register_name) = 'room.screen.cast.state.stop';
+    option (pb.register_id) = 85;
+    //实际类型为uint32，上一个版本为string类型
+    uint32 state = 1;
+    google.protobuf.Value playing_sec = 2;
+    string title = 3;
+    string url = 4;
+    int32 startTime = 5;
+}

@@ -1,0 +1,98 @@
+syntax = "proto3";
+package pb;
+/*
+  建联用户池
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+// 用户池列表接口返回
+// 参数(query): eg: tab_id = 1
+message ResKaTouchList {
+  bool   success = 1;
+  string msg = 2;
+  KaTouchListData data = 3;
+}
+
+message KaTouchListData {
+  // tab列表，新人池，高潜池
+  repeated KaTouchTab tab_list = 1;
+  // 当前tab id
+  uint32 current_tab = 2;
+  // 当前tab下的用户列表
+  repeated KaTouchPoolUser list = 3;
+  // 数据为空时提示文案
+  string empty_text = 4;
+}
+
+message KaTouchTab {
+  // tab id
+  uint32 id = 1;
+  // tab名称
+  string name = 2;
+}
+
+message KaTouchPoolUser {
+  // uid
+  uint32 uid = 1;
+  // 用户昵称
+  string name = 2;
+  // 头像
+  string avatar = 3;
+  // 性别1男，2女
+  uint32 sex = 4;
+  // 在线状态，0不在线，1 在线
+  uint32 online_status = 5;
+  // 已回复， 0未回复，1 已回复
+  uint32 has_replied = 6;
+  // 所属用户池，1：新人池，2：高潜池
+  uint32 pool_id = 7;
+  // 已发送，发送时使用的content_id
+  uint32 content_id = 8;
+}
+
+// 历史统计数据接口
+// 无参数
+message ResKaTouchStatHistory {
+  bool   success = 1;
+  string msg = 2;
+  KaTouchStatHistoryData data = 3;
+}
+
+message KaTouchStatHistoryData {
+  repeated KaTouchStatModule list = 1;
+}
+
+message KaTouchStatModule {
+  // 索引值，0表示全部
+  uint32 idx = 1;
+  // 池名称
+  string name = 2;
+  // 已发送数量
+  string send_count = 3;
+  // 已回复百分比
+  string reply_percent = 4;
+  // 回复数量
+  string reply_count = 5;
+}
+
+// 每日统计数据接口
+// 参数(query): eg: date=20240104
+message ResKaTouchStatDaily {
+  bool   success = 1;
+  string msg = 2;
+  KaTouchStatDailyData data = 3;
+}
+
+message KaTouchStatDailyData {
+  // 当日发送的列表数据
+  repeated KaTouchPoolUser list = 2;
+
+  // 快捷回复id 对应关系
+  map<uint32 ,string> content_map = 3;
+
+  // 用户池对应关系
+  map<uint32 ,string> pool_map = 4;
+}

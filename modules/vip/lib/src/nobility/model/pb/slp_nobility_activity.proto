@@ -1,0 +1,59 @@
+syntax = "proto3";
+package pb;
+/*
+用户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message RespGiftBagDetail {
+  bool success = 1;
+  string msg = 2;
+  GiftBagTitleData title_data = 3;
+  GiftBag11Data eleven_data = 4;
+  GiftBagCherishData cherish_data = 5;
+}
+
+message GiftBagTitleData {
+  string period = 1;
+  uint32 cost = 2;
+  uint32 left = 3;
+  string title_icon = 4;
+  repeated GiftBagBenefitData benefits = 5;
+  repeated GiftBagRewardData rewards = 6;
+  uint32 reward_value = 7;
+  string desc = 8;
+}
+
+message GiftBagBenefitData {
+  string name = 1;
+  string icon = 2;
+}
+
+message GiftBagRewardData {
+  string name = 1;
+  string icon = 2;
+  string cate_name = 3;
+  uint32 id = 4;
+  uint32 price = 5;
+  uint32 period = 6;
+  uint32 type = 7;
+}
+
+message GiftBag11Data {
+  uint32 left = 1;
+  repeated GiftBagRewardData rewards = 2;
+  uint32 cost = 3;
+}
+
+message GiftBagCherishData {
+  uint32 left = 1;
+  repeated GiftBagRewardData rewards = 2;
+}
+
+message RespGiftBagBuy {
+  bool success = 1;
+  string msg = 2;
+}

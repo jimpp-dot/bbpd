@@ -1,0 +1,92 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message KtvRoomTaskLevelItem{
+  uint64 min = 1; // 当前级别需要的最小值
+  uint64 next = 2; // 到达下一个级别需要的值
+  uint32 level = 3; // 当前所属级别，从0开始
+  string levelName = 4; // 当前级别名称
+  string url = 5; // 当前级别的标识
+}
+
+message KtvRoomTaskLevelInfo{
+  uint64 current = 1; // 当前房间当前的级别
+  string levelName = 2; // 当前房间当前等级名称
+  uint32 level = 3; // 当前房间的等级
+  repeated KtvRoomTaskLevelItem levels= 4; // ktv房间等级配置
+}
+
+message KtvRoomTaskInfo{
+  string type = 1; // 任务名称，目前支持"sign，签到,giftsend，送礼，online 在线，sing 唱歌,screen 公屏互动"
+  uint32 status = 2; // 0 未知，1，未完成，2，完成中，3，已完成，4，已领取
+  string title = 3;
+  string desc = 4;
+  KtvRoomTaskExtra extra = 5; // 每个任务的额外信息
+}
+
+message KtvRoomTaskExtra{
+  oneof Extra{
+      KtvRoomTaskSignWeekly signWeekly = 1; // 周签到任务的信息
+      KtvRoomTaskOnline online = 2; // 在线时长任务的额外信息
+  }
+}
+
+message KtvRoomTaskSignWeekly{
+  uint32 signMonthCount = 1;
+  repeated KtvRoomTaskSignWeeklyItem signs = 2;
+}
+
+message KtvRoomTaskSignWeeklyItem{
+  string tag = 1;
+  bool sign = 2;
+}
+
+message KtvRoomTaskOnline{
+  uint32 min = 1; // 在线时长统计最小值
+  uint32 max = 2; // 在线时长统计最大值
+  uint32 cur = 3; // 当前在线时长
+}
+
+message KtvRoomTaskConfig{
+  KtvRoomTaskLevelInfo level = 1;
+  KtvRoomTaskInfo sign = 2;
+  KtvRoomTaskInfo giftSend = 3;
+  KtvRoomTaskInfo online = 4;
+  KtvRoomTaskInfo sing = 5;
+  KtvRoomTaskInfo screen = 6;
+
+}
+message ApiKtvRoomTaskConfigResponse{
+  bool success = 1;
+  string message = 2;
+  KtvRoomTaskConfig data = 3;
+}
+
+message KtvRoomTaskBenefitItem{
+  string type = 1; // "hot 热度值,label,房间标识,admin,房间管理员,member,房间成员标识,card，成员资料卡"
+  string desc = 2; // 描述
+  uint32 num = 3; // 发放数量
+  string url = 4; // 任务url
+}
+
+message KtvRoomTaskLevelBenefit{
+  repeated KtvRoomTaskBenefitItem benefit = 1;
+}
+
+message KtvRoomTaskBenefitInfo{
+  map<uint32,KtvRoomTaskLevelBenefit> benefits = 1;
+  uint32 taskStatus = 2; // 0 未知，1，未达成，2，已达成
+  uint32 receivedStatus = 3; // 0 未知，1，不可领取，2，可领取未领取，3，可领取已领取
+  KtvRoomTaskLevelInfo level = 4;
+}
+
+message ApiKtvRoomBenefitResponse{
+  bool success = 1;
+  string message = 2;
+  KtvRoomTaskBenefitInfo data = 3;
+}
+

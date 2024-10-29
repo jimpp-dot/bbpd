@@ -1,0 +1,29 @@
+syntax = "proto3";
+package pb;
+/*
+贵族proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ResTitleMicSofaSetting {
+  bool success = 1;                         //成功true，失败false
+  string msg = 2;                           //失败message
+  TitleMicSofaData data = 3;
+}
+
+message TitleMicSofaData {
+  bool enable = 1;                          //麦座佩戴开关
+  uint32 wear_level = 2;                    //当前穿戴的等级
+  repeated TitleMicSofaInfo dropbox = 3;    //可穿戴麦座列表
+  bool mic_nick_bg_enable = 4;              //麦坑昵称背景色开关
+}
+
+message TitleMicSofaInfo {
+  uint32 level = 1;                         //爵位等级
+  string name = 2;                          //爵位名称
+  uint32 id = 3;          //  宝座id
+  bool selected = 4;      //  是否选中
+}

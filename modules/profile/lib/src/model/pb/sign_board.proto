@@ -1,0 +1,37 @@
+syntax = "proto3";
+package pb;
+/*
+搜索服务proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ListBoardRsp {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  SignData data = 3;
+}
+
+message SignData {
+  bool signed = 1;
+  string weekDay = 2;
+  uint32 total = 3;
+  uint32 popTimes = 4;
+  bool  canSignWithoutMobile = 5;
+  repeated SignBoard board = 6;
+}
+
+message SignBoard {
+  uint32 signType =1;
+  uint32  missionType =2;
+  uint32  missionId =3;
+  string  awardType =4;
+  string    awardIcon = 5;
+  int32 awardNumCoin =6;
+  string awardIconCoin =7;
+  int32    isSign = 8;
+  string    icon = 9;
+  int32 awardNum =10; //兼容性字段
+}

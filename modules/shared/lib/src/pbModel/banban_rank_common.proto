@@ -1,0 +1,166 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+// ResSingerRank 请求才艺厅榜单返回,接口：/go/slp/rank/broadcasterContent [post]
+message ResBroadcasterContentRank {
+  bool success = 1;                             //成功true，失败false
+  string msg = 2;                               //失败message
+  BroadcasterContentRankData data = 3;
+}
+
+message BroadcasterContentRankData {
+  int32 rank_show_max = 1;                      //本周榜单最多显示数量
+  repeated CommonRankMember this_week_members = 2;   //本周榜单,length不超过rank_show_max
+  repeated CommonRankMember last_week_topN = 3;      //上周topN
+  CommonRankMember me = 4;                           //本周自己的榜单排名,rank大于rank_show_max则显示{rank_show_max}+
+}
+
+// ResSingerRank 请求歌手榜单返回,接口：/go/slp/rank/singer [post]
+message ResSingerRank {
+  bool success = 1;                             //成功true，失败false
+  string msg = 2;                               //失败message
+  SingerRankData data = 3;
+}
+
+message SingerRankData {
+  int32 rank_show_max = 1;                      //本周榜单最多显示数量
+  repeated SingerRankMember members = 2;        //本周全局榜单/新秀榜单,length不超过rank_show_max
+  SingerRankMember me = 3;                      //本周自己的榜单排名,rank大于rank_show_max则显示{rank_show_max}+
+}
+
+enum SingerLevel {
+  SingerLevelNone = 0;
+  SingerLevelNewer = 1;              // 见习歌手
+  SingerLevelNormal = 2;             // 歌手
+  SingerLevelPopSinger = 3;          // 明星歌手
+  SingerLevelGoldSinger = 4;         // 金牌歌手
+  SingerLevelExpertSinger = 5;       // 唱将
+}
+
+message CommonRankMember {
+  uint32 uid = 1;
+  int32 rank = 2;                   // 排名，从1开始
+  uint32 score = 3;                 // 得分
+  string name = 4;                  // 用户名
+  string icon = 5;                  // icon
+}
+
+message SingerRankMember {
+  CommonRankMember base = 1;      // 基本信息
+  SingerLevel level = 2;          // 歌手等级
+  ViabilityInfo viability = 3;    // 活跃值
+  string singer_url = 4;          // 歌手等级图标
+  uint32 inRid = 5;               // 当前所在房间
+  string audio_url = 6; // 音频链接 新增
+  uint32 audio_seconds = 7; // 音频描述 新增
+}
+
+message ViabilityInfo {
+  int32 main_level = 1;            //活跃等级
+  string main_level_title = 2;     //活跃等级名称
+  int32 sub_level = 3;             //活跃等级子等级
+}
+
+// ResGloryHourRank 请求荣耀小时榜单返回,接口：/go/slp/rank/gloryHour [post]
+message ResGloryHourRoomRank {
+    bool                  success    = 1;  //成功true，失败false
+    string                msg        = 2;  //失败message
+    GloryHourRankData data = 3;  
+}
+
+message GloryHourRankData {
+    int64   deadline                  = 1;  //截止时间(时间戳)
+    int64   left_seconds              = 2;  //剩余时间(单位:秒)
+    oneof data {
+        GloryHourRoomRankData glory_room = 3;
+        GloryHourStarRankData glory_star = 4;
+    }
+}
+
+message GloryHourRoomRankData {
+    repeated GloryHourRoomRankGiftTop  top1  = 1;  //礼物排名top1
+    repeated GloryHourRoomRankMember members = 2;  //榜单内容,指定礼物榜单成员
+}
+
+message GloryHourRoomRankGiftTop {
+    uint32 gift_id = 1;
+    string gift_name = 2;
+    GloryHourRankMember top_room = 3;
+}
+
+message GloryHourRoomRankMember {
+    GloryHourRankMember room  = 1; 
+    int32               rank  = 2; //排名,从1开始
+    uint32              score = 3; //共同打赏贡献值
+}
+
+message GloryHourStarRankData {
+    repeated GloryHourStarRankMember members = 1;
+}
+
+message GloryHourStarRankMember {
+    GloryHourRankMember left  = 1; 
+    GloryHourRankMember right = 2;
+    int32               rank  = 3; //排名,从1开始
+    uint32              score = 4; //共同打赏贡献值
+}
+
+message GloryHourRankMember {
+    uint32 id    = 1;  // 用户id或房间id
+    string name  = 2;  // 名称
+    string icon  = 3;  // icon
+    bool online = 4; // online
+}
+
+message RoomGloryHourRankEntrance {
+    bool show = 1;                      //是否展示荣耀小时榜，0-否，1-是
+    uint32 stage = 2;                   //展示阶段，1-荣耀时刻、高光之星轮播，2-倒计时
+    uint32 count_start = 3;             //倒计时开始分钟数50
+    uint32 count_end = 4;               //倒计时结束分钟数55
+    uint32 show_at = 5;                 //入口显示时间1200 (20:00:00)
+    uint32 hide_at = 6;                 //入口隐藏时间10 (00:10:00)
+}
+
+message ResGloryHourEntranceRefresh {
+    bool                  success    = 1;  //成功true，失败false
+    string                msg        = 2;  //失败message
+    GloryHourEntranceRefresh   data = 3;
+}
+
+message GloryHourEntranceRefresh {
+    RoomHourStarRankTop top = 1;
+}
+
+message RoomHourStarRankTop {
+    uint32 left_uid = 1;                //高光之星左边uid
+    uint32 right_uid = 2;               //高光之星右边uid
+    string left_icon = 3;               //高光之星左边头像
+    string right_icon = 4;              //高光之星右边头像
+}
+
+message RecoverListItem {
+    uint32  id = 1;// id
+    string icon = 2;//头像
+    string name = 3;//名字
+    uint32 sex = 4;//性别
+    uint32 uid = 5;//uid
+    uint32 age =6;//年龄
+    uint32 intimacy = 7;//亲密度
+    uint32 accompany_time = 8;//陪伴时长
+    uint32 recover_time = 9;//移除时间
+}
+
+message RecoverListRsp {
+    bool success = 1;  //成功true，失败false
+    string msg = 2;  //失败message
+    message dataItem {
+        bool more =1;
+        repeated RecoverListItem rank_list =2;//列表
+        uint32 recover_money = 3;//恢复的价格
+    }
+    dataItem data = 3;//数据
+}

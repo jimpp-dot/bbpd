@@ -1,0 +1,759 @@
+syntax = "proto3";
+package pb;
+/*
+用户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+import "exhibit.proto";
+import "gift_handbook.proto";
+/*******************************************************基本信息********************************************************/
+
+//个人基本信息
+message HomeProfileBase {
+  uint32 uid = 1;                      //uid
+  string name = 2;                    //昵称
+  string icon = 3;                    //头像
+  uint32  age = 4;                     //年龄
+  string birthday = 5;                //生日
+  string sign = 6;                    //签名
+  uint32 online_status = 7;            //在线状态
+  uint32 dateline = 8;                 //注册日期
+  uint32 online_dateline = 9;          //离线时间
+  string online_dateline_diff = 10;   //离线时间文本
+  uint32 job = 11;                     //职业
+  uint32 sex = 12;                     //性别
+  uint32 title = 13;                   //爵位
+  int32 deleted = 14;                 //封禁状态
+  uint32 block_un_auther_message = 15; //是否允许陌生人消息
+  string position = 16;               //街道位置
+  uint32 role = 17;                    //角色
+  uint32 vipLevel = 18;                //VIP等级
+  repeated string photos = 19;        //形象照
+  string mark_name = 20;              //备注名
+  bool icongray = 21;                 //是否置灰
+  uint32 topic = 22;                   //动态数量
+  uint32 need_verify = 23;             //是否需要身份认证
+  uint32 need_verify_new = 24;         //新版身份认证
+  uint32 official = 25;                //官方标识
+  uint32 is_newer = 26;                //萌新标识
+  uint32 popularity_level = 27;        //人气等级
+  uint32 follow_relation = 28;         //关注关系
+  uint32 fans_num = 29;                //粉丝数量
+  string distance = 30;               //距离
+  uint32 accompany_num = 31;          //陪伴榜人数
+  uint32 new_noble = 32;              //新贵标签
+  uint32 authentication = 33;         //是否红人认证
+  uint32 authenticationScore = 34;     //红人热度
+  string authenticationSign = 35;      //红人标签
+  uint32 defend_count = 36;            //守护人数
+  string frame = 37;                   //用户头像框
+  uint32 virtual_man = 38;             //这个人是不是模拟厅的假人
+  uint32 knight_level = 39;            //骑士团的等级
+  string live_label_header = 40;       //粉丝团的头像框
+  string live_label_bubble = 41;       //粉丝团的聊天气泡
+  string live_label_effect = 42;       //粉丝团的进场特效
+  uint32 live_only = 43;              //是否使用了直播专属头像框
+  string little_alarm = 44;            //小闹钟标签
+  string jukebox = 45;                 //点唱标签
+  bool consume_label = 46;              //消费标签
+  bool recharge_label = 47;             //充值标签
+  uint32 star_singer = 48;              //明星歌手标签
+  uint32 star_verify_tag = 49;          //明星用户认证
+  string star_verify_desc = 50;         //明星用户身份
+  bool ka_white_icon = 51;              //KA神壕标签
+  uint32 artist_worth = 52;             //作为艺人 身价
+  uint32 artist_sign_num = 53;          //作为艺人 签约次数
+  uint32 artist_level = 54;             //作为艺人 等级
+  uint32 agent_level = 55;              //作为经纪人 等级
+  uint32 have_artist_num = 56;          //作为经纪人 旗下艺人数
+  uint32 seven_love_tag = 57;           //七夕活动勋章
+  string agent_icon = 58;               //经纪人的icon
+  repeated string badge_icons = 59;     //用户拥有的勋章
+  string badge_icon_in_use = 60;        //用户佩戴的勋章
+  repeated string tags = 61;            //用户统一标签
+  uint32 pretty_uid = 62;               //用户靓号id
+  uint32 week_star = 63;                //周星大人物标签, 仅在房间资料卡展示
+  uint32 is_third_newer = 64;           //是否三日内注册新用户
+  string ip_location = 65;              //IP属地
+  bool has_godcard = 66;               //是否有主播卡
+  uint32 music_order_count = 67;       //点唱首推歌单个数
+  bool has_cp_house = 68;              //是否有cp小屋
+  uint32 activity_level = 69;           //活跃等级
+  string activity_level_title = 70;     //活跃等级名称
+  uint32 activity_sub_level = 71;       //活跃等级子等级
+  repeated HomeProfileBadgeItem badges = 72; //勋章(礼物之王和礼物之星单独使用,后续心中勋章可以迁移到改字段)
+  uint32 godcard_block = 73;            //个人页主播卡栏目，0-不展示，1-展示
+  HomeProfileAchieveBadge achieve_wear = 74;            //成就墙勋章佩戴
+  bool can_game_order = 75; //可以被游戏下单开黑
+  string hold_hand_icon = 76;   //牵手标签
+}
+
+/*******************************************************技能信息********************************************************/
+
+//个人页活跃值
+message HomeProfileViability{
+  string title = 1;                  //名称
+  int32 main_level = 2;              //大等级
+  int32 sub_level = 3;               //小等级
+}
+
+//技能价格信息
+message HomeProfileSkillPrice{
+  string uint = 1;                  //单位
+  int32 price = 2;                  //价格
+  int32 cheap = 3;                  //特惠
+}
+
+//主播信息
+message HomeProfileSkill{
+  int32 cid = 1;                    //技能id
+  string name = 2;                  //技能名称
+  string icon = 3;                  //技能图标
+  string _level = 4;                //技能等级
+  int32 num = 5;                    //接单数量
+  int32 is_default = 6;             //是否是默认技能
+  repeated HomeProfileSkillPrice price = 7;  //价格信息
+  repeated string user_god_tag_list = 8;     //主播tag
+}
+
+//技能相关信息
+message HomeProfileGod{
+  uint32 god_num = 1;                  //技能数量
+  string god_category = 2;            //技能id列表，逗号分隔
+  uint32 service_pause = 3;            //暂停服务
+  uint32 service_busy = 4;             //当前是否接单中
+  int32 credit_god_level = 5;         //主播信用等级
+}
+
+/*******************************************************房间信息********************************************************/
+
+message HomeProfileRoom{
+  int32 rid = 1;                      //房间id
+  int32 uid = 2;                      //用户id
+  string name = 3;                    //房间名称
+  string icon = 4;                    //房间图标
+  string property = 5;                //房间属性
+  int32 onmic_num = 6;                //麦上人数
+  string role = 7;                    //房间角色
+  string label = 8;                   //房间标签
+  string settlement_channel = 9;      //结算频道
+}
+
+/*******************************************************礼物墙信息*******************************************************/
+
+message HomeProfileGift{
+  uint32 gid = 1;                      //礼物id
+  uint32 num = 2;                      //数量
+  string name = 3;                    //礼物名称
+  uint32 sum = 4;                     //总价值
+}
+
+/*******************************************************交友标签********************************************************/
+
+message HomeProfileTagItem{
+  int32 id = 1;                     //标签id
+  string name = 2;                  //标签名称
+}
+
+message HomeProfileTag{
+  repeated HomeProfileTagItem friend_tags= 5; //交友标签信息
+  repeated HomeProfileTagItem tags = 6;       //个人标签信息
+}
+
+/*******************************************************徒弟信息********************************************************/
+
+message HomeProfileDisciple{
+  int32 uid = 1;                  //用户id
+  string name = 2;                //昵称
+  string icon = 3;                //头像
+  int32 sex = 4;                  //性别
+  int32 online_status = 5;       //在线状态
+  int32 online_dateline = 6;     //离线时间
+  string online_dateline_diff = 7;//离线时间文本
+  int32 age = 8;                  //年龄
+  int32 together_days = 9;        //师徒时间
+  int32 now_exp = 10;             //当前师徒经验
+  int32 nex_exp = 11;             //下一级经验
+}
+
+
+/*******************************************************家族信息********************************************************/
+
+message HomeProfileFleet{
+  int32 gid = 1;                  //家族id
+  string name = 2;                //昵称
+  string icon = 3;                //头像
+  int32 total = 4;                //家族成员
+  int32 creator = 5;              //创建者uid
+  int32 in = 6;                   //todo
+}
+
+/***********************************************交友卡信息（删掉了些冲鸭特有的）*********************************************/
+
+message HomeProfileCard{
+  int32 uid = 1;                //用户id
+  string name = 2;              //昵称
+  string icon = 3;              //头像
+  string desc = 4;              //描述
+  string audio = 5;             //录音
+  string hometown_city = 6;     //家乡城市
+  int32 hometown_city_code = 7; //家乡城市编码
+  string duration = 8;          //持续时间
+  int32 age = 9;                //年龄
+  int32 liked_num = 10;         //被点赞次数
+  int32 height = 11;            //身高
+  string industry = 12;         //行业
+  string education = 13;        //学历
+}
+
+/******************************************************守护信息********************************************************/
+
+message HomeProfileDefend{
+  int32 uid = 1;                //用户id
+  string title = 2;             //守护名称
+  int32 defend_value = 3;       //守护值
+  int32 position = 4;           //守护等级
+  int32 expire = 5;             //过期时间
+  string name = 6;              //昵称
+  string icon = 7;              //头像
+  int32 border_index = 8;       //边框编号
+}
+
+/******************************************************联盟信息********************************************************/
+
+message HomeProfileUnion{
+  int32 un_id = 1;            //联盟id
+  string name = 2;            //联盟昵称
+  int32 create_uid = 3;       //创建者uid
+  string logo = 4;            //联盟logo
+  string user_title = 5;      //管理头衔，80：无头衔，10：盟主，20：副盟主，30：长老
+  string title_name = 6;      //用户头衔名称
+}
+
+/******************************************************挂件信息********************************************************/
+
+message HomeProfileDecorate{
+  message ImageText {
+    string text=1;
+    string image=2;
+  }
+  int32 gift_id = 1;        //礼物id
+  int32 vap_size = 2;       //礼物大小
+  string image = 3;       //mp4资源地址字段,或者webp资源字段
+  uint32 show_type=4;//0：默认；1：恩爱猫咪
+  repeated ImageText image_text =5;        //图文
+}
+
+/******************************************************专属群信息********************************************************/
+
+message HomeProfilePartyGroup{
+  int32 group_id = 1;       //群组id
+  string name = 2;          //群组名称
+  string cover = 3;          //群封面
+  string member_num = 4;    //群组人数
+  bool official = 5;        //官方群标识
+}
+
+/******************************************************贵族名片********************************************************/
+message HomeProfileBussinessCard{
+  string banner = 1;          //群组名称
+  string header = 2;          //群封面
+}
+
+/******************************************************感兴趣标签********************************************************/
+message HomeProfileInterest{
+  string name = 1;          //兴趣名称
+}
+
+/******************************************************游戏房互动礼物********************************************************/
+message HomeProfileGlist{
+  string id = 1;          //礼物ID
+  string name = 2;        //礼物名称
+  string price = 3;       //礼物价格
+  string icon = 4;        //礼物icon
+}
+
+/******************************************************陪伴********************************************************/
+message HomeProfileAccompany{
+  int32 uid = 1;          //用户ID
+  string icon = 2;        //用户头像
+}
+
+/******************************************************剧本称号信息********************************************************/
+message HomeProfileJutitle{
+  string tid = 1;         //titleID
+  string name = 2;        //称号名称
+  string pic = 3;         //称号图片资源
+} 
+
+/******************************************************新用户Tag信息********************************************************/
+message HomeProfileRookieTag{
+  int32 seven_new = 1;   //7天内新注册
+  int32 pay_level = 2;   //LN标识
+}
+
+/******************************************************印记信息********************************************************/
+message HomeProfileMark{
+  string text = 1;      //印记名称
+  string icon = 2;      //印记标识
+}
+
+/*****************************************************游戏信息********************************************************/
+message HomeProfileGame{
+  string type = 1;        //游戏类型
+  string gameId = 2;      //游戏ID
+  string gameZone = 3;    //游戏区
+}
+
+
+/******************************************************亲密度信息********************************************************/
+message HomeProfileAccompanyInfo{
+  uint32 degree = 1;      //亲密度
+  uint32 stay_secs =2;    //陪伴时长
+}
+
+/******************************************************结婚信息********************************************************/
+message HomeProfileMarrySingleInfo{
+  string mid = 1;             //结婚ID    
+  string cid = 2;             //戒指ID
+  string cName = 3;           //戒指名称
+  string img = 4;             //戒指资源
+}
+
+message HomeProfileMarryRelationInfo{
+  string mid = 1;             //结婚ID        
+  string cid = 2;             //戒指ID
+  string img = 3;             //戒指资源
+  uint32 degree = 4;          //亲密度
+}
+
+message HomeProfileMarryInfo{
+  HomeProfileMarrySingleInfo single = 1;                //单身信息
+  HomeProfileMarryRelationInfo relation = 2;            //半路信息
+}
+
+/******************************************************游戏战绩********************************************************/
+message HomeProfileGameHistory{
+  uint32 populace = 1;                                 //卧底胜利次数
+  uint32 under = 2;                                    //卧底胜利次数
+  uint32 total = 3;                                    //画猜总场次
+  uint32 score = 4;                                    //画猜积分数、unity游戏积分、剧本积分
+  uint32 thumbs_up = 5;                                //画猜被点赞数
+  uint32 wolf_win = 6;                                 //狼人杀狼人局获胜次数
+  uint32 good_win = 7;                                 //狼人杀好人局获胜次数
+  uint32 level = 8;                                    //狼人杀等级、剧本等级
+  uint32 ju_count = 9;                                 //剧本杀局数
+  float win_rate = 10;                                 //剧本杀胜率
+  uint32 round = 11;                                   //unity游戏次数
+  uint32 champion = 12;                                //unity游戏获胜次数
+}
+
+
+/*****************************************************KOL粉丝团信息********************************************************/
+message HomeProfileKolGiftShow {
+  uint32 id = 1;                                       //礼物ID
+  string gift_type = 2;                                //礼物类型
+  string name = 3;                                     //礼物名称
+  double price = 4;                                    //礼物价格
+}
+
+message HomeProfileKolRight {
+  string name = 1;                                    //特权名称
+  string image = 2;                                   //特权图片
+}
+
+message HomeProfileKolInfo {
+  uint32 kfg_id = 1;                                 //KOL粉丝团ID
+  uint32 group_uid = 2;                              //创建UID
+  string group_name = 3;                             //名称
+  uint32 member_num = 4;                             //成员数量
+  uint32 is_join = 5;                                //是否加入
+  string icon = 6;                                   //icon
+  string join_title = 7;                             //加入称号
+  string join_note = 8;                              //加入提示
+  HomeProfileKolGiftShow gift = 9;                   //门槛礼物信息
+  repeated HomeProfileKolRight rights = 10;           //加入特权信息
+}
+
+/******************************************************骑士守护团信息******************************************************/
+
+message HomeProfileKnightGroup{
+  bool show = 1;                                      //是否显示守护团
+  uint32 master_uid = 2;                              //主播uid
+  uint32 master_rid = 3;                              //主播的房间id
+  uint32 member_num = 4;                              //守护团人数
+}
+
+/******************************************************礼物墙图鉴******************************************************/
+message HomeProfileUserGiftWall {
+    uint32 level = 1;
+    string level_icon = 2;
+    string level_name = 3;
+    uint32 gift_num = 4;
+    uint32 gold_num = 5;
+    uint32 silver_num = 6;
+    uint32 copper_num = 7;
+    string level_icon_border = 8;
+}
+
+/******************************************************成就墙勋章******************************************************/
+
+message HomeProfileAchieveBadge {
+  uint32 badge_id = 1;                                  //勋章id
+  string name = 2;                                      //勋章名称
+  string image = 3;                                     //勋章图片
+  uint32 level = 4;                                     //勋章等级
+  uint32 skin_id = 5;                                   //成就勋章业务使用的皮肤id
+  bool is_wear = 6; //是否穿戴
+}
+
+/******************************************************陪伴记******************************************************/
+
+
+message HomeProfileSinger{
+  uint32 club_id = 1;          //歌友会id
+  string name = 2;            //歌友会昵称
+  uint32 create_uid = 3;       //创建者uid
+  string logo = 4;            //歌友会logo
+  uint32 user_title = 5;      //管理头衔，80：无头衔，10：会长，20：管理员
+  string title_name = 6;      //用户头衔名称
+}
+
+/******************************************************歌友会信息********************************************************/
+
+
+message HomeProfileImprint {
+  HomeProfileImprintOur our = 1;                        //我们的足迹
+  repeated HomeProfileImprintUser users = 2;            //陪伴用户列表
+}
+
+message HomeProfileImprintOur {
+  uint32 lighten_num = 1;                               //已点亮个数
+  uint32 total_num = 2;                                 //印记总数
+}
+
+message HomeProfileImprintUser {
+  uint32 uid = 1;                                       //用户id
+  string name = 2;                                      //用户昵称
+  string icon = 3;                                      //用户头像
+  uint32 lighten_num = 4;                               //已点亮个数
+  uint32 total_num = 5;                                 //印记总数
+}
+
+/******************************************************资料卡装扮******************************************************/
+
+message HomeProfileCardDecorate {
+  string image = 1;                                     //装扮图片
+  int32 gift_id = 2;                                    //礼物id
+  int32 vap_size = 3;                                   //礼物大小
+}
+
+/******************************************************音色标签******************************************************/
+
+message HomeProfileVoiceTag {
+  uint32 tag_id = 1;                                    //音色标签id
+  string name = 2;                                      //标签名称
+  string icon = 3;                                      //标签图片
+}
+
+message HomeProfileData{
+  HomeProfileBase base = 1;                             //个人基本信息
+  HomeProfileGod god = 2;                               //主播信息
+  HomeProfileRoom room= 3;                              //房间信息
+  repeated HomeProfileGift gift = 4;                    //礼物墙信息
+  HomeProfileTag tag = 5;                               //标签信息
+  repeated HomeProfileDisciple disciple_list = 7;       //徒弟信息
+  HomeProfileFleet fleet = 9;                           //家族信息
+  HomeProfileCard card  = 10;                           //交友卡信息
+  repeated HomeProfileDefend defend_list = 11;          //守护信息
+  HomeProfileUnion union = 12;                          //联盟信息
+  HomeProfileDecorate decorate = 13;                    //挂件信息
+  repeated HomeProfilePartyGroup party_group = 14;      //专属群信息
+  HomeProfileBussinessCard business_card = 15;          //贵族名片信息
+  repeated HomeProfileInterest interest = 16;           //兴趣
+  repeated HomeProfileGlist glist = 17;                 //互动礼物列表
+  HomeProfileAccompany  accompanyFirst = 18;            //陪伴第一名信息 
+  repeated HomeProfileJutitle ju_titles = 19;           //剧本称号信息
+  HomeProfileRookieTag rookie_tag  = 20;                //LN标识信息
+  repeated HomeProfileSkill skill = 21;                 //主播技能信息
+  repeated HomeProfileMark mark = 22;                   //印记信息
+  HomeProfileGame game = 23;                            //游戏账号信息
+  HomeProfileAccompanyInfo accompany = 24;              //陪伴信息
+  HomeProfileMarryInfo  marry = 25;                     //结婚信息
+  HomeProfileGameHistory game_history = 27;             //游戏历史统计信息
+  HomeProfileKolInfo kfg_show = 28;                     //kol粉丝团信息
+  HomeProfileKnightGroup knight_group = 29;             //骑士守护团信息
+  HomeProfileUserGiftWall gift_wall = 30;               //礼物墙图鉴
+  HomeProfileLiveTagInfo live_tag_info = 31;            //直播间tag信息
+  repeated HomeProfileAchieveBadge achieve_badge = 32;  //成就墙勋章
+  repeated HomeProfileSinger singer_club = 33;          //歌友会信息
+  UserMysteryInfo mystery_info = 34;      				//是否神秘人
+  HomeProfileCardDecorate card_decorate = 35;           //房间资料卡装扮
+  repeated ExhibitCommodityItem exhibit_data = 36;             // 收藏室信息
+  HomeProfileGeneralSettings general_settings = 37;     //通用开关设置
+  repeated HomeProfileVoiceTag voice_tag = 38;          //音色标签
+  HomeProfileBirthdayInfo birthday = 39;
+  repeated giftInfo interactGiftInfos = 40; //互动礼物列表
+  RoomCrossPkQualifyingSummary cpkSummary = 41; // 越战排位赛战绩
+  GiftBookBriefInfo brief_info = 42; // 礼物图鉴概要信息
+  bool is_close_gift_wall = 43; // 是否关闭旧礼物墙, true 是  false 否
+  uint32 exhibition_display = 44; // 是否展示收藏室，1，展示，0，不展示
+  StarshipEntry starship_detail = 45; //星舰入口= 45; //星舰入口
+}
+
+message StarshipEntry{
+  string icon = 1;          //星舰icon
+  string name = 2;          //星舰名
+  string desc_txt = 3;        //星舰简介
+  uint32 member_num = 4;      //人数
+  string lv_icon = 5;  //星舰等级图标
+  uint32 rank = 6;  //威望排名
+  uint32 score = 7; //威望积分
+  uint32 id = 8;  //星舰id
+}
+
+message giftInfo {
+  uint32 id = 1;    //礼物id
+  string name = 2;  //礼物名称
+  string type = 3;  //礼物类型
+  uint32 price = 4; //礼物价值
+  string desc = 5;  //礼物描述
+  string icon = 6;  //礼物图片
+  HomeProfileInteractCombineGift combine_gift = 7; //组合礼物
+}
+
+//互动组合礼物
+message HomeProfileInteractCombineGift {
+  uint32 combine_id = 1;
+  string combine_name = 2;
+  string combine_desc = 3;
+  uint32 combine_type = 4;      //礼物组合类型，0-可切换，1-固定单点，2-固定全麦
+  uint32 gift_a = 5;            //礼物a的id
+  string gift_a_name = 6;       //礼物a的名称
+  uint32 gift_b = 7;            //礼物b的id
+  string gift_b_name = 8;       //礼物b的名称
+  uint32 combine_money = 9;     //礼物组合总价
+}
+
+message ResHomeProfile {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  HomeProfileData data = 3;   //返回数据
+}
+
+//个人基本信息
+message HomeProfileSyncBase {
+  uint32 uid = 1;                      //uid
+  uint32 online_status = 2;            //在线状态
+  uint32 online_dateline = 3;          //离线时间
+  string online_dateline_diff = 4;     //离线时间文本
+  uint32 title = 5;                    //爵位
+  uint32 follow_relation = 6;          //关注关系
+  uint32 fans_num = 7;                 //粉丝数量
+  uint32 accompany_num = 8;            //陪伴榜人数
+  uint32 defend_count = 9;             //守护人数
+  uint32 knight_level = 10;            //骑士团的等级
+  uint32 is_birthday = 11;
+}
+
+message HomeProfileSyncData{
+  HomeProfileSyncBase base = 1;                         //个人基本信息
+  HomeProfileRoom room= 2;                              //房间信息
+  HomeProfileFleet fleet = 3;                           //家族信息
+  HomeProfileKolInfo kfg_show = 4;                     //kol粉丝团信息
+  repeated HomeProfileMark mark = 5;                   //印记信息
+  HomeProfileUserGiftWall gift_wall = 6;                //礼物墙图鉴
+  HomeProfileLiveTagInfo live_tag_info = 7;             //直播间tag信息
+  HomeProfileImprint imprint = 8;                       //陪伴记
+  string tag_icon = 9;                                  //非直播间标签ICON
+  RoomCrossPkQualifyingSummary cpkSummary = 10;         // 约战排位赛信息
+  GiftBookBriefInfo brief_info = 11; // 礼物图鉴 概要
+  repeated MountSerialProfile  mount_serial_data = 12;  // 座驾系列
+}
+
+//个人页座驾系列相关
+message MountSerialProfile{
+    uint32 serial_id = 1;       //座驾系列ID
+    string title = 2;           //座驾系列名
+    bool in_use = 3;           //是否在有效期
+    repeated MountSerialProfileItem items = 4;  //对应的碎片
+    string icon = 5;                   //系列图片
+}
+message MountSerialProfileItem{
+    string name = 1;
+    string icon = 2;
+    bool   unlock = 3;          //是否解锁
+}
+
+// 概要
+//message GiftBookBriefInfo {
+//  uint32 light_num = 1; // 点亮个数
+//  uint32 awake_num = 2; // 觉醒个数
+//  uint32 total = 3; // 总数
+//  string title = 4; // title 星际图鉴
+//}
+
+message ResHomeSyncProfile {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  HomeProfileSyncData data = 3;        //返回数据
+}
+
+//粉丝团的铭牌
+message LiveLabelItem {
+   string header = 1;
+   string bubble = 2;
+   string effect =3 ;
+   uint32 liveOnly =4;
+}
+
+
+message HomeProfileLiveTagInfo {
+	uint32 id = 1;
+	string text = 2;
+}
+
+message HomeProfileBadgesResp{
+  bool success = 1;
+  string msg = 2;
+  repeated HomeProfileBadgeItem badges =3;
+}
+
+message HomeProfileBadgeItem{
+  uint32 badge_id = 1;
+  bool is_wear = 2;
+  string icon = 3;
+  string desc = 4;
+  string addition_name = 5;      // 替换
+  bool awake_gift = 6; // 觉醒礼物
+  uint32 badge_type = 7; //勋章类型，0荣誉勋章，1自定义勋章
+  uint32 wear_time = 8;
+  uint32 gift_badge_type = 9;
+}
+
+message HomeProfileWearBadgeReq{
+  uint32 badge_id = 2;
+}
+
+message HomeProfileWearBadgeResp{
+  bool success = 1;
+  string msg = 2;
+}
+
+message HomeProfileBannerResp{
+  bool success = 1;
+  string msg = 2;
+  HomeProfileBannerData data = 3;
+}
+
+message HomeProfileBannerData {
+  string title = 1;
+  bool display = 2;
+  string first_banner_id = 3;
+}
+
+message ResHomeProfileGame {
+  bool success = 1;
+  string msg = 2;
+  repeated  HomeProfileGameItem data = 3;
+}
+
+message HomeProfileGameItem {
+  string key = 1;
+  string name = 2;
+  string icon = 3;
+  int32 total = 4;
+  int32 update_time = 5;
+  repeated HomeProfileGamePlayInfo play_info = 6;
+}
+
+message HomeProfileGamePlayInfo {
+  string key = 1;
+  string name = 2;
+  string value = 3;
+}
+
+
+// 神秘人信息
+message UserMysteryInfo {
+    int32 is_mystery = 1;
+    string txt = 2;     //高奢资料卡隐藏你的真身
+    string header_banner = 3;   //神秘人头像上面装备
+    string header_effect = 4;   //神秘人头像框
+}
+
+//开关设置
+message HomeProfileGeneralSettings {
+  uint32 showGlory = 1;         //是否公开荣誉展示，1-公开，0-隐藏
+  uint32 showPkSkill = 2;       //是否展示PK技能入口，1-展示，0-隐藏
+}
+// 个人页PK战绩结构体 （包括 个人半屏和全屏）
+message RoomCrossPkQualifyingSummary {
+  uint32 uid = 1;
+  uint32 num_win = 2;
+  uint32 num_draw = 3;
+  uint32 num_fail = 4;
+  RoomCrossPkSegmentItem curSegment = 5;
+}
+
+// 段位结构体
+message RoomCrossPkSegmentItem {
+  uint32 segment = 1; // 段位唯一ID
+  string segment_url = 2; // 段位icon
+  string segment_name = 3; // 段位名称 ps:英勇青铜
+  uint32 sub_segment = 4; // 段位等级 ps:1
+  uint32 star = 5; // 端位星数
+  uint32 total_start = 6; // 段位总星星数（包括灰色）
+}
+
+// PK战绩结构体
+// go/room/games/crosspk/exploits
+message ApiRoomCrossPkExploitsListResponse {
+  bool success = 1;
+  string message = 2;
+  RoomCrossPkExploitsListData data= 3;
+}
+
+message RoomCrossPkExploitsListData {
+  RoomCrossPkQualifyingSummary summary = 1;
+  repeated RoomCrossPkQualifyingRecordItem list = 2;
+  uint32 more = 3;
+}
+
+message RoomCrossPkQualifyingRecordItem {
+  RoomCrossPkQualifyingRecordRoleInfo master = 1;
+  RoomCrossPkQualifyingRecordRoleInfo red = 2;
+  RoomCrossPkQualifyingRecordRoleInfo blue = 3;
+  uint32 pk_duration = 4;
+  uint32 pk_at = 5;
+  uint32 pk_mode = 6;
+  uint32 pk_id = 7;
+}
+
+message RoomCrossPkQualifyingRecordUserInfo {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+}
+
+message RoomCrossPkQualifyingRecordRoleInfo {
+  RoomCrossPkQualifyingRecordUserInfo user = 1;
+  uint32 rid = 2;
+  uint32 score = 3;
+  RoomCrossPkWinState win = 4;
+}
+
+enum RoomCrossPkWinState{
+  CROSSPK_UNKNOWN = 0;
+  CROSSPK_WIN = 1;
+  CROSSPK_DRAW = 2;
+  CROSSPK_FAIL = 3;
+}
+message HomeProfileBirthdayInfo{
+  uint32 is_birthday = 1;
+  string rank_top_name = 2;
+}

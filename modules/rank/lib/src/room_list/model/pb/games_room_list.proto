@@ -1,0 +1,57 @@
+syntax = "proto3";
+package pb;
+/*
+用户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "games_room_type.proto";
+
+///房间推荐(交友/桌游/音乐/电台)列表
+message RespGamesRoomRecommendList {
+  bool success = 1;
+  string msg = 2;
+  repeated GamesRoomRecommendListItem data = 3;
+}
+
+message GamesRoomRecommendListItem {
+  uint32 rid = 1;
+  string name = 2;
+  string icon = 3;
+  GamesRoomTypeName1 type_name = 4;//
+  uint32 online_num = 5;
+  repeated string mic_icons = 6; //房间麦上用户的icon
+  string prefix = 7;
+  string user_name = 8;
+  int32 have_lucky_bag = 9; //是否有福袋1有0无
+  RcmdDesc rcmd_desc = 10;
+}
+
+message RcmdDesc {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  string desc = 4;
+}
+
+message GamesRoomFriendListItem {
+  uint32 rid = 1;
+  string user_name = 2;
+  string user_icon = 3;
+  GamesRoomTypeName1 type_name = 4;//
+  uint32 online_num = 5;
+  string room_desc = 6; //房间描述 你的好友|陪伴过
+  string user_desc = 7; //房主｜麦上
+  string room_icon = 8; //房间icon
+  int32 have_lucky_bag = 9;
+}
+
+///房间好友列表
+message ResponseGamesRoomFriendList {
+  bool success = 1;
+  string msg = 2;
+  repeated GamesRoomFriendListItem data = 3;
+}

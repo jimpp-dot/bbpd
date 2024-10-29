@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14px" height="6px" viewBox="0 0 14 6" version="1.1">
+  <title>bbpd_矩形</title>
+  <defs>
+    <linearGradient x1="0%" y1="41.6453439%" x2="101.911609%" y2="58.3546561%" id="linearGradient-1">
+      <stop stop-color="#8947FF" offset="0%"/>
+      <stop stop-color="#72CAFF" offset="100%"/>
+    </linearGradient>
+  </defs>
+  <g id="页面-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="房间-个人房" transform="translate(-24.000000, -116.000000)" fill="url(#linearGradient-1)">
+      <g id="编组-8" transform="translate(12.000000, 115.998475)">
+        <path d="M12.052,6.151 L17.6617757,0.580882079 C18.4416851,-0.19362736 19.7004505,-0.19362736 20.4803599,0.580882079 L26.112,6.173 L125.018845,6.3289032 C131.638895,6.33929926 137,11.7088295 137,18.3288884 L137,44.0015249 C137,50.6289419 131.627417,56.0015249 125,56.0015249 L12,56.0015249 C5.372583,56.0015249 8.11624501e-16,50.6289419 0,44.0015249 L0,18.1514343 C-2.58798134e-15,11.5240173 5.372583,6.15143431 12,6.15143431 L12.052,6.151 Z" id="形状结合"/>
+      </g>
+    </g>
+  </g>
+</svg>

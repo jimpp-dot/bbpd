@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package plugin.vote.refresh;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message PluginVoteRefresh {
+  option (pb.register_name) = 'plugin.vote.refresh';
+  option (pb.register_id) = 57;
+  repeated uint32 vote_info = 1;
+}

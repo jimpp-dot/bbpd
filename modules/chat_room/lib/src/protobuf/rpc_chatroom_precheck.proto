@@ -1,0 +1,15 @@
+syntax = "proto3";
+package pb;
+
+/*
+ *xs_chatroom rpc 协议
+ */
+option go_package = "../app/pb";
+
+
+//rpc接口返回通用结果
+message ResRoomBusi {
+  bool success = 1;
+  string error = 2;
+  map<string, string> extend = 3;
+}

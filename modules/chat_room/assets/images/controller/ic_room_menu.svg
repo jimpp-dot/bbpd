@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon-工具@3x</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="32" height="32" rx="16"></rect>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="语音房-1" transform="translate(-331, -740)">
+            <g id="底部操作栏" transform="translate(0, 734)">
+                <rect id="Frame-133" x="0" y="0" width="375" height="44"></rect>
+                <g id="编组-5" transform="translate(331, 6)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="背板4" fill-opacity="0.1" fill="#FFFFFF" xlink:href="#path-1"></use>
+                    <g id="编组-3" mask="url(#mask-2)" stroke="#FFFFFF" stroke-width="1.66666687">
+                        <g transform="translate(9, 9)">
+                            <path d="M4.714284,0 C5.424366,0 6,0.575634 6,1.285716 C6,1.285716 6,2.428572 6,4.714284 C6,5.424366 5.424366,6 4.714284,6 C4.714284,6 3.571428,6 1.285716,6 C0.575634,6 0,5.424366 0,4.714284 C0,4.714284 0,3.571428 0,1.285716 C0,0.575634 0.575634,0 1.285716,0 C1.285716,0 2.428572,0 4.714284,0 L4.714284,0 Z" id="Rectangle-283"></path>
+                            <path d="M8,3 C8,1.343148 9.343148,0 11,0 C12.656852,0 14,1.343148 14,3 C14,4.656852 12.656852,6 11,6 C9.343148,6 8,4.656852 8,3 C8,3 8,3 8,3 Z" id="Rectangle-285"></path>
+                            <path d="M0,11 C0,9.343148 1.343148,8 3,8 C4.656852,8 6,9.343148 6,11 C6,12.656852 4.656852,14 3,14 C1.343148,14 0,12.656852 0,11 C0,11 0,11 0,11 Z" id="Rectangle-284"></path>
+                            <path d="M12.714284,8 C13.424366,8 14,8.575634 14,9.285716 C14,9.285716 14,10.428572 14,12.714284 C14,13.424366 13.424366,14 12.714284,14 C12.714284,14 11.571428,14 9.285716,14 C8.575634,14 8,13.424366 8,12.714284 C8,12.714284 8,11.571428 8,9.285716 C8,8.575634 8.575634,8 9.285716,8 C9.285716,8 10.428572,8 12.714284,8 L12.714284,8 Z" id="Rectangle-286"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

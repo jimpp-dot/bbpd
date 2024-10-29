@@ -1,0 +1,19 @@
+syntax = "proto3";
+package pb;
+/*
+用户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message GamesRoomTypeName1 {
+	string label = 1;
+	string val = 2;
+	string color = 3;
+	repeated string bg = 4;
+	string show = 5;
+	string icon = 6;
+	string home_icon = 7;
+}

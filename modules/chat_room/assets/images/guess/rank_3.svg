@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="21" height="16" viewBox="0 0 21 16">
+  <title>bbpd_ic_crown3</title>
+  <defs>
+    <path id="a" d="M1.905.242l8.398 4.617L18.695.242A1.153 1.153 0 0 1 20.4 1.339l-.704 9.27a2.304 2.304 0 0 1-2.298 2.131H3.202a2.304 2.304 0 0 1-2.298-2.13L.201 1.339A1.151 1.151 0 0 1 1.905.242z"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <path fill="#E9C277" d="M11.276.969l5.472 8.707H3.852L9.325.969a1.152 1.152 0 0 1 1.951 0z"/>
+    <g transform="translate(0 3.216)">
+      <mask id="b" fill="#fff">
+        <use xlink:href="#a"/>
+      </mask>
+      <use fill="#E9C277" xlink:href="#a"/>
+      <path fill="#F8DFB1" d="M24.118-3.8L.168 11.123v3.731l20.265-1.866z" mask="url(#b)"/>
+    </g>
+    <text fill="#A56B3D" font-family="Gotham-Medium, Gotham" font-size="10">
+      <tspan x="7" y="14.813">3</tspan>
+    </text>
+  </g>
+</svg>

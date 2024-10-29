@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <title>bbpd_&#x9EA6;&#x4F4D;&#x5C01;&#x95ED;</title>
+  <g fill="none" fill-rule="evenodd" opacity=".4">
+    <circle cx="12" cy="12" r="9" stroke="#FFF" stroke-width="2"/>
+    <path fill="#FFF" d="M4.222 5.636l1.414-1.414 14.142 14.142-1.414 1.414z"/>
+  </g>
+</svg>

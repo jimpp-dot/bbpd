@@ -1,0 +1,39 @@
+syntax = "proto3";
+package pb;
+
+/*
+订单相关proto
+*/
+option go_package = "../app/pb";
+
+message RespGetChatOrder {
+	bool success = 1;						  //是否成功
+	string message = 2;						//结果说明
+	RespGetChatOrderData data = 3;
+}
+
+message RespGetChatOrderData {
+	int32 status = 1;
+	string state = 2;
+	ChatData data = 3;
+}
+
+message ChatData {
+	bool godsr = 1;
+	int32 iscomplete = 2;
+	int32 ispay = 3;
+	int32 vote = 4;
+	uint32 id = 5;
+	int32 begin_time = 6;
+	int32 num = 7;
+	uint32 to = 8;
+	int32 version = 9;
+	uint32 cancel_time = 10;
+	SkillInfo skill = 11;
+}
+
+message SkillInfo {
+	string icon = 1;  //
+	string name = 2;  //
+	string type = 3;  // 分类是连麦/线下/图文/视频
+}

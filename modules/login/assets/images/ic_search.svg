@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <title>bbpd_ic_titlebar_search</title>
+  <g fill="none" fill-rule="evenodd" transform="rotate(-90 13 9)">
+    <circle cx="10.5" cy="8" r="8" stroke="#202020" stroke-width="2"/>
+    <path fill="#202020" d="M4.768 12.982a1.25 1.25 0 0 1 0 1.768L3 16.518a1.25 1.25 0 0 1-1.768-1.768L3 12.982a1.25 1.25 0 0 1 1.768 0z"/>
+  </g>
+</svg>

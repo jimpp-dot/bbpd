@@ -1,0 +1,69 @@
+syntax = "proto3";
+package pb;
+/*
+账户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+message GroupSettingDataRsp{
+  bool success = 1;
+  string msg = 2;
+  BodySettingsData data = 3;
+}
+
+message BodySettingsData {
+  uint32 id = 1;
+  uint32 creator = 2;
+  string name = 3;
+  string cover = 4;
+  string notice = 5;
+  string type = 6;
+  uint32 apply_num = 7;
+  uint32 allow_invite = 8;
+  uint32 allow_search = 9;
+  uint32 need_audit = 10;
+  uint32 forbidden = 11;
+  uint32 is_manager = 12;
+  string nickname = 13;
+  repeated GroupMembers members = 14;
+  uint32 chat_only_member = 15;
+  uint32 name_audit = 16;
+  uint32 cover_audit = 17;
+  message StarshipConfig {
+    uint32 modifyIconTime = 1; // 修改头像时间
+    uint32 bouleuterionLv = 2; // 议事厅等级
+    uint32 cycle = 3; // 修改循环周期
+    string desc = 4; // 简介
+    uint32 minLv = 5; // 可修改动态头像的最低等级
+    uint32 role = 6; // 0: 普通用户 1: 议员 2: 副席 3: 群主
+    bool canDynamic = 7; // 是否可以上传动态头像
+    bool canStatic = 8; // 是否可以上传静态头像
+    uint32 maxNum = 9; // 最大人数
+  }
+  StarshipConfig starship = 19;
+  uint32 desc_audit = 20;
+}
+
+message GroupMembers {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  int32 is_creator = 4;
+  int32 is_manager = 5;
+  int32 score = 6;
+  uint32 role = 7;
+}
+
+message RespStarshipGetNameCard {
+  bool success = 1;
+  string msg = 2;
+  StarshipGetNameCardData data = 3;
+}
+message StarshipGetNameCardData {
+  uint32 cid = 1; // 物品cid
+  uint32 price = 2; // 价格
+  uint32 hasNum = 3; //可用数量
+}

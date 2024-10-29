@@ -1,0 +1,29 @@
+name: certificate
+description: A new Flutter package.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ">=2.18.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  shared:
+    path: ../shared
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.2
+  build_runner: ^2.0.0
+  assets_gen: ^1.5.0
+
+assets_gen:
+  omit_path_levels: 2
+
+flutter:
+  assets:
+    - assets/images/

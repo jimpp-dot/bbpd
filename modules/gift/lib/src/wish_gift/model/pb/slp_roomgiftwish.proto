@@ -1,0 +1,31 @@
+syntax = "proto3";
+package pb;
+/*
+礼物心愿proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ResRoomGiftWishRank {
+  bool success = 1;                         //成功true，失败false
+  string msg = 2;                           //失败message
+  RoomGiftWishRankData data = 3;            //礼物心愿助力榜
+}
+
+message RoomGiftWishRankData {
+  repeated RoomGiftWishRankItem list = 1;   //助力榜单
+}
+
+message RoomGiftWishRankItem {
+  uint32 rank = 1;                          //排名
+  uint32 uid = 2;                           //用户id
+  string name = 3;                          //用户名称
+  string icon = 4;                          //用户头像
+  uint32 score = 5;                         //用户得分
+  uint32 age = 6;                           //年龄
+  uint32 sex = 7;                           //性别, 1-男, 2-女
+  uint32 vip_level = 8;                     //VIP等级
+  uint32 popularity_level = 9;              //人气等级
+}

@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message SendCommonFullScreen {
+  option (pb.register_name) = 'room.global.common.notify';
+  option (pb.register_id) = 10046;
+
+  uint32 show_time = 1; // 飘屏时长
+  string back_img = 2; // 背景图
+  string jump_path = 3; // 跳转地址
+  string type = 4; // 客户端响应需要 global.common.notify
+  string front = 5; // 如果有一层透明图
+  CommonScreenExtra common_screen_extra = 6;
+}
+
+message AvatarZone {
+  string left_image = 1;
+  string right_image = 2;
+  uint32 image_size = 3;
+  int32 interval = 4;
+}
+
+message CommonScreenExtra {
+  repeated ImageZone image_zone = 1;
+  repeated ContentZone up_content_zone = 2;  // 文本区上层
+  repeated ContentZone down_content_zone = 3;  // 文本区下层
+  uint32 left_margin = 4; //内容显示左边距，目前31
+  uint32 right_margin = 5; //内容显示右边距，目前31
+  uint32 mid_margin = 6; //左边头像区域跟中间文本区域间距
+  AvatarZone avatar_zone = 7; //左边双头像区域
+  uint32 mid_line = 8;
+}
+// 首尾图片区
+message ImageZone { // 0:头 1:尾
+  string image = 1; // 地址
+  string color = 2; // 色值
+  uint32 corner_angle = 3;  // 圆角角度
+}
+// 文本区
+message ContentZone {
+  uint32 type = 1; // 0:text 1:图片
+  string content = 2; // 图片地址/文本内容
+  string color = 3; // 色值
+  uint32 width = 4;
+  uint32 height = 5;
+  bool is_bold = 6; // 是否加粗
+  uint32 words_limit = 7; // 字数限制
+}

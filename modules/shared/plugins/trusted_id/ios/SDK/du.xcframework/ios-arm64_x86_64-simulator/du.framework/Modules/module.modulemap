@@ -1,0 +1,6 @@
+framework module du {
+  umbrella header "du.h"
+
+  export *
+  module * { export * }
+}

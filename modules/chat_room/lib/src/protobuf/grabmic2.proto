@@ -1,0 +1,224 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+/**
+ * Unknown 未知状态
+ * Pass 唱歌识别通过
+ * Fail 唱歌识别失败
+ * NoGrab 全军覆没，无人抢唱
+ * NoAccept 无人应战，合唱中
+ */
+enum GrabMicResult{
+    Unknown = 0;
+    Pass = 1; // 识别通过
+    PassChorused = 2;//合唱通过
+    Fail = 3; // 识别失败
+    FailChorused = 4;//合唱失败
+    NoGrab = 5; //无人抢唱
+    NoCooperation = 6; //无人应战
+    Accepted = 7; //有人应战
+}
+
+enum GrabMicState{
+    UnknownState = 0;
+    Wait = 1;
+    Start = 2;
+    Play = 3;
+    StartGrab = 4;
+    PublishGrab = 5;
+    Sing = 6;
+    WaitSingResult = 7;
+    SingResult = 8;
+    Next = 9;
+    StartEnd = 10;
+    End = 11;
+}
+
+message GrabMicToken{
+    uint32 uid = 1;
+    uint32 position = 2;
+    uint32 sid = 3;
+    uint32 version = 4;
+    uint32 vvc = 5;
+    uint32 rid = 6;
+    string name = 7;
+    string icon = 8;
+    uint32 isTurn = 9;
+    uint32 turnIndex = 10;
+}
+
+/**
+ * 抢唱房，抢唱业务基本信息
+ */
+message GrabMicBaseMessage{
+    uint32 sid = 1;
+    GrabMicState state = 2;
+    uint32 version = 3;
+    uint32 stageEndLine = 4;
+    uint32 currentStageRunning = 5;
+    uint32 vvc = 6;
+    uint32 grabVersion = 7;
+    uint32 count = 8;
+}
+
+/**
+ * 抢唱歌词分段
+ */
+message GrabMicSongLyricPart{
+    repeated string part = 1;
+}
+/**
+ * 抢唱歌词
+ */
+message GrabMicSongLyric{
+    repeated GrabMicSongLyricPart lyric = 1;
+}
+/**
+ * 抢唱房，抢唱歌曲信息
+ */
+message GrabMicSongInfo{
+    uint32 Id = 1;
+    string name = 2;
+    string singerName = 3;
+    GrabMicSongLyric lyric = 4;
+    uint32 duration = 5;
+    uint32 uploaderUid = 6;
+    string uploaderName = 7;
+    string uploaderIcon = 8;
+    string tag = 9;
+    uint32 mode = 10;//1为合唱，0为独唱
+    string url = 11;
+    uint32 countGood = 12;
+    uint32 countBad = 13;
+}
+
+message GrabMicSceneGift{
+    uint32 giftId = 1;
+    string giftType = 2;
+    string giftName = 3;
+    float price = 4;
+}
+
+message RespGrabMicConfig{
+    bool success = 1;
+    string message = 2;
+    GrabMicMessage body = 3;
+}
+
+/**
+ * 抢唱房，业务信息包装结构体
+ */
+message GrabMicMessage{
+    GrabMicBaseMessage base = 1;
+    GrabMicSongInfo currentSong = 2;
+
+    oneof stage{
+        GrabMicStageStart start = 10;
+        GrabMicStageSongPlay play = 11;
+        GrabMicStageSongGrab grab = 12;
+        GrabMicStageSongGrabResult grabResult = 13;
+        GrabMicStageSongSing sing = 14;
+        GrabMicStageSongRecognize recognize = 15;
+        GrabMicStageSingResult singResult = 16;
+        GrabMicStageEnding ending = 17;
+        GrabMicStageSongNext next = 18;
+    }
+    repeated UserList list= 19;
+
+}
+
+/**
+ * 抢唱信息开始阶段信息包装
+ */
+message GrabMicStageStart{
+
+}
+
+/**
+ * 抢唱信息领唱播放阶段信息包装
+ */
+message GrabMicStageSongPlay{
+    int32 countDown = 1;
+    int32 duration = 2;
+}
+
+/**
+ * 抢唱信息抢唱阶段，信息包装
+ */
+message GrabMicStageSongGrab{
+    repeated GrabMicToken tokens = 1;
+}
+
+/**
+ * 抢唱信息抢唱结果公告阶段信息包装
+ */
+message GrabMicStageSongGrabResult{
+    repeated GrabMicToken singers = 1;
+    GrabMicResult result = 2;
+    string effectUrl = 3;
+    string description = 4;
+}
+
+/**
+ * 抢唱业务信息，用户唱歌阶段信息包装
+ */
+message GrabMicStageSongSing{
+    repeated GrabMicToken singers = 1;
+    repeated GrabMicSceneGift gifts= 2;
+    uint32 duration = 3;
+}
+
+/**
+ * 抢唱业务信息，用户唱歌结果识别阶段信息包装
+ */
+message GrabMicStageSongRecognize{
+
+}
+
+/**
+ * 抢唱业务信息，用户唱歌阶段识别结果公告阶段信息包装
+ */
+message GrabMicStageSingResult{
+    repeated GrabMicToken tokens = 1;
+    GrabMicResult result = 2;
+    string effect = 3;
+}
+
+/**
+ * 抢唱业务信息，下一首歌生成阶段信息包装
+ */
+message GrabMicStageSongNext{
+
+}
+
+/**
+ * 抢唱业务信息，当前轮次结束阶段信息包装
+ */
+message GrabMicStageEnding{
+
+}
+
+/**
+ * 抢唱业务信息，用户唱歌阶段信息包装
+ */
+message GrabMicStageEnd{
+
+}
+
+/**
+ * 抢唱用户列表信息
+ */
+message UserList{
+    uint32 uid = 1;
+    uint32 grab_type = 2; //是否参与了抢歌，1--参与了，2--没有
+    string light_type = 3;//on:爆灯状态；off:灭灯状态;normal:默认状态（开灯）
+}
+
+//爆灯信息
+message GrabMicLightMsg {
+    uint32 uid = 1; //操作爆灯的用户uid
+}

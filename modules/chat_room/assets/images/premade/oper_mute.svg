@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 46 46">
+  <title>bbpd_&#x5F39;&#x7A97;</title>
+  <defs>
+    <linearGradient id="a" x1="81.323%" x2="50%" y1="-9.463%" y2="100%">
+      <stop offset="0%" stop-color="#FF8989"/>
+      <stop offset="100%" stop-color="#FF5858"/>
+    </linearGradient>
+    <linearGradient id="b" x1="41.434%" x2="74.891%" y1="78.947%" y2="0%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="63.975%" stop-color="#FFF" stop-opacity=".609"/>
+      <stop offset="100%" stop-color="#FFF" stop-opacity=".601"/>
+    </linearGradient>
+    <linearGradient id="c" x1="37.71%" x2="100%" y1="72.538%" y2="33.187%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#FFF" stop-opacity=".7"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <circle cx="23" cy="23" r="23" fill="url(#a)" fill-rule="nonzero"/>
+    <path fill="url(#b)" d="M7 14v2a1 1 0 0 1-2 0v-2h2zM2.592 1.258l9.641 11.491a1 1 0 1 1-1.532 1.286L1.06 2.544a1 1 0 0 1 1.533-1.286zm-.093 4.489l4.662 5.556A3.5 3.5 0 0 1 2.5 8l-.002-2.253zM6 .5A3.5 3.5 0 0 1 9.5 4l-.001 3.867-5.597-6.67A3.484 3.484 0 0 1 6 .5z" transform="translate(17 15)"/>
+    <path stroke="url(#c)" stroke-linecap="round" stroke-width="1.5" d="M12 8c0 .57-.08 1.121-.228 1.643m-3.428 3.882A6 6 0 0 1 0 8" transform="translate(17 15)"/>
+  </g>
+</svg>

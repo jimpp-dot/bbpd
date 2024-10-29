@@ -1,0 +1,27 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+// 对某个用户的打赏统计排行榜接口
+
+message PackageCountRankRsp {
+  bool success = 1; //返回给客户端的必须有，默认true
+  string msg = 2; //返回给客户端的错误消息消息，默认空
+  RankData data = 3; //排行榜
+}
+
+message RankUserInfo {
+   uint32 uid  = 1; // 用户id
+   string icon = 2; // 用户头像
+   string name = 3; // 用户名
+   uint32 vip = 4; // vip等级
+   uint32 money = 5; //金额，单位分
+   uint32 rank = 6; // 排名
+}
+
+message RankData {
+  repeated RankUserInfo rank_info = 1; //排行榜
+  uint32 count = 2;   // 排行榜的条目数
+  RankUserInfo self_info = 3; // 当前用户的贡献值信息
+}

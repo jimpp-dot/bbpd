@@ -1,0 +1,73 @@
+syntax = "proto3";
+package pb;
+/*
+聊愈师
+cd proto/api && protoc --go_out=../ healer.proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+//聊愈师首页 /go/slp/healer/index
+message ResHealerIndex {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  HealerIndexData data = 3;
+}
+
+message HealerIndexData {
+  repeated HealerUpCard list = 1; //聊愈师列表
+  bool more = 2; //是否还有下一页
+  uint64 cursor = 3; //排序邮编
+}
+
+message HealerUpCard {
+  uint32 uid = 1; //聊愈师uid
+  string name = 2;//用户名
+  string icon = 3; //用户图标
+  string sign = 4; //用户签名
+  string level_icon = 5; //聊愈师等级icon
+  uint32 count = 6; //已获得up卡数量
+  uint32 rid = 7; //房间id，>0表示在房，要显示房间光圈
+}
+
+//获取用户up卡数量 /go/slp/healer/cardInfo
+message ResHealerCardInfo {
+  bool success = 1; //成功true，失败false
+  string msg = 2; //失败message
+  HealerCardData data = 3;
+}
+
+message HealerCardData {
+  uint32 card_count = 1; //用户拥有up卡数量
+  uint32 cid = 2; //up卡cid，购买up卡时会用到
+  uint32 price = 3; //up卡价格，单位星钻
+  string desc = 4; //up卡使用描述信息
+  string icon = 5; //up卡图标
+  string doc_url = 6; //说明页地址,工会用户返回地址，非工会用户为空
+}
+
+//聊愈师历史记录 /go/slp/healer/sendHistory
+message ResHealerHistory {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  HealerHistoryData data = 3;
+}
+
+message HealerHistoryData {
+  repeated ResHealerUpCardSender list = 1; //up卡助力用户列表
+  bool more = 2; //是否还有下一页
+}
+
+message ResHealerUpCardSender {
+  uint32 uid = 1; //聊愈师uid
+  string name = 2;//用户名
+  string icon = 3; //用户图标
+  string sign = 4; //用户签名
+  uint32 send_time = 5; //up卡最后赠送时间
+  uint32 count = 6; //up卡赠送数量
+  uint32 title = 7; //贵族等级
+  uint32 vip = 8; //vip
+  uint32 popular = 9; //人气
+}

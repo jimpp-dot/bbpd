@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="44" height="44" viewBox="0 0 44 44">
+  <title>bbpd_Close Button&#x5907;&#x4EFD; 2</title>
+  <defs>
+    <path id="a" d="M11.666 11.663c.444-.444.444-1.193.009-1.628l-4.031-4.03 4.03-4.04c.436-.435.436-1.184-.008-1.628A1.162 1.162 0 0 0 10.038.33l-4.04 4.03L1.958.32C1.542-.097.776-.114.332.33c-.444.444-.435 1.21-.009 1.636l4.04 4.04-4.04 4.039c-.426.417-.435 1.183.009 1.627.444.444 1.21.427 1.628.01l4.04-4.04 4.039 4.03a1.162 1.162 0 0 0 1.628-.008z"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <path d="M0 0h44v44H0z"/>
+    <use fill="#303030" fill-rule="nonzero" transform="translate(16 16)" xlink:href="#a"/>
+  </g>
+</svg>

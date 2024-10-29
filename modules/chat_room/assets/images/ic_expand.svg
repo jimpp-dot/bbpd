@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <title>bbpd_icon-&#x5C55;&#x5F00;</title>
+  <defs>
+    <filter id="a">
+      <feColorMatrix in="SourceGraphic" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 1.000000 0"/>
+    </filter>
+  </defs>
+  <g fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" filter="url(#a)" transform="translate(-66 -1)">
+    <path stroke="#000" stroke-width="2" d="M68.202 6.6l5.805 5.333L79.709 6.6"/>
+  </g>
+</svg>

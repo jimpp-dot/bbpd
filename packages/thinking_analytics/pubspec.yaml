@@ -1,0 +1,25 @@
+name: thinking_analytics
+description: 数数插件，用于数据埋点.
+version: 2.8.0
+
+environment:
+  sdk: ">=2.18.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  connectivity_plus:
+  uuid:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: ly.plugins.thinking_analytics
+        pluginClass: ThinkingAnalyticsPlugin
+      ios:
+        pluginClass: ThinkingAnalyticsPlugin

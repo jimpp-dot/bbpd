@@ -1,0 +1,23 @@
+syntax = "proto3";
+package pb;
+/*
+礼物面板的pb定义
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message AuctionOchData{
+  uint32 uid = 1;     // 用户uid
+  uint32 times = 2;   // 用户已经进行多少次欧气
+  uint32 realValue = 3; // 进阶关系所需要的实际价值
+  string rate = 4; // 概率
+  uint32 wish = 5;    // 获得欧气将增加的祝福值
+}
+
+message ApiAuctionOchResponse{
+  bool success = 1;
+  string message = 2;
+  AuctionOchData data = 3;
+}

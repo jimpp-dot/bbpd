@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="16px" viewBox="0 0 60 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <linearGradient x1="99.3373353%" y1="50%" x2="2.71299367%" y2="47.5308642%" id="linearGradient-1">
+            <stop stop-color="#80E36E" offset="0%"></stop>
+            <stop stop-color="#F9C0E7" offset="49.6145619%"></stop>
+            <stop stop-color="#F1677F" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="99.3373353%" y1="50%" x2="2.71299367%" y2="45.7465278%" id="linearGradient-2">
+            <stop stop-color="#53F634" offset="0%"></stop>
+            <stop stop-color="#FF84D9" offset="49.6145619%"></stop>
+            <stop stop-color="#FF244A" offset="100%"></stop>
+        </linearGradient>
+        <path d="M8.14408739,0.059232335 L20.831229,0.059232335 L20.831229,0.059232335 L32.2101644,0.059232335 L45.3873783,0.059232335 C46.8176892,0.059232335 48.1587479,0.754465149 48.9830961,1.92332751 L52.7155408,7.21564681 C52.9864544,7.59978137 52.9833429,8.11361382 52.7077971,8.49443928 L48.9858205,13.6384974 C48.1584003,14.7820558 46.832584,15.4592323 45.4210777,15.4592323 L8.12130379,15.4592323 C6.70671048,15.4592323 5.3783851,14.7791075 4.55143687,13.6314007 L0.82776871,8.46338768 C0.552994258,8.08203309 0.550890744,7.56822397 0.822533536,7.18463237 L4.55327978,1.91637947 C5.37815044,0.751564984 6.7167807,0.059232335 8.14408739,0.059232335 Z" id="path-3"></path>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-5">
+            <stop stop-color="#FFFFFF" stop-opacity="0.383686626" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="99.4707985%" y1="50%" x2="0%" y2="50%" id="linearGradient-6">
+            <stop stop-color="#C0FFB5" offset="0%"></stop>
+            <stop stop-color="#FFA4B4" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="初稿" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="头框4备份" transform="translate(-6.000000, -28.000000)">
+            <g id="荣耀情侣标识" transform="translate(6.000000, 28.000000)">
+                <path d="M7.57410875,1.15923234 L51.8195841,1.15923234 C53.1366281,1.15923234 54.3844159,1.7492136 55.2201777,2.76710712 L58.8182307,7.14925869 C59.1552277,7.5596951 59.1508744,8.15229463 58.8078839,8.5577358 L55.2182025,12.8010155 C54.3821831,13.7892548 53.1534245,14.3592323 51.858996,14.3592323 L7.54746297,14.3592323 C6.24932004,14.3592323 5.01742707,13.7859925 4.18140429,12.7928959 L0.590382096,8.52718425 C0.248390387,8.12093836 0.245447415,7.52836866 0.583387148,7.11874592 L4.18007028,2.75914254 C5.01591796,1.74599676 6.26067595,1.15923234 7.57410875,1.15923234 Z" id="矩形" fill="url(#linearGradient-1)" fill-rule="nonzero" opacity="0.5"></path>
+                <g id="矩形备份-2" transform="translate(2.931570, 0.000000)">
+                    <mask id="mask-4" fill="white">
+                        <use xlink:href="#path-3"></use>
+                    </mask>
+                    <use id="蒙版" fill="url(#linearGradient-2)" fill-rule="nonzero" xlink:href="#path-3"></use>
+                    <rect fill="url(#linearGradient-5)" opacity="0.300000012" mask="url(#mask-4)" transform="translate(34.100000, 10.263140) rotate(-30.000000) translate(-34.100000, -10.263140) " x="-3.85" y="9.16313972" width="75.9" height="2.2"></rect>
+                    <rect id="矩形备份-4" fill="url(#linearGradient-5)" opacity="0.300000012" mask="url(#mask-4)" transform="translate(2.200000, 10.263140) rotate(-30.000000) translate(-2.200000, -10.263140) " x="-35.75" y="9.16313972" width="75.9" height="2.2"></rect>
+                </g>
+                <path d="M48.3189482,0.609232335 C49.5704702,0.609232335 50.7438965,1.21756105 51.4652013,2.24031562 L51.4652013,2.24031562 L55.197646,7.53263491 L51.4717975,13.3160893 C50.7478049,14.3167029 49.5877155,14.9092323 48.3526475,14.9092323 L48.3526475,14.9092323 L11.0528736,14.9092323 C9.8151045,14.9092323 8.65281979,14.3141231 7.9292401,13.3098797 L7.9292401,13.3098797 L4.20557193,8.14186663 L7.93370059,2.23423607 C8.65546242,1.2150234 9.8267639,0.609232335 11.0756573,0.609232335 L11.0756573,0.609232335 Z" id="矩形备份-3" stroke="url(#linearGradient-6)" stroke-width="1.1" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

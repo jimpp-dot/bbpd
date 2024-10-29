@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package screen.msg.pull;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+import "room.refresh.mic.on.proto";
+
+
+// 欢迎弹框(加入房间、加入派对)
+message WelcomePopup {
+    option (pb.register_name) = 'screen.message.welcomepopup';
+    option (pb.register_id) = 10101;
+
+    string welcome = 1;             //弹窗欢迎语
+    string wordsResponse = 2;       //礼貌回应默认文案
+    GiftResponse giftResponse = 3;  //礼物回应
+
+    message GiftResponse {
+        int32 id = 1;
+        string name = 2;
+        float price = 3;
+        string gift_type = 4;
+        repeated MicData mic_data = 5;
+    }
+}

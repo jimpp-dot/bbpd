@@ -1,0 +1,27 @@
+syntax = "proto3";
+package pb;
+/*
+贵族proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ResTitleRoomSkill {
+  bool success = 1;                         //成功true，失败false
+  string msg = 2;                           //失败message
+  TitleRoomSkillData data = 3;
+}
+
+message TitleRoomSkillData {
+  repeated TitleRoomSkillItem skills = 1;   //技能列表
+}
+
+message TitleRoomSkillItem {
+  string key = 1;                           //技能标识
+  string name = 2;                          //技能名称
+  string icon = 3;                          //技能图片
+  string desc = 4;                          //技能描述
+  string button_txt = 5;                    //按钮文字
+}

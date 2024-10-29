@@ -1,0 +1,85 @@
+syntax = "proto3";
+package pb;
+
+/*
+ *xs_chatroom rpc 协议
+ */
+option go_package = "../app/pb";
+
+//此文件放置behavior类所需要的参数传递结构和接口返回的结构
+
+message OnMicParams {
+  int32 position = 1;
+  uint32 uid = 2;
+  uint32 current = 3;
+  int32 boss_position = 4;
+  int32 isAdmin = 5;
+  bool refreshSuspectRole = 6;
+  bool refreshGrabmic = 7;
+}
+
+message OffMicParams {
+  int32 position = 1;
+  int32 is_admin = 2;
+  string position_role = 3;
+  bool refreshSuspectRole = 4;
+}
+
+message PositionTable {
+    uint32 position = 1;
+    uint32 display = 2;
+    uint32 uid = 3;
+}
+
+message Options {
+  repeated  PositionTable position_table = 1;
+}
+
+//排麦业务参数传递结构体
+message WaitMicParams {
+  int32 queue_type = 1;
+  int32 role = 2;
+  repeated WaitQueueRank queueUsers = 3;
+  Options options = 4;
+  int32 boss_position = 5;
+}
+
+//排麦数据结构
+message WaitQueueRank {
+  uint32 uid = 1;//用户ID
+  string name = 2;//用户昵称
+  string icon = 3;//用户头像
+  uint32 sex = 4;//用户性别
+  uint32 birthday = 5;//用户生日
+  uint32 version = 6;//版本号
+  uint32 pay_money = 7;
+  uint64 pay_room_money = 8;
+  uint32 title = 9;//爵位头衔
+  string dateline_diff = 10;
+  uint32 vip = 11;//vip级别
+  uint32 year = 12;//岁数
+  uint32 apply_time = 13;//
+}
+
+//排麦接口返回数据
+message ResActionWaitMic {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  string data = 3;
+}
+
+message ActionWaitMic {
+  repeated WaitQueueRank data = 1;
+  repeated  PositionTable position_table = 2;
+}
+
+message RspRoomWaitMic{
+  bool success = 1;
+  string msg = 2;
+  ActionWaitMic data = 3;
+}
+
+message RspMicOp{
+  bool success = 1;
+  string msg = 2;
+}

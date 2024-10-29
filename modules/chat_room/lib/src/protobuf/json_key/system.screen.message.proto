@@ -1,0 +1,497 @@
+syntax = "proto3";
+
+package system.screen.message;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+import "google/protobuf/struct.proto";
+
+message ScreenMessage {
+    option (pb.register_name) = 'system.screen.message';
+    option (pb.register_id) = 103;
+    string name = 1;
+    string data = 2;
+    Extra extra = 3;          // 说明:extra可能是json对象，也可能是json序列化后的字符串,gateway为节省流量全部转为对象后统一pb编码
+    User user = 4;
+    string content = 5;
+    uint32 rid = 6;
+    uint32 uid = 7;
+    int64 messageId = 8;
+
+    message Extra {
+        bool icongray = 1;
+        bool ka_white_icon = 2;
+        uint32 star_singer = 3;
+        string app_platform = 4;
+        uint32 title_new = 5;
+        uint32 hitNum = 6;
+        string emote = 7;
+        uint32 defends = 8;
+        string name = 9;
+        uint32 is_newer = 10;
+        string new_uuid = 11 [json_name = "_uuid"];
+        string icon = 12;
+        map<string, uint32> giftNumMap = 13;
+        uint32 box_gift = 14 [json_name = "box-gift"]; //原字段名为box-gift，不符合proto命名规范，需要修改别名
+        string bubble_front_color = 15;
+        uint32 top = 16;
+        uint32 uid = 17;
+        string official_tag = 18;
+        string tyrant_msg_content = 19;
+        string frame = 20;
+        uint32 tyrant_msg = 21;
+        uint32 is_recall = 22;
+        string nameplate = 23;
+        string beautiful_remark = 24;
+        uint32 vip_new = 25;
+        string message = 26;
+        uint32 rid = 27;
+        repeated string vap_diy_gift_imgs = 28;
+        uint32 all_mic = 29;
+        google.protobuf.Value juben_title = 30;
+        uint32 new_hit_num = 31 [json_name = "hit_num"];
+        bool show_animation = 32;
+        uint32 new_noble = 33;
+        bool skipHistoryMsg = 34;
+        uint32 top_month = 35;
+        uint32 diy_gift_sign_direction = 36;
+        string from_pub_type = 37;
+        string little_alarm = 38;
+        uint32 defend = 39;
+        repeated uint32 new_to_uid = 40 [json_name = "toUid"];
+        uint32 online = 41;
+        uint32 top_week = 42;
+        Truth truth = 43;
+        uint32 beautiful_id = 44;
+        google.protobuf.Value star_verify_tag = 45;
+        bool is_live = 46;
+        string type = 47;
+        uint32 now = 48;
+        uint32 is_grow_user = 49;
+        string gift_icon = 50;
+        string gift_id = 51;
+        google.protobuf.Value price = 52;
+        BtnData btnData = 53;
+        string boxName = 54;
+        string badge_icon_in_use = 55;
+        string tyrant_msg_type = 56;
+        uint32 seven_new = 57;
+        string live_label_effect = 58;
+        uint32 agent_level = 59;
+        string sub_type = 60;
+        uint32 pay_level = 61;
+        bool is_guess = 62;
+        uint32 emote_sender = 63;
+        repeated uint32 emote_data = 64;
+        uint32 live_only = 65;
+        uint32 vip = 66;
+        FansLabel fans_label = 67;
+        string tag_text = 68;
+        string puzzle_times_id = 69;
+        string image = 70;
+        uint32 knight_level = 71;
+        bool is_cplink_aid = 72;
+        uint32 title = 73;
+        uint32 emote_position = 74;
+        uint32 popularity_level = 75;
+        uint32 is_dm = 76;
+        string awardTitle = 77;
+        // string("quality","start", "end"), int
+        google.protobuf.Value state = 78;
+        repeated string vap_diy_gift_sign = 79;
+        Effect effect = 80;
+        uint32 state_new = 81;
+        uint32 img_format = 82;
+        string live_label_header = 83;
+        bool consume_label = 84;
+        int32 diy_gift_color = 85;
+        //string, int
+        google.protobuf.Value id = 86;
+        string label = 87;
+        uint32 version = 88;
+        string message_background = 89;
+        uint32 applause = 90;
+        Gift gift = 91;
+        MsgData msgData = 92;
+        uint32 join_fans_group = 93;
+        string image_type = 94;
+        string hit_id = 95;
+        string uuid = 96;
+        uint32 hotNum = 97;
+        uint32 artist_level = 98;
+        uint32 seven_love_tag = 99;
+        string jukebox = 100;
+        uint32 duration = 101;
+        bool recharge_label = 102;
+        string msg_action = 103;
+        repeated string icons = 104;
+        Mounts mounts = 105;
+        DefendLabel defend_label = 106;
+        string live_label_bubble = 107;
+        repeated string highLightContent = 108;
+        uint32 from_pub_rid = 109;
+        repeated Tags tags = 110;
+        string portraitUri = 111;
+        string tail_light = 112;
+        bool is_show_title = 113;
+        repeated uint32 uids = 114;
+        bool sign = 115;
+        string vedio = 116;
+        string knight_name = 117;
+        string new_sub_type = 118 [json_name = "subType"];
+        string to = 119;
+        string purpose = 120;
+        string background_new = 121;
+        uint32 onceHitNum = 122;
+        repeated string room_tags = 123;
+        uint32 to_uid = 124;
+        string from = 125;
+        uint32 money = 126;
+        uint32 pid = 127;
+        At at = 128;
+        uint32 live_uid = 129;
+        uint32 master_uid = 130;
+        string msg = 131;
+        string knight_target_name = 132;
+        string op = 133;
+        Data data = 134;
+        string acute_icon = 135;
+        uint32 prop_id = 136;
+        string color = 137;
+        string room_name = 138;
+        string show_name = 139;
+        repeated string bg = 140;
+        Decorate decorate = 141;
+        Artist artist = 142;
+        uint32 pk_id = 143;
+        uint32 total_num = 144;
+        uint32 vrid = 145;
+        string username = 146;
+        string srv = 147;
+        uint32 current_num = 148;
+        string game_name = 149;
+        uint32 fee_type = 150;
+        string tag = 151;
+        uint32 ftype = 152;
+        uint32 fvalue = 153;
+        string voice_url = 154;
+        int32 glory_level = 155;
+        bool is_normal_glory = 156;
+        string gs_msg_action = 157;
+        Viability viability = 158;
+        uint32 from_outstanding_box = 159;
+        OutstandingBox outstanding_box = 160;
+        GiftFirework gift_firework = 161;
+
+        ScreenMessageRoomBirthdayGift birthday_room_gift = 162;
+        string achieve_wear_icon = 167;
+        RedPacketV2 red_packet_v2 = 168;//房间红包
+        // 预留字段200-1000为弹幕使用,弹幕解析走静态序列化,name仍然为system.screen.message
+        repeated WarpUserBubbleTail bubble_tail = 201;
+        string ktv = 202;
+
+        message Viability {
+            string title = 1;
+            int32 mlevel = 2;
+            int32 slevel = 3;
+        }
+
+        message WarpUserBubbleTail {
+            uint32 cid = 1;
+        }
+
+        // 房间礼物红包
+        message RedPacketV2{
+            uint32 type = 1;//1:礼物icon；2：红包icon
+            string icon = 2;
+            uint32 gift_num = 3;//礼物数量
+            string rob_name = 4;
+            string rob_name_color = 5;
+            string author_name = 6;
+            string author_name_color = 7;
+            string red_name = 8;
+        }
+
+        message OutstandingBox {
+            int32  luck_level = 1;
+            string sender_suffix = 2;
+            string sender_box_tag = 3;
+        }
+
+        // 烟花礼物
+        message GiftFirework{
+            string url = 1;
+            uint64 size = 2;
+            int64 width = 3;
+            int64 height = 4;
+            int32  num = 5;
+            string type = 6; // 类型
+        }
+
+        message Data {
+            uint32 time_interval = 1;
+            string type = 2;
+            uint32 level = 3;
+            string name = 4;
+            string msg_tail = 5;
+            string name_color = 6;
+            string msg_tail_color = 7;
+            string bg_img = 8;
+        }
+
+        message At {
+            uint32 uid = 1;
+            string name = 2;
+        }
+
+        message Truth {
+            string conversation = 1;
+            uint32 rid = 2;
+            string type = 3;
+            uint32 mode = 4;
+            Question question = 5;
+            string content = 6;
+            uint32 source = 7;
+            uint32 target = 8;
+
+            message Question {
+                repeated string answers = 1;
+                string id = 2;
+                string content = 3;
+                string type = 4;
+                string dateline = 5;
+                string sex = 6;
+            }
+        }
+
+        message Gift {
+            string vap_header_start = 1;
+            uint32 vap_header = 2;
+            uint32 _num = 3;
+            string vap_header_end = 4;
+            uint32 magic_size = 5;
+            string displayNormalGiftType = 6;
+            uint32 with_end = 7;
+            string gift_type = 8;
+            uint32 size = 9;
+            string price = 10;
+            string vap_type = 11;
+            uint32 vap_size = 12;
+            uint32 show_start_end = 13;
+            uint32 id = 14;
+            string name = 15;
+            uint32 magic = 16;
+            uint32 worthy = 17;
+            string displayNormalGiftRatio = 18;
+            uint32 size_big = 19;
+            string type = 20;
+            int32 _position = 21;
+            uint32 cplink_gift_lev = 22;
+            uint32 id_origin = 33;
+            Header header = 34;
+            uint32 unity_rocket_version = 35;
+            uint32 diy_unity_android_size = 36;
+            uint32 diy_unity_ios_size = 37;
+            uint32 riveValue = 38;
+
+            message Header {
+                From from = 1;
+                To to = 2;
+                uint32 start = 3;
+                uint32 end = 4;
+
+                message From {
+                    string uid = 1;
+                    string icon = 2;
+                    string name = 3;
+                }
+
+                message To {
+                    string uid = 1;
+                    string icon = 2;
+                    string name = 3;
+                }
+            }
+        }
+
+        message Effect {
+            string image = 1;
+            string font_color = 2;
+        }
+
+        message BtnData {
+            string type = 1;
+            string id = 2;
+            uint32 rid = 3;
+            string text = 4;
+            uint32 permanent_vvc = 5;
+            uint32 day = 6;
+        }
+
+        message Tags {
+            uint32 content_type = 1;
+            string content_value = 2;
+            uint32 show_type = 3;
+            repeated string colors = 4;
+        }
+
+        message Mounts {
+            string id = 1;
+            string name = 2;
+            string name_zh_tw = 3;
+            string name_en = 4;
+            string price = 5;
+            string display = 6;
+            string sub_display = 7;
+            string type = 8;
+            string gift_type = 9;
+            string income_type = 10;
+            string with_end = 11;
+            string size = 12;
+            string size_big = 13;
+            string ordering = 14;
+            string deleted = 15;
+            string title = 16;
+            string naming = 17;
+            string xratio = 18;
+            string xtype = 19;
+            string excludes = 20;
+            string tag_url = 21;
+            string tag_ids = 22;
+            string description = 23;
+            string jump_page = 24;
+            string unlock_limit = 25;
+            string ext_id = 26;
+            string is_skin = 27;
+            string is_combo = 28;
+            string version = 29;
+            string vap_type = 30;
+            string vap_size = 31;
+            string vap_header = 32;
+            string vap_header_start = 33;
+            string vap_header_end = 34;
+            string magic = 35;
+            string magic_size = 36;
+            string category = 37;
+            string app_id = 38;
+            string is_app_public = 39;
+            string icon_url = 40;
+            uint32 _num = 41;
+            int32 _position = 42;
+        }
+
+        message FansLabel {
+            string label = 1;
+            uint32 credit = 2;
+            uint32 level = 3;
+        }
+
+        message DefendLabel {
+            string user_name = 1;
+            string relation = 2;
+        }
+
+        message MsgData {
+            repeated NewVoteResultPosMap newVoteResultPosMap = 1;
+            repeated PosUserDataMap posUserDataMap = 2;
+            int32 killPosition = 3;
+            map<string, google.protobuf.ListValue> voteResList = 4;
+            repeated DeadList deadList = 5;
+            LiveList liveList = 6;
+
+            message LiveList {
+                string id = 1;
+                string rid = 2;
+                string position = 3;
+                string origin = 4;
+                string role = 5;
+                string price = 6;
+                string target = 7;
+                string antidoteTarget = 8;
+                string poison_target = 9;
+                string guard_target = 10;
+                string voteTarget = 11;
+                string count = 12;
+                string deadCount = 13;
+                string isDead = 14;
+                string deadPub = 15;
+                string isDesc = 16;
+                string lastwords_type = 17;
+                string voteDead = 18;
+                string killDead = 19;
+                string is_ready = 20;
+                string gun_dead = 21;
+                string poison_dead = 22;
+                string explode_dead = 23;
+                string is_police_join = 24;
+                string is_police = 25;
+                string start_time = 26;
+            }
+
+            message DeadList {
+                string uid = 1;
+                string role = 2;
+                string position = 3;
+                string deadCount = 4;
+                string deadPub = 5;
+                string voteDead = 6;
+                string killDead = 7;
+                string gunDead = 8;
+                string poisonDead = 9;
+                string isPolice = 10;
+            }
+
+            message NewVoteResultPosMap {
+                int32 key = 1;
+                repeated uint32 value = 2;
+            }
+
+            message PosUserDataMap {
+                string position = 1;
+                string uid = 2;
+                string role = 3;
+                string icon = 4;
+            }
+        }
+
+        message Decorate {
+            string name = 1;
+            uint32 num = 2;
+            string image = 3;
+        }
+
+        message Artist {
+            string name = 1;
+            string icon = 2;
+            string sex = 3;
+        }
+    }
+
+    message User {
+        string portraitUri = 1;
+        uint32 popularity_level = 2;
+        string frame = 3;
+        string background_new = 4;
+        string name = 5;
+        uint32 id = 6;
+        string icon = 7;
+        string bubble_front_color = 8;
+        uint32 sex = 9;
+        string message_background = 10;
+        string color_name = 11;
+    }
+
+    message ScreenMessageRoomBirthdayGift{
+        uint32 from = 1;
+        repeated ScreenMessageRoomBirthdayUser to = 2;
+        string word = 3;
+        string sentence = 4;
+        uint32 duration = 5;//弹窗倒计时关闭时间，默认5秒
+    }
+
+    message ScreenMessageRoomBirthdayUser{
+        uint32 uid = 1;
+        string icon = 2;
+    }
+}

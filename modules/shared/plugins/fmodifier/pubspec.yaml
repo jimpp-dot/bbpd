@@ -1,0 +1,17 @@
+name: fmodifier
+description: Simple modifier for Widget
+version: 0.0.1
+author: davon.zhou
+homepage:
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=2.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter 

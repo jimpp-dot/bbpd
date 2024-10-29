@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="ly.plugins.thinking_analytics">
+    <application>
+        <receiver android:name="ly.plugins.thinking_analytics.TrackerReceiver" android:exported='true'>
+            <intent-filter>
+                <action android:name="im_base.tracker.intent.RECEIVE_EVENT" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

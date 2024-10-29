@@ -1,0 +1,26 @@
+syntax = "proto3";
+package pb;
+/*
+新人榜proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ResNewbieUserList {
+  bool success = 1;                         //成功true，失败false
+  string msg = 2;                           //失败message
+  repeated NewbieUserData list = 3;         //列表数据
+  string headline = 4;                      //列表标题
+  bool has_more = 5;                        //是否还有下一页
+}
+
+message NewbieUserData {
+  uint32 uid = 1;                           //用户id
+  string name = 2;                          //用户名称
+  string icon = 3;                          //用户头像
+  string ip_location = 4;                   //IP归属地
+  string channel_tag = 5;                   //渠道标签
+  uint32 said_hi = 6;                       //是否已打招呼，0-否，1-是
+}

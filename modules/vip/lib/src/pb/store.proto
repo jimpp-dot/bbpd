@@ -1,0 +1,234 @@
+syntax = "proto3";
+package pb;
+
+/*
+商城 rpc 协议
+*/
+
+option go_package = "../app/pb";
+
+
+// ************************************************************************//
+// ****************************** 商城公共协议 ****************************** //
+// ************************************************************************//
+//=================== 商城物品信息 ===================//
+
+message StoreCommodityProfile{
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+}
+
+message StoreCommodityItem{
+  uint32 cid = 1;
+  uint32 group_id = 2;
+  string name = 3;
+  string type = 4;
+  string type_name = 5;
+  string sub_type = 6;
+  uint32 price = 7;
+  string money_type = 8;
+  string desc = 9;
+  string avatar = 10;
+  string image = 11;
+  string image_bg = 12;
+  uint32 limited = 13;
+  string corner_icon = 14;
+  string corner_desc = 15;
+  string corner_type = 16;
+  string grade = 17;
+  string grade_icon = 18;
+  uint32 num_total = 19;
+  uint32 num_stock = 20;
+  string partition = 21;
+  string bubble_desc = 22;
+  string bubble_font_color = 23;
+  StoreCommodityProfile owner = 24;
+  uint32 limitedPrice = 25;
+  uint32 duction_rate = 26;//折扣
+  string grant_way = 27;
+  string grant_limit = 28;
+  string jump_type = 29;//是否是跳转h5的类型
+  string jump_url = 30;//条状的url
+  uint32 light_score = 31;//所需要扣减的图鉴点亮积分
+  int32 saling_on_shop = 32;
+}
+
+//=================== 商城物品列表 ===================//
+message StoreCommodityList{
+  StoreCategoryEntity entity = 1;
+  repeated StoreCommodityItem list = 2;
+}
+
+//=================== 商城分类信息 ===================//
+message StoreCategoryEntity{
+  string category = 1;
+  string page = 2;
+  string url = 3;
+  string desc = 4;
+  string desc_icon = 5;
+}
+
+// ************************************************************************//
+// ****************************** 商城RPC协议 ******************************//
+// ************************************************************************//
+
+//=================== 商城列表项信息 ===================//
+message StoreListItem{
+  oneof Item{
+    StoreCommodityItem commodity = 1; // 物品信息
+    StoreCategoryEntity category = 2; // 分类信息
+  }
+}
+
+//=================== 商城列表请求 ===================//
+
+message StoreListParams{
+  string category = 1; // 分类
+  int32 offset = 2; // 偏移量
+  int32 limit = 3;
+  repeated pb.StoreWhere store_where = 4;
+}
+
+message ReqStoreList{
+  uint32 uid = 1; // uid
+  StoreListParams params = 2;// params
+  string package = 3; // 包名
+}
+
+//=================== 商城列表结果 ===================//
+message RspStoreList{
+  string name = 1;
+  string url = 2;
+  string desc = 3;
+  string page = 4;
+  repeated StoreListItem list = 5;
+}
+
+//=================== 商城列表批量查询 ===================//
+
+message ReqStoreMultiList{
+  uint32 uid = 1;
+  repeated StoreListParams categories = 2;
+  string package = 3; // 包名
+}
+
+//=================== 商城列表批量结果 ===================//
+message RspStoreMultiList{
+  repeated RspStoreList multi = 1;
+}
+
+//=================== 商城商品详情查询 ===================//
+message ReqStoreGoodsProfile{
+  uint32 uid = 1;
+  uint32 cid = 2;
+}
+
+//=================== 商城商品详情结果 ===================//
+message RspStoreGoodsProfile{
+  StoreCommodityItem commodity = 1;
+}
+
+service store{
+  // 查询商城列表
+  rpc List(ReqStoreList)returns(RspStoreList);
+  // 批量查询商城列表
+  rpc MultiList(ReqStoreMultiList)returns(RspStoreMultiList);
+  // 查询商城商品详情
+  rpc GoodsProfile(ReqStoreGoodsProfile)returns(RspStoreGoodsProfile);
+}
+
+
+// ************************************************************************//
+// ****************************** 商城HTTP协议 ******************************
+// ************************************************************************//
+
+//=========================商城分类===============================//
+// go/banban/store/index
+message ApiStoreIndexResponse{
+  bool success = 1;
+  string message = 2;
+  StoreIndexData data = 3;
+}
+
+message StoreIndexData{
+  repeated StoreCategoryEntity list = 1;
+}
+
+//=========================商城分类物品===============================//
+message ApiStorePageResponse{
+  bool success = 1;
+  string message = 2;
+  StorePageData data = 3;
+}
+
+message StoreGradeConfigItem{
+  string grade = 1; /// SSS / SS / S / A / B
+  string grade_icon = 2;
+  string grade_name = 3; /// 文字 传说/史诗/稀有/高级/普通
+}
+
+message StoreGradeConfig{
+  repeated StoreGradeConfigItem config = 1;
+}
+
+message StorePageData{
+  string page = 1;
+  repeated StoreCommodityList partition = 2;
+  repeated StoreCategoryEntity subCategory = 3;
+  StoreCommodityList limited = 4;
+  StoreCommodityList vip = 5;
+  StoreGradeConfig grade_config = 6;
+  StoreCommodityList title = 7;//贵族专属
+  StoreCommodityList discount = 8;//折扣
+}
+
+//=========================商城物品详情===============================//
+
+message ApiStoreGoodsResponse{
+  bool success = 1;
+  string message = 2;
+  StoreGoodsData data = 3;
+}
+
+message StoreGoodsData{
+
+}
+
+//=========================商城入口展示页===============================//
+
+message ApiStoreEntranceResponse{
+  bool success = 1;
+  string message = 2;
+  StoreEntranceData data = 3;
+}
+
+message StoreEntranceData{
+  string page = 1;
+  uint32 gray_old_store = 2;
+  repeated StoreCommodityItem list = 3;
+}
+
+//1
+message StoreWhere{
+  string type=1;
+  string subtype=2;
+  uint32 duction_rate=3;//打折过滤。80表示8折1
+  string vip=4;
+  string nobility=5;
+  string recommend=6;
+  message SalingOnShopState{
+    bool is_saling=1;
+    int32 SalingOnShop=2;//0非售卖,1商城售卖,2金币商城,3碎片商城,4联盟银币商城,5联盟特权商城,6积分商城
+  }
+  SalingOnShopState SalingOnShop=7;
+  uint32 tag_id=8;//标签过滤
+}
+
+message ReqStoreMultiListCount{
+  repeated StoreWhere where = 1;
+}
+
+message RspStoreMultiListCount{
+  repeated int32 count = 2;
+}

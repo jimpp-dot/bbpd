@@ -1,0 +1,95 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 pb 目录下
+option go_package = "./pb";
+
+message ResAccountUserInfo {
+    bool   success = 1;
+    string msg = 2;
+    AccountUserInfo data = 3;
+}
+
+message AccountUserInfo {
+    UserProfile Profile = 1;
+    string mark_name = 2;
+    uint32 is_follow = 3;
+    uint32 user_type = 4; //0普通用户，1KA用户
+    uint32 age = 5; //年龄
+    repeated ChatBgImage list = 6; //图片列表
+    uint32 total_count = 7; //图片总数
+    uint32 can_use_count = 8; //可用图片数量
+}
+
+message ChatBgImage {
+    uint32 id = 1;
+    uint32 status = 2; //图片状态：0审核中，1审核通过，2审核不通过
+    uint32 is_use = 3; //1正在使用的背景图，0没被使用
+    string url = 4; //图片地址
+}
+
+message UserProfile {
+    uint32 uid                                          = 1;  //
+    int32  app_id                                       = 2;  //
+    string name                                         = 3;  //
+    string icon                                         = 4;  //
+    uint32 sex                                          = 5;  //
+    string video                                        = 6;  //
+    string cover                                        = 7;  //
+    uint32 birthday                                     = 8;  //
+    uint32 job                                          = 9;  //
+    uint32 role                                         = 10; //
+    string god_category                                 = 11; // 主播可用的资质
+    uint32 god_num                                      = 12; // 接单次数，冗余
+    uint32 god_month_num                                = 13; // 最近一个月接单次数，每天更新
+    uint32 god_week_num                                 = 14; // 最近一天接单次数，每天更新
+    uint32 god_day_num                                  = 15; // 最近一天接单次数，每天更新
+    uint32 god_now_num                                  = 16; // 当前的接单数，实时更新
+    uint32 god_dateline                                 = 17; // 首次通过技能审核时间
+    uint32 online_status                                = 18; // 0 在线， 1离线，2退出
+    uint32 online_dateline                              = 19; // 最后在线时间
+    uint32 version                                      = 20; //
+    string city                                         = 21; //
+    uint32 city_code                                    = 22; //
+    string position                                     = 23; //
+    double longitude                                    = 24; // 地点经度
+    double latitude                                     = 25; // 地点纬度
+    uint32 dateline                                     = 26; //
+    int32  deleted                                      = 27; // 已被封禁，index表的冗余
+    int32  star                                         = 28; // 综合评分
+    string tmp_icon                                     = 29; // 更新头像临时存储，用于后台审核
+    int32  update_time                                  = 30; // 更新头像和更新图片会更新当前时间
+    uint32 block_un_auther_message                      = 31; //
+    string sign                                         = 32; //
+    uint32 pay_num                                      = 33; // 用户完成订单次数，冗余
+    uint32 pay_money                                    = 34; // 用户累计消费，用于计算用户等级
+    uint64 pay_room_money                               = 35; // 用户在聊天室里的累计消费，用于计算用户等级
+    uint32 pay_order_num                                = 36; // 支付订单次数
+    uint32 pay_receive_today                            = 37; // 主播当天接的单子，以支付计算
+    uint32 god_default_id                               = 38; // 默认技能ID
+    uint32 god_default_cid                              = 39; // 默认技能CID
+    uint32 god_discount                                 = 40; // 打折
+    uint32 god_discount_id                              = 41; // 默认技能
+    uint32 god_discount_cid                             = 42; // 打折技能CID
+    uint32 service_score                                = 43; // 服务质量，后台设定
+    uint32 service_busy                                 = 44; // 是否忙
+    uint32 service_pause                                = 45; // 是否暂停接单
+    uint32 notice_order                                 = 46; // 是否开启抢单通知
+    uint32 title                                        = 47; // 爵位
+    uint32 notice_power                                 = 48; // 是否开启闪电抢单通知
+    uint32 notice_game                                  = 49; // 是否开启自动匹配小游戏
+    int32  credit_god                                   = 50; // 接单信用值
+    int32  credit_user                                  = 51; // 下单信用值
+    int32  credit_god_now                               = 52; // 当日信用分数
+    int32  credit_god_week                              = 53; // 本周信用分数
+    int32  credit_god_day                               = 54; // 昨日信用分数
+    uint32 tag                                          = 55; // 用户交友标签
+    uint32 friend_state                                 = 56; // 进入广场,0 未通过, 1 未开启, 2 已开启
+    uint32 has_video                                    = 57; // 是否有通过审核的视频
+}
+
+message SetBgImgResNormal {
+    bool success = 1;
+    string msg = 2;
+}

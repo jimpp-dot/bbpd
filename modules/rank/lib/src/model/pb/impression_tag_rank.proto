@@ -1,0 +1,45 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+// 印象标记排行榜
+message ImpressionTagsRankReq {
+    uint32 rank_type = 1; // 榜单类型1：周榜
+    uint32 tag_id = 2;  // 标签id
+    uint32 last_id = 3; // 最后一个id
+}
+message ImpressionTagsRankRsp {
+    bool success = 1;                 //成功true，失败false
+    string msg = 2;                   //失败message
+    bool has_more = 3;
+    uint32 last_id = 4; // 最后一个id
+    ImpressionTagsRankData data = 5;
+}
+
+message ImpressionTagsRankData {
+    repeated ImpressionRank list = 1;
+    ImpressionRank my = 2;
+    repeated ImpressionTag tags = 3;
+}
+
+message ImpressionTag {
+    uint32 tag_id = 1;
+    string tag_name = 2;
+}
+
+message ImpressionRank {
+    uint32 rank = 1;
+    uint32 uid = 2;
+    string user_name = 3;
+    string user_icon = 4;
+    uint32 score = 5;
+    uint32 tag_id = 6;
+    uint32 vip_level = 7; // vip标记
+    uint32 title = 8; // 爵位
+    uint32 title_new = 9; // 爵位icon
+    uint32 popularity_level = 10; // 人气值
+    string badge_icon = 11; //勋章icon
+}

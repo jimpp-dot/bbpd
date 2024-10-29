@@ -1,0 +1,130 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message RoomInfoHidden {
+    bool authed = 1;
+    bool ishidden = 2;
+}
+
+message RoomInfoSubType {
+    string key = 1;
+    string value = 2;
+}
+
+message RoomInfoMicNumOption {
+    string label = 1;
+    string room_factory_type = 2;
+    bool selected = 3;
+    int32 room_position_num =4;
+}
+
+message RoomInfoSpecialMicType {
+    int32 type = 1;
+    string title = 2;
+}
+
+message RoomInfoSpecialMicConfig {
+    repeated RoomInfoSpecialMicType list = 1;
+    int32 selected_type = 2;
+}
+
+message RoomInfoRoomType {
+    string label = 1;
+    string display = 2;
+    string show = 3;
+    string val = 4;
+    string color = 5;
+    repeated string bg = 6;
+    repeated string category = 7;
+}
+
+message RoomInfoInAudit {
+  uint32 room_name = 1;          //房间名称，0-正常，1-审核中
+  uint32 room_description = 2;   //房间公告
+}
+
+message RoomInfoData {
+    string prefix = 1;
+    string name = 2;
+    string icon = 3;
+    string type = 4;
+    string password = 5;
+    int32 reception = 6;
+    int32 paier = 7;
+    string description = 8;
+    int32 num = 9;
+    string property = 10;
+    uint32 close_box = 11;
+    uint32 mode = 12;
+    int32 auction = 13;
+    int32 isAuction = 14;
+    RoomInfoHidden hidden = 15;
+    bool icon_editable = 16;
+    bool display_open_card = 17;
+    uint32 is_open_card = 18;
+    uint32 gift_wish = 19;
+    string cover_icon = 20;
+    int32 show_new = 21;
+    int32 only_new = 22;
+    bool show_sub_type = 23;
+    string sub_type = 24;
+    repeated RoomInfoSubType sub_type_list = 25;
+    uint32 defense_val = 26;
+    uint32 ktv_pk_mode = 27;
+    int32 mystery = 28;
+    int32 wave = 29;
+    int32 nest_enable = 30;
+    repeated RoomInfoMicNumOption mic_num_option = 31;
+    RoomInfoSpecialMicConfig special_mic_config = 32;
+    repeated RoomInfoRoomType types = 33;
+    string welcomeJoinWords = 34;
+    RoomInfoInAudit in_audit = 35;
+    bool esport_mate_switch = 36; // 是否能展示电竞双排麦位
+    bool esport_mate_show = 37; // 是否展示电竞双排麦位(非真实麦位,仅用来展示榜单第一名)
+    string subtitle = 39; // 副标题
+}
+
+message ResRoomInfo {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+    RoomInfoData data = 3;
+}
+
+// 获取房间菜单信息/go/room/room/getRoomSetInfo [get]
+message ResGetRoomSetInfo {
+    bool     success             = 1;  //返回给客户端的必须有
+    string   msg                 = 2;  //返回给客户端的必须有
+    message  Data {
+        bool is_show_room_set=1;//true：展示房间设置
+        bool is_show_room_close = 2; // true 展示关闭房间
+    }
+    Data data=3;
+}
+
+// 房主or管理获取自己管理的房间列表 /go/room/room/panel
+message ResRoomPanel {
+    bool success = 1;  //返回给客户端的必须有
+    string msg = 2;  //返回给客户端的必须有
+    message Data {
+        message Tab {
+            message RoomItem {
+                uint32 rid = 1;
+                string room_cover = 2; // 房间封面
+                RoomInfoRoomType types = 3; // 类型标签
+                string title = 4; // 房间标题
+                uint32 uid = 5; // 房主uid
+                string user_icon = 6; // 房主头像
+                string user_name = 7; // 房主名称
+                uint32 room_state = 8; // 0 未开播, 1 开播
+            }
+            string name = 1; // tab名称
+            repeated RoomItem list = 2;// 房间列表
+        }
+        repeated Tab tabs = 1; // tab数据
+    }
+    Data data = 3;
+}

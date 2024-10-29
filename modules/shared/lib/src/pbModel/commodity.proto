@@ -1,0 +1,37 @@
+syntax = "proto3";
+package pb;
+/*
+用户背包proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+import "entity_xs_gift.proto";
+
+message RepCommodityUserNew {
+  bool success = 1;
+  string msg = 2;
+  bool data = 3;
+}
+
+
+message RepGiftList {
+  bool success = 1;
+  string msg = 2;
+  repeated RepGiftListItem data = 3;
+}
+
+message RepGiftListItem {
+  EntityXsGift gift = 1;
+  uint32 cid = 2;
+  string ctype = 3;
+  uint32 duction_money = 4;
+}
+
+message RepCommodityResolve {
+  bool success = 1;
+  string msg = 2;
+  int32 num = 3;
+}

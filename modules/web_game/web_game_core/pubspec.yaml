@@ -1,0 +1,23 @@
+name: web_game_core
+description: 游戏中台-基础模块.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  build_runner: ^2.0.0
+  assets_gen: ^1.5.0
+
+  shared:
+    path: ../../shared
+
+assets_gen:
+  omit_path_levels: 2
+
+flutter:
+  assets:
+    - assets/images/

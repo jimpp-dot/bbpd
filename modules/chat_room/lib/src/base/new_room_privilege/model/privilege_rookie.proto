@@ -1,0 +1,36 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message RookiePrivilegeItem{
+  uint32 id = 1; // 特权ID
+  uint32 type = 2; // 特权类型，1，单人，2，全麦
+  string name = 3; // 特权名
+  uint32 status = 4; // 是否已经使用过，1是未使用，2是已使用，0作为未知，保留
+}
+
+message RookiePrivilegeDayList{
+  string tab = 1;
+  uint32 idx = 2;
+  repeated RookiePrivilegeItem list = 3;
+}
+
+message RookiePrivilegeConfig{
+
+  uint64 expireDuration = 1; // 倒计时
+  string desc = 2; // 权益说明
+  string tips = 3; // 开通说明
+  uint32 privilege = 4; // 是否拥有权限，0：未开通；1：已开通
+  uint32 day = 5; // 当前第几天
+  repeated RookiePrivilegeDayList list = 6;
+}
+
+message ApiRookiePrivilegeResponse{
+  bool success = 1;
+  string message = 2;
+  RookiePrivilegeConfig data = 3;
+}
+

@@ -1,0 +1,63 @@
+syntax = "proto3";
+package pb;
+/*
+配置信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+import "banban_home.proto";
+
+message GamePartyItem {
+	string display = 1;
+	string party_type = 2;
+	repeated string type_bg = 3;
+	string type_icon = 4;
+	uint32 playing_num = 5;
+  string jump_url=6;
+  bool no_party=7;  //是否没有二级菜单，有则请求partyData接口
+}
+
+message ResGamePartyList {
+	bool success = 1;
+	string msg = 2;
+	repeated GamePartyItem data = 3;
+}
+
+message ResHomePlayingFriend {
+	bool success = 1;
+	string msg = 2;
+	repeated RoomListItem data = 3;
+}
+
+message ResNoviceGift{
+  bool success = 1;
+  string msg = 2;
+  NoviceGiftData data = 3;
+}
+
+message NoviceGiftData {
+  string task_desc = 1;
+  repeated NoviceGiftDataGift gifts = 2;
+  uint32 task_process = 3; //各项任务占比
+  string task_list = 4;
+  repeated NoviceGiftDataTask tasks = 5;
+  uint32 can_draw = 6; //0:不能领 1:可领取 2:已领取
+  string task_background = 7; //任务背景图
+  uint32 draw_deadline = 8; //奖励结束时间
+}
+
+message NoviceGiftDataGift {
+  string icon = 1; // 礼物图标
+  string desc = 2; // 礼物描述
+}
+
+message NoviceGiftDataTask {
+  uint32 id = 1;
+  string title = 2;
+  string desc = 3; // 任务描述
+  uint32 status = 4; //0 未完成 1 已完成
+  string direct = 5; //status=0的时候跳转的链接
+}

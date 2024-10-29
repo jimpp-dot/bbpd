@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14px" height="14px" viewBox="0 0 14 14" version="1.1">
+  <title>bbpd_ic_arrow_black</title>
+  <defs>
+    <filter color-interpolation-filters="auto" id="filter-1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 1.000000 0"/>
+    </filter>
+  </defs>
+  <g id="抖音知识付费" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="资料-长" transform="translate(-325.000000, -466.000000)">
+      <g id="entry" transform="translate(20.000000, 435.000000)">
+        <g id="text" transform="translate(253.000000, 29.000000)">
+          <g id="ic_arrow_black" transform="translate(52.000000, 2.000000)">
+            <circle id="椭圆形" fill="#202020" cx="7" cy="7" r="7"/>
+            <g filter="url(#filter-1)" id="ic_next_small">
+              <g transform="translate(1.000000, 1.000000)">
+                <path d="M4.35225244,2.60225244 C4.55195236,2.40255251 4.86445012,2.38439798 5.08465874,2.54778882 L5.14774756,2.60225244 L8.14774756,5.60225244 C8.34744749,5.80195236 8.36560202,6.11445012 8.20221118,6.33465874 L8.14774756,6.39774756 L5.14774756,9.39774756 C4.92807765,9.61741748 4.57192235,9.61741748 4.35225244,9.39774756 C4.15255251,9.19804764 4.13439798,8.88554988 4.29778882,8.66534126 L4.35225244,8.60225244 L6.95425,6 L4.35225244,3.39774756 C4.15255251,3.19804764 4.13439798,2.88554988 4.29778882,2.66534126 L4.35225244,2.60225244 Z" id="arrow" fill="#FFFFFF" fill-rule="nonzero"/>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

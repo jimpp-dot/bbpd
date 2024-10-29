@@ -1,0 +1,59 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../../app/pb";
+
+
+message ResOptionRcmd {
+  bool success = 1;
+  OptionRcmdData data = 2;
+}
+
+message OptionRcmdData {
+    repeated OptionRcmdOptionData options = 1;
+    repeated OptionRcmdRoomData rooms = 2;
+    repeated OptionRcmdPlayingData playings = 3;
+}
+
+message OptionRcmdOptionData {
+  string name = 1;
+  int32 value = 2;
+  string icon = 3;
+  string type = 4;
+}
+
+message OptionRcmdPlayingData{
+  uint32 uid = 1;
+  uint32 in_room = 3;
+  string name = 2;
+  string icon = 4;
+  int32 online_status = 5;
+  PlayingRoomMiniIcon mini_icon = 6; // 房间小图标信息， in_room>0时有值
+}
+
+message PlayingRoomMiniIcon {
+  repeated string borders = 1;
+  string board_title = 2;
+  repeated string board_bg = 3;
+  string board_icon = 4;
+}
+
+message OptionRcmdRoomData {
+  uint32 rid = 1;
+  string name = 3;
+  string icon = 4;
+  TypeName type_name = 5;
+  uint32 online_num = 6; //用于换算人气
+  uint32 real = 7;
+  uint32 sex = 8;
+  uint32 hot = 9; //房间人气
+}
+
+message TypeName {
+  string val = 1;
+  string color = 2;
+  string show = 3;
+  repeated string bg = 4;
+  string label = 5;
+}
+

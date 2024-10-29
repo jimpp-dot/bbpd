@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package room.captain.enter;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message RoomCaptainEnter {
+  option (pb.register_name) = 'room.captain.enter';
+  option (pb.register_id) = 63;
+
+  Group group = 1;
+  Captain captain = 2;
+  uint32 alive = 3;
+  Effect effect = 4;
+
+  message Group {
+    string id = 1;
+    string name = 2;
+    string captain = 3;
+    uint32 quiet = 4;
+  }
+
+  message Captain {
+    uint32 uid = 1;
+    string name = 2;
+    string icon = 3;
+    string sex = 4;
+    uint32 vip = 5;
+  }
+
+  message Effect {
+    string image = 1;
+    string font_color = 2;
+  }
+}

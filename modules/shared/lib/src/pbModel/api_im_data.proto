@@ -1,0 +1,135 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+message MarkData {
+    string text = 1;
+    string icon = 2;
+}
+
+message ImUserData {
+    uint32 uid = 1;
+    string icon = 2;
+    uint32 official = 3;
+    uint32 degree = 4;
+    uint32 is_verified = 5;
+    string mark = 6;
+    bool is_chat_pay_gs = 7;
+    uint32 sex = 8;
+    uint32 title = 9;
+    string name = 10;
+    uint32 age = 11;
+    uint32 photo_num = 12;
+    uint32 vip = 13;
+    uint32 popularity = 14;
+    bool new_user = 15;
+    repeated string marks = 16;
+    ImUserOnlineData online_data = 17;
+    uint32 app_id = 18;
+    uint32 version = 19;
+    string order_status = 20;
+    bool icon_gray = 21;
+    uint32 birthday = 22;
+    uint32 online_dateline = 23;
+    uint32 deleted = 24;
+    uint32 title_new = 25;
+    string frame = 26;
+    uint32 star_verify_tag = 27;
+    uint32 chat_egg_title = 28;
+    uint32 daka = 29;
+    uint32 jiaren = 30;
+    uint32 accost = 31;
+    string chatEggTitleName = 32; //彩蛋称号
+    string chatEggTitleColor = 33; //彩蛋字体颜色
+    repeated string chatEggTitleBolder = 34; //彩蛋字体底色
+    string user_machine = 35;     //用户机型标识
+}
+
+message ImUserOnlineData {
+    uint32 uid = 1;
+    bool online = 2;
+    uint32 online_dateline = 3;
+    uint32 time = 4;
+    uint32 status = 5;// 0 未知，读online，1在线，2，离线，3，隐身
+}
+
+message ImUserRoomData {
+    uint32 uid = 1;
+    uint32 room = 2;
+    string roomicon = 3;
+    string prefix = 4;
+    repeated string bg = 5;
+    string acute_icon = 6;
+    string show = 7;
+    uint32 time = 8;
+    uint32 online = 9;
+    uint32 official = 10;
+    string label = 11;
+    string tag_color = 12;
+    string tag_icon = 13;
+    uint32 party_style = 14;
+    string type_icon = 15;
+    repeated string type_bg = 16;
+}
+
+message ImGroupData {
+    uint32 uid = 1;
+    uint32 version = 2;
+    string name = 3;
+    string icon = 4;
+    string type = 5;
+    repeated GroupUser members = 6;
+    uint32 official = 7;
+    uint32 online = 8;
+    uint32 room = 9;
+    string roomIcon = 10;
+    string prefix = 11;
+    uint32 time = 12;
+    uint32 singerClubId = 13;
+    string lvIcon = 14;
+}
+
+message GroupUser {
+    uint32 uid = 1;
+    string name = 2;
+    string icon = 3;
+    uint32 title = 4;
+    uint32 online_dateline = 5;
+    uint32 speak = 6;
+}
+
+message ImCloudAllData {
+    uint32 rid = 1;
+    repeated ImUserData users = 2;
+    repeated ImGroupData group_data = 3;
+    repeated ImUserRoomData room_data = 4;
+    KaTouchData ka_touch = 5; // 建联用户池入口数据，不为空展示
+}
+
+// /cloud/imAll
+message ResImCloudAll {
+    bool success = 1;
+    string msg = 2;
+    ImCloudAllData data = 3; //返回数据
+}
+
+// update.user.cloud.info  更新用户信息数据
+message ImUserOnlineMsg {
+    repeated ImUserOnlineData online_data = 1;
+}
+
+// update.room.cloud.info 更新用户在房信息数据
+message ImUserRoomMsg {
+    repeated ImUserRoomData room_data = 1;
+}
+
+// update.group.cloud.info 更新群组信息数据
+message ImGroupMsg {
+    repeated ImGroupData group_data = 1;
+}
+
+message KaTouchData {
+  string title = 1; // 标题
+  string sub_title = 2; // 副标题
+}

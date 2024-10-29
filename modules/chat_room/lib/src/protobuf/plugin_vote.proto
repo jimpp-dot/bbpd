@@ -1,0 +1,79 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message OptionUser {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+}
+
+message OptionText {
+  string title = 1;
+  string content = 2;
+}
+message VoteOptions {
+  int32 id = 1;
+  oneof data {
+    OptionUser user = 2;
+    OptionText text = 3;
+  }
+  bool is_vote = 4;
+}
+
+message VoteBase {
+  int32 id = 1;
+  string title = 2;
+  string type = 3;
+  int32 duration = 4;
+  int32 select_type = 5;
+  int32 result_show = 6;
+  repeated VoteOptions options = 7;
+}
+
+message VoteDynamic {
+  int32 o_id = 1;
+  int32 score = 2;
+  double rate = 3;
+}
+
+//投票插件 主结构体
+message Vote {
+  VoteBase base = 1;
+  repeated VoteDynamic dynamic = 2;
+}
+
+message ResPluginVoteInfo {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  Vote data = 3;
+}
+
+message VoteSettingRule {
+  string type = 1;
+  string name = 2;
+  int32 option_max_num = 3;
+  VoteSettingTime time = 4;
+  bool enable_select = 5;
+  bool default_select = 6;
+  bool enable_result_show = 7;
+  bool default_result_show = 8;
+}
+
+message VoteSettingTime {
+  int32 min = 1;
+  int32 max = 2;
+  int32 step = 3;
+  int32 default = 4;
+}
+
+//vote.config接口返回消息格式
+message ResVoteConfig {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  string default_rule_type = 3;
+  repeated VoteSettingRule list = 4;
+}

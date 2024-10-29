@@ -1,0 +1,80 @@
+syntax = "proto3";
+package pb;
+/*
+私聊信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+
+
+
+message PopData {
+  bool   needPop = 1; //是否需要弹窗
+  string popTitle = 2; //弹窗标题
+  string popContent = 3; //弹窗文案
+  uint32 taskStep = 4; //任务步骤：0 触发任务，1-5后面五个阶段
+  repeated TaskGiftReward giftRewardList = 5; //如果taskStep=5则返回礼物奖励列表
+}
+
+message TaskBar {
+  string  taskTitle = 1; //任务标题
+  string  taskDesc = 2; //任务描述
+  uint32  curProgress = 3; //当前进度
+  uint32  totalProgress = 4; //所有进度
+  uint32  leftSecond = 5; //当前任务完成剩余时间(秒)
+  uint32  taskStep = 6; //任务步骤：0 触发任务，1-5后面五个阶段
+  bool    isShow = 7;  //是否展示
+  string  popImg = 8; //弹窗彩蛋地址
+}
+
+message EggTipsData {
+  PopData pop = 1; //弹窗提示
+  TaskBar bar = 2; //任务栏
+}
+
+message ResChatEggTips {
+  bool success = 1;
+  string msg = 2;
+  EggTipsData data = 3;
+}
+
+message TaskGiftReward {
+  string icon = 1; //礼物图片
+  string name = 2; //礼物名称
+  uint32 num = 3; //礼物数量
+}
+
+message TaskRewardData {
+  string   name = 1; //任务名称
+  uint32   chatEggTitle = 2; //五个：1-5
+  repeated TaskGiftReward giftRewardList = 3; //礼物奖励列表
+  string  chatEggTitleName = 4; //彩蛋称号
+  string  chatEggTitleColor = 5; //彩蛋字体颜色
+  repeated string chatEggTitleBolder = 6; //彩蛋字体底色
+  string  desc = 7; //彩蛋任务描述
+}
+
+message DetailData {
+  TaskBar bar = 1; //任务栏
+  repeated TaskRewardData list = 3; //任务奖励
+}
+
+message ResChatEggDetail {
+  bool success = 1;
+  string msg = 2;
+  DetailData data = 3;
+}
+
+message ItemForbidDirtMsgData {
+  bool need_forbid_chat = 1;//是否需要禁言
+  uint32 end_time = 2;//禁言解除时间
+}
+
+message ResForbidDirtMsg{
+  bool success = 1;       //成功true，失败false
+  string msg = 2;         //失败message
+  ItemForbidDirtMsgData data = 3;
+}

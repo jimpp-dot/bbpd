@@ -1,0 +1,22 @@
+syntax = "proto3";
+package pb;
+/*
+账户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+message ResAccountHotStatus {
+  bool success = 1;
+  string msg = 2;
+  AccountHotStatus data = 3;
+}
+
+message AccountHotStatus {
+  string status = 1;
+  string request = 2;
+  string reason = 3;
+  uint32 wear_status = 4; //红人勋章佩戴状态：0不是红人，1已佩戴，2没有佩戴
+}

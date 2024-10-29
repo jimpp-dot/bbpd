@@ -1,0 +1,24 @@
+syntax = "proto3";
+package pb;
+/*
+KTV PK榜单proto
+*/
+
+option go_package = "../../app/pb";
+
+message ResKtvPkRank {
+	bool success = 1;                             //成功true，失败false
+	string msg = 2;                               //失败message
+	repeated KtvPkRankData data = 3;      		  //单曲榜
+	uint32 my_score = 4;          //我的星光值
+}
+  
+message KtvPkRankData {
+	uint32 rank = 1;              //排名
+	uint32 score = 2;             //得分
+	uint32 uid = 3;               //演唱者id
+	string name = 4;              //演唱者名称
+	string icon = 5;              //演唱者头像
+	uint32 title = 6;             //爵位等级
+	uint32 popular_level = 7;     //人气等级
+}

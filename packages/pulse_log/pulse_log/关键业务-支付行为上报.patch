@@ -1,0 +1,351 @@
+From 1bd092f80c8a163b3fd83356f49956c65086b7a9 Mon Sep 17 00:00:00 2001
+From: zhoudajun <zhoudajun@KekedeMacBook-Pro.local>
+Date: Tue, 18 Oct 2022 17:50:38 +0800
+Subject: [PATCH] =?UTF-8?q?=E6=B7=BB=E5=8A=A0=E5=85=B3=E9=94=AE=E4=B8=9A?=
+ =?UTF-8?q?=E5=8A=A1=E8=A1=8C=E4=B8=BA=E4=B8=8A=E6=8A=A5=EF=BC=9B?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---     
+ banban_base/pay/lib/src/h5.dart               | 12 ++++++--
+ banban_base/pay/lib/src/iap.dart              |  6 ++++
+ banban_base/pay/lib/src/pay.dart              | 28 +++++++++++++++++--
+ banban_base/pay/lib/src/pay_type_sheet.dart   |  3 ++
+ .../lib/src/nobility/nobility_buy_dialog.dart |  5 ++++
+ 13 files changed, 86 insertions(+), 10 deletions(-)
+
+diff --git a/banban_base/pay/lib/src/h5.dart b/banban_base/pay/lib/src/h5.dart
+index 10e7df0c..8e49320d 100644
+--- a/banban_base/pay/lib/src/h5.dart
++++ b/banban_base/pay/lib/src/h5.dart
+@@ -6,6 +6,7 @@ import 'package:webview_flutter/platform_interface.dart';
+ import 'package:webview_flutter/webview_flutter.dart';
+ 
+ import '../k.dart';
++import 'package:baselog/bblog.dart';
+ 
+ typedef void OnPayErrorMessage(String message);
+ typedef void OnComplete(int aId);
+@@ -17,6 +18,7 @@ class H5 {
+ 
+   start(String token){
+     if(token != null && token.isNotEmpty){
++      BBLog.instance.log(PayBody(PayAction.willOpenH5, {}, true));
+       String url = "${System.payDomain}pa" + "y/h5P" + "ay/?token=$token";
+       Navigator.of(context).push(PageRouteBuilder(
+         opaque: false,
+@@ -29,6 +31,7 @@ class H5 {
+         settings: RouteSettings(name: '/h5PayScreen'),
+       ));
+     }else{
++      BBLog.instance.log(PayBody(PayAction.willOpenH5, {}, false, reason: 'invalid token'));
+       onError(R.string('pay_invalid_token'));
+     }
+   }
+@@ -160,24 +163,27 @@ class _H5PayState extends State<_H5PayScreen>{
+             await launch(_url);
+             _luanchingApp = false;
+             if (widget.onOpenApp != null) widget.onOpenApp();
++            BBLog.instance.log(PayBody(PayAction.h5Jump, {'appName':_appName, 'scheme':_scheme, 'url':_url}, true));
+           } catch (e) {
+             _luanchingApp = false;
+             if (widget.onOpenApp != null) widget.onOpenApp();
+             Fluttertoast.showToast(msg: K.something_went_wrong);
+           }
+         } else {
++          BBLog.instance.log(PayBody(PayAction.h5Jump, {'appName':_appName, 'scheme':_scheme, 'url':_url}, false, reason: 'failed_hasnt_install:$_appName'));
+           _displayErrorMessage(
+               zf + R.string('failed_hasnt_install') + '$_appName');
+         }
+       }
+-
+-      start(appName,scheme,url);
++ 
++      start(appName,scheme,url); 
+   }
+     if(host == 'wx.tenpay.com' && _lastUrl != null && _lastUrl.isNotEmpty){
+       decision = NavigationDecision.prevent;
+       _webViewController.loadUrl(url,headers: {
+         'Referer':_lastUrl
+       });
++      BBLog.instance.log(PayBody(PayAction.h5Jump, {'host':host, 'url':url, 'Referer':_lastUrl}, true, reason: 'reload'));
+     }
+ 
+     _lastUrl = url;
+@@ -191,10 +197,12 @@ class _H5PayState extends State<_H5PayScreen>{
+   }
+ 
+   void _onHttpErrorCallback(WebError httpError) {
++    BBLog.instance.log(PayBody(PayAction.openH5, {}, false, reason: 'HttpError: code=${httpError.code},msg=${httpError.msg}'));
+     print('${httpError.code}------------------------------------------------${httpError.code}');
+   }
+ 
+   void _displayErrorMessage(String message){
++    BBLog.instance.log(PayBody(PayAction.openH5, {}, false, reason: 'WebError: $message'));
+     JsTimer.clearTimeout(_checkTimer);
+     showDialog(
+         context: this.context,
+diff --git a/banban_base/pay/lib/src/iap.dart b/banban_base/pay/lib/src/iap.dart
+index ea3a0885..6e4645b2 100644
+--- a/banban_base/pay/lib/src/iap.dart
++++ b/banban_base/pay/lib/src/iap.dart
+@@ -5,6 +5,7 @@ import 'package:bbcore/bbcore.dart';
+ import 'package:flutter/material.dart';
+ import 'package:flutter/services.dart';
+ import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
++import 'package:baselog/bblog.dart';
+ 
+ //const IAP_Error = [
+ //  '未知错误，请重试',
+@@ -200,6 +201,7 @@ class IAP {
+           bool success = await IAP.restoreIAP(false);
+           hideLoading();
+           if (success) {
++            BBLog.instance.log(PayBody(PayAction.goIapNext, {}, true, reason:'shouldRestore in ios'));
+             if (onComplete != null) onComplete();
+           }
+           return;
+@@ -230,6 +232,7 @@ class IAP {
+             print('IAP_buy_verify:$transactionId' + ' | result：$success');
+             if (success) {
+               await FlutterInappPurchase.finishTransaction(transactionId);
++              BBLog.instance.log(PayBody(PayAction.goIapNext, {}, true, reason:'ios finishTransaction:$transactionId'));
+               if (onComplete != null) onComplete();
+             } else if (errorMsg != null) {
+               Fluttertoast.showToast(
+@@ -240,6 +243,7 @@ class IAP {
+           Map res = await IAP.requestToVerifyGoogleReceipt(params);
+           if (res != null && res['success'] == true) {
+             await FlutterInappPurchase.finishTransaction();
++            BBLog.instance.log(PayBody(PayAction.goIapNext, {}, true, reason:'no-ios finishTransaction'));
+             if (onComplete != null) onComplete();
+           } else {
+             if (res != null && res['msg'] != null && res['msg'] is String) {
+@@ -289,6 +293,7 @@ class IAP {
+           loaded = true;
+           return true;
+         } else {
++          BBLog.instance.log(PayBody(PayAction.goIapNext, {}, false, reason:'sync_x_data_failed_retry'));
+           if (onError != null)
+             onError(Platform.isAndroid
+                 ? R.string('sync_gp_data_failed_retry')
+@@ -296,6 +301,7 @@ class IAP {
+           return false;
+         }
+       } catch (e) {
++        BBLog.instance.log(PayBody(PayAction.goIapNext, {}, false, reason:e.toString()));
+         if (onError != null) onError(e.toString());
+         return false;
+       }
+diff --git a/banban_base/pay/lib/src/pay.dart b/banban_base/pay/lib/src/pay.dart
+index 60dd0551..40295c19 100644
+--- a/banban_base/pay/lib/src/pay.dart
++++ b/banban_base/pay/lib/src/pay.dart
+@@ -8,7 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
+ import 'h5.dart';
+ import 'iap.dart';
+ import 'package:shared_preferences/shared_preferences.dart';
+-
++import 'package:baselog/bblog.dart';
+ /*
+   * *
+   * 示例：
+@@ -142,10 +142,13 @@ class Pay {
+     }
+ 
+     if (type == 'iap') {
++      BBLog.instance.log(PayBody(PayAction.goIap, {'key':key, 'type':type, 'args':args.toString()}, true));
+       payIap(productId, args: args);
+       return;
+     }
+ 
++    BBLog.instance.log(PayBody(PayAction.goNormal, {'key':key, 'type':type, 'args':args.toString()}, true));
++
+     if (_isWaiting == true) return;
+     _isWaiting = true;
+     _lastPayType = type;
+@@ -206,11 +209,14 @@ class Pay {
+           _isWaiting = false;
+           if (res['data'] != null && res['data'] is String) {
+             this.h5Instance.start(res['data']);
++            BBLog.instance.log(PayBody(PayAction.loadH5Token, {'key':key, 'type':type, 'args':args.toString()}, true));
+           } else {
++            BBLog.instance.log(PayBody(PayAction.loadH5Token, {'key':key, 'type':type, 'args':args.toString()}, false, reason:'invalid token'));
+             _onError(R.string('string_zhi') + R.string('string_fu') + R.string('pay_invalid_token'));
+           }
+         } else {
+           if (res['msg'] != null && res['msg'] is String) {
++            BBLog.instance.log(PayBody(PayAction.loadH5Token, {'key':key, 'type':type, 'args':args.toString()}, false, reason: res['msg']));
+             _onError(res['msg'], errorCode: Util.parseInt(res['code']));
+           }
+           hideLoading();
+@@ -218,6 +224,7 @@ class Pay {
+         }
+       } catch (e) {
+         Log.d('pay error: ' + e.toString());
++        BBLog.instance.log(PayBody(PayAction.loadH5Token, {'key':key, 'type':type, 'args':args.toString()}, false, reason: e.toString()));
+         _isWaiting = false;
+         _onError(R.string('pay_failed_retry'), isErrorCatch: true);
+       }
+@@ -237,27 +244,33 @@ class Pay {
+         print(res);
+         hideLoading();
+         if (res['success'] == true) {
++          BBLog.instance.log(PayBody(PayAction.loadPayCreate, {'key':key, 'type':type, 'args':args.toString()}, true,));
+           if (isCycle) { //如果是周期订阅
+             if (res['data'] is Map) {
+               String url = res['data']['url'];
+               if (url != null && url.isNotEmpty) {
+                 if (await canLaunch(url)) {
+-                  await launch(
++                  bool launchResult = await launch(
+                     url,
+                     forceSafariVC: false,
+                     forceWebView: false,
+                   );
++                  BBLog.instance.log(PayBody(PayAction.loadPayCreateNext, {'key':key, 'type':type, 'args':args.toString()}, launchResult, reason: 'launch url result:$url'));
+                 } else {
+                   // Fluttertoast.showToast(msg: '111');
++                  BBLog.instance.log(PayBody(PayAction.loadPayCreateNext, {'key':key, 'type':type, 'args':args.toString()}, false, reason: 'cant launch url:$url'));
+                 }
+               }
+             } else {
+               // Fluttertoast.showToast(msg: '111');
++              BBLog.instance.log(PayBody(PayAction.loadPayCreateNext, {'key':key, 'type':type, 'args':args.toString()}, false, reason: 'server data error'));
+             }
+           } else if (res['paied'] == true) {
+             //钱有变化，全局通知
+             eventCenter.emit(EventConstant.EventUserMoneyChange);
+             _isWaiting = false;
++            BBLog.instance.log(PayBody(PayAction.loadPayCreateNext, {'key':key, 'type':type, 'args':args.toString()}, true, reason: 'paied'));
++            BBLog.instance.log(PayBody(PayAction.payed, {}, true));
+             if (this.onPayed != null) this.onPayed();
+           } else {
+             Map data = res['data'];
+@@ -271,8 +284,9 @@ class Pay {
+                 // 调用小米SDK
+                 IXiaomiManager manager = ComponentManager.instance.getManager(ComponentManager.MANAGER_PLATFORM_XIAOMI);
+                 if (manager != null) {
+-                  manager.zhiXiaomiFu('${data['res']['cpOrderId']}', '${data['res']['cpUserInfo']}',
++                  bool miFuResult = await manager.zhiXiaomiFu('${data['res']['cpOrderId']}', '${data['res']['cpUserInfo']}',
+                       Util.parseInt(data['res']['feeValue'])); // Util.parseInt(args['money'])
++                  BBLog.instance.log(PayBody(PayAction.loadPayCreateNext, {'key':key, 'type':type, 'args':args.toString()}, miFuResult, reason: 'zhiXiaomiFu'));   
+                 }
+               }
+             }
+@@ -281,6 +295,7 @@ class Pay {
+           }
+         } else {
+           if (res['msg'] != null && res['msg'] is String) {
++            BBLog.instance.log(PayBody(PayAction.loadPayCreateNext, {'key':key, 'type':type, 'args':args.toString()}, false, reason: res['msg'])); 
+             _onError(res['msg'], errorCode: Util.parseInt(res['code']), hideToast: Util.parseInt(args['hideErrorToast']) == 1, key: key, type: type, args: args, refer: refer, productId: productId,showLoading: showLoading);
+           }
+           hideLoading();
+@@ -289,6 +304,7 @@ class Pay {
+       } catch (e) {
+         Log.d('pay error: ' + e.toString());
+         _isWaiting = false;
++        BBLog.instance.log(PayBody(PayAction.loadPayCreateNext, {'key':key, 'type':type, 'args':args.toString()}, false, reason: e.toString())); 
+         _onError(R.string('pay_failed_retry'), isErrorCatch: true, key: key, type: type, args: args, refer: refer, productId: productId,showLoading: showLoading);
+       }
+     }
+@@ -324,6 +340,7 @@ class Pay {
+     //钱有变化，全局通知
+     eventCenter.emit(EventConstant.EventUserMoneyChange);
+     //钱有变化，全局通知
++    BBLog.instance.log(PayBody(PayAction.payed, {}, true));
+     if (this.onPayed != null) this.onPayed();
+   }
+ 
+@@ -383,6 +400,7 @@ class Pay {
+           //钱有变化，全局通知
+           _isWaiting = false;
+           hideLoading();
++          BBLog.instance.log(PayBody(PayAction.payed, {}, true));
+           if (this.onPayed != null) this.onPayed();
+ 
+           /// 统计付款成功事件
+@@ -391,6 +409,8 @@ class Pay {
+             AppsFlyerParameter.VALIDATED: true
+           });
+ 
++          BBLog.instance.log(PayBody(PayAction.loadPayReturn, {'payId':_lastPayId.toString()}, true));
++
+         } else {
+           _showLoading(R.string('be_confirm') + '($_reqWaitIndex)...');
+ 
+@@ -401,8 +421,10 @@ class Pay {
+         }
+       } else {
+         if (res['msg'] != null && res['msg'] is String) {
++          BBLog.instance.log(PayBody(PayAction.loadPayReturn, {'payId':_lastPayId.toString()}, false, reason: res['msg']));
+           _onError(res['msg'], errorCode: Util.parseInt(res['code']));
+         } else {
++          BBLog.instance.log(PayBody(PayAction.loadPayReturn, {'payId':_lastPayId.toString()}, false, reason: 'vertify_failed'));
+           _onError(R.string('pay_vertify_failed'), isErrorCatch: true);
+         }
+         hideLoading();
+diff --git a/banban_base/pay/lib/src/pay_type_sheet.dart b/banban_base/pay/lib/src/pay_type_sheet.dart
+index 9beca923..9b92c42f 100644
+--- a/banban_base/pay/lib/src/pay_type_sheet.dart
++++ b/banban_base/pay/lib/src/pay_type_sheet.dart
+@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
+ import 'package:flutter/material.dart';
+ 
+ import '../k.dart';
++import 'package:baselog/bblog.dart';
+ 
+ class PayTypeSheetWidget extends StatefulWidget {
+   final int accountType;
+@@ -215,8 +216,10 @@ class _PayTypeSheetWidgetState extends State<PayTypeSheetWidget> {
+           }
+         }
+         if (_selectedKey == IPayManager.payTypeAvailable && !isMoneyEnough) {
++          BBLog.instance.log(PayBody(PayAction.showPayType, {'type':'iap-recharge'}, true));
+           Navigator.of(context).pop(SheetCallback(SheetCloseReason.Result, -1, SheetItem(R.string('to_recharge'), 'iap-recharge')));
+         } else {
++          BBLog.instance.log(PayBody(PayAction.showPayType, {'type':_selectedKey}, true));
+           Navigator.of(context).pop(SheetCallback(SheetCloseReason.Result, -1, sheetItems.firstWhere((element) => element.key == _selectedKey)));
+         }
+ 
+diff --git a/banban_base/vip/lib/src/nobility/nobility_buy_dialog.dart b/banban_base/vip/lib/src/nobility/nobility_buy_dialog.dart
+index d37352bb..cb7e8d04 100644
+--- a/banban_base/vip/lib/src/nobility/nobility_buy_dialog.dart
++++ b/banban_base/vip/lib/src/nobility/nobility_buy_dialog.dart
+@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
+ import 'package:path_provider/path_provider.dart';
+ 
+ import '../../k.dart';
++import 'package:baselog/bblog.dart';
+ 
+ class NobilityBuyDialog extends StatefulWidget {
+   final VoidCallback onPayed;
+@@ -360,6 +361,8 @@ class _NobilityBuyDialogState extends State<NobilityBuyDialog> {
+         productId = "$iapAutoSubPrefix.${currentSelectedMeal.mealId}";
+       }
+ 
++      BBLog.instance.log(NobilityBody(NobilityAction.showPay, {'type':'iap'}, true));
++
+       _payManager.pay(
+         context,
+         key: 'nobility',
+@@ -375,6 +378,7 @@ class _NobilityBuyDialogState extends State<NobilityBuyDialog> {
+ 
+     int price = _response.isFirst ? currentSelectedMeal.firstPrice : currentSelectedMeal.price;
+     if (currentSelectedMeal.cycleId != 0) {
++    BBLog.instance.log(NobilityBody(NobilityAction.showPay, {'type':'ali', 'cycle':1}, true));
+       //连续订阅
+       _payManager.pay(
+         context,
+@@ -395,6 +399,7 @@ class _NobilityBuyDialogState extends State<NobilityBuyDialog> {
+       if (result == null || result.reason == SheetCloseReason.Active) {
+         return;
+       }
++      BBLog.instance.log(NobilityBody(NobilityAction.showPay, {'type':'${result.value.key}', 'cycle':0}, true));
+       _payManager.pay(
+         context,
+         key: 'nobility',
+-- 
+2.31.1
+

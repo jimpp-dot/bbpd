@@ -1,0 +1,18 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+message IconVapEffect{
+  option (pb.register_name) = 'Room.Effect.Common.Vap';
+  option (pb.register_id) = 10028;
+
+  string url = 1;
+  uint32 size = 2;
+  repeated string contents = 3;
+  repeated string images = 4;
+}

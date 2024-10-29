@@ -1,0 +1,72 @@
+syntax = "proto3";
+package pb;
+
+/*
+国家防沉迷系统 rpc 协议
+*/
+
+option go_package = "../app/pb";
+
+/***********************************************CheckIdCard***********************************************************/
+
+message ReqCheckIdCard{
+  string ai = 1;      //游戏内部成员标识
+  string name= 2;     //用户姓名
+  string idNum= 3;    //身份证
+}
+
+message IdCardData{
+  int32 status = 1;   //实名认证的结果 0 认证成功 1认证中 2认证失败
+  string  pi = 2;     //用户唯一标识
+}
+
+message ResCheckIdCard{
+  bool Success = 1;
+  string Message = 2;
+  IdCardData data = 3;
+}
+
+/***********************************************QueryIdCard***********************************************************/
+
+message ReqQueryIdCard{
+  string ai = 1;      //游戏内部成员标识
+}
+
+message ResQueryIdCard{
+  bool Success = 1;
+  string Message = 2;
+  IdCardData data = 3;
+}
+
+/***********************************************Report***********************************************************/
+
+message WlcReportData{
+  int32 no = 1;       //在批量模式中标识一条行为数据，取值范围 1-128
+  string  si = 2;    //游戏内部会话标识
+  int32 bt = 3;      //用户行为0下线，1上线
+  uint64 ot = 4;      //行为时间戳
+  int32 ct = 5;       //用户类型0 已认证用户  2游客
+  string di = 6;      //设备标识
+  string pi = 7;      //用户标识
+}
+
+message ReqWlcReport{
+  repeated WlcReportData collections = 1;
+}
+
+message ResWlcReport{
+  bool Success = 1;
+  string Message = 2;
+}
+
+service RPCAntiAuction{
+
+  //实名认证接口
+  rpc CheckIdCard (ReqCheckIdCard) returns (ResCheckIdCard);
+
+  //查询实名认证接口
+  rpc QueryIdCard (ReqQueryIdCard) returns (ResQueryIdCard);
+
+  //行为上报
+  rpc WlcReport(ReqWlcReport) returns (ResWlcReport);
+}

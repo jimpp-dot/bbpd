@@ -1,0 +1,87 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../../app/pb";
+
+// ********************************************************************************
+// go/slp/gsbirthday/preferences
+// ********************************************************************************
+message ApiGsBirthdayPreferencesResponse{
+  bool success = 1;
+  string message = 2;
+  GsBirthdayPreferencesData data = 3;
+}
+
+message GsBirthdayPreferencesData{
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 awayBirthday = 4; // 距离生日时间说明ex.N天
+  string gregorianBirthday = 5; // 公历 生日
+  string lunarBirthday = 6; // 农历 生日
+  string chineseZodiac = 7; // 生肖
+  uint32 years = 8; // 年龄
+  repeated GsBirthdayGiftInfo gifts = 9; // 礼物列表
+  string defaultWithContent = 10; // 默认祝福语
+}
+
+message GsBirthdayGiftInfo{
+  uint32 giftId = 1;
+  uint32 price = 2;
+  string name = 3;
+  uint32 cid = 4;
+  string gift_type = 5; //   礼物类型（normal,coin,bean...)
+}
+
+// ********************************************************************************
+// go/slp/gsbirthday/list
+// ********************************************************************************
+message ApiGsBirthdayListResponse{
+  bool success = 1;
+  string message = 2;
+  GsBirthdayListData data = 3;
+}
+
+message GsBirthdayListData{
+  string type = 1; // 列表类型，回传 ｜"room"： 房间麦上生日GS，"wish"： GS 祝福列表， "gift"：好友送礼榜单，"friend"：我的好友生日列表
+  uint32 more = 2; // 是否拥有更多（分页），1，有，0，无
+  uint32 page = 3; // 当前页面，回传
+  repeated GsBirthdayListItem list = 4; // 当前页面数据
+  GsBirthdayListItem extra = 5; // 我在当前类型列表中的位置
+}
+
+message GsBirthdayListItem{
+  int32 index = 1; // 当前列表项在当前列表中的序号
+  uint32 uid = 2;
+  string name = 3;
+  string icon = 4;
+  GsBirthdayListItemExtra extra = 5; // 当前列表项所属类型的专属信息
+}
+
+message GsBirthdayListItemExtra{
+  oneof extra{
+    GsBirthdayRoomListExtra room = 1; // 当列表类型=room 时的额外信息
+    GsBirthdayWishListExtra wish = 2; // 当列表类型=wish 时的额外信息
+    GsBirthdayGiftListExtra gift = 3; // 当列表类型=gift 时的额外信息
+    GsBirthdayFriendListExtra friend = 4; // 当列表类型=friend 时的额外信息
+  }
+}
+
+message GsBirthdayRoomListExtra{
+  uint32 birthday = 1; // 生日时间戳
+  int32 awayBirthday = 2; // 距离生日时间说明ex.N天
+}
+
+message GsBirthdayWishListExtra{
+  uint32 birthday = 1; // 生日时间戳
+ string wishContent = 2; // 祝福语
+}
+
+message GsBirthdayGiftListExtra{
+  uint32 wish = 1; // 祝福值
+}
+
+message GsBirthdayFriendListExtra{
+  uint32 birthday = 1; // 生日时间戳
+  int32 awayBirthday = 2; // 距离生日时间说明ex.N天
+}

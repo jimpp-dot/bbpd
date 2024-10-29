@@ -1,0 +1,67 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+message AwakenHandbookReq {
+  uint32 type = 1; // 榜单类型 0:日榜 1：周榜
+  uint32 last_id = 2; // 最后一个id
+}
+
+message AwakenHandbookRes {
+  bool                  success = 1;  //成功true，失败false
+  string                msg = 2;  //失败message
+  bool has_more = 3;
+  uint32 last_id = 4; // 最后一个id
+  AwakenHandbookData    data = 5;
+}
+
+message AwakenHandbookData {
+  repeated RankDatas list = 1;
+  repeated AwardsData awards = 2;
+  RankDatas my = 3;
+}
+
+message RankDatas {
+  uint32 uid = 1;
+  string nickname = 2;
+  string icon = 3;
+  uint32 xp = 4; // 新增经验值
+  string gift_level = 5; // 礼物墙等级
+  string gift_level_icon = 6;
+  uint32 title = 7; // 爵位
+  uint32 vip_level = 8; // vip标记
+  uint32 popularity_level = 9; // 人气值
+  uint32 rank = 10; // 排名
+  uint32 title_new = 11; // 爵位icon
+}
+// 奖励类型
+message AwardsData {
+  string type = 1;
+  uint32 cid = 2;
+  uint32 num = 3; // 奖励数量
+  string name = 4;
+  string desc = 5;
+  string image = 7; //
+  string image_bg = 8; //
+}
+
+// 觉醒时刻返回
+message AwakeTimeRankRsp {
+    bool success = 1;
+    string msg = 2;
+    message Data {
+        message Item {
+            uint32 uid = 1; // 用户uid
+            string name = 2; // 用户昵称
+            string icon = 3; // 用户头像
+            uint32 gid = 4; // 觉醒礼物id
+            string gift_name = 5; // 礼物名称
+            string background = 6; // 底图
+        }
+        repeated Item rank_list = 1; // 排行榜用户数据
+    }
+    Data data = 3;
+}

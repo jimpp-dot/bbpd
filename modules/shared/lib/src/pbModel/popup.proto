@@ -1,0 +1,26 @@
+syntax = "proto3";
+package pb;
+/*
+弹窗信息proto
+*/
+
+option go_package = "../../app/pb";
+
+message ResHomePopUpMetro{
+  bool success = 1;
+  string msg = 2;
+  HomePopUpMetroData data = 3;
+}
+
+message HomePopUpMetroData {
+  uint32 uid = 1;
+  string name = 2;
+  uint32 age = 3;
+  string city = 4;
+  string icon = 5;
+  string corner_mark = 6;
+  string hint = 7;
+  string distance = 8;
+  uint32 room_id = 9;
+  uint32 sex = 10;  //1 男人 2 女人
+}

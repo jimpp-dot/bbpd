@@ -1,0 +1,22 @@
+syntax = "proto3";
+package pb;
+/*
+账户信息-编辑选项proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+// go/slp/account/industryList
+
+message ResAccountIndustryList {
+  bool success = 1;
+  string msg = 2;
+  repeated AccountIndustry data = 3;
+}
+
+message AccountIndustry {
+  uint32 id = 1;                                    //行业代码
+  string name = 2;                                  //行业名称
+}

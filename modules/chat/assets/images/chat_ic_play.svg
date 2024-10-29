@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+  <title>bbpd_切片</title>
+  <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="弹幕精选置顶" transform="translate(-80.000000, -491.000000)" fill="#FFFFFF">
+      <g id="expand" transform="translate(0.000000, 242.000000)">
+        <g id="编组-3" transform="translate(16.000000, 69.000000)">
+          <g id="1" transform="translate(0.000000, 143.000000)">
+            <g id="voice" transform="translate(136.500000, 49.000000) scale(-1, 1) translate(-136.500000, -49.000000) translate(52.000000, 25.000000)">
+              <g id="play" transform="translate(145.000000, 24.000000) scale(-1, 1) translate(-145.000000, -24.000000) translate(133.000000, 12.000000)">
+                <path d="M16.3761514,8.47562339 L20.4724823,15.374707 C21.1491929,16.5144302 20.7738471,17.9869407 19.6341239,18.6636514 C19.2633276,18.8838117 18.8400622,19 18.4088309,19 L10.2161691,19 C8.89068571,19 7.81616911,17.9254834 7.81616911,16.6 C7.81616911,16.1687687 7.93235742,15.7455033 8.15251772,15.374707 L12.2488486,8.47562339 C12.9255593,7.3359002 14.3980698,6.96055437 15.537793,7.63726501 C15.8829603,7.84220808 16.1712083,8.13045611 16.3761514,8.47562339 Z" transform="translate(14.312500, 12.000000) rotate(-270.000000) translate(-14.312500, -12.000000) "/>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

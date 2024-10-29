@@ -1,0 +1,30 @@
+syntax = "proto3";
+    
+package digit.bombing.sync;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+import "google/protobuf/struct.proto";
+
+message DigitBombingSync {
+    option (pb.register_name) = 'digit.bombing.sync';
+    option (pb.register_id) = 29;
+    uint32 bomb = 1;
+    uint32 bomb_mode = 2;
+    uint32 cmax = 3;
+    uint32 cmin = 4;
+    uint32 id = 5;
+    //int,string
+    google.protobuf.Value lastdigit = 6;
+    uint32 max = 7;
+    uint32 min = 8;
+    uint32 player = 9;
+    string player_icon = 10;
+    string player_name = 11;
+    //int,string
+    google.protobuf.Value position = 12;
+    uint32 rid = 13;
+    uint32 status = 14;
+    uint32 uid = 15;
+}

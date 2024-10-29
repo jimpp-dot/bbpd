@@ -1,0 +1,23 @@
+syntax = "proto3";
+    
+package room.red.packet.notice;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message RoomRedPacketNotice {
+    option (pb.register_name) = 'room.red.packet.notice';
+    option (pb.register_id) = 76;
+    uint32 uvip = 1;
+    string uname = 2;
+    string utitle = 3;
+    uint32 utitle_new = 4;
+    string uicon = 5;
+    string icon = 6;
+    uint32 money = 7;
+    string type = 8;
+    uint32 rid = 9;
+    string rname = 10;
+    string desc = 11;
+}

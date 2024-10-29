@@ -1,0 +1,42 @@
+syntax = "proto3";
+    
+package room.emperor.notice;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+
+message RoomEmperorNotice {
+    option (pb.register_name) = 'room.emperor.notice';
+    option (pb.register_id) = 67;
+    string bless_words = 1;
+    FansLabel fans_label = 2;
+    string frame = 3;
+    uint32 giftId = 4;
+    uint32 giftNum = 5;
+    bool icongray = 6;
+    uint32 money = 7;
+    uint32 rid = 8;
+    string rname = 9;
+    string toname = 10;
+    uint32 tovip = 11;
+    string uicon = 12;
+    string uname = 13;
+    uint32 utitle = 14;
+    uint32 utitle_new = 15;
+    uint32 uvip = 16;
+    uint32 is_newer = 17;
+    string toicon = 18;
+    string glory_naming = 19;
+    string gift_name = 20;
+    uint32 from_outstanding_box = 21;
+    string ricon = 22;
+
+    message FansLabel {
+        string label = 1;
+        uint32 credit = 2;
+        uint32 level = 3;
+    }
+}

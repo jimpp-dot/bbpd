@@ -1,0 +1,30 @@
+syntax = "proto3";
+package pb;
+
+/*
+ /mate/gs系列接口的结果定义
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 pb 目录下
+option go_package = "../../app/pb";
+
+// go/slp/circle/getTagSquare
+message ResGetTagSquare {
+  bool            success = 1;                 //成功true，失败false
+  string          msg     = 2;                 //失败message
+  TagSquareData 	tagSquareData = 3;					 //热门动态话题
+}
+
+message TagSquareData {
+  repeated SquareTag squareTags = 1;  //话题广场热门话题
+}
+
+message SquareTag {
+  string rcmdName = 1; 	//推荐话题全文
+  string icon = 2; 			//配图
+  string name = 3;  		//推荐话题
+  uint32 id = 4; 				//话题id
+  string prefix = 5;		//话题前缀
+  string content = 6;		//话题当前内容
+}

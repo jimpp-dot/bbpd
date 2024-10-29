@@ -1,0 +1,14 @@
+syntax = "proto3";
+    
+package room.screen.cast.state.seekTo;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message RoomScreenCastStateSeekTo {
+    option (pb.register_name) = 'room.screen.cast.state.seekTo';
+    option (pb.register_id) = 84;
+    string playing_sec = 1;
+}

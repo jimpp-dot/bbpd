@@ -1,0 +1,122 @@
+syntax = "proto3";
+package pb;
+/*
+骑士团的pb定义
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+
+message KnightEquities {
+  string icon = 1; //骑士团的等级icon
+  string label = 2; //骑士团的等级标签
+  string desc = 3; //骑士团的等级描述
+}
+
+message KnightDurationList {
+  string durationLabel = 1;//开通的标签
+  uint32 durationPrice = 2;//开通的价格
+  uint32 durationLevel = 3;//开通的等级
+}
+
+message KnightItem {
+  string  knightName = 1; //此骑士团等级的name
+  uint32  knightLevel = 2; //此骑士团的等级
+  repeated KnightEquities  equitiesList = 3; //此骑士团等级的权益
+  repeated KnightDurationList  durationList = 4; //此骑士团等级的价格
+  KnightCouponInfo knightCoupon = 5;    //守护体验券
+}
+
+//骑士团的配置列表
+message ResKnightConfigList {
+  bool success = 1;
+  string msg = 2;
+  repeated KnightItem data = 3;
+  repeated KnightItem verify_data = 4;
+}
+
+message KnightRankItem {
+  string icon = 1;      //头像
+  string name = 2;      //名字
+  uint32 sortIndex = 3; //排名的名次
+  uint32 sortScore = 4; //排名的分数
+  uint32 knightLevel = 5;
+  string knightIcon = 6;
+  string expireDesc = 7; //到期剩余时间
+  bool expireAlert = 8;  //是否有到期提示，标红
+}
+
+//主播守护团信息
+message KnightGroupInfo {
+  uint32 uid = 1;           //主播uid
+  string name = 2;          //主播名称
+  string icon = 3;          //主播头像
+  uint64 groupScore = 4;    //守护团总守护值
+  uint32 memberNum = 5;     //守护团人数
+  uint32 groupRank = 6;     //守护团排名
+}
+
+//守护体验券信息
+message KnightCouponInfo {
+  uint32 ucid = 1;              //用户物品id
+  string name = 2;              //物品名称
+  uint32 duction_money = 3;     //抵扣金额
+  uint32 knight_level = 4;      //开通的守护等级，1-纯爱，2-真爱，3-挚爱
+  string coupon_tips = 5;       //拥有体验券提示
+}
+
+//骑士团的排行列表
+message ResKnightRankList {
+  bool success = 1;
+  string msg = 2;
+  KnightRankItem knightRankMaster = 3;//排名第一的数据
+  KnightRankItem knightMyInfo = 4; // 我的info
+  repeated KnightRankItem list = 5; //排名列表
+  bool hasMore = 6;
+  uint32 total = 7; //排行榜里人的总数
+  bool isRoomer = 8 ; //是否是房主
+  KnightGroupInfo knightGroupInfo = 9; //守护团信息
+  KnightCouponInfo knightCoupon = 10;  //守护体验券
+}
+
+
+message MeKnightItem {
+  string  knightName = 1; //此骑士团等级的name
+  uint32  knightLevel = 2; //此骑士团的等级
+  uint32 expireTime = 3;  //骑士团的过期时间
+  bool  hasBuy = 4 ;//骑士团是否开通
+
+}
+
+message ResKnightMine {
+  bool success = 1;
+  string msg = 2;
+  string icon = 3; //本人的头像
+  string name = 4; //本人的名字
+  uint32 knightScore = 5; //守护分数
+  uint32 knightLevel = 6; //最高的守护等级
+  repeated MeKnightItem knightList = 7;
+}
+
+//骑士守护团之间的排行列表
+message ResKnightGroupRankList {
+  bool success = 1;
+  string msg = 2;
+  repeated KnightGroupRankItem list = 3; //排名列表
+  KnightGroupRankItem my = 4; //我的排名
+  bool hasMore = 5;
+  uint32 total = 6; //排行榜里人的总数
+}
+
+message KnightGroupRankItem {
+  uint32 uid = 1;           //主播uid
+  string icon = 2;          //头像
+  string name = 3;          //名字
+  uint32 sortIndex = 4;     //名次
+  uint64 sortScore = 5;     //总守护值
+  uint32 memberNum = 6;     //守护人数
+  uint32 currentRid = 7;    //当前所在房间
+}
+

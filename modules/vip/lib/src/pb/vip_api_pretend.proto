@@ -1,0 +1,43 @@
+syntax = "proto3";
+package pb;
+
+import "vip_rpc_pretend.proto";
+
+option go_package = "../app/pb";
+
+message ResPretendCateList {
+	bool success = 1;               //成功true，失败false
+	string msg = 2;                 //失败message
+	repeated PretendCategory data = 3;       //返回数据
+}
+
+
+message ResGroupList {
+	bool success = 1;               //成功true，失败false
+	string msg = 2;                 //失败message
+	repeated PretendGroupDetail data = 3;
+}
+
+
+message ResPretend {
+	bool success = 1;               //成功true，失败false
+	string msg = 2;                 //失败message
+	PretendGroupDetail data = 3;                 //失败message
+}
+
+message pretendLevelList {
+	uint32 level = 1;//用户等级
+	uint32 star_score = 2;//星耀分
+}
+
+message pretendMy {
+	PretendMyInfo my = 1;
+	repeated pretendLevelList list = 2;//用户等级对应的星耀积分map
+}
+
+
+message ResPretendMy {
+	bool success = 1;               //成功true，失败false
+	string msg = 2;                 //失败message
+	pretendMy data = 3;
+}

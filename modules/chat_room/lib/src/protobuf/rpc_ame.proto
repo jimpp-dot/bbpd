@@ -1,0 +1,133 @@
+syntax = "proto3";
+package pb;
+
+/*
+腾讯音乐AME rpc 协议
+*/
+
+option go_package = "../app/pb";
+
+
+/***********************************************GetConfig************************************************/
+
+message ReqAmeConfig{
+  optional int64 requestId= 1;
+}
+
+message RepAmeConfig{
+  string  key  = 1;         //控制台生成的key
+  string licenceUrl = 2;    //控制台生成的licenceUrl
+}
+
+
+
+/***********************************************DescribeKTVPlaylists************************************************/
+
+message ReqDescribeKTVPlaylists{
+  optional int64 Offset = 1;
+  optional int64 Limit = 2;
+}
+
+message PlaylistBaseInfo{
+  string Description = 1;
+  int64 MusicNum = 2;
+  string PlaylistId = 3;
+  string Title = 4;
+}
+
+ message DescribeKTVPlaylists{
+   int64 TotalCount = 1;
+   repeated PlaylistBaseInfo info = 2;
+ }
+
+message RepDescribeKTVPlaylists{
+  bool Success = 1;
+  string Message = 2;
+  DescribeKTVPlaylists data = 3;
+}
+
+/***********************************************DescribeKTVPlaylistDetail************************************************/
+
+message ReqDescribeKTVPlaylistDetail{
+  string PlaylistId = 1;
+  optional int64 Offset = 2;
+  optional int64 Limit = 3;
+}
+
+message KTVMusicInfoSet{
+  repeated string ComposerSet = 1;
+  int64 Duration = 2;
+  repeated string LyricistSet = 3;
+  string MusicId = 4;
+  string Name = 5;
+  repeated string SingerSet = 6;
+  repeated string TagSet = 7;
+  bool choosed  = 8;
+}
+
+message DescribeKTVPlaylistDetail{
+  repeated KTVMusicInfoSet info = 1;
+  PlaylistBaseInfo base = 2;
+}
+
+message RepDescribeKTVPlaylistDetail{
+  bool Success = 1;
+  string Message = 2;
+  DescribeKTVPlaylistDetail data = 3;
+}
+
+/***********************************************SearchKTVMusics********************************************************/
+
+message ReqSearchKTVMusics{
+  string KeyWord = 1;
+  optional int64 Offset = 2;
+  optional int64 Limit = 3;
+}
+
+message SearchKTVMusics{
+  repeated KTVMusicInfoSet info = 1;
+  int64 TotalCount = 2;
+}
+
+message RepSearchKTVMusics{
+  bool Success = 1;
+  string Message = 2;
+  SearchKTVMusics data  = 3;
+}
+
+
+/***********************************************DescribeKTVMusicDetail*************************************************/
+
+message ReqDescribeKTVMusicDetail{
+  string  MusicId = 1;
+}
+
+message DescribeKTVMusicDetail{
+    KTVMusicInfoSet base  = 1;
+    string LyricsUrl = 2;
+    string PlayToken = 3;
+}
+
+message RepDescribeKTVMusicDetail{
+  bool Success = 1;
+  string Message = 2;
+    DescribeKTVMusicDetail data = 3;
+}
+
+service RPCAme{
+
+  //获取Ame配置
+  rpc GetConfig (ReqAmeConfig) returns (RepAmeConfig);
+
+  //获取直播互动曲库推荐歌单列表
+  rpc DescribeKTVPlaylists (ReqDescribeKTVPlaylists) returns (RepDescribeKTVPlaylists);
+
+  //获取直播互动曲库推荐歌单详情
+  rpc DescribeKTVPlaylistDetail(ReqDescribeKTVPlaylistDetail) returns(RepDescribeKTVPlaylistDetail);
+
+  //搜索直播互动曲库歌曲
+  rpc SearchKTVMusics(ReqSearchKTVMusics) returns(RepSearchKTVMusics);
+
+  //查询直播互动曲目详情
+  rpc DescribeKTVMusicDetail(ReqDescribeKTVMusicDetail) returns(RepDescribeKTVMusicDetail);
+}

@@ -1,0 +1,45 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../../app/pb";
+
+
+message ResFateMatch {
+	bool success = 1;
+	string msg = 2;
+	FateMatchData data = 3;
+
+}
+
+message FateMatchData {
+	repeated FateCard cards = 1;
+	FateCard my_card = 2;
+	uint32 rid = 3;
+	bool autoPlayAudio = 4; // 是否自动播放声音
+}
+
+message FateCard {
+	repeated string photos = 1;
+	string name = 2;
+	uint32 uid = 3;
+	uint32 age = 4;
+	uint32 sex = 5;
+	uint32 online_status = 6;
+	string online_dateline_diff = 7;
+	string distance = 8;
+	string audio = 9;
+	string duration = 10;
+	repeated string tags = 11;
+	repeated string friend_tags = 12;
+	uint32 match = 13;//匹配度
+	uint32 rid = 14; // 当前所在房间
+	bool is_spec_match = 15; //是否系统特别推荐
+	uint32 height = 16;     //身高
+    string industry = 17;   //行业
+    string education = 18;  //学历
+}
+
+message ResFateLike {
+	bool success = 1;
+	string msg = 2;
+}

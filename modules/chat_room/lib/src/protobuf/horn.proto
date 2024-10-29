@@ -1,0 +1,107 @@
+syntax = "proto3";
+package pb;
+/*
+用户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名2
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+// 喇叭
+message Horn {
+	uint64 id = 1;
+	uint64 uid = 2;
+	string content = 3;
+	uint32 state = 4; // 1：待审核  2 审核通过（待发送）3：已发送 4：拒绝
+	int64 created_at = 5;
+	int64 updated_at = 6;
+	string name = 7;  // 昵称
+	string icon = 8;  // 头像
+	string background = 9; // 背景
+	uint32 price = 10;
+	uint32 last_num =11;
+	uint64 ucid = 12; // 背包里的喇叭id
+	uint32 deleted = 13; // 0 下架
+}
+// 喇叭配置
+message HornConfigReq{}
+message HornConfig {
+	uint32 wait_send_num = 1;
+	uint32 price = 2;
+	uint32 last_num =3;
+	uint64 ucid = 4; // 背包里的喇叭id
+	string rule_url = 5;
+	string name = 6;
+	string icon = 7;
+	string desc = 8;
+	string background = 9; // 背景
+	uint32 cid = 10; // 喇叭物品id
+}
+
+message HornConfigRes {
+	bool success = 1;
+	string msg = 2;
+	HornConfig data = 3;
+}
+
+
+message HornConfigV2Res {
+	bool success = 1;
+	string msg = 2;
+	repeated HornConfig data = 3;
+	string rule_url = 4;  // 规则页
+}
+
+// 编辑提交喇叭
+message HornCommitReq{
+	uint64 ucid = 1; // 背包里的喇叭id
+	string content = 2;
+	uint64 price = 3;
+	uint64 id = 4;
+	uint32 cid = 5; // 喇叭配置的物品Id
+}
+message HornCommitRes {
+	bool success = 1;
+	string msg = 2;
+	uint32 errCode = 3;
+}
+
+// 发送喇叭
+message HornSendReq{
+	uint64 id = 1;
+	uint32 rid = 2; // 房间id
+}
+message HornSendRes {
+	bool success = 1;
+	string msg = 2;
+	uint32 errCode = 3;
+}
+
+// 喇叭列表
+message HornListReq {
+	uint32 state = 1; // 状态
+	uint32 v = 2; // 版本号
+	uint32 lid = 3; // 最后一条数据的id
+}
+message HornListRes {
+	bool success = 1;
+	string msg = 2;
+	repeated Horn data = 3;
+	bool has_more = 4;
+	uint32 last_id = 5; // 最后一个id
+}
+
+// 喇叭广场
+message HornSquareReq {
+	uint32 state = 1; // 状态
+	uint32 cid = 2; // 背包里的喇叭id
+	uint32 lid = 3; // 最后一条数据的id
+}
+message HornSquareRes {
+	bool success = 1;
+	string msg = 2;
+	repeated Horn data = 3;
+	bool has_more = 4;
+	uint32 last_id = 5; // 最后一个id
+}

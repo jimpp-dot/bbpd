@@ -1,0 +1,396 @@
+syntax = "proto3";
+package pb;
+/*
+用户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "banner_center.proto";
+
+message GameItem {
+	string name = 1;
+	string icon = 2;
+	uint32 cid = 3;
+}
+
+message FilterSubTab{
+	string tab = 1;
+	string type = 2;
+	string filter = 3;
+}
+
+message SubTab {
+	string tab = 1;
+	string type = 2;
+	string filter = 3;
+	uint32 default = 4;
+	repeated GameItem game_list = 5;
+	string icon = 6;
+	bool show = 7;  //是否展示
+	uint32 weight = 8; //排序权重
+	bool show_filter = 9; // 是否显示过滤设置
+	repeated FilterSubTab filter_sub_list = 10; // 子分类
+}
+
+message Rank {
+	string uid = 1;
+	string icon = 2;
+	string deleted = 3;
+}
+
+message Tab {
+	string tab = 1;
+	string type = 2;
+	string filter = 3;
+	uint32 default = 4;
+	uint32 tab_id = 5;
+	repeated SubTab sub_tab = 6;
+	repeated string queen = 7;
+	repeated Rank ranker = 8;
+	uint32 style = 9;
+	bool vertical = 10;   //是否竖版展示
+	string banner_channel = 11; //tab 所对应的banner渠道（除 热门/关注）
+}
+
+message TabBarData {
+	string unclicked_icon = 1;
+	string clicked_icon = 2;
+	string copy_writing = 3;
+}
+
+message HomeTabExtend {
+	bool hide_quick_join = 1;   //是否隐藏快速加入
+	bool hide_my_party = 2;     //是否隐藏我的派对
+	bool show_quality_user = 3; //是否展示优质用户入口
+}
+
+message HomeTabData {
+	repeated Tab tab = 1;
+	bool show_rank = 2;
+	bool ok = 3;
+	HomeTabExtend extend = 4;
+	bool show_new = 5;
+	repeated TabBarData bars = 6;
+	bool isSleeplessPlanetAndroidVerify = 7; //快乐星球安卓审核状态
+	ActBarData act_bars = 8;
+	TabRookieCheckInInfo rookie_checkin = 9;
+}
+
+message TabRookieCheckInInfo {
+	bool is_show_entrance = 1; // 时候展示首页新手签到入口
+	string check_in_url = 2; // 新手签到落地页
+}
+
+message ResHomeTab {
+	bool success = 1;
+	string msg = 2;
+	HomeTabData data = 3;
+}
+
+message RoomTypeItem {
+	string room_type  = 1;
+	string show = 2;
+	string label = 3;
+	string type_icon = 4;
+	repeated string type_bg = 5;
+}
+
+message PartyItem {
+	string display = 1;
+	string party_type = 2;
+	string home_icon = 3;
+	repeated RoomTypeItem room_type_group = 4;
+	string tag_icon = 5;
+	repeated string type_bg = 6;
+	string type_icon = 7;
+	uint32 playing_num = 8;
+	string index_icon = 9;
+	uint32 index_icon_height = 10;
+	uint32 index_icon_width = 11;
+}
+
+message FriendTypeName {
+	string show = 1;
+	string label = 2;
+	repeated string bg = 3;
+	string acute_icon = 4;
+	string tag_color = 5;
+	string tag_icon = 6;
+	string type_icon = 7;
+	repeated string type_bg = 8;
+}
+
+message FriendListItem {
+	uint32 uid = 1;
+	uint32 rid = 2;
+	string icon = 3;
+	string uname = 4;
+	string uuid = 5;
+	uint32 sex = 6;
+	string name = 7;
+	uint32 online_num = 8;
+	uint32 online_status = 9;
+	uint32 online_dateline = 10;
+	string online_dateline_diff = 11;
+	string friend_ship = 12;
+	uint32 party_style = 13;
+	string follow_desc = 14;
+	FriendTypeName type_name = 15;
+	string property = 16;
+	bool is_biz = 17;
+	uint32 sort_index = 18;
+	string ticket_mark = 19; //房间门票标识
+}
+
+message RecentListItem {
+	uint32 uid = 1;
+	uint32 rid = 2;
+	string icon = 3;
+	string name = 4;
+	uint32 online_num = 5;
+	uint32 online_status = 6;
+	uint32 online_dateline = 7;
+	string online_dateline_diff = 8;
+	string friend_ship = 9;
+	uint32 sort_index = 10;
+}
+
+message RoomListItem {
+	uint32 rid = 1;
+	string name = 2;
+	string property = 3;
+	string icon = 4;
+	uint32 num_boy = 5;
+	uint32 num_girl = 6;
+	uint32 real = 7;
+	uint32 pattern_style = 8;
+	string room_border = 9;
+	string uname = 10;
+	uint32 hour_rank = 11;
+	string label_type = 12;
+	repeated string mic_icons = 13;
+	FriendTypeName type_name = 14;
+	uint32 uid = 15;
+	string room_factory_type = 16;
+	string settlement_channel = 17;
+	bool is_biz = 18;
+	string reason_for_user = 19;
+	uint32 sex = 20;
+	uint32 paier = 21;
+	bool is_game = 22;
+	string types = 23;
+	string type = 24;
+	string boss_icon = 25;
+	string operation_label = 26;
+	string operation_bg = 27;
+	uint32 online_num = 28;
+	string recruit_desc = 29;
+	uint32 score = 30;
+	string live_cover_icon = 31;
+	string live_tag_icon = 32;
+	string left_frame = 33; //房间左侧头像框
+	repeated string tag_icon = 34; //房间新标签
+	uint32 hot = 35;	//房间热度
+	BaseBannerItem banner = 36;
+	string ticket_mark = 37;  //房间门票标识
+	string top_right_icon = 38;  //房间右上角标签
+	string room_banner_bg = 39; // 房间类型banner背景
+	string fix_tag_url_1 = 40; // 固定位-标签url-单列
+	string fix_tag_url_2 = 41; // 固定位-标签url-双列
+	string fix_frame_url_1 = 42; // 固定位-边框url-单列
+	string fix_frame_url_2 = 43; // 固定位-边框url-双列
+	bool fix_hide_hot = 44; // 固定位，是否展示房间人气值。ps: false:显示，true:隐藏
+	uint32 fix_sort_1 = 45; // 固定位，排序规则-单列
+	uint32 fix_sort_2 = 46; // 固定位，排序规则-双列
+	uint32 fix_position = 47; // 固定位，原始position
+	uint32 pretty_rid = 48; // 房间靓号
+}
+
+message HomeTabFriendData {
+	repeated PartyItem party_list = 1;
+	repeated FriendListItem friend_list = 2;
+	repeated RecentListItem recent_list = 3;
+	repeated RoomListItem room_banner_list = 4;
+	repeated RoomListItem history_list = 5;
+}
+
+message ResHomeTabFriend {
+	bool success = 1;
+	string msg = 2;
+	HomeTabFriendData data = 3;
+}
+
+message HomeTabCollectData{
+	repeated FriendListItem friend_list = 1;		//好友在玩
+	repeated RoomListItem room_list = 2;				//收藏房间
+	repeated RoomListItem me_list = 3;				 //自己的房间
+	bool has_collect = 4;											 //是否有收藏房间
+}
+
+message ResHomeTabCollect{
+	bool success = 1;
+	string msg = 2;
+	HomeTabCollectData data = 3;
+}
+
+message HomeForYouData {
+	repeated RoomListItem room_list = 1;
+	uint32 more = 2;
+}
+
+message ResHomeForYou {
+	bool success = 1;
+	string msg = 2;
+	HomeForYouData data = 3;
+}
+
+message WaveProgressBody{
+	map<uint32,float> progress = 1;
+}
+
+message ApiWaveProgressResponse{
+	bool success = 1;
+	string message = 2;
+	WaveProgressBody data = 3;
+}
+
+message ResHomeQuickTab {
+  bool success = 1;
+  string msg = 2;
+  HomeQuickTabData data = 3;
+}
+
+message HomeQuickTabData {
+  repeated HomeQuickTab tabs = 1;
+}
+
+message HomeQuickTab {
+  string key = 1;           //标识
+  string name = 2;          //名称
+  string image = 3;         //图片
+}
+
+// /go/hisong/home/guessFavorite?longitude=1.1&latitude=2.2
+message GuessFavoriteRoomListRes {
+  bool success = 1;
+  string msg = 2;
+  GuessFavoriteRoomListData data = 3;
+}
+
+message GuessFavoriteRoomListData {
+  repeated GuessFavoriteRoom items = 1;
+  int32 show_index = 2;
+}
+
+message GuessFavoriteRoom {
+ uint32 uid        = 1;
+ uint32 rid        = 2;
+ string name       = 3;  // 房间名称
+ string icon       = 4;  // 背景图
+ string audio      = 5;
+ uint32 duration   = 6;
+ string audio_icon = 7;
+}
+
+// /go/hisong/home/guessFavoriteInRoom?uid=xxx
+message GuessFavoriteInRoomRes {
+  bool   success = 1;
+  string msg     = 2;
+  uint32 data    = 3;
+}
+
+message HomeTabHotData {
+	repeated PartyItem party_list = 1;
+	repeated RoomListItem room_banner_list = 2;
+	AwakeFrontPageRsp.Data awake_front_page = 3;
+}
+
+message ResHomeTabHot {
+	bool success = 1;
+	string msg = 2;
+	HomeTabHotData data = 3;
+}
+
+message HomeTabFollowData {
+	repeated FriendListItem friend_list = 1;
+	repeated RecentListItem recent_list = 2;
+	repeated RoomListItem history_list = 3;
+}
+
+message ResHomeTabFollow {
+	bool success = 1;
+	string msg = 2;
+	HomeTabFollowData data = 3;
+}
+
+message ResTopRoomList{
+ bool success = 1;
+ string msg = 2;
+ TopRoomListData data = 3;
+}
+
+message TopRoomListData{
+ string tile = 1;
+ repeated TopRoomItem list = 2;
+}
+
+message TopRoomItem{
+ uint32 rid = 1;            //房间id
+ string frame_url = 2;      //边框
+ string name = 3;          //房间名称
+ string room_icon = 4;     //房间封面
+ bool active_icon = 5;    //活跃icon, 非活跃为空
+}
+
+message ResTopRoomJump{
+ bool success = 1;
+ string msg = 2;
+ TopRoomJumpData data = 3;
+}
+
+message TopRoomJumpData{
+ bool in_room = 1;       //是否在房间
+ uint32 jump_id = 2;    //房间id或者用户 id
+}
+
+message ActSubBarsData {
+	string unclicked_icon = 1;
+	string dark_color = 2;
+	string clicked_icon = 3;
+	string light_color = 4;
+}
+message ActMiddleBarsData {
+	string icon = 1;
+	string content = 2;
+	string dark_color = 3; // #fffff332 色值
+	string light_color = 4;
+	string jump_url = 5;// slp://开头
+}
+message ActBarData {
+    repeated ActSubBarsData sub_bars = 1;
+    ActMiddleBarsData middle_bar = 2;
+    int64 end_time = 3;
+}
+
+message AwakeFrontPageRsp {
+    bool success = 1;
+    string msg = 2;
+    message Data {
+        message Item {
+            uint32 uid = 1; // 用户uid
+            string name = 2; // 用户昵称
+            string icon = 3; // 用户头像
+            uint32 rid = 4; // 用户所在房间id
+            uint32 gid = 5; // 觉醒礼物id
+            string gift_name = 6; // 礼物名称
+            uint32 id = 7; // 唯一标识id
+            uint32 time = 8; // 觉醒时间
+        }
+        repeated Item list = 1; // 荣耀头条数据
+        bool has_more = 2; // 是否还有更多数据
+    }
+    Data data = 3;
+}

@@ -1,0 +1,155 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="ly.plugins.flt_push">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- 华为push -->
+    <!--如果是安卓8.0，应用编译配置的targetSdkVersion>=26，请务必添加以下权限 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- 华为push -->
+
+    <!-- OPPO push -->
+    <uses-permission android:name="com.coloros.mcs.permission.RECIEVE_MCS_MESSAGE" />
+    <uses-permission android:name="com.heytap.mcs.permission.RECIEVE_MCS_MESSAGE" />
+    <!-- OPPO push -->
+
+    <application>
+        <!-- 小米 配置开始 < -->
+        <receiver
+            android:name="ly.plugins.flt_push.xiaomi.XiaoMiPushReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.ERROR" />
+            </intent-filter>
+        </receiver>
+        <meta-data
+            android:name="XIMAOMI_PUSH_APP_ID"
+            android:value="${XIMAOMI_PUSH_APP_ID}" />
+        <meta-data
+            android:name="XIMAOMI_PUSH_APP_KEY"
+            android:value="${XIMAOMI_PUSH_APP_KEY}" />
+        <!-- 小米 配置结束 < -->
+
+
+        <!-- 华为 配置开始 < -->
+        <service
+            android:name="ly.plugins.flt_push.huawei.HuaWeiMessageService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.huawei.push.action.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="HUAWEI_APP_ID"
+            android:value="${HUAWEI_APP_ID}" />
+
+        <!-- BridgeActivity定义了HMS-SDK中一些跳转所需要的透明页面-->
+        <activity
+            android:name="com.huawei.hms.activity.BridgeActivity"
+            android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent"
+            tools:replace="android:configChanges,android:theme">
+            <meta-data
+                android:name="hwc-theme"
+                android:value="androidhwext:style/Theme.Emui.Translucent" />
+        </activity>
+        <!-- 华为 配置结束 < -->
+        
+        <!-- 荣耀 配置开始 < -->
+        <service
+            android:name="ly.plugins.flt_push.hihonor.HiHonorMessageService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.hihonor.push.action.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.hihonor.push.app_id"
+            android:value="${HIHONOR_APP_ID}" />
+        <!-- 荣耀 配置结束 < -->
+
+
+
+        <!-- OPPO PUSH 配置开始 -->
+        <service
+            android:name="ly.plugins.flt_push.oppo.PushMessageService"
+            android:exported="true"
+            android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE">
+            <intent-filter>
+                <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
+            </intent-filter>
+        </service>
+
+        <service android:name="ly.plugins.flt_push.oppo.AppPushMessageService"
+            android:exported="true"
+            android:permission="com.heytap.mcs.permission.SEND_PUSH_MESSAGE">
+            <intent-filter>
+                <action android:name="com.heytap.mcs.action.RECEIVE_MCS_MESSAGE"/>
+                <action android:name="com.heytap.msp.push.RECEIVE_MCS_MESSAGE" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="OPPO_PUSH_APP_KEY"
+            android:value="${OPPO_PUSH_APP_KEY}" />
+        <meta-data
+            android:name="OPPO_PUSH_APP_SECRET"
+            android:value="${OPPO_PUSH_APP_SECRET}" />
+        <!-- OPPO PUSH 配置结束 -->
+
+        <!-- VIVO PUSH 配置开始 -->
+        <!-- vivo push 推送 receiver 声明 -->
+        <receiver android:name="ly.plugins.flt_push.vivo.VivoPushReceiver" android:exported="true">
+            <intent-filter>
+                <!-- 接收push消息 -->
+                <action android:name="com.vivo.pushclient.action.RECEIVE" />
+            </intent-filter>
+        </receiver>
+
+        <!-- vivo 推送服务需要配置的 service、activity -->
+        <service
+            android:name="com.vivo.push.sdk.service.CommandClientService"
+            android:exported="true"
+            android:permission="com.push.permission.UPSTAGESERVICE" />
+
+        <!-- vivo 推送配置项 -->
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="${VIVO_PUSH_APP_KEY}" />
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="${VIVO_PUSH_APP_ID}" />
+        <!-- VIVO PUSH 配置结束 -->
+
+    </application>
+
+
+    <!-- 您应用的“targetSdkVersion”是30或者更高版本时，需要在“AndroidManifest.xml”中“manifest”内添加<queries>标签，使应用可以访问HMS Core（APK） -->
+    <queries>
+        <intent>
+            <action android:name="com.huawei.hms.core.aidlservice" />
+        </intent>
+    </queries>
+</manifest>

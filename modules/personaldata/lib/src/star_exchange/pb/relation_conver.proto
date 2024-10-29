@@ -1,0 +1,89 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+
+message RelShop {
+    uint32 id=1;
+    uint32 goods_type=2;
+    uint32 goods_id=3;
+    string type_name=4;
+    string name=5;
+    string source_url=6;
+    uint32 star_num=7;//花费星星数目
+    uint32 days=8;//天数
+    uint32 num=9;//个数
+}
+
+
+
+message RelConvertLog {
+    string fmt_time = 1;//兑换时间.由服务端格式换
+    string fmt_convert=2;//兑换文案
+    string fmt_star=3;//消耗积分
+}
+
+message ConvertHomeData{
+    message TypeData {
+        message ShowItem{
+            uint32 id=1;
+            uint32 goods_type=2;//0:cid;1:装扮；2：勋章
+            uint32 goods_id=3;
+            string icon=4;
+            string desc=5;
+            string button_text=6;
+        }
+        string type_name=1;
+        repeated ShowItem list =2;
+        uint32 type_id=3;//1:定制；2：非定制
+    }
+    message CustomData {
+        message user {
+            uint32 uid=1;
+            string name=2;
+            string icon=3;
+            string relation_name=4;//关系名
+        }
+        string bg=1;//背景图地址
+        uint32 reduce_star_num=2;//需要扣减的星数
+        repeated user user_list=3;//关系用户列表
+        string desc=4;//描述文案
+    }
+    message CovertMy {
+        uint32 star_num=1;//当前可用的星星数
+        uint32 expired_star_num=2;//将要过期的星星数目
+        uint32 expired_time=3;//过期时间
+    }
+    CovertMy my =1;
+    repeated TypeData list =2;
+    CustomData custom_data =3;
+}
+
+message RelConvertHomeRsp {
+    bool success = 1;
+    string msg = 2;
+    ConvertHomeData data=3;
+}
+
+message RelConvertListRsp {
+    bool success = 1;
+    string msg = 2;
+    bool is_more = 3;
+    repeated RelShop list =4;
+}
+
+
+//兑换记录
+message RelConvertGoodsLogRsp {
+    bool success = 1;
+    string msg = 2;
+    bool is_more = 3;//true，还有下一页
+    repeated RelConvertLog list = 4;
+}
+
+//兑换
+message RelConvertGoodsRsp {
+    bool success = 1;
+    string msg = 2;
+}

@@ -1,0 +1,15 @@
+syntax = "proto3";
+    
+package broadcaster.content.star.refresh;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+
+message BroadcasterContentStarRefresh {
+    option (pb.register_name) = 'broadcaster.content.star.refresh';
+    option (pb.register_id) = 9;
+    uint32 star_num = 1;
+}

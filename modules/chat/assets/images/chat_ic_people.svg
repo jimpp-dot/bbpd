@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16px" height="16px" viewBox="0 0 16 16" version="1.1">
+  <title>bbpd_ic_people</title>
+  <g id="ic_people" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.4">
+    <g id="编组" stroke="#313131" stroke-width="1.5">
+      <g transform="translate(1.000000, 3.500000)">
+        <path d="M5,6 C5.44931784,6 5.87556476,5.90122163 6.25820986,5.72419578 C6.80405374,5.47166811 7.26117196,5.0599141 7.56996746,4.54853081 C7.8429338,4.09648269 8,3.56658373 8,3 C8,1.34314575 6.65685425,0 5,0 C3.34314575,0 2,1.34314575 2,3 C2,4.65685425 3.34314575,6 5,6 Z" id="head"/>
+        <path d="M9.5,10 C9.1136572,9.56889005 8.66323041,9.19360488 8.16317389,8.88821389 C7.74122205,8.63052244 7.28393323,8.42259653 6.79999157,8.27288907 C6.22701752,8.09563942 5.61668172,8 4.9833971,8 C3.19941811,8 1.59755246,8.7589594 0.5,9.96325707" id="路径"/>
+      </g>
+    </g>
+  </g>
+</svg>

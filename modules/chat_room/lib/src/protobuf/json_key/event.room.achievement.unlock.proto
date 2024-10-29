@@ -1,0 +1,15 @@
+syntax = "proto3";
+    
+package event.room.achievement.unlock;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message EventRoomAchievementUnlock {
+    option (pb.register_name) = 'event.room.achievement.unlock';
+    option (pb.register_id) = 33;
+    string icon = 1;
+    string name = 2;
+}

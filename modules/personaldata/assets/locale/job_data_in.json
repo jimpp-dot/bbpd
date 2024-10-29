@@ -1,0 +1,517 @@
+[
+  {
+    "label": "siswa",
+    "value": 110,
+    "data": [
+      {
+        "label": "siswa",
+        "value": 11001,
+        "data": null
+      },
+      {
+        "label": "Mahasiswa",
+        "value": 11002,
+        "data": null
+      },
+      {
+        "label": "lulusan",
+        "value": 11003,
+        "data": null
+      },
+      {
+        "label": "Siswa Internasional",
+        "value": 11004,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "IT",
+    "value": 101,
+    "data": [
+      {
+        "label": "IT",
+        "value": 10101,
+        "data": null
+      },
+      {
+        "label": "Internet",
+        "value": 10102,
+        "data": null
+      },
+      {
+        "label": "Komunikasi",
+        "value": 10103,
+        "data": null
+      },
+      {
+        "label": "Komputer",
+        "value": 10104,
+        "data": null
+      },
+      {
+        "label": "game online",
+        "value": 10105,
+        "data": null
+      },
+      {
+        "label": "telekomunikasi",
+        "value": 10106,
+        "data": null
+      },
+      {
+        "label": "manajer produk",
+        "value": 10107,
+        "data": null
+      },
+      {
+        "label": "programmer",
+        "value": 10108,
+        "data": null
+      },
+      {
+        "label": "desainer",
+        "value": 10109,
+        "data": null
+      },
+      {
+        "label": "Operator jaringan",
+        "value": 10110,
+        "data": null
+      },
+      {
+        "label": "Web Editor",
+        "value": 10111,
+        "data": null
+      },
+      {
+        "label": "rencana permainan",
+        "value": 10112,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "asuransi keuangan",
+    "value": 102,
+    "data": [
+      {
+        "label": "keuangan",
+        "value": 10201,
+        "data": null
+      },
+      {
+        "label": "investasi",
+        "value": 10202,
+        "data": null
+      },
+      {
+        "label": "bank",
+        "value": 10203,
+        "data": null
+      },
+      {
+        "label": "sekuritas",
+        "value": 10204,
+        "data": null
+      },
+      {
+        "label": "asuransi",
+        "value": 10205,
+        "data": null
+      },
+      {
+        "label": "kepercayaan / jaminan",
+        "value": 10206,
+        "data": null
+      },
+      {
+        "label": "Manajer Investasi",
+        "value": 10207,
+        "data": null
+      },
+      {
+        "label": "Manajer Dana",
+        "value": 10208,
+        "data": null
+      },
+      {
+        "label": "Penasihat Keuangan",
+        "value": 10209,
+        "data": null
+      },
+      {
+        "label": "Manajer Pelanggan",
+        "value": 10210,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "Layanan Bisnis",
+    "value": 103,
+    "data": [
+      {
+        "label": "konsultasi",
+        "value": 10301,
+        "data": null
+      },
+      {
+        "label": "Pelatihan",
+        "value": 10302,
+        "data": null
+      },
+      {
+        "label": "wiraswasta",
+        "value": 10303,
+        "data": null
+      },
+      {
+        "label": "Perjalanan",
+        "value": 10304,
+        "data": null
+      },
+      {
+        "label": "hotel restaurant",
+        "value": 10305,
+        "data": null
+      },
+      {
+        "label": "rekreasi",
+        "value": 10306,
+        "data": null
+      },
+      {
+        "label": "Trade",
+        "value": 10307,
+        "data": null
+      },
+      {
+        "label": "auto",
+        "value": 10308,
+        "data": null
+      },
+      {
+        "label": "real estate",
+        "value": 10309,
+        "data": null
+      },
+      {
+        "label": "Manajemen Properti",
+        "value": 10310,
+        "data": null
+      },
+      {
+        "label": "renovasi / dekorasi",
+        "value": 10311,
+        "data": null
+      },
+      {
+        "label": "salon kecantikan",
+        "value": 10312,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "engineering",
+    "value": 104,
+    "data": [
+      {
+        "label": "Arsitektur",
+        "value": 10401,
+        "data": null
+      },
+      {
+        "label": "Teknik Sipil",
+        "value": 10402,
+        "data": null
+      },
+      {
+        "label": "Pembuatan mesin",
+        "value": 10403,
+        "data": null
+      },
+      {
+        "label": "elektronik",
+        "value": 10404,
+        "data": null
+      },
+      {
+        "label": "biomedis",
+        "value": 10405,
+        "data": null
+      },
+      {
+        "label": "food",
+        "value": 10406,
+        "data": null
+      },
+      {
+        "label": "pakaian",
+        "value": 10407,
+        "data": null
+      },
+      {
+        "label": "energi",
+        "value": 10408,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "Transportasi",
+    "value": 105,
+    "data": [
+      {
+        "label": "penerbangan",
+        "value": 10501,
+        "data": null
+      },
+      {
+        "label": "kereta api",
+        "value": 10502,
+        "data": null
+      },
+      {
+        "label": "pengiriman / pengiriman",
+        "value": 10503,
+        "data": null
+      },
+      {
+        "label": "transportasi umum",
+        "value": 10504,
+        "data": null
+      },
+      {
+        "label": "transportasi logistik",
+        "value": 10505,
+        "data": null
+      },
+      {
+        "label": "Space Shuttle",
+        "value": 10506,
+        "data": null
+      },
+      {
+        "label": "pramugari",
+        "value": 10507,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "Budaya Media",
+    "value": 106,
+    "data": [
+      {
+        "label": "Media Publishing",
+        "value": 10601,
+        "data": null
+      },
+      {
+        "label": "Budaya Media",
+        "value": 10602,
+        "data": null
+      },
+      {
+        "label": "materi iklan",
+        "value": 10603,
+        "data": null
+      },
+      {
+        "label": "Hubungan Masyarakat / Konvensi",
+        "value": 10604,
+        "data": null
+      },
+      {
+        "label": "anime",
+        "value": 10605,
+        "data": null
+      },
+      {
+        "label": "TV",
+        "value": 10606,
+        "data": null
+      },
+      {
+        "label": "Reporter",
+        "value": 10607,
+        "data": null
+      },
+      {
+        "label": "host",
+        "value": 10608,
+        "data": null
+      },
+      {
+        "label": "desain",
+        "value": 10609,
+        "data": null
+      },
+      {
+        "label": "fotografi",
+        "value": 10610,
+        "data": null
+      },
+      {
+        "label": "art",
+        "value": 10611,
+        "data": null
+      },
+      {
+        "label": "penulis",
+        "value": 10612,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "Olahraga Hiburan",
+    "value": 107,
+    "data": [
+      {
+        "label": "film",
+        "value": 10701,
+        "data": null
+      },
+      {
+        "label": "Music",
+        "value": 10702,
+        "data": null
+      },
+      {
+        "label": "model",
+        "value": 10703,
+        "data": null
+      },
+      {
+        "label": "olahraga olahraga",
+        "value": 10704,
+        "data": null
+      },
+      {
+        "label": "kebugaran",
+        "value": 10705,
+        "data": null
+      },
+      {
+        "label": "aktor",
+        "value": 10706,
+        "data": null
+      },
+      {
+        "label": "penyanyi",
+        "value": 10707,
+        "data": null
+      },
+      {
+        "label": "atlet",
+        "value": 10708,
+        "data": null
+      },
+      {
+        "label": "pelatih kebugaran",
+        "value": 10709,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "utilitas publik",
+    "value": 108,
+    "data": [
+      {
+        "label": "agensi pemerintah",
+        "value": 10801,
+        "data": null
+      },
+      {
+        "label": "medis",
+        "value": 10802,
+        "data": null
+      },
+      {
+        "label": "pendidikan",
+        "value": 10803,
+        "data": null
+      },
+      {
+        "label": "Law",
+        "value": 10804,
+        "data": null
+      },
+      {
+        "label": "penelitian ilmiah",
+        "value": 10805,
+        "data": null
+      },
+      {
+        "label": "kepentingan umum",
+        "value": 10806,
+        "data": null
+      },
+      {
+        "label": "pegawai negeri sipil",
+        "value": 10807,
+        "data": null
+      },
+      {
+        "label": "Polisi",
+        "value": 10808,
+        "data": null
+      },
+      {
+        "label": "Militer",
+        "value": 10809,
+        "data": null
+      },
+      {
+        "label": "Dokter",
+        "value": 10810,
+        "data": null
+      },
+      {
+        "label": "perawat",
+        "value": 10811,
+        "data": null
+      },
+      {
+        "label": "guru",
+        "value": 10812,
+        "data": null
+      },
+      {
+        "label": "TK",
+        "value": 10813,
+        "data": null
+      },
+      {
+        "label": "pengacara",
+        "value": 10814,
+        "data": null
+      }
+    ]
+  },
+  {
+    "label": "freelance",
+    "value": 111,
+    "data": [
+      {
+        "label": "freelance",
+        "value": 11101,
+        "data": null
+      },
+      {
+        "label": "tidak ada pekerjaan",
+        "value": 11102,
+        "data": null
+      },
+      {
+        "label": "other",
+        "value": 11103,
+        "data": null
+      }
+    ]
+  }
+]

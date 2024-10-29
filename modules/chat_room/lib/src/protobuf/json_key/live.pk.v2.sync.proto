@@ -1,0 +1,34 @@
+syntax = "proto3";
+    
+package live.pk.v2.sync;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message LivePkV2Sync {
+    option (pb.register_name) = 'live.pk.v2.sync';
+    option (pb.register_id) = 44;
+    uint32 isUse = 1;
+    Pk pk = 2;
+
+    message Pk {
+        Profile compete = 1;
+        Profile main = 2;
+        string punish = 3;
+        string state = 4;
+        uint32 status = 5;
+        uint32 win = 6;
+    }
+
+    message Profile {
+        uint32 uid = 1;
+        string origin = 2;
+        uint32 main_rid = 3;
+        string name = 4;
+        string icon = 5;
+        uint32 sex = 6;
+        uint32 score = 7;
+        string mic = 8;
+    }
+}

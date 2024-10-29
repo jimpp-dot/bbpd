@@ -1,0 +1,14 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+import "ranking_contribute.proto";
+
+message ResRankingCharm {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  repeated RankList data = 3; //返回的数据结果
+  bool hideRank = 4;
+}

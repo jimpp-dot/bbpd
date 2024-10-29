@@ -1,0 +1,49 @@
+syntax = "proto3";
+package pb;
+/*
+广告 相关proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+enum AdScreenType {
+  AdScreenNone = 0;
+  AdScreenBannerType = 1;
+  AdScreenAudioType = 2;
+}
+
+message AdScreenAdData{
+  uint32 id = 1;
+  string image = 2;
+  uint32 width = 3;
+  uint32 height = 4;
+  uint32 duration = 5;
+  string url = 6;
+}
+
+
+message AdScreenAudioData{
+  uint32 id = 1;
+  uint32 uid = 2;//用户头像
+  string icon = 3;//用户头像
+  string nickname = 4;//用户昵称
+  string hot_word = 5;//音频热词
+  uint32 audio_duration = 6;//音频时长，单位秒
+  string url = 7;//音频地址
+  uint32 duration = 8;//开屏时长，单位秒
+}
+
+
+message ResAdScreenAdV2{
+  bool success = 1;
+  string msg = 2;
+  AdScreenData data = 3;
+}
+
+message AdScreenData{
+  AdScreenType ad_type=1;//1:banner (ad_data)，2：启动音(audio_data)
+  AdScreenAdData ad_data=2;//老逻辑：广告（后台配置好的banner）
+  AdScreenAudioData audio_data=3;//启动音
+}

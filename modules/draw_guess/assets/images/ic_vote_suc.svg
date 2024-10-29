@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <title>bbpd_&#x7F16;&#x7EC4; 31&#x5907;&#x4EFD; 2</title>
+  <g fill="none" fill-rule="evenodd">
+    <circle cx="10" cy="10" r="10" fill="#737BFF"/>
+    <path d="M4.286 4.286h11.429v11.429H4.285z"/>
+    <g fill="#FFF" transform="rotate(45 -.648 16.344)">
+      <rect width="1.429" height="6.429" x="2.5" rx=".714"/>
+      <rect width="1.429" height="3.929" x="1.25" y="3.75" rx=".714" transform="rotate(-90 1.964 5.714)"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+// go/room/brother/config
+message ApiBrotherConfigResponse{
+  bool success = 1;
+  string message = 2;
+  BrotherConfigMessage data = 3;
+}
+
+message BrotherConfigMessage{
+  option (pb.register_name) = 'room.myHouse.sync';
+  option (pb.register_id) = 10041;
+
+  uint64 option = 1; // 业务包标识，1 表示包含master, 1<< room 1<<2 layout
+  BrotherUserInfo master = 2; // 房主信息
+  BrotherRoomBase room = 3; // 房间基础信息
+  repeated BrotherDecorateLayoutItem layout = 4; // 装饰信息
+  BrotherUpgradeMessage message = 5; //房间升级消息
+}
+
+message BrotherRoomBase{
+  uint32 rid = 1; // rid 当前房间rid
+  uint32 exp = 2; // 当前房间的经验值
+  uint32 level = 3; // 当前房间的等级
+  uint32 next_level_gap = 4; // 距离下一个等级还差多少经验值
+  BrotherDecorateLayoutItem  background = 5; // 房间背景
+  uint32 initViewOffset = 6; // 初始视野偏移（中心点）
+  string level_info = 7; // 房间等级说明
+}
+
+message BrotherUserInfo{
+  uint32 uid = 1; // uid
+  string name = 2; //
+  string icon = 3;
+  uint32 age = 4;
+  uint32 sex = 5;
+}
+
+message BrotherDecorateLayoutItem{
+  uint32 element_id = 1; // 装饰元素ID
+  string url = 2; // 装饰资源
+  int32 x = 3; // 房间内的X坐标
+  int32 y = 4; // 房间内的Y坐标
+  int32 height = 5; // 装饰资源的宽度
+  int32 width = 6; // 装饰资源的高度
+  BrotherDecorateExtra extra = 7; // 装饰资源的额外个性化信息
+}
+
+message BrotherDecorateExtra{
+  oneof Data{
+    BrotherDecorateCalenderExtra calender = 1; // 当装饰资源为日历时，取当前信息
+  }
+}
+
+message BrotherDecorateCalenderExtra{
+  uint32 birthday = 1; // 生日时间戳
+  uint32 nextBirthdayDays = 2; // 距离下一个生日多少天
+  int32 w = 3;
+  int32 h = 4;
+  int32 x = 5;
+  int32 y = 6;
+}
+
+
+message ApiBrotherPreferencesResponse{
+  bool success = 1;
+  string message = 2;
+  BrotherPreferencesData data = 3;
+}
+
+message BrotherPreferencesData{
+  repeated BrotherDecorateItem decorates = 1;
+  string annotation = 2;
+}
+
+message BrotherDecorateItem{
+  uint32 element_id = 1; // 装饰资源ID
+  string url = 2; // 装饰资源URL
+  uint32 power = 3; // 用户当前是否拥有该资源
+  uint32 display = 4; // 当前装饰资源是否展示
+  uint32 baseLevel = 5; // 解锁当前资源需要的等级
+  string name = 6; // 装饰名称
+}
+
+message BrotherUpgradeMessage{
+  uint32 newLevel = 1;
+  string decorateName = 2;
+}

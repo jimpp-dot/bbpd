@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package screen.msg.pull;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+message WaitMic {
+  option (pb.register_name) = 'Room.Refresh.Wait.Mic';
+  option (pb.register_id) = 10026;
+
+  repeated uint32 wait = 1; //国内海外共用
+  repeated uint32 waitForBoss = 2; //国内海外共用
+  repeated uint32 waitForAuction = 3; //国内海外共用
+  repeated WaitProfile waitProfiles = 4; //国内海外共用
+}
+
+message WaitProfile {
+  uint32 uid = 1;
+  string icon = 2;
+}

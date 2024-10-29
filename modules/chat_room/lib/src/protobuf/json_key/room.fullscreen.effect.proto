@@ -1,0 +1,41 @@
+syntax = "proto3";
+    
+package room.fullscreen.effect;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message RoomFullscreenEffect {
+    option (pb.register_name) = 'room.fullscreen.effect';
+    option (pb.register_id) = 68;
+    Gift gift = 1;
+    string uuid = 2;
+
+    message Gift {
+        uint32 _num = 1;
+        string displayNormalGiftRatio = 2;
+        string displayNormalGiftType = 3;
+        string gift_type = 4;
+        string id = 5;
+        string magic = 6;
+        string magic_size = 7;
+        string name = 8;
+        string price = 9;
+        uint32 show_start_end = 10;
+        string size = 11;
+        string size_big = 12;
+        string type = 13;
+        string vap_header = 14;
+        string vap_header_end = 15;
+        string vap_header_start = 16;
+        string vap_size = 17;
+        string vap_type = 18;
+        string with_end = 19;
+        uint32 worthy = 20;
+        string xratio = 21;
+        string xtype = 22;
+    }
+
+}

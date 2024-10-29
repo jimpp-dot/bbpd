@@ -1,0 +1,66 @@
+syntax = "proto3";
+package pb;
+
+
+option go_package = "../app/pb";
+
+message BodyGodRecommendTab {
+  message LevelConfig {
+    uint32 id = 1;
+    string title = 2;
+  }
+  message TabItem {
+    string title = 1; // tab名称
+    string icon = 2; // 图标
+    uint32 cid = 3; // category id
+    repeated string gradient_colors = 4; // 游戏等级渐变色
+    repeated LevelConfig level_config = 5;
+    bool show = 6; // 是否展示当前tab
+  }
+  repeated TabItem tab_list = 1;
+}
+
+message RspGodRecommendTab {
+  bool success = 1;
+  string msg = 2;
+  BodyGodRecommendTab data = 3;
+}
+
+message BodyGodRecommendList {
+  message Item {
+    uint32 rid = 1;
+    uint32 uid = 2;
+    string name = 3; // 昵称
+    string icon = 4; // 头像
+    uint32 gender = 5; // 性别
+    uint32 cid = 6; // category id
+    uint32 level = 7; // 游戏段位
+    string description = 8; // 接单说明
+    string audio = 9; // 音频
+    string room_desc = 10; // 房间简介
+    uint32 money = 11; // 个人流水
+    uint32 age = 12; // 年龄
+    repeated GodCertInfo cert_list = 13; // 用户认证的所有游戏
+  }
+  repeated Item list = 1;
+}
+
+message GodCertInfo {
+  uint32 cid = 1; // category id
+  uint32 level = 2; // 游戏段位
+}
+
+message RspGodRecommendList {
+  bool success = 1;
+  string msg = 2;
+  BodyGodRecommendList data = 3;
+}
+
+message RspGodRecommendGangUp {
+  bool success = 1;
+  string msg = 2;
+  message BodyGodRecommendGangUp {
+    uint32 rid = 1; // 开黑房间
+  }
+  BodyGodRecommendGangUp data = 3;
+}

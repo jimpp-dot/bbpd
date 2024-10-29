@@ -1,0 +1,252 @@
+syntax = "proto3";
+package pb;
+/*
+私聊信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message CloudChatUser {  //私聊列表用户信息
+  uint32 uid = 1;
+  uint32 appId = 2;
+  uint32 version = 3;
+  uint32 sex = 4;
+  uint32 title = 5;
+  string name = 6;
+  string icon = 7;
+  string city = 8;
+  string position = 9;
+  uint32 official = 10;
+  uint32 degree = 11;
+  string orderStatus = 12;
+  bool   iconGray = 13;
+  uint32 age = 14;
+  uint32 photoNum = 15;
+  uint32 vip = 16;
+  uint32 popularity = 17;
+  string birthday = 18;
+  uint32 onlineDateline = 19;  //+++
+  bool   newUser = 20;
+  uint32 deleted = 21;  //+++
+  uint32 titleNew = 22;
+  string frame = 23;
+  uint32 starVerifyTag = 24;
+  string mark = 25;
+  repeated string marks = 26;
+  uint32 chatEggTitle = 27; //五个：1-5
+  uint32 daka = 28;//大咖
+  uint32 jiaren = 29;//佳人
+  uint32 accost = 30;//快捷交友
+  string chatEggTitleName = 31; //彩蛋称号
+  string chatEggTitleColor = 32; //彩蛋字体颜色
+  repeated string chatEggTitleBolder = 33; //彩蛋字体底色
+}
+
+message CloudRoomConfig {
+  uint32 uid = 1;
+  uint32 online = 2;
+  uint32 room = 3;
+  string roomIcon = 4;
+  string prefix = 5;
+  uint32 official = 6;
+  string show = 7;
+  string label = 8;
+  repeated string bg = 9;
+  uint32 partyStyle = 10;
+  string acuteIcon = 11;
+  string abstractIcon = 12;
+  repeated string typeBg = 13;
+  string typeIcon = 14;
+  string tagIcon = 15;
+  string tagColor = 16;
+}
+
+message CloudGroupConfig {
+  uint32 uid = 1;
+  uint32 groupId = 2;
+  uint32 online = 3;
+  uint32 room = 4;
+  string roomIcon = 5;
+  string prefix = 6;
+  uint32 official = 7;
+}
+
+message ResCloudAll {
+  bool success = 1;
+  string msg = 2;
+  repeated CloudChatUser users = 3;
+  repeated CloudRoomConfig config = 4;
+  repeated CloudGroupConfig groupConfig = 5;
+  uint32 rid = 6;
+}
+
+
+message ProfileContent {
+  string content = 1;
+  repeated string imgs = 2;
+}
+
+message ProfileRelation {
+  uint32 friend = 1;
+  uint32 fans = 2;
+  uint32 defend = 3;
+  uint32 defendR = 4;
+  uint32 orderR = 5;
+  uint32 familiarR = 6;
+  uint32 familiar = 7;
+  bool   isSuper = 8;
+  uint32 gid = 9;
+  uint32 service = 10;
+}
+
+message ProfileFriendTag {
+  uint32 id = 1;
+  string name = 2;
+}
+
+message ProfileGroupMember {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+}
+
+message ProfileDutyWords {
+  uint32 mark = 1;
+  string words = 2;
+}
+
+message ProfileSkill {
+  int32 cid = 1;
+  int32 price = 2;
+  int32 num = 3;
+  string description = 4;
+  string cover = 5;
+  int32 isDefault = 6;
+  int32 type = 7;
+  string name = 8;
+  string icon = 9;
+  string uint = 10;
+  string userIcon = 11;
+  string skillDesc = 12;
+  repeated string skillImages = 13;
+}
+
+message ServiceShortcutMenu {
+  uint32 id = 1;
+  string name = 2;
+}
+
+//客服功能设置
+message ProfileServiceSetting {
+  bool closeSendMsg = 1;        //是否关闭发消息模块
+  bool closeShortcutMenu = 2;   //是否关闭快捷菜单功能区
+  repeated ServiceShortcutMenu shortcutMenu = 3;   //快捷菜单
+}
+
+//聊天气泡尾灯
+message ProfileBubbleTail {
+  uint32 cid = 1;       //尾灯物品id
+}
+
+message CloudProfileData {
+  uint32 uid = 1;
+  uint32 version = 2;
+  string name = 3;
+  string mark = 4;
+  string icon = 5;
+  uint32 sex = 6;
+  uint32 title = 7;
+  uint32 titleNew = 8;
+  string city = 9;
+  string position = 10;
+  uint32 strangerMsg = 11;
+  uint32 rid = 12;
+  uint32 needVerify = 13;
+  uint32 needVerifyNew = 14;
+  uint32 official = 15;
+  uint32 degree = 16;
+  string orderStatus = 17;
+  string frame = 18;
+  uint32 starVerifyTag = 19;
+  uint32 friend = 20;
+  uint32 fans = 21;
+  uint32 defend = 22;
+  uint32 defendR = 23;
+  uint32 orderR = 24;
+  uint32 familiarR = 25;
+  uint32 familiar = 26;
+  bool   isSuper = 27;
+  uint32 gid = 28;
+  uint32 service = 29;
+  uint32 profileIntegrity = 32;
+  uint32 intimacy = 33;
+  uint32 relationScore = 34;
+  uint32 closeEmoticon = 35;
+  string distanceDesc = 36; //用户距离
+  repeated ProfileFriendTag friendTags = 37;
+  string sign = 38;
+  ProfileContent latestFeed = 39;
+  uint32 members = 40; //PHP接口这个字段可能返回成员数或成员列表
+  repeated ProfileGroupMember memberList = 41; //成员列表用这个
+  uint32 applyNum = 42;
+  string nickName = 43;
+  repeated ProfileDutyWords dutyWords = 44;
+  repeated ProfileSkill skills = 45;
+  ProfileSkill currentSkill = 46;
+  string type = 47; //群类型
+  uint32 age = 48;
+  uint32 chatEggId = 49; //私聊彩蛋ID
+  uint32 daka = 50;// 是否为大咖
+  ProfileServiceSetting serviceSetting = 51;    //客服功能设置
+  uint32 jiaren = 52;// 佳人
+  repeated ProfileBubbleTail bubble_tail = 53;  //聊天气泡尾灯
+  uint32 giftSetEnable = 54;                    //是否可以设置自定义私聊礼物
+  uint32 meDanger = 55;   //自己是否是风险用户
+  uint32 group_package = 56; //是否有群红包功能： 0 没有，1 有
+  string user_machine = 57; ////用户机型标识
+  string room_cover = 58; // 房间封面
+  string room_name = 59; // 房间名字
+  uint32 oneKeyProtection = 60; // 一键防护
+  uint32 privateMessageNoti = 61; // 私聊屏蔽
+  uint32 is_birthday = 62; // 是否今天生日
+  uint32 smart_greet = 63; // 是否智能招呼匹配
+  ImCloudHeartFlip heart_flip = 64; // 心动问答
+  uint32 show_sweet_album = 65;
+  string chat_bg_image = 66; //私聊背景图
+  string hold_hand_icon = 67; //牵手标签
+  string desc = 68;// 描述
+  string lvIcon = 69; // 群组等级勋章
+}
+
+message ResCloudProfile {
+  bool success = 1;
+  string msg = 2;
+  string type = 3;
+  CloudProfileData data = 4;
+}
+
+message ResCloudCustomGiftList {
+  bool success = 1;
+  string msg = 2;
+  CloudCustomGiftData data = 3;
+}
+
+message CloudCustomGiftData {
+  repeated CloudCustomGift gifts = 1;
+}
+
+message CloudCustomGift {
+  uint32 id = 1;
+  string name = 2;
+  uint32 price = 3;
+}
+
+message ImCloudHeartFlip {
+  bool  show_entrance = 1;  //是否展示入口
+  int32 total_count = 2;  //总次数
+  int32 use_count = 3;  //使用次数
+}
+
+

@@ -1,0 +1,4 @@
+enum PkMsgType {
+  approveChallenge,
+  confirmResult,
+}

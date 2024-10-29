@@ -1,0 +1,19 @@
+syntax = "proto3";
+    
+package party.wheel.despin;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message PartyWheelDespin {
+    option (pb.register_name) = 'party.wheel.despin';
+    option (pb.register_id) = 54;
+    string content = 1;
+    string icon = 2;
+    uint32 id = 3;
+    uint32 system_id = 4;
+    string type = 5;
+    uint32 uid = 6;
+}

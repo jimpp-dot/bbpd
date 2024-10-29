@@ -1,0 +1,466 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+/*********************** 房间车位列表接口协议 ****************************/
+// go/room/parking/lot  房间车位列表
+message ApiParkingLotResponse{
+  bool Success = 1;
+  string Message = 2;
+  ParkingLotData data = 3;
+}
+
+// 房间车位
+message ParkingLotData{
+  int32 bestPosition = 1; // 最佳座驾所在位置索引
+  repeated ParkingLotPosition positions = 2; // 房间车位列表
+}
+
+// 房间车位消息结构体
+message ParkingLotPosition{
+  uint32 lot = 1;// 座驾停车唯一键
+  uint32 position = 2; // 索引
+  uint32 owner_uid = 3; // 车主 uid
+  string owner_name = 4; // 车主 name
+  string owner_icon = 5; // 车主 icon
+  string image = 6; // 座驾url
+  uint32 level = 7; // 座驾level
+  uint32 parking_duration = 8; // 剩余免罚时间；0则为可贴条
+  uint32 ticket = 9; // 当前用户对此车是否贴条：0 没有，1 已贴条且成功，2已贴条且失败（被保护了）
+  ParkingLotCarProtection protection = 10;
+}
+
+/*********************** 车库接口协议 ****************************/
+// go/room/parking/garage  我的车库
+message ApiParkingGarageResponse{
+  bool Success = 1;
+  string Message = 2;
+  ParkingGarageData data = 3;
+}
+
+// 我的车库列表
+message ParkingGarageData{
+  int64 totalEnergy = 1; // 用户所得总能量值
+  repeated ParkingGarageCar temporary = 2; // 临时座驾列表
+  repeated ParkingGarageCar permanent = 3; // 终生座驾列表
+}
+
+// 座驾道具结构体
+message ParkingGarageCar{
+  uint32 lot = 1;
+  uint32 cid = 2;
+  uint32 UCid = 3;
+  string image = 4;
+  string name = 5;
+  uint32 level = 6;
+  uint32 epm = 7; // 基准收益 xxx/分钟
+  uint32 parking_duration = 8; // 剩余免罚时间；0则为可贴条
+  uint32 state = 9; // 0未知，1未使用，2已使用且未停车；3已使用已停车
+  uint32 period = 10; // 可使用x天
+  uint32 expired_duration = 11; // 剩余时间 差值
+  uint32 rid = 12;
+  uint64 total_energy_product = 13; // 本次停车预计可获取能量值
+  uint32 num_paper_stick = 14; // 本次停车被贴条数
+  uint32 enter_effect_enable = 15; // 入场特效 开关
+  uint32 upgrade_award_enable = 16; // 升级奖励 开关
+  uint32 free_parking_duration = 17; // 免罚时间
+  uint32 num_car = 18; // 道具数量
+  uint32 is_spu = 19; // 透传字段
+  uint32 dynamic_icon = 20; // 动态Icon
+}
+
+/*********************** 座驾详情/弹窗接口协议 ****************************/
+// go/room/parking/car 座驾弹窗
+message ApiParkingCarResponse{
+  bool Success = 1;
+  string Message = 2;
+  ParkingLotCar data = 3;
+}
+
+// 座驾结构体
+message ParkingLotCar{
+  uint32 lot = 1; // 车位唯一识别号
+  uint32 position = 2; // 索引
+  uint32 rid = 3; // rid
+  uint32 cid = 4; // 座驾关联cid
+  string name = 5; // 座驾名称
+  string image = 6; // 座驾icon
+  uint32 level = 7; // 座驾等级
+  string desc = 8; // 座驾说明
+  uint32 epm = 9; // 基准收益 xxx/分钟
+  uint32 parking_duration = 10; // 剩余免罚时间；0则为可贴条
+  uint32 owner_uid = 11; // 车主 uid
+  string owner_name = 12; // 车主 name
+  string owner_icon = 13; // 车主 icon
+  uint64 estimate_energy = 14; // 预期本轮停车收益
+  uint32 num_paper_stick = 15; // 本次停车被贴条数
+  uint32 free_parking_duration = 16; // 免罚时间
+  uint32 ticket = 17; // 当前用户对此车是否贴条：0 没有，1 已贴条且成功，2已贴条且失败（被保护了）
+  uint32 estimate_energy_steal = 18; // 预计可获得罚金
+  uint32 num_stick_enable = 19; // 当前用户还可贴条几次
+  uint32 num_protect_enable = 20; // 当前用户还可保护几次
+  ParkingLotCarProtection protection = 21; // 保护人相关信息
+  uint32 total_stick_prevent = 22; // 累计阻止被贴条数
+  uint32 estimate_energy_limit = 23; // 本轮停车收益是否达到上限；1达到上限
+}
+
+// 保护人结构体
+message ParkingLotCarProtection{
+  uint32 protect_uid = 1; // 保护人 uid
+  string protect_name = 2; // 保护人 name
+  string protect_icon = 3; // 保护人icon
+  uint32 times_stick_prevent = 4; // 保护器件内，阻止被贴条数
+  uint32 times_stick_total = 5; // 保护器件可保护贴条总数
+  uint32 protection_duration = 6; // 保护将在什么时间点到期
+}
+
+//保护座驾
+message ParkingProtectBegMessage{
+  option (pb.register_name) = 'room.parking.protect.beg.sync';
+  option (pb.register_id) = 10030;
+
+  uint32 lot = 1;
+  string name = 2; // 座驾名称
+  string image = 3; // 座驾icon
+  uint32 level = 4; // 座驾等级
+  uint32 owner_uid = 5; // 车主 uid
+  string owner_name = 6; // 车主 name
+  string owner_icon = 7; // 车主 icon
+  string message = 8; // msg
+  uint32 vip = 9;
+  uint32 charm = 10;
+  string tip = 11;  // 每天0点重置6次保护机会
+  uint32 limit = 12; // 60s
+  uint32 num_protect_enable = 13; // 当前用户还可保护几次
+  bool vip_gray = 14; ///vip 是否置灰
+}
+
+/*********************** 房间最有价值座驾接口协议 ****************************/
+//车位入口
+message ParkingEntranceBestLot{
+  option (pb.register_name) = 'room.parking.best.lot.sync';
+  option (pb.register_id) = 10031;
+
+  uint32 rid = 1; // 房间ID 占位
+  string icon = 2; // 座驾之星 车主icon
+  string image = 3; // 座驾之星 座驾image
+}
+
+message ApiParkingMVLResponse{
+  bool success = 1;
+  string message = 2;
+  ParkingEntranceBestLot data = 3;
+}
+
+//energy,gold,gift,commodity
+enum UpgradeMaterialType {
+  UPGRADE_MATERIAL_NONE = 0;
+  UPGRADE_MATERIAL_ENERGY = 1;
+  UPGRADE_MATERIAL_MONEY = 2;
+  UPGRADE_MATERIAL_COMMODITY = 3;
+}
+
+//永久坐骑升级消耗
+message UpgradeMaterial {
+  UpgradeMaterialType type = 1;
+  uint32 id = 2;   // type为UPGRADE_MATERIAL_COMMODITY时用
+  uint32 count = 3;
+  string icon = 4;
+}
+
+message PermanentCar {
+  uint32 level = 1;         // 当前等级
+  bool enter_effect = 2;    // 进场特效
+  bool upgrade_reward = 3;  // 升级奖励
+  ParkingGarageCar car = 4; // 车辆信息
+  string preview = 5;       // 预览图
+  string animation = 6;     // 进场动画
+  uint32 animation_size = 7; // 进场动画文件大小
+  uint32 stick_extra_rate = 8; // 贴条额外收益  N%,N>=0
+  uint32 towed_extra_rate = 9; // 被拖走额外收益 N%,N>=0
+  uint32 take_extra_rate = 10; // 主动取车额外收益 N%,N>=0
+}
+
+message ParkingCarPermanent {
+  int32 state = 1;  // 0:未解锁  1:已解锁
+  uint32 unlock_price = 2; // 解锁价格
+  PermanentCar car = 3; // 当前车辆信息
+  repeated UpgradeMaterial materials = 4; //升级的材料
+  PermanentCar next_level_car = 5;   //升级后车辆信息
+  uint32 red_points = 6; // 红点
+}
+
+message ParkingCarPermanents {
+  repeated ParkingCarPermanent permanents = 1;
+  uint32 stick_extra_rate_sum = 2; // 贴条额外收益  N%,N>=0
+  uint32 towed_extra_rate_sum = 3; // 被拖走额外收益 N%,N>=0
+  uint32 take_extra_rate_sum = 4; // 主动取车额外收益 N%,N>=0
+}
+
+/*********************** 永久座驾基本信息和升级配置 ****************************/
+// 查询永久座驾基本信息和升级信息
+message ApiParkingCarPermanentResponse {
+  bool Success = 1;
+  string Message = 2;
+  ParkingCarPermanents data = 3;
+}
+
+message EnergyExchange {
+  uint32 money = 1; // 钻石
+  int64 energy = 2; // 能量值
+}
+
+/*********************** 能量值兑换列表 ****************************/
+// 能量值兑换列表
+message ApiParkingEnergyExchangeList{
+  bool open = 1;
+  string totast = 2;
+  repeated EnergyExchange exchanges = 3;
+}
+
+/*********************** 永久座驾基本信息和升级配置 ****************************/
+message ApiEnergyExchangeListResponse{
+  bool Success = 1;
+  string Message = 2;
+  ApiParkingEnergyExchangeList data = 3;
+}
+
+message UpgardeData {
+  ParkingGarageCar car = 1;
+  CommoditySend lotteryData = 2;
+  string preview = 3;       // 预览图
+  string animation = 4;     // 进场动画
+  uint32 animation_size = 5; // 进场动画文件大小
+}
+
+//物品发放
+message CommoditySend {
+  int32 cid = 1; //物品id
+  int32 num = 2; //发放数量
+  string icon = 3;//图标
+  uint32 price = 4;//价格
+  string name = 5;//名字
+}
+
+/*********************** 永久座驾升级 ****************************/
+// 升级
+message ApiParkingCarUpgradeResponse{
+  bool Success = 1;
+  string Message = 2;
+  int32 Code = 3; // 1:能量值不足
+  UpgardeData data = 4;
+}
+
+
+
+/*********************** 车位操作详情接口协议 ****************************/
+// go/room/parking/log  操作日志
+message ApiParkingLogResponse{
+  bool success = 1;
+  string message = 2;
+  ParkingLogData data = 3;
+}
+
+message ParkingLogData{
+  repeated ParkingLogItem list = 1;
+  bool more = 2;
+}
+
+message ParkingLogItem{
+  ParkingCarOperateRole operator = 1; // 操作人UID
+  ParkingCarOperateRole operated = 2; // 被操作人UID
+  ParkingCarOperateRole protector = 3; // 保护人
+  uint32 operation = 4; // 操作，1:停车（无用），2，主动取车，3，贴条，4，贴条且阻止 5，贴条且拖车，6，保护，7，求保护
+  uint32 dateline = 5; // 时间点
+  uint32 avenge = 6; // 复仇：0，非复仇，>0，复仇
+  ParkingLogCar car = 7; // 座驾名字
+  uint32 energy = 8; // 基础收益/基础罚金
+  uint32 extra_energy = 9; // 额外加成收益/罚金
+  uint32 logId = 10; // 唯一自增ID
+}
+
+message ParkingLogCar{
+  uint32 cid = 1;
+  string name = 2;
+  uint32 level = 3;
+}
+
+message ParkingCarOperateRole{
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+}
+
+/*********************** 车位最新详情接口协议****************************/
+// go/room/parking/profile 红点
+message ApiParkingProfileResponse{
+  bool success = 1;
+  string message = 2;
+  ParkingProfileData data = 3;
+}
+
+message ParkingProfileData {
+  uint32 max_record_id = 1;
+  uint32 unowned_permanent_cid = 2;
+}
+
+/*********************** 车位日常任务接口协议 ****************************/
+// go/room/parking/task 任务
+message ApiParkingDailyTaskResponse{
+  bool success = 1;
+  string message = 2;
+  ParkingDailyTaskData data = 3;
+}
+
+message ParkingDailyTaskData{
+  repeated ParkingDailyTaskItem tasks = 1;
+  repeated ParkingCardItem cards = 2;
+}
+
+message ParkingDailyTaskItem{
+  uint32 taskID = 1; // 任务ID
+  string title = 2; // 任务标题（表述)
+  string award = 3; // 奖励内容
+  uint32 need = 4; // 需要次数
+  uint32 current = 5; // 当前次数
+  uint32 status = 6; // 任务状态 0 ,1 ,2
+}
+
+message ParkingCardItem{
+  uint32 card = 1; // 卡类型 id
+  string name = 2;
+  string url = 3;
+  uint32 num = 4;
+  string desc = 5;
+}
+
+/*********************** 车位榜单类型接口协议 ****************************/
+// go/room/parking/rankType 榜单类型
+message ApiParkingRankTypeResponse{
+  bool success = 1;
+  string message = 2;
+  ParkingRankTypeData data = 3;
+}
+
+message ParkingRankTypeData{
+  repeated ParkingRankTypeItem tabs = 1;
+}
+
+message ParkingRankTypeItem{
+  uint32 type = 1;
+  string desc = 2;
+}
+
+/*********************** 车位榜单接口协议 ****************************/
+// go/room/parking/rank 榜单数据
+message ApiParkingRankResponse{
+  bool success = 1;
+  string message = 2;
+  ParkingRankData data = 3;
+}
+
+message ParkingRankData{
+  bool more = 1;
+  ParkingRankItem my = 2;
+  repeated ParkingRankItem list = 3;
+}
+
+message ParkingRankItem{
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 cid = 4;
+  string commodityName = 5;
+  string commodityImage = 6;
+  uint32 commodityLevel = 7; // 单座驾等级 / 总等级
+  int32 rank = 8;
+}
+
+/*********************** TA的座驾详情接口协议 ****************************/
+// go/room/parking/parkedCar
+message ApiParkingParkedCarResponse {
+  bool success = 1;
+  string message = 2;
+  ParkingParkedCarData data = 3;
+}
+
+message ParkingParkedCarData {
+  ParkingUserInfo user = 1;
+  repeated ParkingGarageCar list = 2;
+}
+
+message ParkingUserInfo {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 follow = 4;
+}
+
+/*********************** 车位专用座驾检查 ****************************/
+// go/room/parking/awardCheck
+message ApiParkingAwardCheckResponse{
+  bool success = 1;
+  string message = 2;
+  ParkingAwardCheckData data = 3;
+}
+
+message ParkingAwardCheckData{
+  ParkingAwardItem car = 1;
+}
+
+message ParkingAwardItem{
+  uint32 cid = 1;
+  uint32 UCid = 2;
+  uint32 num = 3;
+  string name = 4;
+  string image = 5;
+  string annotation = 6;
+}
+
+/*********************** 永久座驾预览 ****************************/
+// go/room/parking/permanentPreview
+message ApiParkingPermanentPreviewResponse{
+  bool success = 1;
+  string message = 2;
+  ParkingPermanentPreviewData data = 3;
+}
+
+message ParkingPermanentPreviewData{
+  uint32 cid = 1;
+  uint32 level = 2;
+  repeated ParkingPermanentPreviewLevel levels = 3;
+}
+
+message ParkingPermanentPreviewLevel{
+  uint32 level = 1; // 级别
+  string name = 2; // 座驾名
+  string image = 3; // 座驾图
+  bool hasAward = 4; // 是否有省级奖励
+  bool hasEffect = 5; // 是否有进场特效
+  uint32 epm = 6; // 每分钟基础收益
+  uint32 free_parking_duration = 7; // 免罚时长
+  uint32 stick_extra_rate = 8; // 贴条额外收益  N%,N>=0
+  uint32 towed_extra_rate = 9; // 被拖走额外收益 N%,N>=0
+  uint32 take_extra_rate = 10; // 主动取车额外收益 N%,N>=0
+  string animation = 11; // 进场动效
+  uint32 animation_size = 12; // 进场动效资源size
+  uint32 dynamic_icon = 13; // 动态Icon
+}
+
+/*********************** Do ****************************/
+// go/room/parking/do
+message ApiParkingDoResponse{
+  bool success = 1;
+  string message = 2;
+  ParkingDoData data =3;
+}
+
+message ParkingDoData{
+  uint32 lot = 1;
+  ParkingCardItem card = 2;
+}

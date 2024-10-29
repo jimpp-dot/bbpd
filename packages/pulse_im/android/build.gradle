@@ -1,0 +1,49 @@
+group 'ly.plugins.pulse_im'
+version '1.0'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.0'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 33
+
+    defaultConfig {
+        minSdkVersion 21
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    sourceSets{
+        main{
+            res.srcDirs = ['res']
+        }
+    }
+}
+
+
+dependencies {
+//    compileOnly files('libs/flutter.jar')
+//    compileOnly files('libs/classes.jar')
+}

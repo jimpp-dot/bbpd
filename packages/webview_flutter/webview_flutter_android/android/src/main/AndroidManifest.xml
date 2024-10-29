@@ -1,0 +1,11 @@
+<manifest package="io.flutter.plugins.webviewflutter"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application>
+        <activity
+            android:name="io.flutter.plugins.webviewflutter.FileChooseActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+    </application>
+
+</manifest>

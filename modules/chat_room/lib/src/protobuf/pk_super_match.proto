@@ -1,0 +1,96 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+// PK超级联赛
+
+message ApiPkPendantInfoResponse {
+  bool success = 1;
+  string message = 2;
+  PkPendantInfoData data = 3;
+}
+
+message PkCycleInfoData {
+  uint32 rid1 = 1;
+  uint32 rid2 = 2;
+  string rid1_score = 3;
+  string rid2_score = 4;
+  uint32 left_time = 5;
+  uint32 is_hunter = 6;
+  string schema_url = 7;
+  uint32 end_time = 8;
+}
+
+message PkMessageData {
+  string msg = 1;
+  string schema_text = 2;
+  string schema_url = 3;
+}
+
+message PkRankInfoData {
+  string title = 1;
+  uint32 rank = 2;
+  string desc = 3;
+  string score = 4;
+  uint32 is_hunter = 5;
+  string schema_url = 6;
+}
+
+//挂件
+message PkPendantInfoData {
+  option (pb.register_name) = 'pk.super.match_pendant';
+  option (pb.register_id) = 60001;
+  int32 type = 1; //1:循环赛 2:
+  PkCycleInfoData cycle_data = 2;
+  PkMessageData message_data = 3;
+  PkRankInfoData rank_data = 4;
+  PkFinalInfoData final_data = 5;
+  int32 show_final_data = 6;
+}
+
+message PkResultInfoData {
+  option (pb.register_name) = 'pk.super.match_result';
+  option (pb.register_id) = 60002;
+  int32 type = 1;
+  PkCycleResultData cycle_result = 2;
+  PkFinalResultData final_result = 3;
+}
+
+message PkCycleResultData {
+  PkResultData result1 = 1;
+  PkResultData result2 = 2;
+  uint32 win_rid = 3;
+}
+
+message PkFinalResultData {
+  string level_name = 1;
+  repeated PkResultData finals = 2;
+}
+
+message PkResultData {
+  uint32 rid = 1;
+  string name = 2;
+  string icon = 3;
+  string score = 4;
+}
+
+message PkFinalInfoData {
+  uint32 end_time = 1;
+  repeated PendantData pks = 2;
+  string schema_url = 3;
+  bool is_hunter = 4;
+  string desc = 5;
+}
+
+message PendantData {
+  uint32 rid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 score = 4;
+  string score_msg = 5;
+}

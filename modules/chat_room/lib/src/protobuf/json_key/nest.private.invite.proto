@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package nest.private.invite;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message NestPrivateInvite {
+  option (pb.register_name) = 'nest.private.invite';
+  option (pb.register_id) = 115;
+  string rid = 1;
+  string password = 2;
+  string gs = 3;
+  uint32 boss = 4;
+}

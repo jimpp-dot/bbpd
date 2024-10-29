@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <title>bbpd_ic_titlebar_close_w_right</title>
+  <path fill="#FFF" fill-rule="nonzero" d="M22.071 4.929a2 2 0 0 1 0 2.828L17.828 12l4.243 4.243a2 2 0 1 1-2.828 2.828L15 14.828l-4.243 4.243a2 2 0 1 1-2.828-2.828l4.243-4.244L7.93 7.757a2 2 0 1 1 2.828-2.828l4.244 4.242 4.242-4.242a2 2 0 0 1 2.828 0z" opacity=".6"/>
+</svg>

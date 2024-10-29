@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">快乐星球</string>
+    <string name="room_owner_desc">%1$s的房间</string>
+
+    <string name="notification_channel_name_room_control">进厅通知</string>
+    <string name="notification_channel_description_room_control">在厅中的常驻通知</string>
+
+    <string name="notification_channel_name_chat_msg">聊天通知</string>
+    <string name="notification_channel_description_chat_msg">新消息通知</string>
+</resources>

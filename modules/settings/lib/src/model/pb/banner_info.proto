@@ -1,0 +1,66 @@
+syntax = "proto3";
+package pb;
+
+/*
+充值礼包相关proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message SettingChargeGiftResp {
+  bool success = 1;
+  int32 code = 2;
+  string msg = 3;
+  SettingChargeGiftDetail chargeGiftDetail = 4;
+  SettingBannerDetail bannerDetail = 5;
+}
+
+//首冲礼包奖励物品信息
+message SettingFormatCommodity {
+  uint32 app_id = 1;
+  uint32 cid = 2;
+  uint32 group_id = 3;
+  string name = 4;
+  string sub_type = 5;
+  uint32 price = 6;
+  string money_type = 7;
+  string type = 8;
+  string desc = 9;
+  string avatar = 10;
+  string image = 11;
+  string image_bg = 12;
+  uint32 is_limited = 13;
+  uint32 num = 14;
+  string corner_icon = 15;
+  string corner_type = 16;
+  string corner_desc = 17;
+  string bubble_desc = 18;
+  string bubble_front_color = 19;
+  uint32 return_num = 20;
+  string filter_tab_name = 21;
+}
+
+// 首冲礼包信息
+message SettingChargeGiftItem {
+  string name = 1;
+  uint32 recharge = 2;
+  repeated SettingFormatCommodity gifts = 3;
+  bool send = 4;
+  uint32 more_pay = 5;
+  uint32 pay = 6;
+}
+
+message SettingChargeGiftDetail {
+  repeated SettingChargeGiftItem packages = 1;
+  uint32 left_seconds = 2;
+  string introduction = 3;
+}
+
+// 充值页面banner图信息
+message SettingBannerDetail {
+  bool finished = 1; // 已结束
+  string img = 2;
+  string scheme = 3;
+}

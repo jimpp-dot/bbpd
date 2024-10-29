@@ -1,0 +1,94 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ResGodCardCategory{
+	bool success = 1;
+	string msg = 2;
+	repeated GodCardCategory god_category = 3;
+}
+
+message GodCardCategory {
+	string title = 1; //游戏总分类名称  手游/端游
+	repeated GodCardCategoryItem list = 4; //游戏分类列表
+}
+
+message GodCardCategoryItem {
+	uint32 id = 1; //游戏分类ID
+	string name = 2; //游戏名称
+	string icon = 3; //游戏icon
+}
+
+message ResGodCardCategoryDetail{
+	bool success = 1;
+	string msg = 2;
+	uint32 id = 3; //游戏分类ID
+	repeated GodCardCategoryDetail god_category = 4; //需要填写信息列表
+}
+
+message GodCardCategoryDetail {
+	uint32 type = 1; //选择类型 0用户选择 1填写
+	string name = 2; //属性名称
+	repeated  GodCardSubCate sub_cate = 3; //可供选择的分类
+	uint32  id = 4;//子属性id
+	string value = 5;//子属性值
+}
+
+message GodCardSubCate {
+	string name = 1;//子属性名称
+}
+
+message ResGodCardList {
+	bool success = 1;
+	string msg = 2;
+	repeated GodCardList list = 4; //用户主播卡列表
+}
+
+message GodCardList {
+	uint32 id = 1;      //游戏分类ID
+	uint32 uid = 2;     //用户ID
+	string name = 3;    //游戏名称
+	string icon = 4;    //游戏icon
+	string game_id = 5; //用户游戏昵称
+	repeated GodCardCategoryDetail game_sub_cate = 6; //子属性
+	string card_bg = 7; //卡片背景
+}
+
+message ResRecommendGodList {
+	bool success = 1;
+	string msg = 2;
+	repeated RecommendGodList list = 4; //推荐主播信息
+}
+
+message RecommendGodList {
+	uint32 uid = 1; //用户ID
+	string name = 2;//用户昵称
+	string icon = 3; //用户icon
+	string level = 4; //用户评级 例如S+
+	uint32 online_status = 5;//是否在线 0在线 1不在线
+	string tag_icon = 6; //tag icon
+	uint32 sex = 7; //1男 2女
+	uint32 age = 8; //年龄
+	uint32 rid = 9; //房间ID
+}
+
+message ResGodLevelProgress {
+	bool success = 1;
+	string msg = 2;
+	GodLevelProgressData data = 3;
+}
+
+message GodLevelProgressData {
+    string level = 1;               //主播评级
+    uint32 gift_num = 2;            //当前下单礼物数
+    uint32 upgrade_gift_num = 3;    //升级所需的礼物数
+    uint32 money = 4;               //当前流水(钻)
+    uint32 upgrade_money = 5;       //升级所需的流水
+    uint32 mac_time = 6;            //当前麦时(分钟)
+    uint32 upgrade_mac_time = 7;    //升级所需的麦时
+    uint32 boss_num = 8;            //当前服务boss数
+    uint32 upgrade_boss_num = 9;    //升级所需的服务boss数
+}

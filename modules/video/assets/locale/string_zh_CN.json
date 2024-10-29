@@ -1,0 +1,13 @@
+{
+  "video_error_retry": "出错了，请重试！",
+  "video_face_value": "颜值",
+  "video_refresh_failed": "刷新失败!",
+  "video_refresh_completed": "刷新完成!",
+  "video_release_refresh": "释放可以刷新",
+  "video_down_to_refresh": "下拉刷新哦!",
+  "video_refreshing": "正在刷新...",
+  "video_hot_loading": "火热加载中...",
+  "video_up_to_load": "上拉加载",
+  "video_network_exception": "网络异常",
+  "video_no_more_data": "没有更多数据"
+}

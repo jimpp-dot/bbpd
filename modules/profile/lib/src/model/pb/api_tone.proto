@@ -1,0 +1,67 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+message ResToneGroupList {
+	bool success = 1;               //成功true，失败false
+	string msg = 2;                 //失败message
+	ToneGroupListData data = 3;       //返回数据
+}
+
+message ToneGroupListData  {
+	repeated ToneGroup male=1;//男
+	repeated ToneGroup female=2;//女
+	uint32 default_sex=3;//1:男；2：女
+	ToneAudio using_audio = 4;       //返回数据
+}
+
+//启动音的系列信息pb
+message ToneGroup{
+	uint32 group_id=1;
+	ToneGroupTag t_tag=2;
+	string image_url=3;
+	string name=4;
+	string desc=5;
+	uint32 sex=6;
+	uint32 sort=7;
+}
+
+message ToneGroupTag{
+	string t_tag=1;
+	repeated string color=2;
+}
+
+
+message ResToneAudioList {
+	bool success = 1;               //成功true，失败false
+	string msg = 2;                 //失败message
+	bool more = 3;                 //false:无
+	ToneAudioListData data = 4;       //返回数据
+}
+
+message ToneAudioListData {
+	repeated ToneAudio audios = 1;       //返回数据
+}
+
+
+// 启动音的音频信息
+message ToneAudio {
+	uint32 id = 1;
+	uint32 uid = 2;//用户头像
+	string icon = 3;//用户头像
+	string nickname = 4;//用户昵称
+	string hot_word = 5;//音频热词
+	uint32 audio_duration = 6;//音频时长，单位秒
+	string url = 7;//音频地址
+	bool is_use = 8;//
+	uint32 group_id = 9;//
+}
+
+
+message ResToneChange{
+	bool success = 1;               //成功true，失败false
+	string msg = 2;                 //失败message
+}
+
+

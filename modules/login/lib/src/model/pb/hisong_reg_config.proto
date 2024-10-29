@@ -1,0 +1,27 @@
+syntax = "proto3";
+package pb;
+/*
+account 相关proto
+*/
+
+option go_package = "../app/pb/api/account;apiAccount";
+
+message ResHiSongRegConfig {
+  bool success = 1;
+  string msg = 2;
+  HiSongRegConfig data = 3;
+}
+
+message HiSongRegConfig {
+  string male_default_icon = 1;                     //默认男生头像
+  string female_default_icon = 2;                   //默认女生头像
+  uint32 default_sex = 3;                           //默认性别
+  string third_name = 4;                            //第三方昵称
+  string third_icon = 5;                            //第三方头像
+  uint32 third_sex = 6;                             //第三方性别
+  repeated string male_rand_prefix = 7;             //男生随机昵称前缀
+  repeated string male_rand_name = 8;               //男生随机昵称
+  repeated string female_rand_prefix = 9;           //女生随机昵称前缀
+  repeated string female_rand_name = 10;            //女生随机昵称
+  uint32 new_home = 11;                             //是否展示新首页
+}

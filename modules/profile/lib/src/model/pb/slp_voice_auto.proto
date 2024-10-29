@@ -1,0 +1,25 @@
+syntax = "proto3";
+package pb;
+/*
+音色认证proto
+*/
+
+option go_package = "../app/pb";
+
+message ResVoiceVerifyHome {
+  bool success = 1;                     //成功true，失败false
+  string msg = 2;                       //失败message
+  VoiceVerifyHomeData data = 3;         //返回数据
+}
+
+message VoiceVerifyHomeData {
+  repeated VoiceVerifyItem list = 1;     //音色认证列表
+}
+
+message VoiceVerifyItem {
+  uint32 tag_id = 1;                    //音色标签id
+  string name = 2;                      //音色标签名称
+  string color = 3;                     //申请文字颜色
+  string image = 4;                     //音色标签图片
+  uint32 verify = 5;                    //认证状态，0-待认证，1-审核中，2-已认证
+}

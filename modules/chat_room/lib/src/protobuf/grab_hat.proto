@@ -1,0 +1,61 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "grab_hat_rank.proto";
+
+// /go/slp/hat/index
+message ResHatIndex {
+  bool       success = 1;
+  string     message = 2;
+  HatIndexData data    = 3;
+}
+
+message HatIndexData {
+    repeated HatSeries hat = 1;
+    repeated uint32 count_time = 2;
+    uint32 state = 3; // 状态， 0：未开始/已结束,  1: 进行中
+    HatPlayingData play_data = 4;
+}
+
+message HatSeries {
+    uint32 id = 1;
+    string series_image = 2;
+    string hat_image = 3;
+    uint32 level = 4;
+    string level_txt = 5;
+}
+
+message HatPlayingData {
+    uint32 total_seconds = 1;  // 总时间
+    uint32 remain_seconds = 2; // 剩余秒
+    repeated HatMvpData data = 3;
+}
+
+message HatMvpData {
+    uint32 uid = 1;
+    string icon = 2;
+    string name = 3;
+    string num = 4;
+}
+
+// /go/slp/grab_hat/random
+message ResHatRandom {
+    bool       success = 1;
+    string     message = 2;
+    HatRandomData data    = 3;
+}
+
+message HatRandomData {
+    repeated HatSeries hat = 1;
+}
+
+// /go/slp/hat/merge
+message ResHatMerge {
+  bool       success = 1;
+  string     message = 2;
+  HatActivityRewardCommodity data    = 3;
+}

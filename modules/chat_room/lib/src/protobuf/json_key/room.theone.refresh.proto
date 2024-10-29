@@ -1,0 +1,33 @@
+syntax = "proto3";
+    
+package room.theone.refresh;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+
+message RoomTheoneRefresh {
+    option (pb.register_name) = 'room.theone.refresh';
+    option (pb.register_id) = 89;
+    repeated Adore adore = 1;
+    uint32 hand_num = 2;
+    uint32 honeymoon = 3;
+    uint32 inflexion = 4;
+    repeated uint32 like = 5;
+    string like_icon = 6;
+    repeated uint32 love = 7;
+    string love_icon = 8;
+    string mys_icon = 9;
+    string mysm_icon = 10;
+    uint32 mystery = 11;
+    string reveal_effect = 12;
+    string stage = 13;
+    uint32 toplight = 14;
+
+    message Adore {
+        uint32 uid = 1;
+        uint32 value = 2;
+    }
+}

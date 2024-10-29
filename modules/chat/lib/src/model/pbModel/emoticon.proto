@@ -1,0 +1,27 @@
+syntax = "proto3";
+package pb;
+/*
+闪萌表情包proto
+*/
+
+option go_package = "../../app/pb";
+
+message ResEmoticonSearch {
+  bool success = 1;
+  string msg = 2;
+  EmoticonSearchData data = 3;
+}
+
+message EmoticonSearchData {
+  bool user_default = 1;
+  int32 expire_sec = 2;
+  repeated EmoticonSearchListItem list = 3;
+}
+
+message EmoticonSearchListItem {
+  string gif = 1;
+  int32 width = 2;
+  int32 height = 3;
+  string id = 4;
+  string webp = 5;
+}

@@ -1,0 +1,20 @@
+syntax = "proto3";
+    
+package party.privity.refresh;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message PartyPrivityRefresh {
+    option (pb.register_name) = 'party.privity.refresh';
+    option (pb.register_id) = 50;
+    Privity privity = 1;
+
+    message Privity {
+        string state = 1;
+        repeated uint32 player = 2;
+    }
+
+}

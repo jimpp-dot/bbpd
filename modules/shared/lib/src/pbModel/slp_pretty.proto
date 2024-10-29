@@ -1,0 +1,47 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../../app/pb";
+
+message PrettySellItem{
+  uint32 id = 1;          //靓号index
+  uint32  pretty_id = 2;  //靓号ID
+  uint32 price = 3;      //钻石数量
+}
+
+message PrettySellMeInfo{
+  uint32 uid =1;         //用户id
+  string name  = 2;      //昵称
+  string icon = 3;      //头像
+  //repeated HomeProfileDefend defend_list = 4;          //守护信息
+}
+
+message PrettySellList{
+    PrettySellMeInfo meInfo = 1;    //自己信息
+   repeated PrettySellItem prettyInfo = 2; //售卖靓号信息
+   string notice_text  = 3;  //说明
+}
+
+//售卖列表
+message ResPrettySellList{
+  bool success = 1;
+  string message = 2;
+  PrettySellList data = 3;
+}
+
+//我的靓号列表
+message ResMyPrettyIdList {
+  bool success = 1;               //成功true，失败false
+  string msg = 2;                 //失败message
+  repeated PrettyIdInfo data = 3;       //返回数据
+}
+
+message PrettyIdInfo  {
+  uint32 pretty_id = 1; //靓号id
+  uint32 start_time = 2; //发放时间
+  uint32 end_time = 3; //结束时间
+  bool is_use = 4; //当前正在使用靓号，1是，0否
+  uint32 type = 5; //靓号类型，购买/发放
+  string desc = 6; //描述
+  uint32 period = 7; //有效期，单位秒
+}

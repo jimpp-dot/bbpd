@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package mate.barrage;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+/// 弹幕
+message BarrageColor{
+  string desc = 1;
+  repeated string color = 2;
+}
+
+message BarrageEffect{
+  string desc = 1;
+  string background =2;
+}
+
+message BarrageData{
+  option (pb.register_name) = 'mate.barrage';
+  option (pb.register_id) = 20003;
+
+  uint32 type = 1; //1,2,3分别代表普通弹幕、高级弹幕、炫彩弹幕
+  string name = 2;
+  string icon = 3;
+  uint32 value =4; //价值钻
+  string default_color_desc = 5;
+  string default_effect_desc = 6;
+  string msg = 7;
+  uint32 max_length = 8;
+  uint32 cycle_times = 9; //循环次数
+  repeated BarrageColor barrage_color = 10;
+  repeated BarrageEffect barrage_effect = 11;
+  string user_icon = 12;
+}
+
+message BarrageRes{
+  bool success = 1;
+  string msg = 2;
+  repeated BarrageData data = 3;
+}

@@ -1,0 +1,98 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+message ResKtvChorusConfig {
+  bool success = 1;
+  string msg = 2;
+  KtvChorusConfigData data = 3;
+}
+
+message KtvChorusConfig {
+  option (pb.register_name) = 'ktv.chorus.config';
+  option (pb.register_id) = 10035;  
+  uint32 rid = 1;
+  KtvChorusConfigData ktv_chorus_info = 2;
+}
+
+message KtvChorusConfigData {
+  uint32 prop_show_time = 1;
+  uint32 prop_use_time = 2;
+  uint32 list_count = 3;
+  string pid = 4;
+  string appkey = 5;
+  KtvChorusConfigDataCurrentSong current_song = 6;
+  repeated string song_list = 7;
+  repeated KtvChorusConfigDataChorusUser chorus_user = 8;
+  KtvChorusConfigDataSongDetail song_detail = 9;
+  repeated OffMicList off_mic_list = 10;
+  string agora_sub_channel_token = 11;
+
+  message OffMicList {
+    uint32 uid = 1;
+    string name = 2;
+    string icon = 3;
+    string frame = 4;
+}
+}
+
+message KtvChorusConfigDataCurrentSong {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  string brc = 4;
+  uint32 back_track = 5;
+  uint32 play_time = 6;
+  uint32 brc_progress = 7;
+  string singer_name = 8;
+  uint32 sid = 9;
+  string sname = 10;
+  string status = 11;
+  uint64 count_down = 12;
+  string platform = 13;
+  string platform_song_id = 14;
+  string platform_rank_id = 15;
+  uint32 need_report = 16;
+  uint32 week_musical_notes = 17;
+  string rtc_stream_id = 18;
+  uint32 chorus_switch = 19;
+  string music_id = 20;
+  string pitch_line = 21;
+}
+
+message KtvChorusConfigDataChorusUser {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 week_musical_notes = 4;
+  string rtc_stream_id = 5;
+}
+
+message KtvChorusConfigDataSongDetail {
+  uint32 id = 1;
+  string name = 2;
+  string photo = 3;
+  string original_mp3 = 4;
+  uint32 size = 5;
+  string hq_music = 6;
+  uint32 hq_size = 7;
+  uint32 hq_status = 8;
+  uint32 singer_id = 9;
+  string singer_name = 10;
+  string uploader_uid = 11;
+  string uploader_name = 12;
+  string uploader_photo = 13;
+  string brc = 14;
+  uint32 choosed = 15;
+  bool show_accuse = 16;
+  int32 status = 17;
+  string status_description = 18;
+  string platform = 19;
+  uint32 playtime = 20;
+  string platform_song_id = 21;
+}

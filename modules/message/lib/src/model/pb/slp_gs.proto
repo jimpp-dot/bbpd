@@ -1,0 +1,129 @@
+syntax = "proto3";
+package pb;
+
+/*
+ /mate/gs系列接口的结果定义
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 pb 目录下
+option go_package = "../../app/pb";
+
+message GsAutoChatStrategy {
+    uint32 strategy_id = 1;
+    uint32 state = 2; //状态，0表示审核中，1表示审核通过，2表示审核失败
+    uint32 grade = 3; //评级，0表示暂无评级，1表示S，2表示A，依次类推
+    string open_rate = 4; //打开率，如90%，空表示暂无数据
+    string reply_rate = 5; //回复率，如90%，空表示暂无数据
+    string answer_rate = 6; //相应率
+    repeated uint32 msg_type_list = 7; //消息类型列表
+    string name = 8;
+}
+
+message GsAutoChatData {
+    uint32 chat_num_today = 1; //今天搭讪并且没有回复的
+    repeated GsAutoChatStrategy strategies = 2;  //搭讪策略
+    uint32 selected_strategy_id = 3;
+}
+
+message ResGsAutoChat {
+    bool success = 1;                    //成功true，失败false
+    string msg = 2;                      //失败message
+    GsAutoChatData data = 3;         //返回数据
+}
+
+message GsChatMsg {
+    uint32 msg_id = 1;
+    uint32 type = 2;
+    string content = 3;
+    uint32 state = 4; //状态，0表示审核中，1表示审核通过，2表示审核失败
+}
+
+message GsChatMsgListData {
+    string strategy_name = 1;
+    repeated GsChatMsg msg_list = 2;
+    uint32 nearest = 3; // 同城推荐 0｜1
+}
+
+message ResGsChatMsgList {
+    bool success = 1;                    //成功true，失败false
+    string msg = 2;                      //失败message
+    GsChatMsgListData data = 3;
+}
+
+message CacheUint32List {
+    repeated uint32 id_lst = 1;
+    int64 last_changed = 2;
+}
+
+message CacheInt32List {
+    repeated int32 id_lst = 1;
+    int64 last_changed = 2;
+}
+
+message ResGsNull {
+    bool success = 1;                    //成功true，失败false
+    string msg = 2;                      //失败message
+}
+
+message FriendMsgGroupData {
+    repeated uint32 gs_list = 1;
+    repeated uint32 boss_list = 2;
+}
+
+message ResFriendMsgGroup {
+    bool success = 1;                    //成功true，失败false
+    string msg = 2;                      //失败message
+    FriendMsgGroupData data = 3;         //返回数据
+}
+
+message StrategyCategory {
+    uint32 categoryId = 1; //分类ID
+    string categoryName = 2; //分类名称
+}
+
+message ResAutoChatCategory {
+    bool success = 1;                    //成功true，失败false
+    string msg = 2;                      //失败message
+    repeated StrategyCategory list = 3;  //所有分类列表
+    string help = 4;   //帮助文档h5地址
+    uint32 cdLeftSecond = 5; //CD剩余时间,0 代表没有CD
+}
+
+message ResAccostSampleList{
+    bool success = 1;
+    string msg = 2;
+    repeated string data = 3;
+}
+
+message AccostPermissionHelpItem{
+    string title = 1;
+    string annotation = 2;
+}
+
+message ResAccostGsPermissions{
+    bool success = 1;
+    string msg = 2;
+    repeated AccostPermissionHelpItem data = 3;
+}
+
+message ResAccostGsRank{
+    bool success = 1;
+    string msg = 2;
+    AccostGsRankData data = 3;
+}
+
+message AccostGsRankData{
+    repeated AccostGsRankItem list = 1;
+    bool has_more = 2;
+    int32 next_id = 3;
+    AccostGsRankItem me = 4;
+}
+
+message AccostGsRankItem{
+    uint32 uid = 1;
+    string icon = 2;
+    string name = 3;
+    double score = 4;
+    uint32 rank = 5;
+}

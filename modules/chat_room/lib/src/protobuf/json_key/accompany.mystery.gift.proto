@@ -1,0 +1,16 @@
+syntax = "proto3";
+    
+package accompany.mystery.gift;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message AccompanyMysteryGift {
+    option (pb.register_name) = 'accompany.mystery.gift';
+    option (pb.register_id) = 1;
+    string name = 1;
+    uint32 num = 2;
+    string pic_url = 3;
+    string title = 4;
+}

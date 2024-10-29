@@ -1,0 +1,44 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message PluginItem {
+  string type = 1;
+  bool show_plugin = 2;
+  bool in_use = 3;
+  string url = 4;
+}
+
+message PluginConfig {
+  repeated PluginItem plugins = 1;
+  repeated DynamicPluginItem dynamicPlugins = 2;
+}
+
+message ResRoomPluginList {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  PluginConfig data = 3;
+}
+
+message ResPluginConfig {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  string data = 3;
+}
+
+message ResPluginOperate {
+  bool success = 1;  //返回给客户端的必须有
+  string msg = 2;   //返回给客户端的必须有
+}
+
+message DynamicPluginItem {
+  uint32 id = 1;
+  uint32 position = 2; // 1-互动玩法、2-房间工具、3-其他
+  string name = 3;
+  string icon = 4;
+  string jump = 5;
+  uint32 seq = 6; // 服务端字段
+}

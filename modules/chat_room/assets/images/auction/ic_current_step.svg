@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="20px" viewBox="0 0 60 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <linearGradient x1="0%" y1="50%" x2="100%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#00DBDE" offset="0%"></stop>
+            <stop stop-color="#FC00FF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="50%" x2="100%" y2="50%" id="linearGradient-2">
+            <stop stop-color="#00DBDE" offset="0%"></stop>
+            <stop stop-color="#FC00FF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="初稿" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="拍卖房-竞拍设置" transform="translate(-80.000000, -137.000000)">
+            <g id="进行中模块背景" transform="translate(80.000000, 137.000000)">
+                <path d="M10,2 L50,2 C54.418278,2 58,5.581722 58,10 C58,14.418278 54.418278,18 50,18 L10,18 C5.581722,18 2,14.418278 2,10 C2,5.581722 5.581722,2 10,2 Z" id="矩形" fill="url(#linearGradient-1)"></path>
+                <path d="M50,0 C55.5228475,0 60,4.4771525 60,10 C60,15.5228475 55.5228475,20 50,20 L50,20 L10,20 C4.4771525,20 0,15.5228475 0,10 C0,4.4771525 4.4771525,0 10,0 L10,0 Z M50,1 L10,1 C5.02943725,1 1,5.02943725 1,10 C1,14.9705627 5.02943725,19 10,19 L50,19 C54.9705627,19 59,14.9705627 59,10 C59,5.02943725 54.9705627,1 50,1 Z" id="形状结合" fill="url(#linearGradient-2)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

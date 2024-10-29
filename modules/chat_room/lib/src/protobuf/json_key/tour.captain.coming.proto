@@ -1,0 +1,30 @@
+syntax = "proto3";
+    
+package tour.captain.coming;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message TourCaptainComing {
+    option (pb.register_name) = 'tour.captain.coming';
+    option (pb.register_id) = 104;
+    Captain captain = 1;
+    uint32 captain_rid = 4;
+    Group group = 5;
+
+    message Captain {
+        string icon = 1;
+        string sex = 2;
+        uint32 vip = 3;
+        string uid = 4;
+        string name = 5;
+    }
+
+    message Group {
+        string quiet = 1;
+        string id = 2;
+        string name = 3;
+        string type = 4;
+    }
+}

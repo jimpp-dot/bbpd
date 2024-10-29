@@ -1,0 +1,49 @@
+syntax = "proto3";
+package pb;
+
+
+message BaseBannerItem{
+  uint32 id = 1;
+  string image = 2;
+  uint32 width = 3;
+  uint32 height = 4;
+  uint32 duration = 5;
+  string url = 6;
+  string title = 7;
+  string position = 8;
+  string data = 9;
+  string type = 10;
+  BaseBannerOptionData opt = 11;
+}
+
+message BaseBannerOptionData {
+  bool show_close = 1;
+}
+
+message ResBannerCenter{
+  bool success = 1;
+  string msg = 2;
+  BannerCenterData data = 3;
+}
+
+message BannerCenterData {
+  repeated BannerCenterTab tabs = 1;
+  BaseBannerOptionData opt = 2;
+}
+
+message BannerCenterTab {
+  string name = 1;   // 活动中心tab名称
+  int32 show_type = 2;    // 样式 1:横排 2:铺满
+  repeated BaseBannerItem items = 3; // banner内容
+}
+
+message ResRechargeBanner{
+  bool success = 1;
+  string msg = 2;
+  repeated RechargeBanner data = 3;
+}
+
+message RechargeBanner{
+  string banner_url = 1;
+  string jump_to = 2;
+}

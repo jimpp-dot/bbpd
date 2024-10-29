@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package pb;
+
+message ResBrokerShopIndex{
+  bool success = 1;
+  string msg = 2;
+  BrokerShopIndexData data = 3;
+}
+
+message BrokerShopIndexData{
+  uint32 score = 1;
+  repeated BrokerShopTabItem tab = 2;
+}
+
+message BrokerShopTabItem {
+  string type = 1;
+  string name = 2;
+}
+
+message ResScoreHistory {
+  bool success = 1;
+  string msg = 2;
+  repeated ScoreHistoryItem data = 3;
+}
+
+message ScoreHistoryItem {
+  int32 type = 1; //1收入，2消费
+  string subject = 2; //描述
+  int32 value = 3;
+  int64 timestamp = 4;
+}

@@ -1,0 +1,26 @@
+syntax = "proto3";
+package pb;
+
+/*
+ /mate/gs系列接口的结果定义
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 pb 目录下
+option go_package = "../../app/pb";
+
+// go/slp/cloud/tips
+message ResImCloudTips {
+  bool success = 1;
+  string msg = 2;
+  ImCloudTipsData data = 3;
+}
+
+message ImCloudTipsData {
+  ImCloudSmartGreet smart_greet = 1;
+  bool show_fate = 2;
+}
+
+message ImCloudSmartGreet {
+  bool show_pop = 1;      //是否展示弹窗
+}

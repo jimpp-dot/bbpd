@@ -1,0 +1,381 @@
+syntax = "proto3";
+package pb.room.cross.pk;
+
+import "punish.proto";
+import "json_key/broadcast_extension.proto";
+
+option go_package = "../app/pb";
+
+enum RoomCrossPKMode {
+  ROOM_CROSS_PK_MODE_UNKNOWN = 0;
+  ROOM_CROSS_PK_MODE_2 = 1; // 匹配赛
+  ROOM_CROSS_PK_MODE_3 = 2;
+  ROOM_CROSS_PK_MODE_TOWER = 3;
+  ROOM_CROSS_PK_MODE_QUALIFY = 4; // 排位赛
+}
+
+/**
+ * ROOM_CROSS_PK_STATUS_UNKOWN = 0; 未知的匹配状态
+ * ROOM_CROSS_PK_STATUS_MATCH=1;匹配状态
+ * ROOM_CROSS_PK_STATUS_PKING = 2;PK中
+ * ROOM_CROSS_PK_STATUS_ENDING = 3;惩罚中/结束中
+ * ROOM_CROSS_PK_STATUS_CLOSED = 4;已经结束，也许用不到
+ */
+enum RoomCrossPKStatus{
+  ROOM_CROSS_PK_STATUS_UNKONWN = 0;
+  ROOM_CROSS_PK_STATUS_LIVING = 1;
+  ROOM_CROSS_PK_STATUS_MATCH = 2;
+  ROOM_CROSS_PK_STATUS_PKING = 3;
+  ROOM_CROSS_PK_STATUS_ENDING = 4;
+  ROOM_CROSS_PK_STATUS_CLOSED = 5;
+}
+
+/**
+ * ROOM_CROSS_PK_WIN_UNKNOWN = 0;//未知的胜负关系
+ * ROOM_CROSS_PK_WIN_NORMAL = 1;//正常胜负局
+ * ROOM_CROSS_PK_WIN_DRAW = 3;//平局
+ */
+enum RoomCrossPkWin{
+  ROOM_CROSS_PK_WIN_UNKNOWN = 0;
+  ROOM_CROSS_PK_WIN_NORMAL = 1;
+  ROOM_CROSS_PK_WIN_DRAW = 3;
+}
+
+enum RoomCrossPkInviteMode{
+    UNKNOWN_MODE = 0;
+    INVITE_MODE = 1;
+    MATCH_MODE = 2;
+}
+
+/**
+ * UNKNOWN_CHANNEL = 0; 未知渠道
+ * SEARCH_LIST_CHANNEL = 1;从搜索列表中发起
+ * ANCHOR_LIST_CHANNEL = 2;从主播列表中发起
+ * MATCH_POOL_CHANNEL = 3;从匹配池中发起
+ */
+enum RoomCrossPkChannel{
+  UNKNOWN_CHANNEL = 0;
+  SEARCH_LIST_CHANNEL = 1;
+  ANCHOR_LIST_CHANNEL = 2;
+  MATCH_POOL_CHANNEL = 3;
+}
+
+/**
+ *
+ */
+enum RoomCrossAnchorState{
+  ROOM_CROSS_PK_ANCHOR_UNLIVING = 0;
+  ROOM_CROSS_PK_ANCHOR_LIVING = 1;
+  ROOM_CROSS_PK_ANCHOR_PKING = 2;
+}
+
+/**
+ * 房间PK设置消息结构体
+ * acceptInvite 表示是否接受邀请
+ * acceptSpecialInvite 表示是否接受特定邀请
+ * coinEnable 表示是否支持金币礼物
+ * duration PK场持续时长，单位为秒
+ * punish PK场的惩罚项ID
+ * punish PK场的惩罚描述
+ */
+message RoomCrossPkSettingMessage{
+  uint32 acceptInvite = 1;
+  uint32 acceptSpecialInvite = 2;
+  uint32 coinEnable = 3;
+  int32 duration = 4;
+  int32 punish = 5;
+  string punishment = 6;
+}
+
+message RoomCrossPkSettingData{
+  RoomCrossPkSettingMessage setting = 4;
+  SystemPunishConfig punishments = 5;
+}
+/**
+ * setting 当前房钱的PK设置
+ * punishments 系统支持的惩罚项
+ */
+message RespRoomCrossPkSetting{
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  RoomCrossPkSettingData data = 3;
+}
+
+/**
+ * PK列表项详情
+ * rid 房间ID
+ * uid 用户ID
+ * sex 用户性别
+ * real 用户魅力值
+ * audience 房间观众数量
+ * state 当前房间的状态；0未知，1，PK中
+ * name 用户名称
+ * icon 用户头像
+ */
+message RoomCrossPkRole {
+  uint32 rid = 1;
+  uint32 uid = 2;
+  uint32 sex = 3;
+  uint32 age = 4;
+  int32 real = 5;
+  int32 audience = 6;
+  uint32 state = 7;
+  string name = 8;
+  string icon = 9;
+}
+
+/**
+ * 搜索接口返回结构体
+ * hitMode 命中模式，这里1表示ID命中，2表示姓名命中，0表示未知
+ * total 一共命中多少条
+ * list 数据列表
+ */
+message RespRoomCrossPkSearchData{
+  int32 hitMode = 1;
+  int32 total = 2;
+  repeated RoomCrossPkRole list = 3;
+}
+
+message RespRoomCrossPkSearch{
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  RespRoomCrossPkSearchData data = 3;
+}
+
+/**
+ * PK列表返回结构体
+ * total 一共有多少条数据
+ * list 当前返回的数据
+ */
+message RespRoomCrossPkListData{
+  int32 total = 1;
+  repeated RoomCrossPkRole list = 3;
+}
+
+message RespRoomCrossPkList{
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  RespRoomCrossPkListData data = 3;
+}
+
+/**
+ * PK发出邀请请求结构体
+ * rid 发出邀请的房间
+ * targetRid 目标房间
+ * source 邀请渠道，0，未知，1，匹配邀请，2，列表邀请，3，搜索邀请
+ */
+message ReqRoomCrossPkInvite {
+  uint32 rid = 1;
+  repeated uint32 targetRid = 2;
+  uint32 source = 3;
+}
+
+/**
+ * PK场的PK详细信息
+ * pkId PK场的ID
+ * status 当前的PK状态，详细见 RoomCrossPKStatus 定义
+ * winner PK场胜负关系，详细见 RoomCrossPkWin 定义
+ * setting 当前PK场的设置信息/配置信息
+ */
+message RoomCrossPkDetails{
+  int32 pkId = 1;
+  RoomCrossPKMode mode = 2;
+  RoomCrossPKStatus status = 3;
+  int32 stageEndLine = 4;
+  uint32 winner = 5;
+  RoomCrossPkWin win = 6;
+  RoomCrossPkSettingMessage setting = 7;
+}
+
+/**
+ * pk过程中，麦上用户得分统计
+ */
+message RoomCrossPkMember {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 sex = 4;
+  uint32 age = 5;
+  int32 score = 6;
+}
+
+/**
+ * PK场的角色信息
+ * rid 角色的房间ID
+ * uid 房主ID
+ * name 房主名
+ * icon 房主头像
+ * totalScore 当前PK场的总PK值
+ * seq 顺序，主场为0
+ * members
+ * bestReceiver 魅力榜首
+ * bestSender 贡献榜首
+ */
+message RoomCrossPkRoleInfo{
+  uint32 rid = 1;
+  uint32 uid = 2;
+  string name = 3;
+  string icon = 4;
+  int32 totalScore = 5;
+  uint32 seq = 6;
+  repeated RoomCrossPkMember members = 7;
+  RoomCrossPkMember bestReceiver = 8;
+  RoomCrossPkMember bestSender = 9;
+  uint32 micStatus = 10;// 1表示开启，2表示关闭
+}
+
+/**
+ * PK场的消息推送结构体
+ * pk 当前PK场的信息
+ */
+message RoomCrossPkMessage{
+  repeated RoomCrossPkRoleInfo roles = 2;
+  RoomCrossPkDetails pk = 3;
+  UserPunish punish = 4;
+}
+
+/**
+ * 获取PK场信息接口的返回结构体
+ */
+message RespRoomCrossPkConfig{
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  RoomCrossPkMessage data = 3;
+}
+
+/**
+ * PK场邀请信息结构体
+ * pkId 发起请求的PK场ID
+ * inviter 邀请者与pk场相关信息
+ */
+message RoomCrossPkInviteMessage{
+  uint32 version = 1;
+  RoomCrossPKMode mode = 3;
+  RoomCrossPkRole inviter = 4;
+  repeated RoomCrossPkRole target = 5;
+  RoomCrossPkSettingMessage setting = 6;
+  RoomCrossPkInviteMode inviteMode = 7;
+  uint32 action_when_timeout = 8; // 0 默认接受，1 默认拒绝
+}
+
+/// 结果排行榜
+message RoomCrossPkResult {
+  RoomCrossPkWin result = 1;
+  uint32 seq = 2;
+  uint32 rid = 3;
+  string name = 4;
+  string icon = 5;
+  repeated RoomCrossPkMember receiverRank = 6; // 魅力榜
+  repeated RoomCrossPkMember senderRank = 7; // 贡献榜
+}
+
+enum RoomCrossPkWinState{
+  CROSSPK_UNKNOWN = 0;
+  CROSSPK_WIN = 1;
+  CROSSPK_DRAW = 2;
+  CROSSPK_FAIL = 3;
+}
+
+/// 结果排行榜V2，只关心房间自己的数据
+message RoomCrossPkResultV2 {
+  RoomCrossPkWinState result = 1;
+  uint32 seq = 2;
+  uint32 rid = 3;
+  string name = 4;
+  string icon = 5;
+  repeated RoomCrossPkMember receiverRank = 6; // 魅力榜
+  repeated RoomCrossPkMember senderRank = 7; // 贡献榜
+}
+
+message ReqRoomCrossPkLiveStatus{
+  uint32 rid = 1;
+  uint32 app_id = 2;
+  string language = 3;
+  string settlement = 4;
+}
+
+message RespRoomCrossPkLiveStatus{
+  int32 status = 1;
+}
+
+/**
+ * PK 段位赛 匹配确认
+ */
+message RoomCrossPkQualifyingAffirmMessage{
+  option (pb.register_name) = 'cross.pk.qualifying.affirm';
+  option (pb.register_id) = 10044;
+
+  uint32 pk_id = 1;
+  RoomCrossPKMode mode = 2;
+  RoomCrossPkInviteMode invite_mode = 3;
+  uint32 action_when_timeout = 4; // 0 默认接受，1 默认拒绝
+}
+
+// 段位结果推送
+message RoomCrossPkSegmentMessage {
+  option (pb.register_name) = 'cross.pk.result.segment';
+  option (pb.register_id) = 10043;
+
+  RoomCrossPkSegmentItem curSegment = 1; // 当前端位
+  RoomCrossPkWinState result = 2; // PK结果
+  string tips = 3; // 段位tips
+  string vap_url = 4; // 段位变化动画url
+  uint32 vap_size = 5; // 段位变化动画size
+}
+
+// 段位结构体
+message RoomCrossPkSegmentItem {
+  uint32 segment = 1; // 段位唯一ID
+  string segment_url = 2; // 段位icon
+  string segment_name = 3; // 段位名称 ps:英勇青铜
+  uint32 sub_segment = 4; // 段位等级 ps:1
+  uint32 star = 5; // 端位星数
+  uint32 total_star = 6; // 段位总星星数（包括灰色），为0 则表示最高段位：显示为 星*5
+}
+
+service RPCCrossPkAnchor{
+    rpc LivingStatus(ReqRoomCrossPkLiveStatus)returns (RespRoomCrossPkLiveStatus);
+}
+
+message MessageOvertimePoll{
+  RoomCrossPkMember sender = 1; // 加时申请方
+  string content = 2; // 加时申请文案
+  uint32 duration = 3; // 加时多长，单位秒，客户端透传
+}
+
+message RoomCrossPkEndVoteMessage{
+  option (pb.register_name) = 'cross.pk.end.apply';
+  option (pb.register_id) = 10047;
+  RoomCrossPkRole sender = 1; // 申请方
+  uint32 duration = 2; // 等待时长，秒
+  uint32 defaultMode = 3; // 默认选中，1，同意，2，拒绝
+  string content = 4; // 文案
+  uint32 versionCode = 5; // 版本号识别，同意，拒绝时候透传,6位数序列
+}
+
+message RoomCrossPkModeInfo{
+  string name = 1;
+  RoomCrossPKMode mode = 2;
+  repeated RoomCrossPkModeInfo children = 3;
+}
+
+message ApiCrossPkTabResponse{
+  bool success = 1;
+  string message =2;
+  RoomCrossPkTabResponse tab = 3;
+}
+
+message RoomCrossPkTabResponse{
+  repeated RoomCrossPkModeInfo tabs = 1;
+}
+
+// go/room/games/crosspk/exploitsDetails
+message ApiRoomCrossPkExploitsDetailsResponse{
+  bool success = 1;
+  string message = 2;
+  RoomCrossPkExploitsDetailsData data = 3;
+}
+
+message RoomCrossPkExploitsDetailsData{
+  RoomCrossPkResultV2 result = 1;
+}

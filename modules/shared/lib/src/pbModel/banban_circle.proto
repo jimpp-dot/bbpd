@@ -1,0 +1,79 @@
+syntax = "proto3";
+package pb;
+/*
+礼物面板的pb定义
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb/";
+
+
+message ResMessageCount {
+	bool            success = 1;                 //成功true，失败false
+	string          msg     = 2;                 //失败message
+	RepMessageCount data    = 3;                 //返回数据
+}
+
+message RepMessageCount {
+	uint32          num     = 1;                //count
+}
+
+
+message ResTopicNew {
+	bool            success = 1;                 //成功true，失败false
+	string          msg     = 2;                 //失败message
+	RepTopicNew     data    = 3;                 //返回数据
+}
+
+message RepTopicNew {
+	uint32          num     = 1;                //count
+}
+
+message RepCircleDefaultTab {
+  bool success = 1;
+  int32 data = 2;
+}
+
+message ResCirclePics {
+	bool            success = 1;                 //成功true，失败false
+	string          msg     = 2;                 //失败message
+	RepCirclePics   data    = 3;                 //返回数据
+}
+
+message RepCirclePics {
+    repeated CirclePicItem list = 1;             //动态图片列表
+	uint64  tpid    = 2;                         //上次浏览到尾部的动态ID
+	uint32  total   = 3;                         //上次浏览到尾部的动态ID
+}
+
+message CirclePicItem {
+    uint64  tpid    = 1;
+    uint32  total   = 2;
+    uint32  pos     = 3;
+    string  url     = 4;
+}
+
+message ResCircleTabRedPoint {
+	bool            success = 1;                 //成功true，失败false
+	string          msg     = 2;                 //失败message
+	CircleTabRedPointData data  = 3;             //返回数据
+}
+
+message CircleTabRedPointData {
+	uint32 unread_mood_num = 1;                  //未读小心情的条数
+}
+
+message RecTag {
+	uint32 tag_id = 1;
+	string name = 2;
+}
+message RecTagsData {
+	repeated RecTag list = 1;
+}
+// 搜索话题
+message ResGetRecTags {
+	bool success = 1;
+	string msg = 2;
+	RecTagsData data = 3;
+}

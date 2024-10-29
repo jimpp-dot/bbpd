@@ -1,0 +1,24 @@
+syntax = "proto3";
+    
+package broadcaster.content.program;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message BroadcasterContentProgram {
+    option (pb.register_name) = 'broadcaster.content.program';
+    option (pb.register_id) = 7;
+    string state = 1;
+    uint32 program_id = 2;
+    CurrentAnchor current_anchor = 3;
+    string banner_text = 4;
+    string rank_desc = 5;
+    uint32 star_num = 6;
+
+    message CurrentAnchor {
+        uint32 uid = 1;
+        string name = 2;
+        string icon = 3;
+    }
+}

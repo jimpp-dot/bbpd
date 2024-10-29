@@ -1,0 +1,42 @@
+syntax = "proto3";
+package pb;
+/*
+隐形侠
+*/
+
+option go_package = "../../app/pb";
+
+
+message ResInvisible {
+    bool success = 1;                             //成功true，失败false
+    string msg = 2;  
+    InvisibleData data = 3;
+}
+
+message InvisibleData {
+    uint32 limited = 1;
+    repeated InvisibleItem my_invisible_list = 2; //我的权益
+    repeated InvisiblePck invisible_list = 3; //套餐权益列表
+    uint32 default_pack_id = 4;//默认选中套餐ID
+    uint32 progress = 5;//已购人数
+}
+
+message InvisiblePck {
+    uint32 price = 1;
+    repeated InvisibleItem invisible_list = 2;
+    uint32 pck_type = 3; //1权益包类型  2套餐类型
+    string name = 4; //权益名称
+    uint32 id = 5;//套餐id
+    string desc = 6; //描述
+    string unit = 7; //单位
+    uint32 unit_days = 8;//生效天数
+}
+
+message InvisibleItem {
+    uint32 id = 1;
+    string name = 2; //权益名称
+    uint32 price = 3; //价格
+    uint32 expire_time = 4; //过期时间
+    bool is_open = 5;//是否打开
+    string desc = 6; //权益描述
+}

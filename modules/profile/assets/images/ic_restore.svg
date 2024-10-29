@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+  <title>bbpd_ic_profile_time</title>
+  <g id="ic_profile_time" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linejoin="round">
+    <g id="1" transform="translate(1.500000, 2.500000)" stroke="#313131" stroke-width="2">
+      <path d="" id="路径-20" stroke-linecap="round"/>
+      <path d="M17.372384,17.4947987 C19.3925756,17.3842713 21,15.5260826 21,13.25 C21,11.2688085 19.7821117,9.60424033 18.1342127,9.13327809 L18.1363636,9 C18.1363636,4.30557963 14.7174472,0.5 10.5,0.5 C6.82440105,0.5 3.75532689,3.39053177 3.02738268,7.24081461 C1.2552027,8.01639158 0,9.93878367 0,12.1875 C0,15.0443019 2.02583822,17.3744317 4.56569627,17.4950918 L4.77272727,17.5 L17.1818182,17.5 L17.372384,17.4947987 Z" id="路径"/>
+    </g>
+  </g>
+</svg>

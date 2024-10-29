@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package defend.join.mic.banner;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message DefendJoinMicBanner {
+  option (pb.register_name) = 'defend.join.mic.banner';
+  option (pb.register_id) = 27;
+  uint32 rid = 1;
+  uint32 uid = 2;
+  string my_name = 3;
+  string to_name = 4;
+  string title = 5;
+  string mic_suffix = 6;
+  string background = 7;
+  string font_color = 8;
+}

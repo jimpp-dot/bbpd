@@ -1,0 +1,36 @@
+syntax = "proto3";
+package pb;
+/*
+app启动接口
+*/
+
+option go_package = "../../app/pb";
+
+enum BootAppPopupType {
+	BootAppPopupTypeUnknown = 0; // 未知类型
+	BootAppPopupTypeCommon = 1;  // 通用弹窗
+}
+
+message ApiBootAppResponse {
+	bool success = 1;
+	string msg = 2;
+	BootAppData data = 3;
+}
+
+message BootAppData {
+	repeated BootAppPopup popups = 1; // 弹窗数据
+}
+
+message BootAppPopup {
+	uint32 biz_id = 1; // 业务id
+	BootAppPopupType p_type = 2; // 弹窗类型
+	BootAppPopupCommon common_data = 3; // 通用弹窗数据，当弹窗类型等于BootAppPopupTypeCommon时解析
+	uint32 max_count = 4; // 最大使用次数
+	uint32 max_circle_type = 5; // 最大值循环类型，0: 按天, 1: 按周 2:按月
+}
+
+message BootAppPopupCommon {
+	string title = 1;  // 标题,无实际用处
+	string image = 2;  // 弹窗图
+	string schema = 3; // 跳转链接
+}

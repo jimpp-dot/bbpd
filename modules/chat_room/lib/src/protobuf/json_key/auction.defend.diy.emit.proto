@@ -1,0 +1,13 @@
+syntax = "proto3";
+    
+package auction.defend.diy.emit;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message AuctionDefendDiyEmit {
+    option (pb.register_name) = 'auction.defend.diy.emit';
+    option (pb.register_id) = 118;
+    repeated uint32 pb = 1;
+}

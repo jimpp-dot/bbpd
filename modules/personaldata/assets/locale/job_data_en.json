@@ -1,0 +1,517 @@
+[
+    {
+        "label": "Student",
+        "value": 110,
+        "data": [
+            {
+                "label": "Student",
+                "value": 11001,
+                "data": null
+            },
+            {
+                "label": "University students",
+                "value": 11002,
+                "data": null
+            },
+            {
+                "label": "Postgraduate studies",
+                "value": 11003,
+                "data": null
+            },
+            {
+                "label": "Student",
+                "value": 11004,
+                "data": null
+            }
+        ]
+    },
+    {
+        "label": "Information technology",
+        "value": 101,
+        "data": [
+            {
+                "label": "IT",
+                "value": 10101,
+                "data": null
+            },
+            {
+                "label": "Internet",
+                "value": 10102,
+                "data": null
+            },
+            {
+                "label": "Communications",
+                "value": 10103,
+                "data": null
+            },
+            {
+                "label": "Computers",
+                "value": 10104,
+                "data": null
+            },
+            {
+                "label": "Web Games",
+                "value": 10105,
+                "data": null
+            },
+            {
+                "label": "Telecommunications operation",
+                "value": 10106,
+                "data": null
+            },
+            {
+                "label": "Product Manager",
+                "value": 10107,
+                "data": null
+            },
+            {
+                "label": "Programmer",
+                "value": 10108,
+                "data": null
+            },
+            {
+                "label": "Designer",
+                "value": 10109,
+                "data": null
+            },
+            {
+                "label": "Network operation",
+                "value": 10110,
+                "data": null
+            },
+            {
+                "label": "Network Edit",
+                "value": 10111,
+                "data": null
+            },
+            {
+                "label": "Game planning",
+                "value": 10112,
+                "data": null
+            }
+        ]
+    },
+    {
+        "label": "Financial insurance",
+        "value": 102,
+        "data": [
+            {
+                "label": "Finance",
+                "value": 10201,
+                "data": null
+            },
+            {
+                "label": "Investments",
+                "value": 10202,
+                "data": null
+            },
+            {
+                "label": "Bank",
+                "value": 10203,
+                "data": null
+            },
+            {
+                "label": "Security",
+                "value": 10204,
+                "data": null
+            },
+            {
+                "label": "Insurance",
+                "value": 10205,
+                "data": null
+            },
+            {
+                "label": "Trust/guarantee",
+                "value": 10206,
+                "data": null
+            },
+            {
+                "label": "Investment Manager",
+                "value": 10207,
+                "data": null
+            },
+            {
+                "label": "Fund Manager",
+                "value": 10208,
+                "data": null
+            },
+            {
+                "label": "Financial Advisor",
+                "value": 10209,
+                "data": null
+            },
+            {
+                "label": "Customer Manager",
+                "value": 10210,
+                "data": null
+            }
+        ]
+    },
+    {
+        "label": "Business Services",
+        "value": 103,
+        "data": [
+            {
+                "label": "Consultancy",
+                "value": 10301,
+                "data": null
+            },
+            {
+                "label": "Training",
+                "value": 10302,
+                "data": null
+            },
+            {
+                "label": "Individual operation",
+                "value": 10303,
+                "data": null
+            },
+            {
+                "label": "Tourism",
+                "value": 10304,
+                "data": null
+            },
+            {
+                "label": "Hotel Dining",
+                "value": 10305,
+                "data": null
+            },
+            {
+                "label": "Recreation",
+                "value": 10306,
+                "data": null
+            },
+            {
+                "label": "Trade",
+                "value": 10307,
+                "data": null
+            },
+            {
+                "label": "Car",
+                "value": 10308,
+                "data": null
+            },
+            {
+                "label": "Real Estate",
+                "value": 10309,
+                "data": null
+            },
+            {
+                "label": "Property management",
+                "value": 10310,
+                "data": null
+            },
+            {
+                "label": "Improvements/improvements",
+                "value": 10311,
+                "data": null
+            },
+            {
+                "label": "beautiful hair",
+                "value": 10312,
+                "data": null
+            }
+        ]
+    },
+    {
+        "label": "Project Manufacturing",
+        "value": 104,
+        "data": [
+            {
+                "label": "Buildings",
+                "value": 10401,
+                "data": null
+            },
+            {
+                "label": "Civil Engineering",
+                "value": 10402,
+                "data": null
+            },
+            {
+                "label": "Mechanical manufacturing",
+                "value": 10403,
+                "data": null
+            },
+            {
+                "label": "Electronics",
+                "value": 10404,
+                "data": null
+            },
+            {
+                "label": "Biological medicine",
+                "value": 10405,
+                "data": null
+            },
+            {
+                "label": "Food",
+                "value": 10406,
+                "data": null
+            },
+            {
+                "label": "Outfit",
+                "value": 10407,
+                "data": null
+            },
+            {
+                "label": "Energy",
+                "value": 10408,
+                "data": null
+            }
+        ]
+    },
+    {
+        "label": "Transport",
+        "value": 105,
+        "data": [
+            {
+                "label": "Aviation",
+                "value": 10501,
+                "data": null
+            },
+            {
+                "label": "Railways",
+                "value": 10502,
+                "data": null
+            },
+            {
+                "label": "Shipping/Ship",
+                "value": 10503,
+                "data": null
+            },
+            {
+                "label": "Public transport",
+                "value": 10504,
+                "data": null
+            },
+            {
+                "label": "Logistics transport",
+                "value": 10505,
+                "data": null
+            },
+            {
+                "label": "Empty Multiply",
+                "value": 10506,
+                "data": null
+            },
+            {
+                "label": "Empty",
+                "value": 10507,
+                "data": null
+            }
+        ]
+    },
+    {
+        "label": "Cultural media",
+        "value": 106,
+        "data": [
+            {
+                "label": "Media publishing",
+                "value": 10601,
+                "data": null
+            },
+            {
+                "label": "Cultural media",
+                "value": 10602,
+                "data": null
+            },
+            {
+                "label": "Advertise Creative",
+                "value": 10603,
+                "data": null
+            },
+            {
+                "label": "Public Relations/ Events",
+                "value": 10604,
+                "data": null
+            },
+            {
+                "label": "Angular",
+                "value": 10605,
+                "data": null
+            },
+            {
+                "label": "TV",
+                "value": 10606,
+                "data": null
+            },
+            {
+                "label": "Journalists",
+                "value": 10607,
+                "data": null
+            },
+            {
+                "label": "Moderator",
+                "value": 10608,
+                "data": null
+            },
+            {
+                "label": "Design",
+                "value": 10609,
+                "data": null
+            },
+            {
+                "label": "Photography",
+                "value": 10610,
+                "data": null
+            },
+            {
+                "label": "Fine Arts",
+                "value": 10611,
+                "data": null
+            },
+            {
+                "label": "Author",
+                "value": 10612,
+                "data": null
+            }
+        ]
+    },
+    {
+        "label": "Recreational Sports",
+        "value": 107,
+        "data": [
+            {
+                "label": "Video vision",
+                "value": 10701,
+                "data": null
+            },
+            {
+                "label": "Music",
+                "value": 10702,
+                "data": null
+            },
+            {
+                "label": "Models",
+                "value": 10703,
+                "data": null
+            },
+            {
+                "label": "Sports",
+                "value": 10704,
+                "data": null
+            },
+            {
+                "label": "Fitness",
+                "value": 10705,
+                "data": null
+            },
+            {
+                "label": "Actors",
+                "value": 10706,
+                "data": null
+            },
+            {
+                "label": "Artist",
+                "value": 10707,
+                "data": null
+            },
+            {
+                "label": "Spline",
+                "value": 10708,
+                "data": null
+            },
+            {
+                "label": "Fitness Coach",
+                "value": 10709,
+                "data": null
+            }
+        ]
+    },
+    {
+        "label": "Public Service",
+        "value": 108,
+        "data": [
+            {
+                "label": "Government organs",
+                "value": 10801,
+                "data": null
+            },
+            {
+                "label": "Medical care",
+                "value": 10802,
+                "data": null
+            },
+            {
+                "label": "Education",
+                "value": 10803,
+                "data": null
+            },
+            {
+                "label": "Law",
+                "value": 10804,
+                "data": null
+            },
+            {
+                "label": "Science",
+                "value": 10805,
+                "data": null
+            },
+            {
+                "label": "Public interest",
+                "value": 10806,
+                "data": null
+            },
+            {
+                "label": "Civil servants",
+                "value": 10807,
+                "data": null
+            },
+            {
+                "label": "Police",
+                "value": 10808,
+                "data": null
+            },
+            {
+                "label": "Armed Forces",
+                "value": 10809,
+                "data": null
+            },
+            {
+                "label": "Doctor",
+                "value": 10810,
+                "data": null
+            },
+            {
+                "label": "Nurse",
+                "value": 10811,
+                "data": null
+            },
+            {
+                "label": "Teachers",
+                "value": 10812,
+                "data": null
+            },
+            {
+                "label": "Minor",
+                "value": 10813,
+                "data": null
+            },
+            {
+                "label": "Counsel",
+                "value": 10814,
+                "data": null
+            }
+        ]
+    },
+    {
+        "label": "Free Profession",
+        "value": 111,
+        "data": [
+            {
+                "label": "Free Profession",
+                "value": 11101,
+                "data": null
+            },
+            {
+                "label": "Unemployed",
+                "value": 11102,
+                "data": null
+            },
+            {
+                "label": "Other",
+                "value": 11103,
+                "data": null
+            }
+        ]
+    }
+]

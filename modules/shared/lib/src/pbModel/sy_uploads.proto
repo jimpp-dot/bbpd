@@ -1,0 +1,13 @@
+
+syntax = "proto3";
+package apiUpload;
+
+option go_package = "../app/pb/api/uploads;apiUpload";
+
+message RspSyUploadPromise{
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  string sign_url = 3;//上传的url地址
+  string path =4;//上传文件的路径
+  string origin_url =5;//oss上此文件的路径
+}

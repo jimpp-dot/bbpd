@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "../app/pb";
+
+message ResRoomBuyHot{
+    bool success =1;
+    string msg = 2;
+    BuyHotData data = 3;
+}
+
+message BuyHotData{
+   string buy_type = 1;
+   string image_background = 2;
+   string image = 3;
+   string name = 4;
+   string desc = 5;
+   uint32 money = 6;
+   repeated BuyHotItem items= 7;
+}
+
+message BuyHotItem{
+    uint32 cid = 1;
+    uint32 unit_price=2;
+    string period = 3;
+    uint32 hot = 4;
+}

@@ -1,0 +1,66 @@
+syntax = "proto3";
+package pb;
+/*
+私聊信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message RespRoomCharm {
+  bool success = 1;
+  string message =2;
+  RespRoomCharmData data = 3;
+}
+
+
+message RespRoomCharmData {
+  int32 have_room_charm = 1;
+  repeated RankTypeList rank_type_list = 2;
+  repeated GapList gap_list= 3;
+  repeated TopInfo top_list = 4;
+  Rule rule = 5;
+}
+
+message RankTypeList  {
+  string title = 1;
+  string typeMame = 2;
+}
+
+message TopInfo  {
+  uint32 rid = 1;
+  uint32 rank = 2;
+  uint32 room_charm = 3;
+  uint32 room_creator = 4;
+  string room_name = 5;
+  uint32 uid = 6;
+  string user_name = 7;
+  string user_icon = 8;
+  string rank_change_type = 9;
+  uint32 rank_change = 10;
+  uint32 current_rid = 11;
+  //未知的2个字段，客户端有，服务端代码里没找到
+  int32 before_diff = 12;
+  int32 stay_hour = 13;
+}
+
+message GapList {
+   string typeMame = 1;
+   int32 time = 2;
+   string des = 3;
+   bool show_icon = 4;
+}
+
+message Rule {
+  repeated string hour = 1;
+  repeated string  day = 2;
+  repeated string week = 3;
+  repeated string knight = 4;
+  repeated string pk = 5;
+}
+
+
+
+
+

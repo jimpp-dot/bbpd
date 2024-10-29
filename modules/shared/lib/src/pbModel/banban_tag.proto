@@ -1,0 +1,40 @@
+syntax = "proto3";
+package pb;
+/*
+room tag 相关proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+message ScreenTagConfig{
+	uint32 id = 1;           //标签ID
+	string label = 2;        //标签文案
+	string icon = 3;         //标签图
+	string property = 4;     //标签显示房间类型  vip个人房  business 商业房
+	uint32 on_mic_show = 5;  //是否麦上才展示 1上麦才展示 0麦上麦下都展示
+	uint32 show_user_role = 6; //标签可见用户身份 0、所有用户可见;  1、商业房房主和接待; 2、公会用户
+	string room_factory_type = 7; //标签可以显示的模板，多个逗号隔开
+	string channel = 8;//标签可以显示的结算频道，多个逗号隔开'
+	uint32 white_list_id = 9;//标签可以显示的白名单type, 对应通用白名单的type
+	uint32 cute = 10;//是否打标靓号关联房间展示
+	uint32 type = 11;//标签类型 1、纯图片  2、图片+文字固定宽度  3、图片+文字不定宽度  4、图片不拉伸 + 文案
+	string white_list_rids = 12;//白名单房间rid， 多个用逗号隔开, 最多300个
+	uint32 text_start_px = 13; //文案起始像素， 当type=2时生效
+	uint32 front_style = 14; //字体 0、普通字体 1、YouShe字体
+	uint32 profile_show = 15;//是否个人资料卡展示该标签  0、不展示   1、展示
+	string font_color = 16; //字体颜色
+  uint32 location =17; //标签位置，0：前面，1：后面
+}
+
+message RepTagConfig {
+	uint32	version = 1;
+	repeated ScreenTagConfig	config = 2;
+}
+
+message ResTagConfig {
+	bool			success = 1;
+	string 			msg = 2;
+	RepTagConfig	data  = 3;
+}

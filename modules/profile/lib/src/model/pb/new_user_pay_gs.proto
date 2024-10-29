@@ -1,0 +1,76 @@
+syntax = "proto3";
+package pb;
+
+/*
+ /mate/gs系列接口的结果定义
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 pb 目录下
+option go_package = "../../app/pb";
+
+message NewUserPayGsItem{
+  uint32 uid = 1;
+  uint32 age = 2;
+  uint32 sex = 3;
+  uint32 vip = 4;
+  string name = 5;
+  string icon = 6;
+  string registerTime = 7;
+  uint32 onlineStatus = 8;
+  string online = 9;
+  RookieTag rookie = 10;
+  message RookieTag{
+    uint32 sevenNew = 1;
+    uint32 payLevel = 2;
+  };
+}
+
+message ResNewUserPayGsData{
+  repeated NewUserPayGsItem rank = 1;
+  bool hasMore = 2;
+}
+
+message ResNewUserPayGsRank{
+  bool success = 1;
+  string msg = 2;
+  ResNewUserPayGsData data = 3;
+}
+
+message ResGsTransferStat{
+  bool success = 1;
+  string msg = 2;
+  GsTransferStat data = 3;
+}
+
+message GsTransferStat{
+  uint32 today_points = 1;        //今日获得积分
+  uint32 curr_points = 2;         //当前剩余积分
+  uint32 sum_points = 3;          //累计获得积分
+  uint32 today_transfer = 4;      //今日转化人数
+  uint32 sum_transfer = 5;        //累计转化人数
+}
+
+message ResGsTransferPointsDetail{
+  bool success = 1;
+  string msg = 2;
+  GsTransferPointsData data = 3;
+}
+
+message GsTransferPointsData{
+  repeated GsTransferPointsTabs tabs = 1;
+  repeated GsTransferPointsDetail list = 2;
+  bool hasMore = 3;
+}
+
+message GsTransferPointsTabs{
+  uint32 tab_id = 1;
+  string tab_name = 2;
+}
+
+message GsTransferPointsDetail{
+  uint32 points = 1;              //变化的积分，都是正数
+  uint32 op_type = 2;             //1-支出，2-收入
+  string subject = 3;             //积分变化描述
+  string time = 4;                //时间
+}

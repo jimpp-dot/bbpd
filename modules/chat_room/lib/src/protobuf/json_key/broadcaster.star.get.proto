@@ -1,0 +1,18 @@
+syntax = "proto3";
+    
+package broadcaster.star.get;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message BroadcasterStarGet {
+    option (pb.register_name) = 'broadcaster.star.get';
+    option (pb.register_id) = 10;
+    uint32 reward_star_total_time = 1;
+    uint32 reward_star_stay_time = 2;
+    bool reward_star_stay_finish = 3;
+    string reward_star_icon = 4;
+    uint32 dateline = 5;
+    uint32 count = 6;
+}

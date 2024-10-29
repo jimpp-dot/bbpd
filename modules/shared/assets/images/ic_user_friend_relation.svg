@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="14px" viewBox="0 0 32 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <linearGradient x1="100%" y1="42.7848749%" x2="0%" y2="59.5703125%" id="linearGradient-1">
+            <stop stop-color="#F4D238" offset="0%"></stop>
+            <stop stop-color="#EEAA35" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="linearGradient-2">
+            <stop stop-color="#FFFFFF" stop-opacity="0.1" offset="0%"></stop>
+            <stop stop-color="#000000" stop-opacity="0.3" offset="100%"></stop>
+        </linearGradient>
+        <path d="M7,0 L25,0 C28.8659932,-7.10171439e-16 32,3.13400675 32,7 C32,10.8659932 28.8659932,14 25,14 L7,14 C3.13400675,14 4.73447626e-16,10.8659932 0,7 C-4.73447626e-16,3.13400675 3.13400675,7.10171439e-16 7,0 Z" id="path-3"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="观众列表" transform="translate(-77.000000, -132.000000)">
+            <g id="List_avatar" transform="translate(0.000000, 88.000000)">
+                <g id="base" transform="translate(77.000000, 44.000000)">
+                    <mask id="mask-4" fill="white">
+                        <use xlink:href="#path-3"></use>
+                    </mask>
+                    <g>
+                        <use fill="#FF47AB" xlink:href="#path-3"></use>
+                        <use fill="url(#linearGradient-1)" xlink:href="#path-3"></use>
+                        <use fill="url(#linearGradient-2)" style="mix-blend-mode: overlay;" xlink:href="#path-3"></use>
+                    </g>
+                    <polygon id="light" fill="#FFFFFF" opacity="0.100000001" mask="url(#mask-4)" points="30.7777778 0.777777778 37.9722222 0.777777778 34.0833333 13.2222222 26.8888889 13.2222222"></polygon>
+                    <polygon id="light" fill="#FFFFFF" opacity="0.171428573" mask="url(#mask-4)" points="26.3055556 0.777777778 29.6111111 0.777777778 25.7222222 13.2222222 22.4166667 13.2222222"></polygon>
+                    <path d="M25,0.583333333 C26.7719136,0.583333333 28.3760802,1.30154321 29.5372685,2.46273149 C30.6984568,3.62391976 31.4166667,5.22808643 31.4166667,7 C31.4166667,8.77191357 30.6984568,10.3760802 29.5372685,11.5372685 C28.3760802,12.6984568 26.7719136,13.4166667 25,13.4166667 L25,13.4166667 L7,13.4166667 C5.22808643,13.4166667 3.62391976,12.6984568 2.46273149,11.5372685 C1.30154321,10.3760802 0.583333333,8.77191357 0.583333333,7 C0.583333333,5.22808643 1.30154321,3.62391976 2.46273149,2.46273149 C3.62391976,1.30154321 5.22808643,0.583333333 7,0.583333333 L7,0.583333333 Z" stroke="#F3CE37" stroke-width="1.16666667" mask="url(#mask-4)"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,63 @@
+syntax = "proto3";
+package pb;
+
+import "json_key/broadcast_extension.proto";
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+// socket消息
+message EsportTopInRoomDataNotify {
+    option (pb.register_name) = 'room.et.rank.top';
+	option (pb.register_id) = 10032;
+
+    bool show = 1;
+    EsportTopInRoomData data = 2;
+}
+
+// RespEsportTopInRoom 请求房间电竞双排top返回,接口: /go/room/esportmate/top [post]
+message RespEsportTopInRoom {
+    bool success = 1;
+    string msg = 2;
+    EsportTopInRoomData data = 3;
+}
+
+message EsportTopInRoomData {
+    bool has = 1;                 // 是否有人上榜
+    EsportMateUser left = 2;      // 贡献大者排在左边
+    EsportMateUser right = 3;     // 贡献小者排在右边
+    uint32 money = 4;             // 共同打赏流水
+}
+
+message EsportMateUser {
+    uint32 uid = 1;
+    string name = 2;
+    string icon = 3;
+    string frame = 4;
+}
+
+// RespEsportRank 请求全局电竞双排榜单返回,接口：/go/room/esportmate/rank [post]
+message RespEsportRank {
+    bool success = 1;
+    string msg = 2;
+    EsportRankData data = 3;
+}
+
+message EsportRankData {
+    repeated EsportRankMember today_rank = 1;      // 今天榜单
+    EsportRankMember yestday_top = 2;              // 昨天榜首
+    EsportRankMe today_me = 3;                     // 今天本人的排名情况
+}
+
+message EsportRankMember {
+    int32 rank = 1;             // 排名,从1开始
+    EsportMateUser left = 2;    // 贡献大者排在左边
+    EsportMateUser right = 3;   // 贡献小者排在右边
+    uint32 money = 4;           // 共同打赏流水
+}
+
+message EsportRankMe {
+    bool unlock = 1;            // 今天是否解锁
+    EsportRankMember me = 2;    // 今天自己整体排名
+}

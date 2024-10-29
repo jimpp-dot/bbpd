@@ -1,0 +1,38 @@
+syntax = "proto3";
+package pb;
+/*
+房间门票proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+// go/room/ranking/rewardStranger  会话陌生人打赏榜
+message ApiRankRewardStrangerResponse{
+  bool success = 1;
+  string message = 2;
+  RankRewardStrangerData data = 3;
+}
+
+message RankRewardStrangerData{
+  repeated RankRewardStrangerItem list = 1; // 会话打赏列表
+  bool more = 2;
+}
+
+// 会话打赏结构体
+message RankRewardStrangerItem {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 sex = 4;
+  uint32 age = 5;
+  uint32 value = 6;
+  uint32 time = 7;
+  string gift_name = 8;
+  uint32 gift_num = 9;
+  string room_name = 10;
+  uint32 unread = 11;
+}
+
+

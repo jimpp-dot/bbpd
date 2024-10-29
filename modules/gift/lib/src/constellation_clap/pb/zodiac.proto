@@ -1,0 +1,111 @@
+syntax = "proto3";
+package pb;
+/*
+用户活跃值proto
+*/
+
+option go_package = "../../app/pb";
+
+enum ZodiacCode{
+  ZodiacCodeUnknown = 0; // 位置代码
+  ZodiacAries = 1; // 白羊座
+  ZodiacTaurus = 2; // 金牛座
+  ZodiacGemini = 3; // 双子座
+  ZodiacCancer = 4; // 巨蟹座
+  ZodiacLeo = 5; // 狮子座
+  ZodiacVirgo = 6; // 处女座
+  ZodiacLibra = 7; // 天秤座
+  ZodiacScorpio = 8; // 天蝎座
+  ZodiacSagittarius = 9;// 天蝎座
+  ZodiacCapricorn = 10;// 摩羯座
+  ZodiacAquarius = 11; // 水瓶座
+  ZodiacPisces = 12;// 双鱼座
+  ZodiacExceeded = 13;// 超出最大值
+}
+
+enum ZodiacPopupState{
+  ZodiacStateUnknown = 0; //  位置状态
+  ZodiacStateDisabled = 1; // 不允许弹窗
+  ZodiacStatePrepare = 2; // 准备弹窗，条件不满足
+  ZodiacStateEnable = 3; // 弹窗弹出，条件满足
+  ZodiacStateDone = 4; // 弹窗已弹出，条件满足
+}
+
+message ZodiacUser{
+  uint32 uid = 1; // 用户id
+  uint32 sex = 2; // 性别
+  string name = 3; // 用户姓名
+  string icon = 4; // 用户头像
+  uint32 in_room = 5; // 当前所在房间
+  string zodiac_icon = 6; // 星座小图
+}
+
+message Zodiac{
+  ZodiacCode code = 1; // 星座代码
+  string zodiacName = 2; // 星座名称
+  ZodiacUser spokesman = 3; // 用户信息
+  uint32 marked = 4; // 是否是代言人
+}
+
+message ZodiacPopup{
+  repeated Zodiac zodiacs = 1; // 星座信息
+  uint32 price = 2; // 拍一拍价格，单位钻
+  string top_text = 3; // 顶部文案
+  string bottom_text = 4; // 底部文案
+  ZodiacUser me = 5; // 我的信息
+  uint32 to_uid = 6; // 选中的uid
+}
+
+message ZodiacPopupData{
+  uint32 state = 1; // 1 条件还不满足，2 条件满足，3. 已拍下 4. 任务完成or 过期  5 条件不可能满足
+  ZodiacPopup popup = 2; // 弹窗详情
+  uint32 delay = 3; // 弹窗延时时间
+}
+
+message ZodiacPaiGift{
+  uint32 id = 1;
+  string name = 2;
+  string icon = 3;
+  uint32 price = 4;
+  string description = 5;
+}
+
+message ZodiacPaiMission{
+  uint32 id = 1;
+  uint32 type = 2;
+  string description = 3;
+  uint32 progress = 4; // 任务进度
+  string reward_name = 5;
+  uint32 reward_num = 6;
+  string reward_icon = 7;
+  string reward_type = 8;
+  uint32 state = 9; // 0/1 进行中 2 完成待领取 3 已领取 4 超时未领取
+  string jump = 10;
+  string reward_period = 11; // 奖励期限
+  uint32 total = 12; // 任务总数
+}
+
+message ZodiacPaiResultData{
+  ZodiacUser me = 1;
+  ZodiacUser spokesman = 2;
+  ZodiacCode code = 3;
+  uint32 score = 4;
+  ZodiacPaiGift gift = 5;
+  repeated ZodiacPaiMission missions = 6; // 任务数组
+  uint32 end_time = 7; // 拍拍结束时间
+}
+
+
+// 获取弹窗信息
+message ApiZodiacPopupResponse{
+  bool success = 1;
+  string message = 2;
+  ZodiacPopupData data = 3;
+}
+
+// 获取弹窗拍拍结果信息
+message ApiZodiacPaiResultResponse{
+  bool success = 1;
+  string message = 2;
+  ZodiacPaiResultData data = 3;
+}

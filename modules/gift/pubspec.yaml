@@ -1,0 +1,55 @@
+name: gift
+description: 礼物.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ">=2.18.0 <3.0.0"
+dependencies:
+  flutter:
+    sdk: flutter
+
+  shared:
+    path: ../shared
+
+  chat_room:
+    path: ../chat_room
+
+  date_count_down:
+    path: ../shared/plugins/date_count_down/
+
+  auto_size_text_field: 2.1.1
+  dotted_border: 2.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  build_runner: ^2.0.0
+  flutter_lints: ^2.0.2
+  assets_gen: ^1.5.0 #gen cmd：flutter pub run assets_gen build
+
+assets_gen:
+  omit_path_levels: 2
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+  # To add assets to your package, add an assets section, like this:
+  assets:
+    - assets/images/
+    - assets/images/gift_pack/
+    - assets/images/limit_package/
+    - assets/images/intimate_interact/
+    - assets/images/gift_banner/
+    - assets/images/tag_gift/
+    - assets/images/throne/
+    - assets/images/custom_ring/
+    - assets/images/constellation_clap/
+
+  fonts:
+    - family: Anton
+      fonts:
+        - asset: assets/fonts/Anton-Regular.ttf

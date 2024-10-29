@@ -1,0 +1,59 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+
+message ResLucky {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+    string data = 3; //返回的数据
+}
+
+
+// LuckyBase的User结构
+message ResLuckyBaseUser {
+    uint32 origin = 1;
+    uint32 position = 2;
+    string icon = 3;
+    string name = 4;
+}
+// LuckyBase里的location_list结构
+message ResLuckyBaseLocationList {
+    uint32 hurdle_num = 1;
+    uint32 is_breaker = 2;
+    string title = 3;
+    repeated ResLuckyBaseUser user = 4;
+}
+// LuckyBase的根结构
+message ResLuckyBaseData {
+    repeated string banner = 1;
+    uint32 breaker_hurdle_num = 2;
+    string state = 3; //游戏阶段
+    repeated ResLuckyBaseLocationList location_list = 4;
+}
+// LuckyBase
+message ResLuckyBase {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+    ResLuckyBaseData data = 3; //返回的闯关插件面板核心数据
+}
+
+
+message ResLuckyRule {
+    bool success = 1; //返回给客户端的必须有
+    string msg = 2; //返回给客户端的必须有
+    string data = 3; //返回的背景列表数据
+}
+
+// 闯关成功弹层
+message ResLuckyBreakSuccess {
+    string title = 1;
+    string sub_title = 2;
+    uint32 uid = 3;
+    string name = 4;
+    string icon = 5;
+    repeated string hurdle_list = 6;
+}

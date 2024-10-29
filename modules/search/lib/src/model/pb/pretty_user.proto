@@ -1,0 +1,36 @@
+syntax = "proto3";
+package apiPretty;
+
+option go_package = "./app/pb/api/pretty_user;apiPretty";
+
+message RspPrettyInfo {
+  bool success = 1;
+  string msg = 2;
+  repeated PrettyInfo data = 3;
+}
+
+message PrettyInfo {
+  uint32 uid = 1;                 //用户id
+  string icon = 2;                //头像
+  uint32 rid = 3;                 //在房
+  string birthday = 4;            //生日, 客户端根据生日计算星座
+  string sign = 5;                //签名
+  uint32 sex = 6;                 //生日, 客户端根据生日计算星座
+  repeated PrettyInfoTag tags = 7;  //标签  https://alpha.lanyean.cn/go/slp/profile/home/? tag.tags获取
+  repeated string photos = 8;   //形象照
+  repeated PrettyInfoGirl girls_group = 9; //闺蜜团
+}
+
+message PrettyInfoGirl {
+  uint32 uid = 1;                //用户id
+  string name = 2;              //昵称
+  uint32 sex = 3;               //性别
+  uint32 age = 4;               //年龄
+  string icon = 5;              //头像
+  uint32 rid = 6;               //房间id
+}
+
+message PrettyInfoTag {
+  uint32 id = 1;                //标签id
+  string name = 2;             //标签名称
+}

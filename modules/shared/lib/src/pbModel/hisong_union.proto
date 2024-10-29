@@ -1,0 +1,564 @@
+syntax = "proto3";
+package pb;
+/*
+  联盟相关 proto
+*/
+
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb/api/union;apiUnion";
+
+// 联盟任务返回
+message UnionIndexRsp {
+  bool success = 1;
+  string msg = 2;
+  UnionIndexData data = 3;
+
+}
+
+message UnionIndexData{
+  // 活跃数
+  string activeNum = 1;
+  //  未活跃数 ？
+  string silverNum = 2;
+  //  今日活跃数
+  string activeNumToday = 3;
+  // 周活跃数
+  string weekActiveNum = 4;
+  // 任务进度
+  float progress = 5;
+  // 奖励 列表
+  repeated Award awards = 6;
+  // 解决方案 ？
+  repeated Solution solutions = 7;
+  // 联盟 周活跃数
+  uint32 unionWeekActive_num = 8;
+
+  // 单个奖励
+  message Award {
+    //    活跃度
+    uint32 activeNum = 1;
+    // 用户活跃度
+    uint32 userActiveNum = 2;
+    // 奖励列表
+    repeated AwardItem Items = 3;
+    // 用户活跃贴士
+    string userActiveTips = 4;
+    // 标记
+    uint32 mark = 5;
+    // 领取状态
+    uint32 state = 6;
+
+    message AwardItem {
+      // 类型
+      uint32 ctype = 1;
+      //      奖励id
+      uint32 cid = 2;
+      // 奖励名称
+      string name = 3;
+      // 奖励数量
+      uint32 num = 4;
+      // å图片
+      string pic = 5;
+    }
+  }
+
+  message Solution {
+    // 循环周期
+    uint32 cycle = 1;
+    // 出金
+    uint32 outputGold = 2;
+    //    出银子
+    uint32 outputSilver = 3;
+    //    输出用户活跃
+    uint32 outputUserActive = 4;
+    // 输出联盟活跃
+    uint32 outputUnionActive = 5;
+    // 输出id
+    uint32 outputCid = 6;
+    // 输出id名称
+    string outputCidName = 7;
+    //    名称
+    string name = 8;
+    // 贴士
+    string tips = 9;
+    // 单日限制
+    uint32 dayLimit = 10;
+    // 每周限制
+    uint32 weekLimit = 11;
+    // 重定向？
+    string redirect = 12;
+    //    是否仅仅 嗨歌使用
+    bool onlyHisong = 13;
+    // 标记
+    uint32 mark = 14;
+    // 完成数
+    uint32 finishNum = 15;
+    // 状态
+    uint32 state = 16;
+    // 老代码里面没看到的部分
+    string  cidIcon = 17;
+    string cidName = 18;
+    string cidShowTime = 19;
+    uint32 cidNum = 20;
+    uint32 outputMoneyCoupon = 21;
+  }
+
+}
+
+
+
+// 联盟详情返回
+message UnionInfoResp {
+  bool success = 1;
+  string msg = 2;
+  UnionInfoData data = 3;
+
+}
+message UnionInfoData {
+  string appId = 1; //app_id
+  string name = 2; // Union Name
+  string shortName = 3; // Union Short Name
+  uint32 createUid = 4; // Union Create uuid
+  string createName = 5; // Union Create Name
+  string logo = 6;  // Union Logo
+  string bgPic = 7;    // Union Background Pic
+  string headerPic = 8;    // Union Head pic
+  string desc = 9;    // Union Desc
+  uint32 unId = 10;    // Union id
+  uint32 activeNum = 11;    // Union active_num
+  uint32 level = 12; // Union Level
+  uint32 maxUserNum = 13; // Union Max user_num
+  uint32 userNum = 14;// now Union user num
+  uint32 highActivePoint = 15;  // Union High Active Point
+  uint32 condition = 16;
+  uint32 isNotify = 17;
+  string tempName = 18;
+  string tempLogo = 19;
+  string tempDesc = 20;
+  string tempShortName = 21;
+  string post = 22;
+  string tmpPost = 23;
+  uint32 inUnion = 24;
+  uint32 userTitle = 25;
+  uint32 userActiveNum = 26;
+  string goldNum = 27;
+  string silverNum = 28;
+  uint32 rankNum = 29;
+  ChatroomInfo chatroomInfo = 30;
+  LuckyDipInfo luckyDipInfo = 31;
+  uint32 applyingCount = 32;
+  uint32 onlineUserNum = 33;
+  uint32 conditionVip = 34;
+  uint32 conditionPopularity = 35;
+  uint32 elderRecept = 36;
+
+  message ChatroomInfo {
+    uint32 onlineUserNum = 1;
+    uint32 roomId = 2;
+    string roomName = 3;
+    repeated string userIcons = 4;
+  }
+
+  message LuckyDipInfo {
+    uint32 gachaNum = 1;
+    uint32 level = 2;
+    string desc = 3;
+    repeated UnionNormalReward normalRewards = 4;
+  }
+
+}
+
+message UnionRoomInfo {
+  uint32 uid = 1;
+  uint32 rid = 2;
+  string icon = 3;
+  string uname = 4;
+  uint32 sex = 5;
+  string roomUserName = 6;
+  Tag tagInfo = 7;
+  string type = 8;
+  string titleName = 9;
+  uint32 repeated = 10;
+  uint32 onlineUser = 11;
+  uint32 hotNum = 12;
+  uint32 rankNum = 13;
+  uint32 open = 14;
+  string roomName = 15;
+  uint32 onlineStatus = 16;
+  string onlineDateline = 17;
+  RoomTag roomTag = 18;
+  string partyStyle = 19;
+  uint32 real = 20;
+  string types = 21;
+
+  message Tag {
+    string label = 1;
+    string val = 2;
+    string tagColor = 3;
+    string show = 4;
+    repeated string bgColors = 5;
+  }
+  message RoomTag{
+    uint32 Id = 1;
+    string Show = 2;
+    string Label = 3;
+    string AcuteIcon = 4;
+    string FirstColor = 5;
+    string SecColor = 6;
+    uint32 CreateTime = 7;
+    uint32 UpdateTime = 8;
+    string TagIcon = 9;
+    string TagColor = 10;
+
+  }
+}
+
+// 联盟在线返回
+message UnionOnlineRsp {
+  bool success = 1;
+  string msg = 2;
+  UnionOnlineData data = 3;
+
+}
+message UnionOnlineData {
+  string title = 1;
+  uint32 num = 2;
+  repeated Temp list = 3;
+  repeated ProfileBubbleTail bubble_tail = 4;  //聊天气泡尾灯
+
+  message Temp {
+    uint32 uid = 1;
+    string icon = 2;
+    uint32 onlineDateLine = 3;
+    uint32 rid = 4;
+    RoomTag room_tag = 5;
+  }
+
+  message RoomTag{
+    uint32 Id = 1;
+    string Show = 2;
+    string Label = 3;
+    string AcuteIcon = 4;
+    string FirstColor = 5;
+    string SecColor = 6;
+    uint32 CreateTime = 7;
+    uint32 UpdateTime = 8;
+    string TagIcon = 9;
+    string TagColor = 10;
+
+  }
+
+  //聊天气泡尾灯
+  message ProfileBubbleTail {
+    uint32 cid = 1;       //尾灯物品id
+  }
+}
+
+
+//我的联盟数据返回
+message MyUnionRsp {
+  bool success = 1;
+  string msg = 2;
+  MyUnionInfo data = 3;
+}
+
+message MyUnionInfo {
+  uint32 app_id = 1;
+  string name = 2;
+  string short_name = 3;
+  uint32 create_uid = 4;
+  string create_name = 5;
+  string logo = 6;
+  string bg_pic = 7;
+  string header_pic = 8;
+  string desc = 9;
+  uint32 un_id = 10;
+  int32 active_num = 11;
+  uint32 level = 12;
+  uint32 max_user_num = 13;
+  uint32 user_num = 14;
+  uint64 high_active_point = 15;
+  int32 condition = 16;
+  int32 is_notify = 17;
+  string temp_name = 18;
+  string temp_logo = 19;
+  string temp_desc = 20;
+  string temp_short_name = 21;
+  string post = 22;
+  string tmp_post = 23;
+  uint32 condition_vip = 24;
+  uint32 condition_popularity = 25;
+}
+
+
+// 联盟基础返回
+message UnionBaseResp {
+  bool success = 1;
+  string msg = 2;
+}
+
+// 联盟任务返回
+message UnionCommonRewardResp {
+  bool success = 1;
+  string msg = 2;
+  UnionIndexData data = 3;
+  repeated UnionNormalReward normalRewards = 4;
+
+
+}
+message UnionNormalReward {
+  uint32 id = 1;
+  string avatar = 2;
+  uint32 cid = 3;
+  uint32 cNum = 4;
+  string cType = 5;
+  uint32 groupId = 6;
+  string name = 7;
+  string subType = 8;
+  string desc = 9;
+  string type = 10;
+  string image = 11;
+  string imageBg = 12;
+  string bubbleDesc = 13;
+  string bubbleFrontColor = 14;
+  string period = 15;
+  uint32 price = 16;
+  uint32 boxType = 17;
+  string  content = 18;
+  string imagePop = 19;
+  uint32 isLimited = 20;
+  string cornerIcon = 21;
+  string cornerDesc = 22;
+  string moneyType = 23;
+  UnionGiftColorConfig colorConfig = 24;
+  repeated UnionCommodityGift gifts = 25;
+  uint32 num = 26;
+  uint32 returnNum = 27;
+  string filterTabName = 28;
+  uint32 liveOnly = 29;
+  string liveLabel = 30;
+  string jumpPath = 31;
+  string inUseDesc = 32;
+}
+message UnionGiftColorConfig {
+  string  bgColors = 1;
+  string textColor = 2;
+  string itemBgColor = 3;
+}
+message UnionCommodityGift {
+  uint32 id = 1;
+  uint32  cid = 2;
+  string ctype = 3;
+  uint32 groupId = 4;
+  string subType = 5;
+  uint32 cNum = 6;
+  string image = 7;
+  string name = 8;
+  string type = 9;
+  string bubbleDesc = 10;
+  string avatar = 11;
+  string bubbleFontColor = 12;
+  string desc = 13;
+  string imageBg = 14;
+  uint32 price = 15;
+  string period = 16;
+}
+
+
+message UnionExchangeBoxResp {
+  bool success = 1;
+  string msg = 2;
+  repeated UnionCommodityGift data = 3;
+
+}
+
+message UnionRankListResp{
+  bool success = 1;
+  string msg = 2;
+  UnionRankData data = 3;
+  message UnionRankData{
+    uint32 next = 1;
+    uint32 page = 2;
+    repeated UnionRankInfo list = 3;
+  }
+  message UnionRankInfo{
+    uint32 unid = 1;
+    uint32 rankNum =2;
+    string logo = 3;
+    string name = 4;
+    uint32 level = 5;
+    uint32 activeNum = 6;
+    uint32 userNum = 7;
+    uint32 maxUserNum = 8;
+    string headerPic = 9;
+  }
+}
+
+message UnionBoxListResp {
+
+  bool success = 1;
+  string msg = 2;
+  Data data = 3;
+  
+  message List {
+    string name = 1;
+    uint32 price = 2;
+    uint32 pool_id = 3;
+    string money_type = 4;
+    string image = 5;
+    UnionGiftColorConfig color_config = 6;
+    uint32 box_type = 7;
+    string desc = 8;
+    repeated UnionCommodityGift gifts = 9;
+  }
+
+  message Data {
+    string  goldNum = 1;
+    string silverNum = 2;
+    repeated List list = 3;
+  }
+}
+
+message UnionUsersResp {
+
+  message Data {
+    uint32 id = 1;
+    uint32 app_id = 2;
+    uint32 un_id = 3;
+    uint32 uid = 4;
+    uint32 title = 5;
+    uint32 state = 6;
+    uint32 silver_num = 7;
+    uint32 active_num = 8;
+    uint32 week_active_num = 9;
+    uint32 week_time = 10;
+    uint32 join_time = 11;
+    uint32 create_time = 12;
+    uint32 update_time = 13;
+    float gold_num = 14;
+    uint32 last_week_active_num = 15;
+    string user_name = 16;
+    string user_icon = 17;
+    uint32 online_status = 18;
+    uint32 online_dateline = 19;
+    string title_name = 20;
+    uint32 title_num = 21;
+    uint32 rid = 22;
+  }
+
+  bool success = 1;
+  string msg = 2;
+  float union_gold = 3;
+  repeated Data data = 4;
+}
+
+message AccountDetailResp {
+  bool success = 1;
+  string msg = 2;
+  repeated AccountDetailData data = 3;
+}
+
+message AccountDetailData {
+  float change_num = 1;  //此次变化数目
+  uint32 op = 2; //操作：10：收入，20：消费
+  string subject = 3;  //操作主题
+  uint32 create_time = 4;
+  string change_num_str = 5;  //金额字符串, change_num 弃用
+}
+
+message GetApplyListResp {
+
+  bool success = 1;
+  string msg = 2;
+  repeated ApplyListData data = 3;
+
+}
+
+message ApplyListData {
+  uint32 id = 1;
+  uint32  uid = 2;
+  uint32 un_id = 3;
+  uint32 state = 4;
+  uint32 apply_time = 5;
+  uint32 check_time = 6;
+  string apply_note = 7;
+  string check_note = 8;
+  string user_name = 9;
+  string user_icon = 10;
+}
+
+message CreateResp {
+  message Data {
+    uint32 un_id = 1;
+  }
+
+  bool success = 1;
+  string msg = 2;
+  Data data = 3;
+}
+
+
+message JoinUnionResp{
+  bool success = 1;
+  string msg = 2;
+  Data data = 3;
+  message Data {
+    uint32 unionId = 1;
+    uint32 inUnion = 2;
+  }
+}
+
+
+message LuckDipIndexResp {
+
+  message Data {
+    uint32 luckydip_id = 1;
+    uint32 luck_dip_level = 2;
+    string luck_dip_desc = 3;
+    uint32 union_id = 4;
+    uint32 day_price = 5;
+    uint32 available_times = 6;
+    bool has_free = 7;
+    bool can_maintenance = 8;
+    string advance_rewards_desc = 9;
+    repeated UnionCommodityGift normal_rewards = 10;
+    repeated UnionCommodityGift advance_rewards = 11;
+    repeated UnionBuyOptions buy_options = 12;
+    bool repair_status = 13;
+    bool need_repair_fee = 14;
+  }
+
+  bool success = 1;
+  string msg = 2;
+  Data data = 3;
+
+}
+
+message UnionBuyOptions {
+  string name = 1;
+  uint32 price = 2;
+  uint32 num = 3;
+  string money_type = 4;
+}
+
+message LuckDipLotteryResp {
+  bool success = 1;
+  repeated UnionCommodityGift data = 2;
+  string msg = 3;
+}
+
+message UnionCommonResp {
+  bool success = 1;
+  string msg = 2;
+}
+
+message GetAwardResp {
+  message Data {
+    string info = 1;
+  }
+  bool success = 1;
+  string msg = 2;
+  Data data = 3;
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="16px" viewBox="0 0 56 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <linearGradient x1="0%" y1="50%" x2="100%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#00DBDE" offset="0%"></stop>
+            <stop stop-color="#FC00FF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="初稿" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.699999988">
+        <g id="拍卖房-亲密升级" transform="translate(-82.000000, -139.000000)" fill="url(#linearGradient-1)">
+            <g id="时间线" transform="translate(82.000000, 137.000000)">
+                <g id="1" transform="translate(0.000000, 2.000000)">
+                    <path d="M8,0 L48,0 C52.418278,-8.11624501e-16 56,3.581722 56,8 C56,12.418278 52.418278,16 48,16 L8,16 C3.581722,16 5.41083001e-16,12.418278 0,8 C-5.41083001e-16,3.581722 3.581722,8.11624501e-16 8,0 Z" id="矩形"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

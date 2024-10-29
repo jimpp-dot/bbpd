@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16px" height="16px" viewBox="0 0 16 16" version="1.1">
+  <title>bbpd_ic_noti_blue</title>
+  <g id="ic_noti_blue" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g>
+      <path d="M8,6.5 C8.27614237,6.5 8.5,6.72385763 8.5,7 L8.5,11 C8.5,11.2761424 8.27614237,11.5 8,11.5 C7.72385763,11.5 7.5,11.2761424 7.5,11 L7.5,7 C7.5,6.72385763 7.72385763,6.5 8,6.5 Z M8,4.5 C8.27614237,4.5 8.5,4.72385763 8.5,5 C8.5,5.27614237 8.27614237,5.5 8,5.5 C7.72385763,5.5 7.5,5.27614237 7.5,5 C7.5,4.72385763 7.72385763,4.5 8,4.5 Z" id="形状结合" fill="#60C8FF"/>
+      <circle id="info" stroke="#60C8FF" cx="8" cy="8" r="6.5"/>
+    </g>
+  </g>
+</svg>

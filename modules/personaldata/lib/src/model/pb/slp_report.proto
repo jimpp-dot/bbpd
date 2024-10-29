@@ -1,0 +1,15 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../../app/pb";
+
+message ResReportList {
+  bool success = 1;
+  string msg = 2;
+  repeated ReportItem list = 3;
+}
+
+message ReportItem {
+  uint32 type = 1;
+  string name = 2;
+}

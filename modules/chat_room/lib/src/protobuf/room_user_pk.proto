@@ -1,0 +1,31 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+
+import "json_key/broadcast_extension.proto";
+
+
+message UserPkScreen {
+  option (pb.register_name) = 'user.pk.screen';
+  option (pb.register_id) = 20018;
+  string content = 1;
+  uint32 pk_id = 2;
+}
+
+
+message UserPkFly {
+  option (pb.register_name) = 'user.pk.fly';
+  option (pb.register_id) = 20019;
+  string uicon = 1;
+  string uname = 2;
+  uint32 uvip = 3;
+  uint32 utitle = 4;
+  uint32 utitle_new = 5;
+  uint32 rid = 6; //所在的房间，在房间时传
+  string rname = 7;
+  string toname = 8;
+  uint32 tovip = 9;
+  uint32 pk_id = 10;
+}

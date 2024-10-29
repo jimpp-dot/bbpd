@@ -1,0 +1,19 @@
+syntax = "proto3";
+package pb;
+/*
+房间门票proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message ResRoomTicketConfig {
+  bool success = 1;                         //成功true，失败false
+  string msg = 2;                           //失败message
+  RoomTicketConfigData data = 3;            //房间门票
+}
+
+message RoomTicketConfigData {
+  uint32 gift_id = 1;                       //门票礼物id
+}

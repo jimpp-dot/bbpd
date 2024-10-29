@@ -1,0 +1,91 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+message ResHeartRaceConfig {
+	bool success = 1;
+	string msg = 2;
+	HeartRaceConfig config = 3;
+}
+
+message ResHeartRaceRelationConfig {
+	bool success = 1;
+	string msg = 2;
+	HeartRelaionConfig config = 3;
+}
+
+message HeartRelaionConfig {
+	repeated HeartRelationItem relation_list = 1;
+	uint32  relation_duration = 2;
+}
+
+message HeartRelationItem {
+	uint32 id = 1; //关系id
+	string name = 2;//关系名字
+}
+
+message HeartRaceConfig {
+    option (pb.register_name) = 'heartrace.refresh';
+	option (pb.register_id) = 10006;
+	string state = 1; //wait、pk、pk_result、choose_relation
+	uint32 state_deadline = 2; //阶段倒计时 0不限制
+	repeated MicPair mic_pair = 3; //top3麦位对
+	uint32 level = 4; //第一名的等级, pk、pk_result、choose_relation阶段输出
+	bool is_lock_sec = 5;//是否开始锁第二名
+	HeartRaceAward award_config = 6;
+	bool has_hat = 7;//第一名是否有帽子
+	string vap_url = 8;//动画揭晓的动画url
+	uint32 vap_size = 9;//动画揭晓的动画size
+}
+
+message HeartRaceAward {
+	repeated string award_icons = 1;
+	string diff_num_tips = 2;
+	uint32 progress = 3;
+	uint32 award_days = 4;
+	uint32 award_level= 5;
+	repeated string award_names = 6;
+	uint32 progress_start = 7;
+	uint32 progress_end = 8;
+}
+
+message MicItem {
+	uint32 uid = 1;
+	string name = 2;
+	string icon = 3;
+	uint32 package = 4;
+	uint32 sex = 5;
+}
+
+message MicPair {
+	MicItem left = 1;
+	MicItem right = 2;
+	uint32 package = 3;
+	string relation_tips = 4; //距离下一档的提示
+	uint32 relation_state = 5; //1未达到选关系阈值 2未选 3已选
+}
+
+message ResHeartRaceRank {
+	bool success = 1;
+	string msg = 2;
+	repeated HeartRaceRank rank = 3;
+}
+
+message HeartRaceRank {
+	uint32 leftUid  = 1;
+	string leftName  = 2;
+	string leftIcon  = 3;
+	uint32 leftSex = 4; //1男 2女
+	uint32 rightUid  = 5;
+	string rightName  = 6;
+	string rightIcon  = 7;
+	uint32 rightSex = 8;
+	string time = 9;
+	uint32 level = 10;
+	uint32 totalPackage = 11;
+}

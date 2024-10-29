@@ -1,0 +1,75 @@
+syntax = "proto3";
+    
+package speakguess.refresh;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message SpeakguessRefresh {
+    option (pb.register_name) = 'speakguess.refresh';
+    option (pb.register_id) = 98;
+    uint32 change_word_price = 1;
+    string change_word_price_type = 2;
+    Content content = 3;
+    repeated List list = 4;
+    string state = 5;
+
+    message Current {
+        string icon = 1;
+        string name = 2;
+        uint32 uid = 3;
+    }
+
+    message WordInfo {
+        uint32 duration = 1;
+        repeated string hot_word_answer = 2;
+        repeated string hot_word_describer = 3;
+        uint32 id = 4;
+        repeated string key_word_answer = 5;
+        repeated string key_word_describer = 6;
+        string prompt = 7;
+        string word = 8;
+    }
+
+    message Content {
+        Current current = 1;
+        uint32 position = 2;
+        uint32 surplus_duration = 3;
+        uint32 timestamp = 4;
+        uint32 total_duration = 5;
+        uint32 turn_start = 6;
+        WordInfo word_info = 7;
+        string change_type = 8;
+        uint32 guess_success = 9;
+        repeated RankList rank_list = 10;
+        string effect = 11;
+        uint32 winner = 12;
+        uint32 winner_score = 13;
+        string next_word = 14;
+
+        message RankList {
+            User user = 1;
+            uint32 score = 2;
+            uint32 rank = 3;
+
+            message User {
+                uint32 uid = 1;
+                string name = 2;
+                string icon = 3;
+            }
+        }
+    }
+
+    message List {
+        string icon = 1;
+        uint32 is_offline = 2;
+        string name = 3;
+        uint32 position = 4;
+        string role = 5;
+        uint32 score = 6;
+        uint32 uid = 7;
+    }
+
+}

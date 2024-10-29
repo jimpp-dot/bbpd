@@ -1,0 +1,126 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+// go/room/pet/home  房间车位列表
+// go/room/pet/use   道具使用
+message ApiPetHomeResponse {
+  bool success = 1;
+  string message = 2;
+  PetHomeData data = 3;
+}
+
+message PetHomeData {
+  uint32 uid = 1; // 当前页面信息属于uid
+  PetInfo cat = 2; // 当前uid拥有的宠物猫信息
+  PetUserProps props = 3; // 当前用户拥有的道具信息
+}
+
+message PetInfo {
+  uint32 id = 1; // 操作自增ID，服务端使用
+  uint32 pet = 2; // 宠物ID，目前只有猫(1)
+  string name = 3; // 宠物名字
+  uint32 level = 4; // 用户拥有的宠物级别（个数）
+  uint32 status = 5; // 宠物当前的状态，0，默认，1保护中，2被偷走
+  string url = 6; // 当前宠物图片-常态
+  string url_sleeping = 7; // 当前宠物图片-睡觉（保护中）
+  string url_feed = 8; // 当前宠物图片-喂食（喂食时触发，播放一次）
+  PetStealProgress progress = 9; // 当前进度条
+  uint32 protect_duration = 10; // 保护罩剩余时间：秒
+  uint32 award = 11; // 奖励 0-没有；1-没领取；2-已领取
+}
+
+message PetStealProgress {
+  uint32 min = 1; // 进度条最小值
+  uint32 cur = 2; // 进度条当前值   200
+  uint32 max = 3; // 进度条最大值  1000
+}
+
+message PetUserProps {
+  uint32 fish = 1; // 用户拥有多少条鱼 -- 偷
+  uint32 stick = 2; // 用户拥有多少逗猫棒 -- 喂
+  uint32 shield = 3; // 用户拥有多少保护罩 -- 抱
+}
+
+/// 任务 go/room/pet/task
+message ApiPetTaskResponse {
+  bool success = 1;
+  string message = 2;
+  PetTaskData data = 3;
+}
+
+message PetTaskData {
+  repeated PetTaskItem tasks = 1; // 任务列表
+  bool has_more = 2;
+}
+
+message PetTaskItem {
+  uint32 id = 1;
+  string icon = 2;
+  string name = 3;
+  string prop = 4;
+  uint32 prop_num = 5;
+  uint32 progress_cur = 6;
+  uint32 progress_max = 7;
+}
+
+/// 榜单 go/room/pet/rank
+message ApiPetRankResponse {
+  bool success = 1;
+  string message = 2;
+  PetRankData data = 3;
+}
+
+message PetRankData {
+  repeated PetRankItem ranks = 1; // 榜单列表
+  PetRankItem self = 2; // 自己
+  bool has_more = 3;
+}
+
+message PetRankItem {
+  uint32 uid = 1;
+  string icon = 2;
+  string name = 3;
+  uint32 pet_level = 4;
+  int32 rank = 5; //排名
+  uint32 score = 6; // 分数，用于排名
+}
+
+
+/// 记录（自己/别人） go/room/pet/record
+message ApiPetRecordResponse {
+  bool success = 1;
+  string message = 2;
+  PetRecordData data = 3;
+}
+
+message PetRecordData {
+  repeated PetRecordItem records = 1; // 记录列表
+  bool has_more = 2;
+}
+
+message PetRecordItem {
+  uint32 uid = 1;
+  string icon = 2;
+  string name = 3;
+  uint32 opt_type = 4; // 1 喂猫， 2 喂猫且带走， 3 保护罩，
+  uint32 prop_num = 5; // 喂猫次数 --> 1/10
+  uint32 time = 6;
+}
+
+/// 奖励 go/room/pet/award
+message ApiPetAwardResponse {
+  bool success = 1;
+  string message = 2;
+  PetAwardData data = 3;
+}
+
+message PetAwardData {
+  uint32 prop_id = 1;   // 道具ID
+  string prop_name = 2; // 道具名称
+  string prop_type = 3; // 道具类型
+  string prop_icon = 4; // 道具icon
+}

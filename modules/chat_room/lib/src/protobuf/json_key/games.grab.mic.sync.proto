@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package games.grab.mic.sync;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message GamesGrabMicSync {
+  option (pb.register_name) = 'games.grab.mic.sync';
+  option (pb.register_id) = 34;
+  repeated uint32 pb = 1;
+}

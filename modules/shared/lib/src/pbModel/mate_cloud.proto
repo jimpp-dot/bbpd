@@ -1,0 +1,201 @@
+syntax = "proto3";
+package pb;
+/*
+私聊信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "./pb";
+
+message MateCloudChatUser {  //私聊列表用户信息
+  uint32 uid = 1;
+  uint32 appId = 2;
+  uint32 version = 3;
+  uint32 sex = 4;
+  uint32 title = 5;
+  string name = 6;
+  string icon = 7;
+  string city = 8;
+  string position = 9;
+  uint32 official = 10;
+  uint32 degree = 11;
+  string orderStatus = 12;
+  bool   iconGray = 13;
+  uint32 age = 14;
+  uint32 photoNum = 15;
+  uint32 vip = 16;
+  uint32 popularity = 17;
+  string birthday = 18;
+  uint32 onlineDateline = 19;  //+++
+  bool   newUser = 20;
+  uint32 deleted = 21;  //+++
+  uint32 titleNew = 22;
+  string frame = 23;
+  uint32 starVerifyTag = 24;
+  string mark = 25;
+  repeated string marks = 26;
+}
+
+message MateCloudRoomConfig {
+  uint32 uid = 1;
+  uint32 online = 2;
+  uint32 room = 3;
+  string roomIcon = 4;
+  string prefix = 5;
+  uint32 official = 6;
+  string show = 7;
+  string label = 8;
+  repeated string bg = 9;
+  uint32 partyStyle = 10;
+  string acuteIcon = 11;
+  string abstractIcon = 12;
+  repeated string typeBg = 13;
+  string typeIcon = 14;
+  string tagIcon = 15;
+  string tagColor = 16;
+}
+
+message MateCloudGroupConfig {
+  uint32 uid = 1;
+  uint32 groupId = 2;
+  uint32 online = 3;
+  uint32 room = 4;
+  string roomIcon = 5;
+  string prefix = 6;
+  uint32 official = 7;
+}
+
+message MateResCloudAll {
+  bool success = 1;
+  string msg = 2;
+  repeated MateCloudChatUser users = 3;
+  repeated MateCloudRoomConfig config = 4;
+  repeated MateCloudGroupConfig groupConfig = 5;
+  uint32 rid = 6;
+}
+
+
+message MateProfileContent {
+  string content = 1;
+  repeated string imgs = 2;
+}
+
+message MateProfileRelation {
+  uint32 friend = 1;
+  uint32 fans = 2;
+  uint32 defend = 3;
+  uint32 defendR = 4;
+  uint32 orderR = 5;
+  uint32 familiarR = 6;
+  uint32 familiar = 7;
+  bool   isSuper = 8;
+  uint32 gid = 9;
+  uint32 service = 10;
+}
+
+message MateProfileFriendTag {
+  uint32 id = 1;
+  string name = 2;
+}
+
+message MateProfileGroupMember {
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+}
+
+message MateProfileDutyWords {
+  uint32 mark = 1;
+  string words = 2;
+}
+
+message MateProfileSkill {
+  int32 cid = 1;
+  int32 price = 2;
+  int32 num = 3;
+  string description = 4;
+  string cover = 5;
+  int32 isDefault = 6;
+  int32 type = 7;
+  string name = 8;
+  string icon = 9;
+  string uint = 10;
+  string userIcon = 11;
+  string skillDesc = 12;
+  repeated string skillImages = 13;
+}
+
+message MateCloudProfileData {
+  uint32 uid = 1;
+  uint32 version = 2;
+  string name = 3;
+  string mark = 4;
+  string icon = 5;
+  uint32 sex = 6;
+  uint32 title = 7;
+  uint32 titleNew = 8;
+  string city = 9;
+  string position = 10;
+  uint32 strangerMsg = 11;
+  uint32 rid = 12;
+  uint32 needVerify = 13;
+  uint32 needVerifyNew = 14;
+  uint32 official = 15;
+  uint32 degree = 16;
+  string orderStatus = 17;
+  string frame = 18;
+  uint32 starVerifyTag = 19;
+  uint32 friend = 20;
+  uint32 fans = 21;
+  uint32 defend = 22;
+  uint32 defendR = 23;
+  uint32 orderR = 24;
+  uint32 familiarR = 25;
+  uint32 familiar = 26;
+  bool   isSuper = 27;
+  uint32 gid = 28;
+  uint32 service = 29;
+  uint32 profileIntegrity = 32;
+  uint32 intimacy = 33;
+  uint32 relationScore = 34;
+  uint32 closeEmoticon = 35;
+  string distanceDesc = 36; //用户距离
+  repeated MateProfileFriendTag friendTags = 37;
+  string sign = 38;
+  MateProfileContent latestFeed = 39;
+  uint32 members = 40; //PHP接口这个字段可能返回成员数或成员列表
+  repeated MateProfileGroupMember memberList = 41; //成员列表用这个
+  uint32 applyNum = 42;
+  string nickName = 43;
+  repeated MateProfileDutyWords dutyWords = 44;
+  repeated MateProfileSkill skills = 45;
+  MateProfileSkill currentSkill = 46;
+  string type = 47; //群类型
+  uint32 age = 48;
+  string userOriginTag = 49; //用户来源标签，目前有“站外老板”的标签
+  string constellation = 50; //星座
+  string audio = 51; //语音内容
+  uint32 duration = 52; //语音内容时长
+  bool chat_msg_disabled = 53;  //是否屏蔽私聊发送消息的聊天框
+  uint32 chat_egg_id = 54; //彩蛋id
+  uint32 meDanger = 55;   //自己是否是风险用户
+  uint32 magic_msg_entry = 56; //魔法消息的入口
+}
+
+message MateResCloudProfile {
+  bool success = 1;
+  string msg = 2;
+  string type = 3;
+  MateCloudProfileData data = 4;
+}
+
+message MateCloudTagData{
+  map<uint32,string> user_origin_tag = 1;
+}
+
+message MateResCloudTag{
+  bool success = 1;
+  string msg = 2;
+  MateCloudTagData data = 3;
+}

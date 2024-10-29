@@ -1,0 +1,40 @@
+syntax = "proto3";
+package pb;
+/*
+artcenter 相关proto
+*/
+
+option go_package = "../../app/pb";
+
+message ArtListItem {
+	uint32 art_id = 1;              //节目id
+	uint32 center_rid = 2;          //麦序房ID
+	uint32 content_rid = 3;         //转播房间ID
+	uint32 content_uid = 4;         //转播用户ID
+	string content_uid_name = 5;    //转播用户昵称
+	string content_uid_icon = 6;    //转播用户头像
+	string content_desc = 7;        //转播内容描述
+	uint32 start_time = 8;          //开始转播时间
+	uint32 end_time = 9;            //结束转播时间
+	uint32 in_rid = 10;             //用户当前所在房间
+	bool   on_live = 11;            //当前是否转播中
+	string content_uid_sign = 12;    //用户签名
+	bool   is_follow = 13;           //是否关注转播用户
+	string in_room_tip = 14;         //在房提示
+}
+
+message ResArtList {
+	bool success = 1;                  //true/false
+	string msg = 2;					   //错误信息
+	uint32 date_time = 3;              //当前是哪一天的数据
+	repeated ArtListItem list = 4;     //节目单列表
+	bool   can_copy  = 5;              //是否可以复制
+}
+
+message ResArtRoomSearch {
+	bool success = 1;                  //true/false
+	string msg = 2;					   //错误信息
+	uint32 rid = 3;					   //房间id
+	string icon = 4;				   //房间icon
+	string room_title = 5;             //房间标题
+}

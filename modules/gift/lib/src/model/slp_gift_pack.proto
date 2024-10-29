@@ -1,0 +1,148 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../../app/pb";
+
+message ResGiftPackCenterTabs {
+	bool success = 1;
+	string msg = 2;
+	repeated GiftPackCenterTab tabs = 3;
+}
+
+message GiftPackCenterTab {
+	string name = 1; //tab名称
+	string type = 2; //类型new/daily/h5, 保证唯一
+	string url = 3; //当type为h5时候下发
+	string color = 4; //当前tab色， #000000
+} 
+
+message ResGiftPackDailyConfig {
+	bool success = 1;
+	string msg = 2;
+	GiftPackDailyConfig data = 3;
+}
+
+message ResGiftPackOpen {
+	bool success = 1;
+	string msg = 2;
+	GiftPackOpen data = 3;
+	repeated GiftPackOpen data_list = 4;
+}
+
+message GiftPackOpen {
+	string commodity_icon = 1; //物品icon
+	string commodity_name = 2; //物品名称
+	uint32 period_day  = 3; //有效期，精确到天，day和hour只能取一个
+	uint32 period_hour = 4; //有效期，精确小时
+	string tips = 5;//提示信息
+	uint32 cid = 6; //物品id
+	uint32 count = 7; //中奖数量
+}
+
+message ResGiftPackGetPrayAward {
+	bool success = 1;
+	string msg = 2;
+	GiftPackGetPrayAward data = 3;
+}
+
+message ResGiftPackCouponLog {
+	bool success = 1;
+	string msg = 2;
+	repeated GiftPackCouponLogItem coupon_list = 3;
+}
+
+message GiftPackCouponLogItem {
+	string subject = 1;
+	uint32 create_time = 2;
+	uint32 num = 3;
+	uint32 type = 4; //1加 2减少
+}
+
+message ResGiftPackPrayHistory {
+	bool success = 1;
+	string msg = 2;
+	repeated GiftPackPrayHistoryItem history_list = 3;
+}
+
+message GiftPackPrayHistoryItem {
+	uint32 create_time = 1;
+	repeated GiftPackPrayItem pray_list = 2;
+}
+
+message GiftPackPrayItem {
+	uint32 uid = 1;
+	string name = 2;
+	string icon = 3;
+	string commodity_name = 4;
+}
+
+message GiftPackGetPrayAward {
+	string commodity_icon = 1; //物品icon
+	string commodity_name = 2; //物品名称
+	string badge_icon = 3; //勋章icon
+	string badge_name = 4; //勋章名称
+	uint32 cid = 5;//物品ID
+	uint32 badge_id = 6;//勋章ID
+	uint32 award_date = 7;//奖励日期
+}
+
+message GiftPackDailyConfig {
+	repeated PrayAwardPreviewList pray_award_preview = 1;//奖励预览
+	repeated PayDutyItem  pay_duty_list = 2; //充值任务
+	uint32 coupon_num = 3;//用户当前奖券个数
+	string open_box_type = 4;//用户可以开启的宝箱类型，未开启的时候用 primary/middle/senior
+	string opened_box_type = 5;//当天开启宝箱的类型 primary/middle/senior
+	repeated PrevPrayAwardResult prev_pray_award_result = 6; //上期祈福奖励公示
+	repeated PrayAwardList pray_award_list = 7;//用户待领取奖励
+	repeated PrayAwardItem primary_pray_award_config = 8;//初级宝箱奖励公示
+	repeated PrayAwardItem middle_pray_award_config = 9;//中级奖励公示
+	repeated PrayAwardItem senior_pray_award_config = 10;//高级奖励公示
+	uint32 primary_box_price = 11; //宝箱消耗奖券数
+	uint32 middle_box_price = 12;//宝箱消耗奖券数
+	uint32 senior_box_price = 13;//宝箱消耗奖券数
+	uint32 open_nums = 14; //宝箱开启次数
+	uint32 left_open_nums = 15; //宝箱剩余开启次数
+}
+
+message PayDutyItem {
+	uint32 progress = 1;
+	uint32 limit = 2;
+	string title = 3;
+}
+
+message PrayAwardPreviewList {
+	string name = 1;  //物品名称
+	string icon = 2;  //icon
+	uint32 num = 3;   //数量个
+	uint32 price = 4; //金额钻
+	string type = 5; //类型 gift/badge
+}
+
+message PrayAwardList {
+	uint32 id = 1;             //奖励Id, 客户端回传，方便检验数据
+	uint32 cid = 2;            //待领取物品ID
+	string commodity_icon = 3; //物品icon
+	string commodity_name = 4; //物品名称
+	uint32 badge_id = 5;       //待领取勋章id
+	string badge_icon = 6;//勋章icon
+	string badge_name = 7;//勋章名称
+	uint32 award_time = 8;//奖励时间
+}
+
+message PrevPrayAwardResult {
+	uint32 uid = 1;			   //中奖用户uid
+	string name = 2;           //中奖用户名称
+	string icon = 3;           //中奖用户头像
+	string commodity_icon = 4; //物品icon
+	string commodity_name = 5; //物品名称
+	string badge_icon = 6;//勋章icon
+	string badge_name = 7;//勋章名称
+}
+
+message PrayAwardItem {
+	string type = 1; //类型 gift/badge/coupon
+	uint32 price = 2; //价格，钻石, 当type=gift时候显示
+	string tips = 3;//提示文案
+	string award_icon = 4; //物品icon
+	string award_name = 5; //物品名称
+}

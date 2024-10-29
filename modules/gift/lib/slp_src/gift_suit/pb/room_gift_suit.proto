@@ -1,0 +1,40 @@
+syntax = "proto3";
+package pb;
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+message GetRoomFrameListResp{
+  bool success = 1;
+  string msg = 2;
+  message Tab {
+    uint32 tab_id=1;//1:边框设置，2：角标设置
+    string name=2;
+    message TabItem {
+      uint32 show_id=1;
+      string name=2;
+      string img=3;
+      int64 get_time=4;
+      int64 start_time=5;
+      int64 end_time=6;
+      uint32 wear_state=7;//0:未戴；1：已戴
+    }
+    repeated TabItem items=3;
+  }
+
+  message Data {
+    repeated Tab tabs=1;
+  }
+  Data data =3;
+}
+
+message SetRoomFrameResp{
+  bool success = 1;
+  string msg = 2;
+}
+message CancelRoomFrameResp{
+  bool success = 1;
+  string msg = 2;
+}
+

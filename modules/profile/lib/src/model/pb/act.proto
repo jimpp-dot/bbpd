@@ -1,0 +1,83 @@
+syntax = "proto3";
+package pb;
+/*
+活动 相关proto
+*/
+
+option go_package = "../../app/pb/api/act";
+
+message ResLoveMatchRes{
+  bool success = 1;
+  string msg = 2;
+  LoveMatchData data = 3;
+}
+
+message LoveMatchData {
+   uint32  uid = 1; //用户ID
+   string  name = 2; //用户昵称
+   string  icon = 3; //用户头像
+   string  res_type = 4; //人格类型描述
+   repeated MatchTag tag_list = 5;
+   string best_cp_title = 6; //你的最好CP提示语
+   string best_cp_desc = 7; //你的最好CP详情
+  repeated MatchPerson person_list = 8; //为你匹配列表
+}
+
+message MatchTag {
+  string title = 1;
+  string desc = 2;
+}
+
+message MatchPerson {
+  uint32  uid = 1; //用户ID
+  string  name = 2; //用户昵称
+  string  icon = 3; //用户头像
+  repeated string marks = 4; //标签
+  string say_hi_word = 5;
+  uint32 age = 6;
+  uint32 sex = 7;
+}
+
+message LoveExamIndexRes{
+  bool success = 1;
+  string msg = 2;
+  LoveExamStatus data = 3;
+}
+
+message LoveExamStatus{
+  uint32 status = 1; // 恋爱测试状态 0:未完成测试，1:已经完成测试
+  uint32 tag_id = 2; // 恋爱标签id 
+  repeated MatchPerson match_pool = 3;// 需要展示的匹配列表
+}
+
+message GetLoveExamRes{
+  bool success = 1;
+  string msg = 2;
+  LoveExamData data = 3;
+}
+
+message LoveExamData{
+  repeated LoveExamQuestion LoveExamQuestions = 1;
+}
+
+message  LoveExamQuestion{
+  uint32 id =1; // 问题ID
+  string question_desc = 2; //问题文案
+  repeated LoveExamAnswer answer = 3; // 问题答案 
+}
+
+message LoveExamAnswer{
+  uint32 id = 1 ; //答案id
+  string answer_desc = 2; //答案文案
+}
+
+message GetLoveExamResultRes{
+  bool success = 1;
+  string msg = 2;
+  LoveExamResult data = 3;
+}
+
+message LoveExamResult{
+  uint32 tag_id = 1 ; //用户恋爱类型id
+  string desc = 2; //用户恋爱类型文案
+}

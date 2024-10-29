@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon-表情@3x</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="语音房-1" transform="translate(-167, -740)">
+            <g id="底部操作栏" transform="translate(0, 734)">
+                <g id="icon-表情" transform="translate(167, 6)">
+                    <path d="M23.5,16 C23.5,20.14213 20.14213,23.5 16,23.5 C11.85787,23.5 8.5,20.14213 8.5,16 C8.5,11.85787 11.85787,8.5 16,8.5 C20.14213,8.5 23.5,11.85787 23.5,16 Z" id="Ellipse-2" stroke="#FFFFFF" stroke-width="1.66666663"></path>
+                    <path d="M18.5,16.5 C17.87528,17.701076 16.765256,18.5 15.5,18.5 C14.234744,18.5 13.12472,17.701076 12.5,16.5" id="Ellipse-52" stroke="#FFFFFF" stroke-width="1.66666663" stroke-linecap="round"></path>
+                    <g id="Group-141" transform="translate(11.5, 12.5)" fill="#FFFFFF">
+                        <path d="M1,0 C1.552284,0 2,0.447716 2,1 C2,1.552284 1.552284,2 1,2 C0.447716,2 2.22044605e-16,1.552284 2.22044605e-16,1 C2.22044605e-16,0.447716 0.447716,0 1,0 C1,0 1,0 1,0 Z" id="Ellipse-53"></path>
+                        <path d="M6,0 C6.552284,0 7,0.447716 7,1 C7,1.552284 6.552284,2 6,2 C5.447716,2 5,1.552284 5,1 C5,0.447716 5.447716,0 6,0 C6,0 6,0 6,0 Z" id="Ellipse-54"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

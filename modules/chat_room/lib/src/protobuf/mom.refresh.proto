@@ -1,0 +1,31 @@
+syntax = "proto3";
+    
+package mom.refresh;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+message MomRefresh {
+	option (pb.register_name) = 'mom.refresh';
+	option (pb.register_id) = 10001;
+	string state = 1;
+	repeated ShuffleMicList shuffle_mic_list = 2;
+	string room_level = 3;
+	string award_stage = 4;
+	uint32 deadline = 5;
+	string upgrade_award_tips = 6;
+	string boss_name = 7;
+}
+
+message ShuffleMicList {
+	uint32 uid = 1;
+	uint32 package = 2;
+	string name = 3;
+	string icon = 4;
+	uint32 position = 5;
+	uint32 guess_uid = 6;
+	string guess_name = 7;
+	string guess_icon = 8;
+}
+

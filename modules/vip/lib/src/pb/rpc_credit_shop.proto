@@ -1,0 +1,38 @@
+syntax = "proto3";
+package pb;
+
+option go_package = "../app/pb";
+
+import "store.proto";
+
+//积分商城里面的物品列表
+message CreditGoodsIndex {
+	message CreditGoodsType {
+		string name=1; //模块名称
+		repeated StoreCommodityItem items=2;
+		string desc=3; //描述
+	}
+	message CustomZone {
+		string name=1; //模块名称
+		repeated CustomZoneItem items=2;
+		string desc=3; //描述
+	}
+	message CustomZoneItem {
+		uint32 id=1; //id
+		string name=2; //名称
+		string image=3;//图片地址
+		string image_bg=4;//图片背景地址
+		int32 score=5;//需要积分
+		int32 money=6;//需要砖石
+	}
+	message CreditGoodsMode {
+		uint32 c_type=1; //0:定制类型(zone)。1：商品类型(goods)。 后面会不停地拓展
+		repeated CustomZone zone=2;//定制
+		repeated CreditGoodsType goods=3;//热兑
+	}
+
+	int32 balance_score =1;//剩余积分
+	repeated CreditGoodsMode c_mode=2;//模块列表
+	string  prompt_text=3;//提示文案,低版本使用.等积分商城真的上线了，就废弃这个字段
+	bool  ready=4;//true:开放商城，false：关闭商城
+}

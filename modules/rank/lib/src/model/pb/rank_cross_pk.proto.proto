@@ -1,0 +1,66 @@
+syntax = "proto3";
+package pb.rank.cross.pk;
+/*
+用户信息proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../../app/pb";
+
+// 段位结构体
+message RoomCrossPkSegmentItem {
+  uint32 segment = 1; // 段位唯一ID
+  string segment_url = 2; // 段位icon
+  string segment_name = 3; // 段位名称 ps:英勇青铜
+  uint32 sub_segment = 4; // 段位等级 ps:1
+  uint32 star = 5; // 端位星数
+  uint32 total_start = 6; // 段位总星星数（包括灰色）
+}
+
+// go/room/games/crosspk/segmentRank
+message ApiRoomCrossPkSegmentRankResponse{
+  bool success = 1;
+  string message = 2;
+  RoomCrossPkSegmentRankData data = 3;
+}
+
+message RoomCrossPkSegmentRankData{
+  repeated RoomCrossPkSegmentRankItem list = 1;
+  RoomCrossPkSegmentRankItem me = 2;
+  uint32 more = 3;
+}
+
+message RoomCrossPkSegmentRankItem{
+  uint32 uid = 1;
+  string name = 2;
+  string icon = 3;
+  RoomCrossPkSegmentItem cur_segment = 4;
+  int32 rank = 5;
+  bool is_follow = 6;
+}
+
+// go/room/games/crosspk/livingRank
+message ApiRoomCrossPkLivingRankResponse{
+  bool success = 1;
+  string message = 2;
+  RoomCrossPkLivingRankData data = 3;
+}
+
+message RoomCrossPkLivingRankData{
+  repeated RoomCrossPkLivingRankItem list = 1;
+  uint32 more = 2;
+}
+
+message RoomCrossPkLivingRankItem{
+  RoomCrossPkLivingRankRole red = 1;
+  RoomCrossPkLivingRankRole blue = 2;
+  int32 rank = 3;
+}
+
+message RoomCrossPkLivingRankRole{
+  uint32 uid = 1;
+  uint32 rid = 2;
+  uint32 charm = 3;
+  string icon = 4;
+}

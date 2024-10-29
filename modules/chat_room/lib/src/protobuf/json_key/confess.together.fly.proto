@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package confess.together.fly;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+message ConfessTogetherFly {
+  option (pb.register_name) = 'confess.together.fly';
+  option (pb.register_id) = 19;
+  string back_img = 1;
+  string type = 2;
+  string uicon= 3;
+  string uname = 4;
+  uint32 giftId = 5;
+  string desc = 6;
+  string toicon = 7;
+  string toname = 8;
+  uint32 rid = 9;
+  string rname = 10;
+}

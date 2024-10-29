@@ -1,0 +1,22 @@
+name: web_game_room
+description: 游戏中台-房间游戏模块.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  web_game_core:
+    path: ../web_game_core
+  chat_room:
+    path: ../../chat_room
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.0.0
+  flutter_lints: ^2.0.2

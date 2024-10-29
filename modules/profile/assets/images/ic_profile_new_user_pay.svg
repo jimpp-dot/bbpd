@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <title>bbpd_zhuanhua</title>
+  <g fill="none" fill-rule="evenodd">
+    <path d="M0 0h24v24H0z"/>
+    <g stroke="#313131" stroke-width="2" transform="translate(1.917 2)">
+      <circle cx="9.167" cy="5" r="4"/>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12.685 9.597A10.512 10.512 0 009.167 9C4.104 9 0 12.504 0 16.826c0 4.321 4.104 2.976 9.167 2.976M17.822 10.439L19.882 13h-8M19.882 17h-8l2.061 2.561"/>
+    </g>
+  </g>
+</svg>

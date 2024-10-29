@@ -1,0 +1,148 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "../app/pb";
+
+import "json_key/broadcast_extension.proto";
+
+//歌曲类别分组信息
+message GuessGroupItem {
+  uint32 group_id = 1; //分组ID
+  string group_name = 2; //分组名称
+  uint32 has_select = 3; //是否已选择: 0 未选择,1已选择 (已选择的不能再选)
+}
+
+message GuessAnswerItem {
+  uint32 song_id = 1;
+  string song_name = 2;
+  uint32 has_select = 3; //是否已选择: 0 未选择,1已选择 (已选择的不能再选)
+  uint32 is_right = 4; //是否正确答案: 0 不是, 1是
+}
+
+message GuessPubAnswerInfo {
+  string right_name = 1; //正确答案名称
+  uint32 right_num = 2; //答对人数
+  uint32 wrong_num = 3; //答错人数
+  uint32 is_complete = 4; //该轮是否已结束: 0 未结束, 1已结束     (结束就显示更换题库按钮且对与10连模式不进行倒计时)
+}
+
+//猜歌房业务状态数据(以及guess.song.refresh房间消息的pb数据)
+message GuessSongConfigData {
+  option (pb.register_name) = 'guess.song.refresh';
+  option (pb.register_id) = 30001;
+  string current_state = 1; //当前状态: wait 等待开始, pre_start 开始倒计时, running 进行中,  answer 答题阶段, pub_answer 公布答案阶段
+  uint32 room_score = 2; //当前房间积分
+  string current_mode = 3; //当前模式: one 单曲播放，ten 十连播放
+  uint32 song_index = 4; //对于十连播模式表示第几题
+  repeated GuessGroupItem group_list = 5; //wait状态下对应显示的歌曲分组
+  uint32 current_dateline = 6; //当前阶段截止时间(除wait阶段不需要截止时间)
+  repeated GuessAnswerItem answer_list = 7; //答题阶段供选择的答案列表
+  GuessPubAnswerInfo pub_answer_info = 8; //答案公布阶段(0号麦收到这个消息需要继续播放当前歌曲5s)
+  string group_name = 9; //当前分组的名称
+  PlaySongItem song_info = 10; //歌曲信息
+}
+
+//猜歌礼物奖励相关弹窗消息(guess.song.toast)
+message GuessSongGiftToast {
+  option (pb.register_name) = 'guess.song.toast';
+  option (pb.register_id) = 30002;
+  uint32 reward_type = 1;  //奖励类型: 1 十连猜中奖通知, 2 幸运抽奖提示(这个情况弹窗需要点击抽奖)
+  string toast_title = 2; //弹窗标题
+  string toast_text = 3; //弹窗文本
+  string reward_gift_icon = 4; //类型1对应的奖励物品图片
+  repeated uint32 uid_filter_list = 5; //显示这个弹窗的uid
+  uint32 record_id = 6; //抽奖记录id
+}
+
+message GuessSongConfig {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  GuessSongConfigData data = 3;
+}
+
+message PlaySongItem {
+  uint32 song_id = 1; //歌曲ID
+  string song_url = 2; //歌曲播放链接
+  uint32 duration = 3; //歌曲时长
+}
+
+message ResGuessStartPlay {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  repeated PlaySongItem list = 3; //返回的歌曲列表
+}
+
+message ResGuessAnswerSong {
+  bool success = 1;                    //成功true，失败false
+  string msg = 2;                      //失败message
+  bool is_right = 3; //是否正确
+  string right_song_name = 4; //正确答案的名字
+}
+
+// 猜歌排行榜
+message GuessRankRsp {
+  bool success = 1;
+  string msg = 2;
+  repeated UserGuess user_list = 3;
+  repeated RoomGuess room_list = 4;
+  UserGuess personal = 5;
+  int32 start_id = 6; //下一页起始位置
+  RoomGuess personal_room = 7; //用户所在联盟房排名
+}
+
+//用户猜歌排行榜
+message UserGuess {
+  uint32 id = 1;  //排名
+  string icon = 2; //头像
+  string name = 3;
+  uint32 week_grade = 4; //周积分
+  uint32 uid = 5;
+}
+
+//联盟房猜歌排行榜
+message RoomGuess {
+  uint32 id = 1; //排名
+  string room_icon = 2; //房间头像
+  string room_name = 3; //房间名称
+  uint32 week_grade = 4; //房间周积分
+  uint32 rid = 5; //房间ID
+  uint32 un_id = 6; //联盟id
+}
+
+
+message LucksRedPacketData {
+  string title = 1;
+  string content = 2;
+  repeated LuckRedPacketDataItem list = 3;
+}
+
+message LuckRedPacketDataItem {
+  string name = 1;    // 红包名称
+  uint32 score = 2;   // 红包积分值
+  string desc = 3;   // 红包描述
+  uint32 status = 4; //1:已解锁 0:待解锁
+  uint32 pool_id = 5; //奖池id
+  uint32 price = 6; //奖池价值
+  uint32 record_id = 7; //1:开奖的记录id
+  uint32 current_score = 8;   // 房间当前30分钟积分值
+}
+
+message ResLuckRedPacket {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  LucksRedPacketData data = 3; //返回的数据结果
+}
+
+message ResLuckRedPacketOpen {
+  bool success = 1; //返回给客户端的必须有
+  string msg = 2; //返回给客户端的必须有
+  LuckRedPacketData  data = 3;
+}
+
+message LuckRedPacketData {
+  string gift_name = 1;
+  uint32 gift_num = 2;
+  string gift_icon = 3;
+}
+

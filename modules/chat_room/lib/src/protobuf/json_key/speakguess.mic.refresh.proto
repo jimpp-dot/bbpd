@@ -1,0 +1,25 @@
+syntax = "proto3";
+    
+package speakguess.mic.refresh;
+
+option go_package = "../app/pb";
+
+import "broadcast_extension.proto";
+
+
+message SpeakguessMicRefresh {
+    option (pb.register_name) = 'speakguess.mic.refresh';
+    option (pb.register_id) = 97;
+    repeated List list = 1;
+
+    message List {
+        string icon = 1;
+        uint32 is_offline = 2;
+        string name = 3;
+        uint32 position = 4;
+        string role = 5;
+        uint32 score = 6;
+        uint32 uid = 7;
+    }
+
+}

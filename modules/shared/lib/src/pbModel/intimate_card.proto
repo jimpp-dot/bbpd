@@ -1,0 +1,111 @@
+syntax = "proto3";
+package pb;
+/*
+打赏分类信息proto
+cd proto/api && protoc --go_out=../ intimate_card.proto
+*/
+
+//表示目标文件生成的路径, go的包名就是最后的目录名
+//目前统一生成到 app/pb 目录下
+option go_package = "../app/pb";
+
+//亲密卡列表 /go/slp/intimate_card/list
+message ResIntimateCardList {
+  bool success = 1; //成功true，失败false
+  string msg = 2; //失败message
+  IntimateCardList data = 3; //亲密卡列表
+}
+
+message IntimateCardList {
+  uint32 send_count = 1; //我赠送的亲密卡数量
+  uint32 receive_count = 2; //我收到的亲密卡数量
+  repeated IntimateCardInfo list = 3; //我赠送的亲密列表
+  bool more = 4; //是否有下一页
+  uint32 cursor = 5; //分页游标
+  string doc_url = 6; //说明文档地址
+}
+
+message IntimateCardInfo {
+  uint32 card_id = 1; //亲密卡id
+  uint32 uid = 2; //用户uid
+  string name = 3; //用户名称
+  string icon = 4; //用户图标
+  string relation = 5; //卡类型，如跟班卡，cp卡等
+  uint32 cycle = 6; //周期：1天，2星期，3月
+  uint32 total_money = 7; //当前周期总额度
+  uint32 left_money = 8; //当前周期剩余额度
+  uint32 status = 9;//状态:1待领取，2已领取，3已失效，4已解绑
+  uint32 unbind_time = 10; //解绑时间，若没解绑就是0
+  bool is_send = 11; //true我赠送，false我收到的
+  string color = 12; //颜色
+  uint32 relation_id = 13; //关系id
+  uint32 add_money = 14; //临时额度总和
+  string font_color = 15; //卡名颜色
+}
+
+//亲密卡详情 /go/slp/intimate_card/detail
+message ResIntimateCardDetail {
+  bool success = 1; //成功true，失败false
+  string msg = 2; //失败message
+  ResIntimateCardDetailData data = 3;
+}
+
+message ResIntimateCardDetailData {
+  IntimateCardInfo card = 1; //亲密卡详情
+  uint32 defend_value = 2; //守护值
+  string message = 3; //默认留言信息
+}
+
+//已解绑亲密卡列表 /go/slp/intimate_card/unbindList
+message ResIntimateCardUnbind {
+  bool success = 1; //成功true，失败false
+  string msg = 2; //失败message
+  repeated IntimateCardInfo data = 3; //亲密卡列表
+}
+
+//赠送关系列表 /go/slp/intimate_card/relationList
+message ResIntimateCardRelation {
+  bool success = 1; //成功true，失败false
+  string msg = 2; //失败message
+  repeated IntimateCardRelationInfo data = 3; //亲密卡详情
+}
+
+message IntimateCardRelationInfo {
+  uint32 id = 1; //赠送关系id
+  string name = 2; //赠送关系名称
+  string desc = 3; //赠送关系描述
+  string color = 4; //背景色
+  string title = 5; //关系展示标题
+  string font_color = 6; //字体颜色
+}
+
+//赠送关系用户列表 /go/slp/intimate_card/relationUserList
+message ResCardRelationUserList {
+  bool success = 1; //成功true，失败false
+  string msg = 2; //失败message
+  repeated IntimateCardRelationUserInfo data = 3; //亲密卡详情
+  string name = 4; //关系名称
+}
+
+message IntimateCardRelationUserInfo {
+  uint32 defend_value = 1; //守护值
+  uint32 uid = 2; //用户uid
+  string name = 3; //用户名称
+  string icon = 4; //用户头像
+  uint32 relation_id = 5; //守护关系id
+  string relation_name = 6; //关系名称
+  string font_color = 7; //关系名称字体颜色
+}
+
+message RespIntimateRoomGiftList{
+  bool success = 1;
+  string msg = 2;
+  repeated IntimateCardInfo data = 3;
+}
+
+//获得一个拍卖房 /go/slp/intimate_card/auctionRoom
+message ResIntimateCardAuctionRoom {
+  bool success = 1; //成功true，失败false
+  string msg = 2; //失败message
+  uint32 rid = 3; //房间id
+}

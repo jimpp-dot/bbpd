@@ -1,0 +1,21 @@
+{
+  "emote_data":[
+    {"name": "害羞", "key": "60"},
+    {"name": "巨汗", "key": "61"},
+    {"name": "色眯眯", "key": "62"},
+    {"name": "我错了", "key": "63"},
+    {"name": "哭", "key": "64"},
+    {"name": "疑惑", "key": "65"},
+    {"name": "左亲亲", "key": "66"},
+    {"name": "右亲亲", "key": "67"},
+    {"name": "欢迎", "key": "68"},
+    {"name": "举手", "key": "69"},
+    {"name": "打call", "key": "70"},
+    {"name": "求抱走", "key": "71"},
+    {"name": "求试音", "key": "72"},
+    {"name": "谢谢", "key": "73"},
+    {"name": "亮灯", "key": "light", "onlyInMic": true},
+    {"name": "硬币", "key": "coin", "onlyInMic": true},
+    {"name": "抽签", "key": "rand", "onlyInMic": true}
+  ]
+}
